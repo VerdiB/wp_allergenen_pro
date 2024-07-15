@@ -1,0 +1,70 @@
+/* product css */
+.woocommerce .allergen-icon{
+	position: relative;
+	width: 36px;
+	margin-right: 6px;
+	margin-bottom: 2px;
+}
+
+.woocommerce ul.products li.product .allergen-icon{
+	position: relative;
+	display: inline-block;
+	width: 36px;
+	margin-right: 4px;
+	margin-bottom: 0;
+	z-index: 99;
+}
+
+/* admin product css*/
+.allergen-field{
+	display: inline-block;
+	float: left;
+	margin-top: 12px;
+	margin-left: 12px;
+	border: 1px solid #ccc;
+	padding: 6px 12px;
+	border-radius: 6px;
+	background-color: white;
+}
+
+.allergen-field>input{
+	float: left;
+}
+
+.allergen-field img{
+	max-height: 36px;
+	display: table-cell;
+	vertical-align: middle;
+	float: left;
+	padding-left: 4px;
+}
+
+.allergen-div{
+	overflow:auto;
+}
+
+.woocommerce_options_panel .allergen-div{
+	margin-bottom: 10px;
+}
+
+.woocommerce_options_panel .allergen-div>p, .woocommerce_options_panel .allergen-div>span{
+	margin-bottom: -10px;
+	font-size: 20px;
+}
+
+.woocommerce_options_panel .allergen-div span.description{
+	font-size: 16px;
+}
+
+#woocommerce-product-data ul.wc-tabs li.allergens-tab_options a:before{
+	font-family: WooCommerce;
+	content: '\e016';
+}
+
+/* admin settings css */
+.woocommerce_options_panel .settings_header{
+	font-size: 20px;
+	color: black;
+	margin-bottom: -10px;
+	padding-left: 0;
+}
