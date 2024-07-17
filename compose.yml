@@ -1,0 +1,40 @@
+services:
+  wordpress:
+    image: "wordpress:latest"
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: ""
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_WP_DEBUG: true
+      WORDPRESS_WP_DEBUG_LOG: true
+    volumes:
+      - ./:/var/www/html/wp-content/plugins/custom
+      - wp-plugins:/var/www/html/wp-content/plugins/
+      - ./debug:/var/www/html/wp-content/debug.log
+    networks:
+      development:
+        ipv4_address: 124.168.92.21
+  mysql:
+    image: "mysql:latest"
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      development:
+        ipv4_address: 124.168.92.20
+volumes:
+  wp-plugins:
+networks:
+  development:
+    ipam:
+      driver: default
+      config:
+        - subnet: "124.168.92.0/24"
+    
