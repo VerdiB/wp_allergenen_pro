@@ -14,11 +14,13 @@ services:
       WORDPRESS_WP_DEBUG_LOG: true
     volumes:
       - ./:/var/www/html/wp-content/plugins/custom
-      - wp-plugins:/var/www/html/wp-content/plugins/
+      - wp-plugins:/var/www/html/wp-content/plugins
       - ./debug:/var/www/html/wp-content/debug.log
+      - ./tests:/var/www/html/wordpress-tests
     networks:
       development:
         ipv4_address: 124.168.92.21
+
   mysql:
     image: "mysql:latest"
     environment:
@@ -29,12 +31,25 @@ services:
     networks:
       development:
         ipv4_address: 124.168.92.20
+
+  phpunit:
+    build: ./phpunit
+    volumes:
+      - ./:/var/www/html/wp-content/plugins/custom
+      - ./tests:/var/www/html/wordpress-tests
+    depends_on:
+      - wordpress
+      - mysql
+    entrypoint: ["/bin/sh", "-c", "/var/www/html/wordpress-tests/bin/install-wp-tests.sh wordpress root '' mysql && vendor/bin/phpunit"]
+    networks:
+      development:
+
 volumes:
   wp-plugins:
+
 networks:
   development:
     ipam:
       driver: default
       config:
         - subnet: "124.168.92.0/24"
-    
