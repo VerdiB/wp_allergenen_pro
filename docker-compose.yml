@@ -19,7 +19,7 @@ services:
       - ./tests:/var/www/html/wordpress-tests
     networks:
       development:
-        ipv4_address: 124.168.92.21
+        ipv4_address: "124.168.92.20"
 
   mysql:
     image: "mysql:latest"
@@ -30,14 +30,26 @@ services:
       - ./mysql:/var/lib/mysql
     networks:
       development:
-        ipv4_address: 124.168.92.20
-  phpunit:
-    image: "wordpressdevelop/phpunit"
+        ipv4_address: "124.168.92.21"
+  phpmyadmin:
+    image: "phpmyadmin:latest"
+    ports:
+      - "8181:80"
     depends_on:
-      - wordpress
       - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
     networks:
-      - development
+      development:
+        ipv4_address: "124.168.92.22"
+  # phpunit:
+  #   image: "wordpressdevelop/phpunit"
+  #   depends_on:
+  #     - wordpress
+  #     - mysql
+  #   networks:
+  #     - development
 
   # phpunit:
   #   build: ./phpunit
