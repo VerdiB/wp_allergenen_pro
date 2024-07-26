@@ -1,6 +1,6 @@
+
 @startuml db-design
 skinparam Linetype ortho
-
 note as N1
 this ERD has 1 table from woocommerce which will be displayed here.
 furthermore will the prefix "wp_" not be included for two reasons:
