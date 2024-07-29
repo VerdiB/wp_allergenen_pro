@@ -13,7 +13,7 @@ services:
       WORDPRESS_WP_DEBUG: "true"
       WORDPRESS_WP_DEBUG_LOG: "true"
     volumes:
-      - ./:/var/www/html/wp-content/plugins/custom
+      - ./:/var/www/html/wp-content/plugins/allergens-dietary-ictoria
       - wp-plugins:/var/www/html/wp-content/plugins
       - ./debug:/var/www/html/wp-content/debug.log
       - ./tests:/var/www/html/wordpress-tests
@@ -38,8 +38,8 @@ services:
     depends_on:
       - mysql
     environment:
-      PMA_HOST: mysql
       PMA_PORT: 3306
+      PMA_HOST: mysql
     networks:
       development:
         ipv4_address: "124.168.92.22"
