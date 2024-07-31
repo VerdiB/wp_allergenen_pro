@@ -1,58 +1,73 @@
 <?php
 class Allergens_Dietary_Ictoria_Activator{
+    private static $counter = 0;
 
-
-    public static function activata(){
-        self::create_tables();
+    public static function activate(){
+        if(self::$counter === 0){
+            self::create_tables();
+            self::add_fk_tables();
+            self::$counter++;
+        }
+        if (self::$counter > 0)
+        {
+            return;
+        }
     }
 
     private static function create_tables(){
         global $wpdb;
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
-        $sql_attachments = $wpdb->prepare("CREATE IF NOT EXISTS {$wpdb->prefix } allergens_dietary_ictoria_attachments(
+        $sql_attachments = $wpdb->query("CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_attachments(
         attachment_name VARCHAR(255) NOT NULL PRIMARY KEY,
-        attachment_path VARCHAR(255)) DEFAULT CHARACTER SET DEFAULT CHARACTER SET %i COLLATE %i",
-			$wpdb->charset,
-			$wpdb->collate
+        attachment_path VARCHAR(255))"
         );
 
-        $sql_allergy = $wpdb->prepare("CREATE TABLE IF NOT EXISTS {$wpdb->prefix } allergens_dietary_ictoria_allergy(
+        $sql_allergy = $wpdb->query("CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_allergy(
         allergy_name VARCHAR(50) NOT NULL PRIMARY KEY,
-        allergy_description VARCHAR(255))CHARACTER SET DEFAULT CHARACTER SET %i COLLATE %i",
-            $wpdb->charset,
-            $wpdb->collate
+        allergy_description VARCHAR(255))"
         );
 
-        $sql_allergy_attachment = $wpdb->prepare("CREATE TABLE IF NOT EXISTS {$wpdb->prefix } allergens_dietary_ictoria_allergy_attachment(
+        $sql_allergy_attachment = $wpdb->query("CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment(
         allergy_name VARCHAR(50) NOT NULL,
         attachment_name VARCHAR(255) NOT NULL,
-        PRIMARY KEY (allergy_name, attachment_name)) CHARACTER SET DEFAULT CHARACTER SET %i COLLATE %i",
-            $wpdb->charset,
-            $wpdb->collate
+        PRIMARY KEY (allergy_name, attachment_name))"
         );
-        $sql_allergy_attachment_fk = $wpdb->prepare("ALTER TABLE IF EXISTS {$wpdb->prefix } allergens_dietary_ictoria_allergy_attachment(
-        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name),
-        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name))"
-            );
 
-        $sql_allergy_product = $wpdb->prepare("CREATE TABLE IF NOT EXISTS {$wpdb->prefix } allergens_dietary_ictoria_allergy_product(
-        product_id INT NOT NULL,
+        $sql_allergy_product = $wpdb->query("CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_allergy_product(
+        product_id BIGINT NOT NULL,
         allergy_name VARCHAR(50) NOT NULL,
-        PRIMARY KEY (product_id, allergy_name)) CHARACTER SET DEFAULT CHARACTER SET %i COLLATE %i",
-            $wpdb->charset,
-            $wpdb->collate
+        PRIMARY KEY (product_id, allergy_name))"
         );
-        $sql_allergy_product_fk = $wpdb->prepare("ALTER TABLE IF EXISTS {$wpdb->prefix } allergens_dietary_ictoria_allergy_product(
-        FOREIGN KEY (product_id) REFERENCES {$wpdb->prefix}_wc_product_meta_lookup(product_id),
-        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name))"
-            );
-            
         dbDelta( $sql_attachments );
         dbDelta( $sql_allergy );
         dbDelta( $sql_allergy_attachment );
-        dbDelta( $sql_allergy_attachment_fk );
         dbDelta( $sql_allergy_product );
+    }
+
+    public static function add_fk_tables(){
+        global $wpdb;
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+        
+        $sql_allergy_product_fk = $wpdb->query(
+            "ALTER TABLE {$wpdb->prefix}allergens_dietary_ictoria_allergy_product
+           ADD CONSTRAINT FK_AllergyProduct_WCproduct
+           FOREIGN KEY (product_id) REFERENCES {$wpdb->prefix}wc_product_meta_lookup(product_id),
+           ADD CONSTRAINT FK_AllergyProduct_Allergy
+           FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name)"
+            );
+                
+                
+        $sql_allergy_attachment_fk = $wpdb->query(
+            "ALTER TABLE {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment
+            ADD CONSTRAINT FK_AllergyAttch_Allergy
+            FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name),
+            ADD CONSTRAINT FK_AllergyAttch_Attch
+            FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name)
+            ");
+
+        dbDelta( $sql_allergy_attachment_fk );
         dbDelta( $sql_allergy_product_fk );
     }
     

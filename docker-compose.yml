@@ -10,13 +10,14 @@ services:
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: ""
       WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_WP_DEBUG: "true"
-      WORDPRESS_WP_DEBUG_LOG: "true"
+      WORDPRESS_DEBUG: 1
     volumes:
       - ./:/var/www/html/wp-content/plugins/allergens-dietary-ictoria
       - wp-plugins:/var/www/html/wp-content/plugins
-      - ./debug:/var/www/html/wp-content/debug.log
+      - ./debug:/var/www/html/wp-content/logs
       - ./tests:/var/www/html/wordpress-tests
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./error-logging.ini:/usr/local/etc/php/conf.d/error-logging.ini
     networks:
       development:
         ipv4_address: "124.168.92.20"
