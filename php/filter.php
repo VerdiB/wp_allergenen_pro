@@ -37,9 +37,11 @@ class Allergens_Dietary_Ictoria_Filter {
                     $checked = 'checked="checked"';
                 }
                 $categories[$value['category']] .= '<div>
-                    <input type="checkbox" class="checkbox ' . $value['category'] . '" name="allergen_filter_options[' . $key . ']" value="1" ' . $checked . '/>
-                    <span>' . $value['title'] . '</span>
-                </div>';
+				<input type="checkbox" class="checkbox ' . $value['category'] . '" name="allergen_filter_options[' . $key . ']" value="1" ' . $checked . '/>
+				<span>';
+				// added filter-extra prepend (if necessary)
+                $categories[$value['category']] .= $value['filter-extra'];
+                $categories[$value['category']] .= $value['title'] . '</span></div>';
             }
         }
 
@@ -59,20 +61,26 @@ class Allergens_Dietary_Ictoria_Filter {
         echo $html;
     }
 
+	
+
     public function filter_query($query) {
         if ($query->is_main_query() && is_shop() && isset($_POST['allergen_filter'])) {
-            $options = isset($_POST['allergen_filter_options']) ? $_POST['allergen_filter_options'] : array();
+			$options = Allergens_Dietary_Ictoria_Functions::get_options();
+            $allergen_options = isset($_POST['allergen_filter_options']) ? $_POST['allergen_filter_options'] : array();
 
             // Check if there are any options selected
-            if (!empty($options)) {
+            if (!empty($allergen_options)) {
                 $meta_query = array();
 
                 // Loop through each selected option and build the meta query
-                foreach ($options as $key => $value) {
+                foreach ($allergen_options as $key => $value) {
+					$action = isset($options[$key]) ? $options[$key]['filter-action'] : 'exclude';
+					$compare = ($action === 'exclude') ? 'NOT LIKE' : 'LIKE';
+
                     $meta_query[] = array(
                         'key'     => 'allergens_dietary_ictoria', // Key of the custom field
                         'value'   => '"' . $key . '"', // The value to compare (key is the option name)
-                        'compare' => 'NOT LIKE'
+                        'compare' => $compare
                     );
                 }
 
