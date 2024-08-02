@@ -36,12 +36,13 @@ class Allergens_Dietary_Ictoria_Filter {
                 if (isset($_POST['allergen_filter_options'][$key])) {
                     $checked = 'checked="checked"';
                 }
-                $categories[$value['category']] .= '<div>
-				<input type="checkbox" class="checkbox ' . $value['category'] . '" name="allergen_filter_options[' . $key . ']" value="1" ' . $checked . '/>
-				<span>';
-				// added filter-extra prepend (if necessary)
-                $categories[$value['category']] .= $value['filter-extra'];
-                $categories[$value['category']] .= $value['title'] . '</span></div>';
+				// Added separate hidden input for the filter-action property so it doesn't have to call get_options again
+				// also added the filter-extra part
+				$categories[$value['category']] .= '<div>
+					<input type="checkbox" class="checkbox ' . $value['category'] . '" name="allergen_filter_options[' . $key . ']" value="1" ' . $checked . '/>
+					<input type="hidden" name="allergen_filter_action[' . $key . ']" value="' . esc_attr($value['filter-action']) . '"/>
+					<span>' . $value['filter-extra'] . $value['title'] . '</span>
+				</div>';
             }
         }
 
@@ -65,16 +66,17 @@ class Allergens_Dietary_Ictoria_Filter {
 
     public function filter_query($query) {
         if ($query->is_main_query() && is_shop() && isset($_POST['allergen_filter'])) {
-			$options = Allergens_Dietary_Ictoria_Functions::get_options();
-            $allergen_options = isset($_POST['allergen_filter_options']) ? $_POST['allergen_filter_options'] : array();
+			$selected_options = isset($_POST['allergen_filter_options']) ? $_POST['allergen_filter_options'] : array();
+        	$filter_actions = isset($_POST['allergen_filter_action']) ? $_POST['allergen_filter_action'] : array();
 
             // Check if there are any options selected
-            if (!empty($allergen_options)) {
+            if (!empty($selected_options)) {
                 $meta_query = array();
 
                 // Loop through each selected option and build the meta query
-                foreach ($allergen_options as $key => $value) {
-					$action = isset($options[$key]) ? $options[$key]['filter-action'] : 'exclude';
+                foreach ($selected_options as $key => $value) {
+					// A check for the filter-action property
+					$action = isset($filter_actions[$key]) ? $filter_actions[$key] : 'exclude';					
 					$compare = ($action === 'exclude') ? 'NOT LIKE' : 'LIKE';
 
                     $meta_query[] = array(
