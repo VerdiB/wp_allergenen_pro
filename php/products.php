@@ -5,14 +5,15 @@ if(!defined('ABSPATH')){
 }
 
 //this class contains functions used on the front-end product pages
-class Allergens_Dietary_Ictoria_Products{
-	private static $_instance = null;
+class Allergens_Dietary_Ictoria_Products {
+    private static ?self $_instance = null;
 
-	public static function instance(){
-		if(is_null(self::$_instance)){
-			self::$_instance = new Allergens_Dietary_Ictoria_Products();
-		}
-	}
+    public static function instance(): self {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
 	
 	public function __construct(){
 		add_filter('allergens_dietary_ictoria_render_html', array($this, 'render_html'));
@@ -21,7 +22,7 @@ class Allergens_Dietary_Ictoria_Products{
 	}
 	
 	//get all active product options added by this plugin of the product that is currently being loaded by WooCommerce.
-	public function show_product_options(){
+	public function show_product_options(): Void {
 		global $post;
 		$html = '';
 		$options = Allergens_Dietary_Ictoria_Functions::get_options();
@@ -44,14 +45,16 @@ class Allergens_Dietary_Ictoria_Products{
 	}
 
 	//generate the html to display all relevant options for the given product.
-	public function render_html($data){
+	public function render_html(array $data): string {
         $html = array();
         
         foreach ($data as $key => $value){
 			//check if the option is globally enabled by the admin
-			if($value['status'] == 'active'){
-				$html[] = '<img class="allergen-icon" src="'.$value['icon'].'" alt="'.$value['title'].'" title="'.$value['title'].'" data-id="'.$key.'" />';
-			}
+			if($value['status'] === 'active'){
+				$icon_url = esc_url($value['icon']);
+                $title = esc_attr($value['title']);
+                $html[] = "<img class='allergen-icon' src='{$icon_url}' alt='{$title}' title='{$title}' data-id='" . esc_attr($key) . "' />";
+            }
         }
         return implode('', $html);
 	}
