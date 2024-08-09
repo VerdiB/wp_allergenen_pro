@@ -120,10 +120,10 @@ if(ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE){
 	}
 	//load generic files used by the plugin when active
 	include_once(ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/php/products.php');
-	//include_once(ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/php/filter.php');
+	include_once(ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/php/filter.php');
 	
 	Allergens_Dietary_Ictoria_Products::instance();
-	//Allergens_Dietary_Ictoria_Filter::instance();
+	Allergens_Dietary_Ictoria_Filter::instance();
 	Allergens_Dietary_Ictoria_Functions::load_style();
 }else{
 	//WooCommerce is not installed or inactive, show error message
