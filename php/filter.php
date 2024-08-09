@@ -13,7 +13,7 @@ class Allergens_Dietary_Ictoria_Filter {
         }
     }
 
-    public function __construct() {
+    private function __construct() {
         add_action('woocommerce_before_shop_loop', array($this, 'create_filter'));
         add_filter('pre_get_posts', array($this, 'filter_query'));
     }

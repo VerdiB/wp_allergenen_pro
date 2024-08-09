@@ -4,8 +4,9 @@ class Allergens_Dietary_Ictoria_Filter {
     -{static} _instance : Allergens_Dietary_Ictoria_Filter
     +{static} instance() : Allergens_Dietary_Ictoria_Filter
     ..
+    -construct() : void
     +create_filter() : void
-    +filter_query($query) : void
+    +filter_query(query : String) : void
 }
 
 class Allergens_Dietary_Ictoria_Functions {
