@@ -53,18 +53,18 @@ class Allergens_Dietary_Ictoria_Activator{
         $sql_allergy_product_fk = $wpdb->query(
             "ALTER TABLE {$wpdb->prefix}allergens_dietary_ictoria_allergy_product
            ADD CONSTRAINT FK_AllergyProduct_WCproduct
-           FOREIGN KEY (product_id) REFERENCES {$wpdb->prefix}wc_product_meta_lookup(product_id),
+           FOREIGN KEY IF NOT EXISTS (product_id) REFERENCES {$wpdb->prefix}wc_product_meta_lookup(product_id),
            ADD CONSTRAINT FK_AllergyProduct_Allergy
-           FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name)"
+           FOREIGN KEY IF NOT EXISTS (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name)"
             );
                 
                 
         $sql_allergy_attachment_fk = $wpdb->query(
             "ALTER TABLE {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment
             ADD CONSTRAINT FK_AllergyAttch_Allergy
-            FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name),
+            FOREIGN KEY IF NOT EXISTS (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name),
             ADD CONSTRAINT FK_AllergyAttch_Attch
-            FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name)
+            FOREIGN KEY IF NOT EXISTS (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name)
             ");
 
         dbDelta( $sql_allergy_attachment_fk );
