@@ -43,10 +43,10 @@ global $wpdb;
  * @var array
  */
 $tables = array(
+	'allergens_dietary_ictoria_allergy_attachment',
+	'allergens_dietary_ictoria_allergy_product',
 	'allergens_dietary_ictoria_attachments',
 	'allergens_dietary_ictoria_allergy',
-	'allergens_dietary_ictoria_allergy_attachment',
-	'allergens_dietary_ictoria_allergy_product'	
 );
 
 /**
