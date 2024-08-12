@@ -12,7 +12,7 @@ services:
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DEBUG: 1
     volumes:
-      - ./:/var/www/html/wp-content/plugins/allergens-dietary-ictoria
+      - ./:/var/www/html/wp-content/plugins/wp_allergenen
       - wp-plugins:/var/www/html/wp-content/plugins
       - ./debug:/var/www/html/wp-content/logs
       - ./tests:/var/www/html/wordpress-tests
