@@ -1,0 +1,82 @@
+@startuml classDiagram
+skinparam Linetype ortho
+skinparam groupInheritance 2
+
+note as N1
+In this diagram we are showing the classes and their methods that are used in the Allergens Dietary Ictoria plugin.
+and not any WordPress core classes or methods.
+Likewise with Woocommerce.
+end note
+
+note as N2
+The file called Allergens_Dietary_Ictoria is the main file for the plugin.
+But contains 2 classes these must be separated in a later rendition of the plugin.
+This to support the Single Responsibility Principle and maintain clean code.
+end note
+
+package "php"{
+
+    class Allergens_Dietary_Ictoria_Filter{
+        -{static} _instance : Allergens_Dietary_Ictoria_Filter
+        +{static} instance() : Allergens_Dietary_Ictoria_Filter
+        - __construct() : void
+        +create_filter() : void
+        +filter_query(query : String) : void
+    }
+
+    class Allergens_Dietary_Ictoria_Functions {
+        +{static} load_textdomain() : void
+        +{static} get_settings() : array
+        +{static} get_options() : array
+        +{static} load_style() : void
+        +{static} load_admin_js() : void
+        +{static} error_notice(level:string, message:string) : void
+        +{static} default_options() : array
+    }
+
+    class Allergens_Dietary_Ictoria_Activator{
+        -{static} counter : int
+        +{static} activate() : void
+        -{static} create_tables() : void
+    }
+
+    class Allergens_Dietary_Ictoria_Product_Settings{
+        -{static} _instance : Allergens_Dietary_Ictoria_Product_Settings
+        +{static} instance() : void
+        + data_tab(product_data_tabs:array) : array
+        + data_fields() : void
+        + save_product_options(post_id:int) : void
+    }
+
+    class Allergens_Dietary_Ictoria_Products{
+        -{static} _instance : Allergens_Dietary_Ictoria_Products
+        + show_product_options() : void
+        + render_html(data:array): string
+
+    }
+
+    class Allergens_Dietary_Ictoria_Wc_Integration_Settings{
+        + init_form_fields() : void
+        +generate_allergensdietary_htnl() : void
+        +{static} plugin_action_links(links:array) : array
+    }
+}
+
+package Allergens_Dietary_Ictoria{
+    class Allergens_Dietary_Ictoria_Startup{
+        +{static} on_activation : void
+        +{static} on_deactivation : void
+    }
+    class Allergens_Dietary_Ictoria_Wc_Integration_Startup{
+        +init_integration() : void
+        +add_integration(integrations:array) : array
+    }
+}
+N2 -- Allergens_Dietary_Ictoria
+Allergens_Dietary_Ictoria +-u- php
+
+Allergens_Dietary_Ictoria_Filter --> Allergens_Dietary_Ictoria_Functions : uses
+Allergens_Dietary_Ictoria_Wc_Integration_Settings -r-> Allergens_Dietary_Ictoria_Functions : uses
+Allergens_Dietary_Ictoria_Product_Settings -l-> Allergens_Dietary_Ictoria_Functions : uses
+
+@enduml
