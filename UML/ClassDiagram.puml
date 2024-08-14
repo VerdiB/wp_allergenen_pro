@@ -41,7 +41,7 @@ package "php"{
     }
 
     class Allergens_Dietary_Ictoria_Product_Settings{
-        +{static} instance() : 
+        +{static} instance() : void
         + data_tab(product_data_tabs:array) : array
         + data_fields() : void
         + save_product_options(post_id:int) : void
