@@ -41,6 +41,7 @@ package "php"{
     }
 
     class Allergens_Dietary_Ictoria_Product_Settings{
+        -{static} _instance : Allergens_Dietary_Ictoria_Product_Settings
         +{static} instance() : void
         + data_tab(product_data_tabs:array) : array
         + data_fields() : void
