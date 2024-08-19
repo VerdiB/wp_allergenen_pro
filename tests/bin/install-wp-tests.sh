@@ -14,16 +14,31 @@ DB_HOST=${4:-localhost}
 WP_VERSION=${5:-latest}
 
 # Download WordPress
-if [ $WP_VERSION == 'latest' ]; then
+if [ "$WP_VERSION" == 'latest' ]; then
   WP_VERSION=$(curl -s https://api.github.com/repos/WordPress/WordPress/tags | jq -r '.[0].name')
 fi
 
+# Maak de map aan
 mkdir -p /tmp/wordpress/
-curl -o /tmp/wordpress/wordpress.tar.gz https://wordpress.org/wordpress-$WP_VERSION.tar.gz
-tar -xzf /tmp/wordpress/wordpress.tar.gz -C /tmp/wordpress/
+
+# Download WordPress met controle op de juiste URL
+curl -L -o /tmp/wordpress/wordpress.tar.gz https://wordpress.org/wordpress-$WP_VERSION.tar.gz
+
+# Controleer of het gedownloade bestand echt een gzip-bestand is
+if file /tmp/wordpress/wordpress.tar.gz | grep -q gzip; then
+  tar -xzf /tmp/wordpress/wordpress.tar.gz -C /tmp/wordpress/
+else
+  echo "Error: Downloaded file is not in gzip format. Exiting."
+  exit 1
+fi
+
+# Controleer of mysqladmin beschikbaar is, anders installeer het
+if ! command -v mysqladmin &> /dev/null; then
+  apt-get update && apt-get install -y mysql-client
+fi
 
 # Create database
-mysqladmin create $DB_NAME --user="$DB_USER" --host="$DB_HOST"
+mysqladmin create "$DB_NAME" --user="$DB_USER" --host="$DB_HOST" --password="$DB_PASS"
 
 # Install WordPress
 cp /tmp/wordpress/wordpress/wp-config-sample.php /tmp/wordpress/wordpress/wp-config.php

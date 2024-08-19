@@ -52,17 +52,19 @@ services:
   #   networks:
   #     - development
 
-  # phpunit:
-  #   build: ./phpunit
-  #   volumes:
-  #     - ./:/var/www/html/wp-content/plugins/custom
-  #     - ./tests:/var/www/html/wordpress-tests
-  #   depends_on:
-  #     - wordpress
-  #     - mysql
-  #   entrypoint: ["/bin/sh", "-c", "/var/www/html/wordpress-tests/bin/install-wp-tests.sh wordpress root '' mysql && vendor/bin/phpunit"]
-  #   networks:
-  #     development:
+  phpunit:
+    build: 
+      context: .
+      dockerfile: phpunit/Dockerfile
+    volumes:
+      - ./:/var/www/html/wp-content/plugins/allergens-dietary-ictoria
+      - ./tests:/var/www/html/wordpress-tests
+    depends_on:
+      - wordpress
+      - mysql
+    entrypoint: ["/bin/sh", "-c", "/var/www/html/wordpress-tests/bin/install-wp-tests.sh wordpress root '' mysql && vendor/bin/phpunit"]
+    networks:
+      development:
 
 volumes:
   wp-plugins:
