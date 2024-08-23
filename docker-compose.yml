@@ -32,6 +32,7 @@ services:
     networks:
       development:
         ipv4_address: "124.168.92.21"
+
   phpmyadmin:
     image: "phpmyadmin:latest"
     ports:
@@ -62,7 +63,7 @@ services:
     depends_on:
       - wordpress
       - mysql
-    entrypoint: ["/bin/sh", "-c", "/var/www/html/wordpress-tests/bin/install-wp-tests.sh wordpress root '' mysql && vendor/bin/phpunit"]
+    # entrypoint: ["/bin/sh", "-c", "/var/www/html/wordpress-tests/bin/install-wp-tests.sh wordpress root '' mysql && vendor/bin/phpunit"]
     networks:
       development:
 
