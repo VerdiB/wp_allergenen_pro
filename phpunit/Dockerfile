@@ -17,6 +17,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 # Voeg composer to aan het PATH
 ENV PATH="$PATH:/root/.composer/vendor/bin"
+# Voeg wp test config aan het PATH
+ENV WP_TESTS_CONFIG="$PATH/root/.composer/vendor/bin/wp-tests-config.php"
 
 # Installeer PHPUnit via Composer
 RUN composer global require --dev phpunit/phpunit ^9 \
