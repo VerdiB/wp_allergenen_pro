@@ -92,7 +92,7 @@ class Allergens_Dietary_Ictoria_Functions{
 	
 		foreach ($files_templates as $files_template) {
 			$language_file_fullname = $language_file_basename . $user_locale . $files_template;
-			$plugin_language_file = ASSET_MGMT_ICTORIA_DIRNAME . '/languages/' . $language_file_fullname;
+			$plugin_language_file = ALLERGENS_DIETARY_ICTORIA . '/languages/' . $language_file_fullname;
 	
 			if (file_exists($plugin_language_file) && $language_path . '/' . $language_file_fullname) {
 	
