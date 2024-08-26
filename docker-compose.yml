@@ -46,13 +46,6 @@ services:
     networks:
       development:
         ipv4_address: "124.168.92.22"
-  # phpunit:
-  #   image: "wordpressdevelop/phpunit"
-  #   depends_on:
-  #     - wordpress
-  #     - mysql
-  #   networks:
-  #     - development
 
   phpunit:
     build: 
@@ -67,15 +60,15 @@ services:
     networks:
       development:
 
-  mysql-unit:
-    image: "mysql:latest"
-    environment:
-      MYSQL_DATABASE: wordpress_test
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    volumes:
-      - ./mysql:/var/lib/mysql
-    networks:
-      development:
+  # mysql-unit:
+  #   image: "mysql:latest"
+  #   environment:
+  #     MYSQL_DATABASE: wordpress_test
+  #     MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+  #   volumes:
+  #     - ./mysql:/var/lib/mysql
+  #   networks:
+  #     development:
 
 volumes:
   wp-plugins:
