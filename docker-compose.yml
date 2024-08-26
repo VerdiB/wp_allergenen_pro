@@ -64,8 +64,6 @@ services:
       - ./wordpress:/var/www/html/
     depends_on:
       - wordpress
-      - mysql-unit
-    # entrypoint: ["/bin/sh", "-c", "/var/www/html/wordpress-tests/bin/install-wp-tests.sh wordpress root '' mysql && vendor/bin/phpunit"]
     networks:
       development:
 

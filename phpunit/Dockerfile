@@ -19,7 +19,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 ENV PATH="$PATH:/root/.composer/vendor/bin"
 ENV COMPOSER_ALLOW_SUPERUSER=1
 # # Voeg wp test config aan het PATH
-ENV WP_TESTS_CONFIG="$PATH/root/.composer/vendor/bin/wp-tests-config.php"
 
 # Installeer PHPUnit via Composer
 RUN composer global require --dev phpunit/phpunit ^9 \
@@ -30,11 +29,8 @@ RUN composer global require --dev wp-phpunit/wp-phpunit ^6\
 && ln -s /root/.composer/vendor/bin/wpunit /usr/local/bin/wpunit
 
 #  voeg config aan wordpress root toe
-COPY ../tests/wp-tests-config.php /root/.composer/vendor/bin/wp-tests-config.php
-COPY ../tests/wp-tests-config.php /var/www/html/
-
-# WORKDIR var/www/html
-# # update composer
-# RUN composer update -W
+# COPY ../tests/wp-tests-config.php /root/.composer/vendor/bin/wp-tests-config.php
 
 WORKDIR /var/www/html
+
+ENTRYPOINT [ "phpunit", "--verbose", "./wordpress-tests" ]
