@@ -32,31 +32,55 @@ class Allergens_Dietary_Ictoria_Dashboard {
 
         // Register a new section in the "Allergens_Dietary_Ictoria" page.
         add_settings_section(
-            'Allergens_Dietary_Ictoria_section_developers',
+            'Allergens_Dietary_Ictoria_section_main',
             __( 'The Matrix has you.', 'Allergens_Dietary_Ictoria' ),
-            [ $this, 'section_developers_callback' ],
+            [ $this, 'section_main_callback' ],
             'Allergens_Dietary_Ictoria'
         );
 
-        // Register a new field in the "Allergens_Dietary_Ictoria_section_developers" section, inside the "Allergens_Dietary_Ictoria" page.
+        // Register a new field in the "Allergens_Dietary_Ictoria_section_main" section, inside the "Allergens_Dietary_Ictoria" page.
         add_settings_field(
             'Allergens_Dietary_Ictoria_field_pill',
             __( 'Pill', 'Allergens_Dietary_Ictoria' ),
             [ $this, 'field_pill_callback' ],
             'Allergens_Dietary_Ictoria',
-            'Allergens_Dietary_Ictoria_section_developers',
+            'Allergens_Dietary_Ictoria_section_main',
             [
                 'label_for'         => 'Allergens_Dietary_Ictoria_field_pill',
                 'class'             => 'Allergens_Dietary_Ictoria_row',
                 'Allergens_Dietary_Ictoria_custom_data' => 'custom',
             ]
         );
+
+        // Register upsell section
+        add_settings_section(
+            'Allergens_Dietary_Ictoria_section_upsell',
+            __( 'More plugins by Ictoria.nl', 'Allergens_Dietary_Ictoria' ),
+            [ $this, 'section_upsell_callback' ],
+            'Allergens_Dietary_Ictoria'
+        );
     }
 
-    // Developers section callback function
-    public function section_developers_callback( $args ) {
+    // Main section callback function
+    public function section_main_callback( $args ) {
         ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Follow the white rabbit.', 'Allergens_Dietary_Ictoria' ); ?></p>
+        <?php
+    }
+
+    // Upsell section callback function
+    public function section_upsell_callback( $args ) {
+        ?>
+        <div id="<?php echo esc_attr( $args['id'] ); ?>" class="ictoria-dashboard-section">
+            <div class="ictoria-dashboard-section-col">
+                <span>This is a plugin/product title</span>
+                <span>&euro;50</span>
+
+            </div>
+            <div class="ictoria-dashboard-section-col">
+                This is a review section
+            </div>
+        </div>
         <?php
     }
 
@@ -98,11 +122,13 @@ class Allergens_Dietary_Ictoria_Dashboard {
     // Add the top level menu page
     public function options_page() {
         add_menu_page(
-            'Allergens Dietary Ictoria',
-            'Allergens & Dietary Options',
+            'Ictoria Plugin Dashboard',
+            'Ictoria.nl',
             'manage_options',
             'Allergens_Dietary_Ictoria',
-            [ $this, 'options_page_html' ]
+            [ $this, 'options_page_html' ],
+            'dashicons-admin-settings',
+            56
         );
     }
 
@@ -121,18 +147,20 @@ class Allergens_Dietary_Ictoria_Dashboard {
         // Show error/update messages
         settings_errors( 'Allergens_Dietary_Ictoria_messages' );
         ?>
-        <div class="wrap">
-            <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-            <form action="options.php" method="post">
-                <?php
-                // Output security fields for the registered setting "Allergens_Dietary_Ictoria"
-                settings_fields( 'Allergens_Dietary_Ictoria' );
-                // Output setting sections and their fields
-                do_settings_sections( 'Allergens_Dietary_Ictoria' );
-                // Output save settings button
-                submit_button( 'Save Settings' );
-                ?>
-            </form>
+        <div id="ictoria-dashboard">
+            <div class="ictoria-dashboard-container">
+                <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+                <form action="options.php" method="post">
+                    <?php
+                    // Output security fields for the registered setting "Allergens_Dietary_Ictoria"
+                    settings_fields( 'Allergens_Dietary_Ictoria' );
+                    // Output setting sections and their fields
+                    do_settings_sections( 'Allergens_Dietary_Ictoria' );
+                    // Output save settings button
+                    submit_button( 'Save Settings' );
+                    ?>
+                </form>
+            </div>
         </div>
         <?php
     }
