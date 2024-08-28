@@ -1,0 +1,238 @@
+# Blank WordPress Pot
+# Copyright 2014 ...
+# This file is distributed under the GNU General Public License v3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Allergens-Dietary-Ictoria v1.0.0\n"
+"Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
+"POT-Creation-Date: 2024-08-26 10:41+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: Your Team <translations@example.com>\n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
+"_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: php\n"
+"X-Poedit-SearchPathExcluded-0: _old code\n"
+"X-Poedit-SearchPathExcluded-1: _snippets\n"
+"X-Poedit-SearchPathExcluded-2: assets\n"
+"X-Poedit-SearchPathExcluded-3: debug\n"
+"X-Poedit-SearchPathExcluded-4: languages\n"
+"X-Poedit-SearchPathExcluded-5: mysql\n"
+"X-Poedit-SearchPathExcluded-6: phpunit\n"
+"X-Poedit-SearchPathExcluded-7: tests\n"
+"X-Poedit-SearchPathExcluded-8: UML\n"
+
+#: allergens-dietary-ictoria.php:86
+msgid "initial_setup_done"
+msgstr "initiële_setup_voltooid"
+
+#: allergens-dietary-ictoria.php:97 php/functions.php:22
+#: php/wc_integration.php:111
+msgid "allergens_dietary_ictoria_options"
+msgstr "allergenen_dieët_ictoria_opties"
+
+#: allergens-dietary-ictoria.php:131
+#, php-format
+msgid ""
+"%1$sThe WooCommerce Integration class was not found. Please make sure "
+"WooCommerce is installed correctly%2$s"
+msgstr ""
+"%1$sDe WooCommerce-integratieklasse is niet gevonden. Controleer of "
+"WooCommerce correct is geïnstalleerd%2$s"
+
+#: allergens-dietary-ictoria.php:160
+#, php-format
+msgid ""
+"%1$sWooCommerce is inactive or not installed. Please install & activate "
+"WooCommerce%2$s"
+msgstr ""
+"%1$sWooCommerce is niet actief of niet geïnstalleerd. Installeer en activeer "
+"WooCommerce%2$s"
+
+#: php/functions.php:12
+msgid "allergens-dietary-ictoria"
+msgstr "allergenen-dieët-ictoria"
+
+#: php/functions.php:17
+msgid "allergens_dietary_ictoria_settings"
+msgstr "allergenen_dieët_ictoria_instellingen"
+
+#: php/functions.php:71
+#, php-format
+msgid "%1$sAllergens and Dietary is inactive:%2$s"
+msgstr "%1$sAllergenen en Dieët is niet actief:%2$s"
+
+#: php/functions.php:89
+msgid "no "
+msgstr "geen "
+
+#: php/functions.php:92 php/functions.php:100 php/functions.php:108
+#: php/functions.php:116 php/functions.php:124 php/functions.php:132
+#: php/functions.php:140 php/functions.php:148 php/functions.php:156
+#: php/functions.php:164 php/functions.php:172 php/functions.php:180
+#: php/functions.php:188 php/functions.php:196 php/functions.php:204
+#: php/functions.php:212 php/functions.php:220
+msgid "allergen"
+msgstr "allergeen"
+
+#: php/functions.php:93
+msgid "Peanuts"
+msgstr "Pinda's"
+
+#: php/functions.php:94 php/functions.php:102 php/functions.php:110
+#: php/functions.php:118 php/functions.php:126 php/functions.php:134
+#: php/functions.php:142 php/functions.php:150 php/functions.php:158
+#: php/functions.php:166 php/functions.php:174 php/functions.php:182
+#: php/functions.php:190 php/functions.php:198 php/functions.php:206
+#: php/functions.php:214 php/functions.php:222 php/functions.php:230
+#: php/functions.php:238 php/functions.php:246 php/functions.php:254
+msgid "active"
+msgstr "actief"
+
+#: php/functions.php:95 php/functions.php:103 php/functions.php:111
+#: php/functions.php:119 php/functions.php:127 php/functions.php:135
+#: php/functions.php:143 php/functions.php:151 php/functions.php:159
+#: php/functions.php:167 php/functions.php:175 php/functions.php:183
+#: php/functions.php:191 php/functions.php:199 php/functions.php:207
+#: php/functions.php:215 php/functions.php:223 php/functions.php:255
+msgid "exclude"
+msgstr "exclusief"
+
+#: php/functions.php:101
+msgid "Nuts"
+msgstr "Noten"
+
+#: php/functions.php:109
+msgid "Sesame"
+msgstr "Sesam"
+
+#: php/functions.php:117
+msgid "Lupin"
+msgstr "Lupine"
+
+#: php/functions.php:125
+msgid "Soya"
+msgstr "Soja"
+
+#: php/functions.php:133
+msgid "Mustard"
+msgstr "Mosterd"
+
+#: php/functions.php:141
+msgid "Eggs"
+msgstr "Eieren"
+
+#: php/functions.php:149
+msgid "Dairy"
+msgstr "Zuivel"
+
+#: php/functions.php:157
+msgid "Fish"
+msgstr "Vis"
+
+#: php/functions.php:165
+msgid "Crustaceans"
+msgstr "Schaaldieren"
+
+#: php/functions.php:173
+msgid "Molluscs"
+msgstr "Weekdieren"
+
+#: php/functions.php:181
+msgid "Gluten"
+msgstr "Gluten"
+
+#: php/functions.php:189
+msgid "Corn"
+msgstr "Mais"
+
+#: php/functions.php:197
+msgid "Wheat"
+msgstr "Tarwe"
+
+#: php/functions.php:205
+msgid "Celery"
+msgstr "Selderij"
+
+#: php/functions.php:213
+msgid "Sulfite"
+msgstr "Sulfiet"
+
+#: php/functions.php:221
+msgid "Alcohol"
+msgstr "Alcohol"
+
+#: php/functions.php:228 php/functions.php:236 php/functions.php:244
+#: php/functions.php:252
+msgid "dietary"
+msgstr "dieët"
+
+#: php/functions.php:229
+msgid "Vegetarian"
+msgstr "Vegatarisch"
+
+#: php/functions.php:231 php/functions.php:239 php/functions.php:247
+msgid "include"
+msgstr "inclusief"
+
+#: php/functions.php:237
+msgid "Vegan"
+msgstr "Veganistisch"
+
+#: php/functions.php:245
+msgid "Halal"
+msgstr "Halal"
+
+#: php/functions.php:253
+msgid "Risk for pregnant women"
+msgstr "Risico voor zwangere vrouwen"
+
+#: php/product_settings.php:26
+msgid "Allergens"
+msgstr "Allergenen"
+
+#: php/product_settings.php:27
+msgid "allergens_dietary_ictoria_product_data"
+msgstr "allergenen_dieët_ictoria_product_gegevens"
+
+#: php/product_settings.php:37 php/product_settings.php:97
+#: php/wc_integration.php:12
+msgid "allergens_dietary_ictoria"
+msgstr "allergenen_dieët_ictoria"
+
+#: php/product_settings.php:93
+msgid "_allergens_dietary_ictoria_option"
+msgstr "allergenen_dieët_ictoria_optie"
+
+#: php/wc_integration.php:13
+msgid "Allergens and Dietary Ictoria plugin settings"
+msgstr "Allergenen en Dieët Ictoria plugin instellingen"
+
+#: php/wc_integration.php:30
+msgid "allergensdietary"
+msgstr "allergenendieët"
+
+#: php/wc_integration.php:57
+msgid ""
+"Enable and disable allergens and dietary options on the whole website. This "
+"only changes the availability of the options and does not add or remove them "
+"from products"
+msgstr ""
+"Allergenen en dieetopties in- en uitschakelen op de hele website. Dit "
+"verandert alleen de beschikbaarheid van de opties en voegt ze niet toe aan "
+"of verwijdert ze van producten"
+
+#: php/wc_integration.php:116
+msgid "Settings"
+msgstr "Instellingen"
