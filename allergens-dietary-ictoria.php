@@ -16,6 +16,7 @@ Author URI:  http://ictoria.nl
 License:     GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: allergens-dietary-ictoria
+Domain Path: /languages/
 WC tested up to: 8.1.1
 
 "Allergens and Dietary" is free software: you can redistribute it and/or modify
@@ -49,32 +50,21 @@ include_once(ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/php/functions.php');
 add_action('plugins_loaded', array('Allergens_Dietary_Ictoria_Functions', 'load_textdomain'));
 
 /*
-Plugin Name: Mijn Plugin
-Text Domain: mijn-plugin
-Domain Path: /languages
+Plugin Name: Allergens and Dietary
+Text Domain: allergens-dietary-icotoria
+Domain Path: /languages/
 */
 class load_language{
 	public function __construct(){
-		add_action('plugins_loaded', array( $this, 'translation_init ') );
+		add_action('plugins_loaded', array( $this, 'translation_init') );
 	}
 
 	function translation_init() {
-		load_plugin_textdomain( 'allergens-dietry-ictoria', FALSE, dirname( plugin_basename( __FILE__) ) . '/languages' );
+		load_plugin_textdomain( 'allergens-dietary-ictoria', FALSE, dirname( plugin_basename( __FILE__) ) . '/languages/' );
 	}
 }
 
-putenv("LANG=$languages");
-putenv("LANGUAGE=$languages");
-
-setlocale(LC_ALL, $languages);
-
-$domain = 'Allergenen-plugin';
-
-textdomain($domain);
-
-bindtextdomain($domain, 'languages');
-
-bind_textdomain_codeset($domain, 'UTF-8');
+$nl_NL = new load_language;
 
 
 //class that contains the functions that are used by the activation/deactivation/uninstall hooks
@@ -98,28 +88,6 @@ class Allergens_Dietary_Ictoria_Startup{
 		}
 	}
 	
-	public function upload_language_file()
-	{
-		$language_path = WP_LANG_DIR . '/plugins';
-		$language_file_basename = 'allergens-dietary-ictoria-';
-		$user_locale = get_user_locale();
-		$files_templates = array(
-			'.po', // Default template for all locales.
-			'.mo',
-		);
-	
-		foreach ($files_templates as $files_template) {
-			$language_file_fullname = $language_file_basename . $user_locale . $files_template;
-			$plugin_language_file = ASSET_MGMT_ICTORIA_DIRNAME . '/languages/' . $language_file_fullname;
-	
-			if (file_exists($plugin_language_file) && $language_path . '/' . $language_file_fullname) {
-	
-				copy($plugin_language_file, $language_path . '/' . $language_file_fullname);
-			}
-		}
-	}
-
-
 	//function that runs when the deactivation hook is called
 	public static function on_deactivation(){
 		//cookies might be needed if the filter needs to store previous search settings, and will have to be removed if this function is called
