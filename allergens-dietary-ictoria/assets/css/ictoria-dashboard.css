@@ -1,0 +1,28 @@
+:root {
+	--dash-margin: 2rem;
+}
+
+#wpbody-content {
+	width: calc(100% - 20px);
+	/* padding-right: 20px; */
+}
+
+#ictoria-dashboard {
+	background-color: white;
+	margin: var(--dash-margin);
+	padding: 0.4rem 0.8rem;
+}
+
+.ictoria-dashboard-container {
+}
+
+.ictoria-dashboard-container > h1 {
+	margin: 0.6rem 0;
+}
+
+.ictoria-dashboard-section {
+	display: flex;
+}
+
+.ictoria-dashboard-section-col {
+}
