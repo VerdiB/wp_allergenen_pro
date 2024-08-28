@@ -4,48 +4,45 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Autoloader function for classes
-spl_autoload_register(function ($class_name) {
-    // Base directory for the namespace prefix
-    $base_dir = __DIR__ . '/';
+define('ADI_DASHBOARD_DIR', __DIR__);
 
-    // Array of directories to search for classes
-    $directories = [
-        $base_dir . 'sections/',
-        $base_dir . 'pages/'
-    ];
+// Autoload classes
+spl_autoload_register(['Allergens_Dietary_Ictoria_Dashboard', 'autoload']);
 
-    // Replace namespace separators with directory separators in the class name and append with .php
-    $file_name = str_replace('_', '-', strtolower($class_name)) . '.php';
+// Initialize the main dashboard class
+Allergens_Dietary_Ictoria_Dashboard::instance();
 
-    // Iterate over each directory to find the class file
-    foreach ($directories as $directory) {
-        $file = $directory . $file_name;
-        if (file_exists($file)) {
-            require_once $file;
-            return;
+class Allergens_Dietary_Ictoria_Dashboard
+{
+    private static $_instance = null;
+
+    public static function instance()
+    {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
         }
-    }
-});
-
-class Allergens_Dietary_Ictoria_Dashboard {
-
-    private static $instance = null;
-
-    public static function get_instance() {
-        if (null == self::$instance) {
-            self::$instance = new self();
-        }
-        return self::$instance;
+        return self::$_instance;
     }
 
-    private function __construct() {
-        // Register actions for admin menu
-        add_action('admin_menu', [$this, 'options_page']);
+    private function __construct()
+    {
+        // Register actions for the admin menu
+        add_action('admin_menu', [$this, 'dashboard_page']);
+        // Initialize all necessary components
+        $this->initialize_components();
     }
 
-    // Add the top-level menu page
-    public function options_page() {
+    // Initialize all dashboard components (pages, sections, etc.)
+    private function initialize_components()
+    {
+        // Initialize the main page and any other components
+        ADI_Dashboard_Main_Page::instance();
+        // You can add more initializations for other sections here if needed
+        ADI_Dashboard_Main_Section::instance();
+    }
+
+    public function dashboard_page()
+    {
         add_menu_page(
             'Ictoria Plugin Dashboard',
             'Ictoria Plugins',
@@ -57,13 +54,33 @@ class Allergens_Dietary_Ictoria_Dashboard {
         );
     }
 
-    // Load the dashboard page
-    public function load_dashboard_page() {
-        // Load the dashboard page controller
-        $dashboard_page = Allergens_Dietary_Ictoria_Dashboard_Page::get_instance();
+    public function load_dashboard_page()
+    {
+        $dashboard_page = ADI_Dashboard_Main_Page::instance();
         $dashboard_page->render_page();
     }
-}
 
-// Instantiate the main dashboard class
-Allergens_Dietary_Ictoria_Dashboard::get_instance();
+    public static function autoload($class_name)
+    {
+        // Base directory for the namespace prefix
+        $base_dir = ADI_DASHBOARD_DIR . '/';
+
+        // Array of directories to search for classes
+        $directories = [
+            $base_dir . 'sections/',
+            $base_dir . 'pages/',
+        ];
+
+        $file_name = str_replace('_', '-', strtolower($class_name)) . '.php';
+
+        if (strpos($class_name, 'ADI_') === 0) {
+            foreach ($directories as $directory) {
+                $file = $directory . $file_name;
+                if (file_exists($file)) {
+                    require_once $file;
+                    return;
+                }
+            }
+        }
+    }
+}
