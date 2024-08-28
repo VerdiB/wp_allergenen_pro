@@ -2,22 +2,35 @@
 	--dash-margin: 2rem;
 }
 
+h1 {
+	color: white;
+	font-weight: 600;
+	margin: 0.8rem 0;
+}
+h2 {
+	color: rgba(255, 255, 255, 0.8);
+	font-weight: 400;
+	font-style: italic;
+}
+
 #wpbody-content {
 	width: calc(100% - 20px);
 	/* padding-right: 20px; */
 }
 
 #ictoria-dashboard {
-	background-color: white;
+	font-family: "Poppins", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	background-color: #262d60;
+	/* background-color: white; */
+	color: white;
 	margin: var(--dash-margin);
-	padding: 0.4rem 0.8rem;
+	padding: 0.4rem 1.2rem;
+	border-radius: 1rem;
 }
 
 .ictoria-dashboard-container {
-}
-
-.ictoria-dashboard-container > h1 {
-	margin: 0.6rem 0;
 }
 
 .ictoria-dashboard-section {
