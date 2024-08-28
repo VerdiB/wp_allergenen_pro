@@ -142,7 +142,7 @@ if(ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE){
 	include_once(ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/php/filter.php');
 
 	// Load dashboard
-	include_once(ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/php/dashboard.php');
+	include_once(ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/php/dashboard/index.php');
 	
 	Allergens_Dietary_Ictoria_Products::instance();
 	Allergens_Dietary_Ictoria_Filter::instance();
