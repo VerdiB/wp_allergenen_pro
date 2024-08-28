@@ -16,6 +16,7 @@ Author URI:  http://ictoria.nl
 License:     GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: allergens-dietary-ictoria
+Domain Path: /languages/
 WC tested up to: 8.1.1
 
 "Allergens and Dietary" is free software: you can redistribute it and/or modify
@@ -48,13 +49,31 @@ if(in_array( 'woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 include_once(ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/php/functions.php');
 add_action('plugins_loaded', array('Allergens_Dietary_Ictoria_Functions', 'load_textdomain'));
 
+/*
+Plugin Name: Allergens and Dietary
+Text Domain: allergens-dietary-icotoria
+Domain Path: /languages/
+*/
+class load_language{
+	public function __construct(){
+		add_action('plugins_loaded', array( $this, 'translation_init') );
+	}
+
+	function translation_init() {
+		load_plugin_textdomain( 'allergens-dietary-ictoria', FALSE, dirname( plugin_basename( __FILE__) ) . '/languages/' );
+	}
+}
+
+$nl_NL = new load_language;
+
+
 //class that contains the functions that are used by the activation/deactivation/uninstall hooks
 class Allergens_Dietary_Ictoria_Startup{
 	//function that runs when the activation hook is called
 	public static function on_activation(){
 		$settings = Allergens_Dietary_Ictoria_Functions::get_settings();
 		//show popup asking for certain setting options if this is the first activation after installing the plugin.
-		if(!isset($settings['initial_setup_done'])){
+		if(!isset($settings[__('initial_setup_done')])){
 			//show popup asking wether or not the user wants to automatically export all relevant product data on uninstall
 			//tell user (within popup) that above setting can be set at all times from the plugin settings menu
 			//save chosen settings in the allergens_dietary_ictoria_settings(WP options table)
@@ -65,7 +84,7 @@ class Allergens_Dietary_Ictoria_Startup{
 		//set the default options in the WooCommerce options table if they do not exist
 		if(empty($options)){
 			$options = Allergens_Dietary_Ictoria_Functions::default_options();
-			update_option('allergens_dietary_ictoria_options', $options, true);
+			update_option(__('allergens_dietary_ictoria_options', 'allergens-dietary-ictoria'), $options, true);
 		}
 	}
 	

@@ -9,7 +9,7 @@ class Allergens_Dietary_Ictoria_Wc_Integration_Settings extends WC_Integration{
 	
 	public function __construct(){
 		global $woocommerce;
-		$this->id                 = 'allergens_dietary_ictoria';
+		$this->id                 = __('allergens_dietary_ictoria');
 		$this->method_title       = __('Allergens and Dietary Ictoria plugin settings', 'allergens-dietary-ictoria');
 		$this->method_description = '';
 		
@@ -27,7 +27,7 @@ class Allergens_Dietary_Ictoria_Wc_Integration_Settings extends WC_Integration{
 		//using a custom type causes WooCommerce to try and call $this->generate_{value of type}_html();
 		$this->form_fields = array(
 			'select_items' => array(
-				'type' 			=> 'allergensdietary',
+				'type' 			=> __('allergensdietary'),
 				'desc_tip' 		=> false
 			)
 		);
@@ -108,7 +108,7 @@ class Allergens_Dietary_Ictoria_Wc_Integration_Settings extends WC_Integration{
 				$options[$key]['status'] = 'inactive';
 			}
 		}
-		update_option('allergens_dietary_ictoria_options', $options, true);
+		update_option(__('allergens_dietary_ictoria_options'), $options, true);
 	}
 	
 	//create and return a link that shows up on the plugin page and redirects the user to the settings of this plugin in the integrations tab of WooCommerce when clicked
