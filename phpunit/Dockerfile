@@ -33,4 +33,4 @@ RUN composer global require --dev wp-phpunit/wp-phpunit ^6\
 
 WORKDIR /var/www/html
 
-ENTRYPOINT [ "phpunit", "--verbose", "./wordpress-tests" ]
+# ENTRYPOINT [ "phpunit", "--verbose", "./wordpress-tests" ]
