@@ -1,0 +1,45 @@
+@import "./poppins-font.css";
+
+:root {
+	--dash-margin: 2rem 1rem;
+}
+
+/* h2 {
+	color: rgba(255, 255, 255, 0.8);
+	font-weight: 400;
+	font-style: italic;
+} */
+
+#adi-dashboard {
+	font-family: "Poppins", sans-serif;
+	background-color: #262d60;
+	margin: var(--dash-margin);
+	padding: 0.4rem 1.6rem;
+	border-radius: 1.8rem;
+	color: white;
+}
+
+.adi-dashboard-container {
+	h1 {
+		color: white;
+		font-weight: 600;
+	}
+}
+
+.notice * {
+	color: black !important;
+}
+
+.adi-dashboard-form {
+	h2 {
+		color: rgba(255, 255, 255, 0.9);
+		font-style: italic;
+	}
+}
+
+.adi-dashboard-section {
+	display: flex;
+}
+
+.adi-dashboard-section-col {
+}

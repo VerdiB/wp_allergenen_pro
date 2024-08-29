@@ -1,7 +1,7 @@
 <?php
-// exit if user can access this file directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+//exit if user can access this file directly
+if (!defined('ABSPATH')) {
+    exit;
 }
 
 /*
@@ -31,7 +31,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with "Allergens and Dietary". If not, see https://www.gnu.org/licenses/licenses/gpl-3.0.html
-*/
+ */
 
 // Set constant values that are used to retain file location references
 define( 'ALLERGENS_DIETARY_ICTORIA_NAME', 'allergens-dietary-ictoria' );
@@ -145,7 +145,7 @@ if ( ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE ) {
 	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/filter.php';
 
 	// Load dashboard
-	include_once(ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/php/dashboard/index.php');
+	include_once(ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/php/dashboard/ictoria-admin-menu.php');
 	
 	Allergens_Dietary_Ictoria_Products::instance();
 	Allergens_Dietary_Ictoria_Filter::instance();
