@@ -25,21 +25,21 @@ class ADI_Dashboard_Main_Section
     public function main_section_init()
     {
         add_settings_section(
-            'adi_main_section',
-            __('Main section title', 'allergens-dietary-ictoria'),
+            'adi-main-section',
+            __('Main section title', 'allergens_dietary_ictoria'),
             [$this, 'section_main_callback'],
             'allergens_dietary_ictoria'
         );
 
         add_settings_field(
-            'adi_field_pill',
-            __('Pill', 'allergens-dietary-ictoria'),
+            'adi-field-pill',
+            __('Pill', 'allergens_dietary_ictoria'),
             [$this, 'field_pill_callback'],
             'allergens_dietary_ictoria',
-            'adi_main_section',
+            'adi-main-section',
             [
-                'label_for' => 'adi_field_pill',
-                'class' => 'adi_row',
+                'label_for' => 'adi-field-pill',
+                'class' => 'adi-field-row',
                 'adi_custom_data' => 'custom',
             ]
         );
