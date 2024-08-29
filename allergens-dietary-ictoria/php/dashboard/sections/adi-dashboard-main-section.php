@@ -64,15 +64,51 @@ class ADI_Dashboard_Main_Section
         // return "<p id=\"$id\">$content</p>";
 
         $html = <<<HTML
-        <div class="adi-main-section-hero-menu">
-            <span class="adi-main-section-hero-menu-item">Hero slide 1</span>
-            <span class="adi-main-section-hero-menu-item">Hero slide 2</span>
-            <span class="adi-main-section-hero-menu-item">Hero slide 3</span>
+        <div class="adi-dashboard-section">
+            <p>Temporibus, praesentium impedit! Praesentium harum reprehenderit in eaque accusantium facilis ratione.</p>
         </div>
-        <div class="adi-main-section-hero">
-            <div class="adi-main-section-hero-wrapper">
-                <div class="adi-main-section-hero-container">
-                    Hello
+
+        <div class="adi-hero">
+            <div class="adi-hero-menu">
+                <span class="adi-hero-menu-item">Hero slide 1</span>
+                <span class="adi-hero-menu-item">Hero slide 2</span>
+                <span class="adi-hero-menu-item">Hero slide 3</span>
+            </div>
+
+            <div class="adi-hero-wrapper">
+                <div class="adi-hero-container">
+                    <div class="adi-hero-content-left">
+                        <h2>Allergens & Dietary Plugin</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, praesentium impedit! Praesentium harum reprehenderit in eaque accusantium facilis ratione est necessitatibus sequi doloremque quis unde, odit, recusandae itaque laudantium vero?</p>
+                    </div>
+
+                    <div class="adi-hero-content-right">
+
+                        <div class="adi-hero-review">
+                            <h3>Review 1</h3>
+                            <div>
+                                <span>John Doe</span>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        </div>
+
+                        <div class="adi-hero-review">
+                            <h3>Review 2</h3>
+                            <div>
+                                <span>Jane Smith</span>
+                            </div>
+                            <p>Quos animi, tempora commodi alias fugiat harum quisquam maiores quibusdam illum aliquam quo.</p>
+                        </div>
+
+                        <div class="adi-hero-review">
+                            <h3>Review 3</h3>
+                            <div>
+                                <span>Alice Johnson</span>
+                            </div>
+                            <p>Sequi laudantium aspernatur veritatis iste nemo temporibus beatae corporis.</p>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
