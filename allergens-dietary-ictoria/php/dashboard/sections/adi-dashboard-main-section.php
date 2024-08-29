@@ -26,23 +26,23 @@ class ADI_Dashboard_Main_Section
     {
         add_settings_section(
             'adi-main-section',
-            __('Main section title', 'allergens_dietary_ictoria'),
+            __('These are some plugins', 'allergens_dietary_ictoria'),
             [$this, 'section_main_callback'],
             'allergens_dietary_ictoria'
         );
 
-        add_settings_field(
-            'adi-field-pill',
-            __('Pill', 'allergens_dietary_ictoria'),
-            [$this, 'field_pill_callback'],
-            'allergens_dietary_ictoria',
-            'adi-main-section',
-            [
-                'label_for' => 'adi-field-pill',
-                'class' => 'adi-field-row',
-                'adi_custom_data' => 'custom',
-            ]
-        );
+        // add_settings_field(
+        //     'adi-field-pill',
+        //     __('Pill', 'allergens_dietary_ictoria'),
+        //     [$this, 'field_pill_callback'],
+        //     'allergens_dietary_ictoria',
+        //     'adi-main-section',
+        //     [
+        //         'label_for' => 'adi-field-pill',
+        //         'class' => 'adi-field-row',
+        //         'adi_custom_data' => 'custom',
+        //     ]
+        // );
     }
 
     public function section_main_callback($args)
@@ -58,10 +58,27 @@ class ADI_Dashboard_Main_Section
     // Generates HTML for the section main callback
     private function get_section_main_html($args)
     {
-        $id = esc_attr($args['id']);
-        $content = esc_html__('Follow the white rabbit.', 'allergens_dietary_ictoria');
+        // $id = esc_attr($args['id']);
+        // $content = esc_html__('Follow the white rabbit.', 'allergens_dietary_ictoria');
 
-        return "<p id=\"$id\">$content</p>";
+        // return "<p id=\"$id\">$content</p>";
+
+        $html = <<<HTML
+        <div class="adi-main-section-hero-menu">
+            <span class="adi-main-section-hero-menu-item">Hero slide 1</span>
+            <span class="adi-main-section-hero-menu-item">Hero slide 2</span>
+            <span class="adi-main-section-hero-menu-item">Hero slide 3</span>
+        </div>
+        <div class="adi-main-section-hero">
+            <div class="adi-main-section-hero-wrapper">
+                <div class="adi-main-section-hero-container">
+                    Hello
+                </div>
+            </div>
+        </div>
+        HTML;
+
+        return $html;
     }
 
     // Generates HTML for the field pill callback

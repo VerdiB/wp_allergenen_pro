@@ -48,12 +48,14 @@ class ADI_Dashboard_Main_Page
 
     private function get_dashboard_html()
     {
-        $title = esc_html(get_admin_page_title());
+        $title = esc_html('Plugin Dashboard', 'allergens_dietary_ictoria');
+        // $title = esc_html(get_admin_page_title());
         // Using HEREDOC syntax for better readability
         $html = <<<HTML
         <div class="wrap">
             <div id="adi-dashboard">
                 <div class="adi-dashboard-container">
+                    <img src="https://ictoria.nl/wp-content/uploads/2023/07/ICTORIA-2.0-LOGO_Tekengebied-1.png.webp" class="adi-dashboard-logo" alt="ICTORIA logo">
                     <h1 class="adi-dashboard-h1">$title</h1>
                     <form class="adi-dashboard-form" action="options.php" method="post">
                         {$this->get_settings_fields_html()}
