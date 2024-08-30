@@ -34,7 +34,7 @@ class Allergens_Dietary_Ictoria_Product_Settings{
         global $post;
 		
 		$options = Allergens_Dietary_Ictoria_Functions::get_options();
-		$list = get_post_meta( $post->ID, __('allergens_dietary_ictoria') , true);
+		$list = get_post_meta($post->ID, 'allergens_dietary_ictoria', true);
 		if (empty($list)) {
 			$list = array();
 		}
@@ -90,11 +90,11 @@ class Allergens_Dietary_Ictoria_Product_Settings{
 		
         $list = array();
         foreach ($options as $key => $value) {
-            if (isset($_POST[$key.__('_allergens_dietary_ictoria_option')])) {
-                $list[] = $key;
-            }
+			if (isset($_POST[$key.'_allergens_dietary_ictoria_option'])) {
+				$list[] = $key;
+			}			
         }
-        update_post_meta( $post_id, __('allergens_dietary_ictoria') , $list);
+		update_post_meta($post_id, 'allergens_dietary_ictoria', $list);
     }
 }
 ?>
