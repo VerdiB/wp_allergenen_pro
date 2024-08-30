@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 
 require_once '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/php/filter.php';
 
-echo "FilterTest.php\n";
 
 final class FilterTest extends TestCase
 {

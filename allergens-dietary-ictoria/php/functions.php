@@ -5,6 +5,16 @@ if(!defined('ABSPATH')){
 }
 
 //class that contains functions that are used by multiple classes/files or do not belong in another class
+
+/**
+* @author V.B.
+* @covers Allergens_Dietary_Ictoria_Functions
+* @important 
+* This class will be outdated when the plugin
+* does not include anything anymore from the functions.php file.
+* this is also part of the planning in the future.
+*/
+
 class Allergens_Dietary_Ictoria_Functions{
 	
 	//function to get a translation of all text contained within __() functions throughout the plugin IF the .mo and .po files for the local/server language are available
