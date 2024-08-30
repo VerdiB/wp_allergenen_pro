@@ -15,7 +15,7 @@ services:
     volumes:
       - ./allergens-dietary-ictoria:/var/www/html/wp-content/plugins/allergens-dietary-ictoria
       - ./debug:/var/www/html/wp-content/logs
-      - ./tests:/var/www/html/wordpress-tests
+      - ./phpunit/tests:/var/www/html/wordpress-tests/
       - ./wordpress:/var/www/html/
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       - ./error-logging.ini:/usr/local/etc/php/conf.d/error-logging.ini
@@ -53,7 +53,7 @@ services:
       dockerfile: phpunit/Dockerfile
     volumes:
       - ./allergens-dietary-ictoria:/var/www/html/wp-content/plugins/allergens-dietary-ictoria
-      - ./tests:/var/www/html/wordpress-tests
+      - ./phpunit/tests:/var/www/html/wordpress-tests/
       - ./wordpress:/var/www/html/
     depends_on:
       - wordpress

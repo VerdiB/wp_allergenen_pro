@@ -1,4 +1,10 @@
 <?php
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+
 class Allergens_Dietary_Ictoria_Activator{
     private static $counter = 0;
 

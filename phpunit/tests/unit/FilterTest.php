@@ -1,10 +1,12 @@
-<?php 
+<?php
 
 use PHPUnit\Framework\TestCase;
 
 require_once '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/php/filter.php';
 
-class FilterTest extends TestCase
+echo "FilterTest.php\n";
+
+final class FilterTest extends TestCase
 {
     public function test_instance()
     {
@@ -50,5 +52,4 @@ class FilterTest extends TestCase
         $this->assertTrue($method->isPrivate());
     }
 }
-
 ?>
