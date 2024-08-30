@@ -4,16 +4,6 @@ use PHPUnit\Framework\TestCase;
 
 require_once '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/php/products.php';
 
-/**
- * @author V.B.
- * @covers Allergens_Dietary_Ictoria_Products
- * @brief
- * Unit tests class for the Products class.
- * @version 1.0
- * @date 2024-08-30 modified: 2024-08-30
- * @modified by V.B.
- */
-
  class ProductsTest extends TestCase
  {
     public function test_instance()
@@ -50,13 +40,13 @@ require_once '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/php/pro
 
     public function test_show_product_method_exists()
     {
-        $this->assertTrue(method_exists('Allergens_Dietary_Ictoria_Products', 'show_product'));
+        $this->assertTrue(method_exists('Allergens_Dietary_Ictoria_Products', 'show_product_options'));
     }
 
-    public function test_show_producct_is_private()
+    public function test_show_product_is_private()
     {
         $reflector = new ReflectionClass('Allergens_Dietary_Ictoria_Products');
-        $method = $reflector->getMethod('show_product');
+        $method = $reflector->getMethod('show_product_options');
         $this->assertTrue($method->isPrivate());
     }
  }

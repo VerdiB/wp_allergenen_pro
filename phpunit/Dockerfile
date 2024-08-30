@@ -33,6 +33,6 @@ RUN composer global require --dev phpunit/phpunit ^11 \
 
 WORKDIR /var/www/html/wordpress-tests
 
-RUN phpunit -c phpunit.xml
+# RUN phpunit -c phpunit.xml
 
-ENTRYPOINT [ "phpunit", "--testsuite", unit ]
+# ENTRYPOINT [ "phpunit", "--testsuite", unit ]

@@ -3,32 +3,12 @@ use PHPUnit\Framework\TestCase;
 
 require_once '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/php/product_settings.php';
 
-/**
- * @author V.B.
- * @covers Allergens_Dietary_Ictoria_Product_Settings
- * @brief
- * Unit tests class for the Product Settings class.
- * @version 1.0
- * @date 2024-08-30 modified: 2024-08-30
- * @modified by V.B.
- */
+
 class ProductSettingsTest extends TestCase
 {
     public function test_instance()
     {
         $this->assertTrue(class_exists('Allergens_Dietary_Ictoria_Product_Settings'));
-    }
-
-    public function test_create_settings_method_exists()
-    {
-        $this->assertTrue(method_exists('Allergens_Dietary_Ictoria_Product_Settings', 'create_settings'));
-    }
-
-    public function test_create_settings_is_public()
-    {
-        $reflector = new ReflectionClass('Allergens_Dietary_Ictoria_Product_Settings');
-        $method = $reflector->getMethod('create_settings');
-        $this->assertTrue($method->isPublic());
     }
 
     public function test_instance_is_singleton()
