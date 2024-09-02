@@ -1,20 +1,21 @@
 <?php
-//exit if user can access this file directly.
-if(!defined('ABSPATH')){
+// exit if user can access this file directly.
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-//register_activation_hook(ALLERGENS_WP_ICTORIA_BASE, array('Allergens_Wp_Ictoria_Setup', 'on_activation'));
-//register_uninstall_hook(ALLERGENS_WP_ICTORIA_BASE, array('Allergens_Wp_Ictoria_Setup', 'on_deactivation'));
-//register_deactivation_hook(ALLERGENS_WP_ICTORIA_BASE, array('Allergens_Wp_Ictoria_Setup', 'on_uninstall'));
+// register_activation_hook(ALLERGENS_WP_ICTORIA_BASE, array('Allergens_Wp_Ictoria_Setup', 'on_activation'));
+// register_uninstall_hook(ALLERGENS_WP_ICTORIA_BASE, array('Allergens_Wp_Ictoria_Setup', 'on_deactivation'));
+// register_deactivation_hook(ALLERGENS_WP_ICTORIA_BASE, array('Allergens_Wp_Ictoria_Setup', 'on_uninstall'));
 
-class Allergens_Wp_Ictoria_Setup{
-	
-	//function that runs when the plugin is activated and sets the default options in the WooCommerce options table if they do not exist.
-	/*public static function on_activation(){
+class Allergens_Wp_Ictoria_Setup {
+
+	// function that runs when the plugin is activated and sets the default options in the WooCommerce options table if they do not exist.
+	/*
+	public static function on_activation(){
 		$functions = 'Allergens_Wp_Ictoria_Functions';
 		$options = $functions::get_options();
-		
+
 		if(empty($options)){
 			$functions::load_textdomain();
 			$options = array(
@@ -111,13 +112,13 @@ class Allergens_Wp_Ictoria_Setup{
 	}
 	//function that is called on deactivation
 	function static on_deactivation(){
-		
-		
+
+
 		//lines below this are used for direct testing and manually clearing some data
 		//delete_option('allergens_wp_ictoria_options');
 		//Allergens_Wp_Ictoria_Functions::show_options
 	}
-	
+
 	//function that is called when uninstalling this plugin.
 	function static on_uninstall(){
 		//add popup with confirmation of data removal (options table, custom images?)
@@ -125,5 +126,3 @@ class Allergens_Wp_Ictoria_Setup{
 		delete_option('allergens_wp_ictoria_options');
 	}*/
 }
-
-?>
