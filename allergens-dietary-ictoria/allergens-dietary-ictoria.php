@@ -86,6 +86,12 @@ class Allergens_Dietary_Ictoria_Startup {
 			$options = Allergens_Dietary_Ictoria_Functions::default_options();
 			update_option( __( 'allergens_dietary_ictoria_options', 'allergens-dietary-ictoria' ), $options, true );
 		}
+
+		// temporary admin menu panel for testing the license form
+		add_menu_page( 'Allergens and Dietary', 'Allergens and Dietary', 'manage_options', 'allergens-dietary-ictoria', array( 'Allergens_Dietary_Ictoria_Functions', 'admin_page' ), 'dashicons-carrot', 6 );
+
+		
+
 	}
 
 	// function that runs when the deactivation hook is called
