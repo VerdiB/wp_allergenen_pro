@@ -1,12 +1,10 @@
 <?php
-namespace Ictoria\Dashboard\Pages;
-
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }
 
-abstract class Base_Dashboard_Page
+abstract class ADI_Base_Dashboard_Page
 {
     protected $page_title;
     protected $menu_title;
