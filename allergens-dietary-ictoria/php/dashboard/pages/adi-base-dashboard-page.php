@@ -24,8 +24,8 @@ abstract class ADI_Base_Dashboard_Page
         $this->icon_url = $icon_url;
         $this->position = $position;
 
-        add_action('admin_menu', [$this, 'add_menu_page']);
-        add_action('admin_init', [$this, 'admin_init_hooks']);
+        // add_action('admin_menu', [$this, 'add_menu_page']);
+        // add_action('admin_init', [$this, 'admin_init_hooks']);
     }
 
     public function add_menu_page()
