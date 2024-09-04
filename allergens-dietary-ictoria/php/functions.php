@@ -4,6 +4,10 @@ if(!defined('ABSPATH')){
 	exit;
 }
 
+//MyPluginAddMenu();
+//instance();
+
+
 //class that contains functions that are used by multiple classes/files or do not belong in another class
 class Allergens_Dietary_Ictoria_Functions{
 	
@@ -277,8 +281,34 @@ class Allergens_Dietary_Ictoria_Functions{
 				'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
 				'filter-extra' => '',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   '',
 				'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/dietary_pregnant.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME)
-			)
+			),
+			
 		);
+		
+	/////////////////////////////////////////////////////////////
+
+		$attributes_allergen = 
+		add_query_arg( array( 
+			'key' => array(
+				'category' => __('allergen','allergens-dietary-ictoria'),
+				'title' => __('key', 'allergens-dietary-ictoria') , 
+				'status' => __('active', 'allergens-dietary-ictoria'),
+				'filter-action' => __('exclude', 'allegens-dietary-ictoria') ,
+				'filter-extra' => $no,
+				'icon' => __('url1', 'allegens-dietary-ictoria') , // icon upload option in WP-dashboard
+					ALLERGENS_DIETARY_ICTORIA_DIRNAME
+			) ));
+
+// add allergen button in WordPress
+	submit_button( __('add allergen', 'allergens-dietary-ictoria'), 
+    'primary', //CSS class for the button
+    true,  // Wrap the button in a <p> tag
+    $attributes_allergen // Additional attributes like 'id'
+);
+
+
+
+///////////////////////////////////////////////////////////////////////////
 		return $options;
 	}
 }
