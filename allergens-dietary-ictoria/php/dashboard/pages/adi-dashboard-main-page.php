@@ -22,7 +22,7 @@ class ADI_Dashboard_Main_Page extends ADI_Base_Dashboard_Page
             'Ictoria Plugin Dashboard',
             'Ictoria Plugins',
             'manage_options',
-            'allergens-dietary-ictoria',
+            'allergens-dietary-ictoria-dashboard',
             [$this, 'render_page'],
             'dashicons-admin-settings',
             56
