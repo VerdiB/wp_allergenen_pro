@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class ADI_Dashboard_Main_Page extends ADI_Base_Menu_Page
+class ADI_Dashboard_Settings_Page extends ADI_Base_Menu_Page
 {
     private static $_instance = null;
 
@@ -19,25 +19,25 @@ class ADI_Dashboard_Main_Page extends ADI_Base_Menu_Page
     public function __construct()
     {
         parent::__construct(
-            'Ictoria Plugin Dashboard',
-            'Ictoria',
+            'Ictoria Plugin Settings',
+            'Settings',
             'manage_options',
-            'allergens-dietary-ictoria-dashboard',
+            'allergens-dietary-ictoria-dashboard-settings',
             [$this, 'render_page'],
-            'dashicons-admin-settings',
-            56
+            '',
+            null
         );
 
-        $this->add_section(new ADI_Dashboard_Main_Section());
+        $this->add_section(new ADI_Dashboard_Settings_Section());
     }
 
     protected function is_top_level()
     {
-        return true;
+        return false;
     }
 
     protected function get_parent_slug()
     {
-        return ''; // No parent since it's top-level
+        return 'allergens-dietary-ictoria-dashboard';
     }
 }
