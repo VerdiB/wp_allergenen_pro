@@ -36,7 +36,7 @@ abstract class ADI_Base_Dashboard_Section
 
     public function section_callback($args)
     {
-        echo '<p>' . esc_html__('This is a generic section description.', 'allergens-dietary-ictoria') . '</p>';
+        echo '<p>' . esc_html__('This is a generic section description.', 'allergens-dietary-ictoria-dashboard') . '</p>';
     }
 
     public function add_field($field_id, $field_title, $callback, $args = [])

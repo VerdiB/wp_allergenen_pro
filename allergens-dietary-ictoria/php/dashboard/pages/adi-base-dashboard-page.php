@@ -23,9 +23,6 @@ abstract class ADI_Base_Dashboard_Page
         $this->callback = $callback;
         $this->icon_url = $icon_url;
         $this->position = $position;
-
-        // add_action('admin_menu', [$this, 'add_menu_page']);
-        // add_action('admin_init', [$this, 'admin_init_hooks']);
     }
 
     public function add_menu_page()
@@ -47,12 +44,12 @@ abstract class ADI_Base_Dashboard_Page
             return;
         }
 
-        settings_errors('allergens_dietary_ictoria_messages');
+        settings_errors($this->menu_slug . '_messages'); // Ensure consistent error slug
         echo '<div class="wrap">';
         echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
         echo '<form action="options.php" method="post">';
-        settings_fields($this->menu_slug);
-        do_settings_sections($this->menu_slug);
+        settings_fields($this->menu_slug); // Make sure this matches register_setting
+        do_settings_sections($this->menu_slug); // Make sure this matches the section
         submit_button('Save Settings');
         echo '</form>';
         echo '</div>';
@@ -61,7 +58,11 @@ abstract class ADI_Base_Dashboard_Page
     public function admin_init_hooks()
     {
         // Register a new setting for this page
-        register_setting($this->menu_slug, $this->menu_slug . '_options', [$this, 'validate_settings']);
+        register_setting(
+            $this->menu_slug, // Option group (should match settings_fields)
+            $this->menu_slug . '_options', // Option name stored in the database
+            [$this, 'validate_settings']// Validation callback
+        );
 
         // Additional initialization tasks specific to this page can be added here by child classes
     }
