@@ -4,7 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-<<<<<<< HEAD
 // class that contains functions that are used by multiple classes/files or do not belong in another class
 
 /**
@@ -21,18 +20,6 @@ class Allergens_Dietary_Ictoria_Functions {
 	// function to get a translation of all text contained within __() functions throughout the plugin IF the .mo and .po files for the local/server language are available
 	public static function load_textdomain() {
 		load_plugin_textdomain( __( 'allergens-dietary-ictoria', 'allergens-dietary-ictoria' ), false, basename( ALLERGENS_DIETARY_ICTORIA_FILE ) . '/l10n' );
-=======
-//MyPluginAddMenu();
-//instance();
-
-
-//class that contains functions that are used by multiple classes/files or do not belong in another class
-class Allergens_Dietary_Ictoria_Functions{
-	
-	//function to get a translation of all text contained within __() functions throughout the plugin IF the .mo and .po files for the local/server language are available
-	public static function load_textdomain(){
-		load_plugin_textdomain(__('allergens-dietary-ictoria', 'allergens-dietary-ictoria'), false, basename(ALLERGENS_DIETARY_ICTORIA_FILE).'/l10n'); 
->>>>>>> add-allergeen
 	}
 
 	// Get all relevant plugin settings from the WP options table
@@ -301,18 +288,6 @@ class Allergens_Dietary_Ictoria_Functions{
 				'',
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/dietary_pregnant.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
 			),
-<<<<<<< HEAD
-=======
-			'pregnant' => array(
-				'category' => __('dietary', 'allergens-dietary-ictoria'),
-				'title' => __('Risk for pregnant women', 'allergens-dietary-ictoria'),
-				'status' => __('active', 'allergens-dietary-ictoria'),
-				'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
-				'filter-extra' => '',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   '',
-				'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/dietary_pregnant.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME)
-			),
-			
->>>>>>> add-allergeen
 		);
 		
 	/////////////////////////////////////////////////////////////
