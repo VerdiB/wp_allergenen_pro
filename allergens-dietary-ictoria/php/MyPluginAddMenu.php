@@ -1,4 +1,3 @@
-
 <?php
 //exit if user can access this file directly
 if(!defined('ABSPATH')){
@@ -42,10 +41,30 @@ class MyPluginAddMenu {
                 'myAdminPage'
             )
         );
+
+        add_submenu_page(
+            'my-menu-page-slug',
+            __('License key', 'allergens-dietary-ictoria'),
+            __('License key', 'allergens-dietary-ictoria'),
+            'manage_options',
+            'allergens-dietary-license',
+            array(
+                $this,
+                'licenseform'
+            )
+        );
     }
 
     public function myAdminPage() {
         // echo the HTML here ......
+    }
+
+    public function licenseForm() {
+        if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
+            require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
+        }
+        Allergens_Dietary_Ictoria_Form::setFormType( FormType::LICENSE );
+        Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
     }
 }
 

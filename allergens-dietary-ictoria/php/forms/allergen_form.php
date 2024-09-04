@@ -5,11 +5,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! interface_exists( 'I_Allergens_Dietary_Ictoria_Form' ) ) {
-	require_once dirname( __DIR__ ) . '/forms/Iallergen_form.php';
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/Iallergen_form.php';
 }
 
 if ( ! class_exists( 'Allergens_Dietary_Ictoria_License_Form' ) ) {
-	require_once dirname( __DIR__ ) . '/forms/allergen_form_license.php';
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form_license.php';
 }
 
 enum FormType {
@@ -45,6 +45,7 @@ class Allergens_Dietary_Ictoria_Form {
 		if ( self::$_instance === null ) {
 			self::$_instance = new self();
 		}
+		return self::$_instance;
 	}
 
 	public static function setFormType( FormType $formType ) {

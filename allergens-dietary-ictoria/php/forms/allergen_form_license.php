@@ -18,7 +18,7 @@ if ( ! interface_exists( 'I_Allergens_Dietary_Ictoria_Form' ) ) {
  * @since 1.0.0
  * 
  */
-class Allergens_Dietary_Ictoria_License_Form implements I_Asset_Mgmt_Ictoria_Asset_Form
+class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Ictoria_Form
 {
 
 	/**
@@ -33,13 +33,17 @@ class Allergens_Dietary_Ictoria_License_Form implements I_Asset_Mgmt_Ictoria_Ass
 
 	public function showForm( string $allergenName = null )
 	{
-		echo '
-		<form method="post">
-			<label for="license_key">License key:</label>
-			<input type="text" name="license_key" id="license_key" value="<?php echo esc_attr( get_option( 'license_key' ) ); ?>" />
-			<input type="submit" name="submit" value="Submit" />
-		</form>'
-		;
+		if ( ! is_null( $allergenName ) ) {
+			return;
+		}
+ 
+		$html = '<fieldset>
+		<label for="license_key">' . __( 'License key', 'allergens-dietary-ictoria' ) . '</label>
+		<input type="text" name="license_key" id="license_key" value="' . get_option( 'license_key' ) . '">';
+		$html .= '</fieldset>';
+
+		echo $html;
+
 	}
 
 	public function submit( array $data )
