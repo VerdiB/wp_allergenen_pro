@@ -34,6 +34,8 @@ abstract class ADI_Base_Section
                 $this->section_id,
                 $field['args']
             );
+
+            register_setting($menu_slug . '_options_group', $field['id']);
         }
     }
 

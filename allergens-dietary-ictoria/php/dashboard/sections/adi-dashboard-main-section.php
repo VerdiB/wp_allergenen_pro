@@ -30,6 +30,8 @@ class ADI_Dashboard_Main_Section extends ADI_Base_Section
 
     public function example_field_callback($args)
     {
-        echo '<input type="text" id="' . esc_attr($args['label_for']) . '" name="main_menu_slug_options[' . esc_attr($args['label_for']) . ']" value="" />';
+        $option_value = get_option('adi_settings_field');
+
+        echo '<input type="text" id="' . esc_attr($args['label_for']) . '" name="adi_settings_field" value="' . esc_attr($option_value) . '" />';
     }
 }
