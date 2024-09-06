@@ -22,6 +22,7 @@ class Allergens_Dietary_Ictoria_Dashboard
     {
         // Initialize the dashboard
         // new ADI_Dashboard_Main_Page();
+        // Other things can be initialized here if needed
     }
 
     public static function autoload($class_name)
@@ -52,5 +53,6 @@ spl_autoload_register(['Allergens_Dietary_Ictoria_Dashboard', 'autoload']);
 // Initialize the main dashboard class
 Allergens_Dietary_Ictoria_Dashboard::instance();
 
+// Initialize the dashboard pages (might have to look into how to do this dynamically later)
 ADI_Dashboard_Main_Page::instance();
 ADI_Dashboard_Settings_Page::instance();
