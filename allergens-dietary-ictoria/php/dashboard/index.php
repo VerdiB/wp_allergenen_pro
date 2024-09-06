@@ -27,17 +27,17 @@ class Allergens_Dietary_Ictoria_Dashboard
 
     public static function adi_dashboard_style()
     {
-        wp_enqueue_style('adi-dashboard-css', plugins_url('assets/css/adi-dashboard.css', ALLERGENS_DIETARY_ICTORIA_FILE));
+        wp_enqueue_style('adi-dashboard-css', plugins_url('assets/dashboard/css/adi-dashboard.css', ALLERGENS_DIETARY_ICTORIA_FILE));
     }
 
     public static function adi_dashboard_script()
     {
         wp_enqueue_script(
             'adi-dashboard-js',
-            plugins_url('assets/js/adi-dashboard.js', ALLERGENS_DIETARY_ICTORIA_FILE),
-            ['jquery'],
+            plugins_url('assets/dashboard/js/adi-dashboard.js', ALLERGENS_DIETARY_ICTORIA_FILE),
+            '',
             false,
-            true
+            false
         );
     }
 

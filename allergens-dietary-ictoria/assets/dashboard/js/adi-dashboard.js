@@ -1,6 +1,4 @@
-jQuery(document).ready(function () {
-	//WordPress does not allow the use of $ in js files without changes to some settings. Instead of doing that we add the jQuery command to a local variable.
-	let $j = jQuery.noConflict()
-
+document.addEventListener("DOMContentLoaded", function (event) {
+	// Your code to run since DOM is loaded and ready
 	console.log("hello from dashboard")
 })
