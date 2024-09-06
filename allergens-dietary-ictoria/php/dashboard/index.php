@@ -20,8 +20,6 @@ class Allergens_Dietary_Ictoria_Dashboard
 
     private function __construct()
     {
-        // Initialize the dashboard
-        // new ADI_Dashboard_Main_Page();
         // Other things can be initialized here if needed
     }
 

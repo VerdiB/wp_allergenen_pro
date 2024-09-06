@@ -19,23 +19,23 @@ class ADI_Dashboard_Settings_Section extends ADI_Base_Section
     public function __construct()
     {
         parent::__construct(
-            'adi_settings_section', // Section ID
-            __('Settings Section Title', 'text-domain'), // Section Title
-            'adi-settings-page' // Page slug this section belongs to
+            'adi_settings_section',
+            __('Settings Section Title', 'text-domain'),
+            'adi-dashboard-settings'
         );
 
-        // Add fields specific to this section
         $this->add_field(
-            'adi_settings_field', // Field ID
-            __('Settings Field', 'text-domain'), // Field Title
-            [$this, 'field_callback'], // Callback to render the field
-            ['label_for' => 'adi_settings_field']// Additional arguments
+            'adi_settings_field',
+            __('Settings Field', 'text-domain'),
+            [$this, 'field_callback'],
+            ['label_for' => 'adi_settings_field']
         );
     }
 
     public function field_callback($args)
     {
-        // Field rendering logic here
-        echo '<input type="text" id="' . esc_attr($args['label_for']) . '" name="adi_settings_field" value="" />';
+        $option_value = get_option('adi_settings_field');
+
+        echo '<input type="text" id="' . esc_attr($args['label_for']) . '" name="adi_settings_field" value="' . esc_attr($option_value) . '" />';
     }
 }

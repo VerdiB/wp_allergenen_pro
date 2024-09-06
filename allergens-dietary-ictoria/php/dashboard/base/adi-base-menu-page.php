@@ -55,6 +55,12 @@ abstract class ADI_Base_Menu_Page
 
     public function register_settings()
     {
+        register_setting(
+            $this->menu_slug . '_options_group',
+            $this->menu_slug . '_options',
+            [$this, 'validate_settings']
+        );
+
         foreach ($this->sections as $section) {
             $section->register_section($this->menu_slug);
         }
@@ -79,6 +85,12 @@ abstract class ADI_Base_Menu_Page
     public function add_section($section)
     {
         $this->sections[] = $section;
+    }
+
+    public function validate_settings($input)
+    {
+        // Default validation function, can be overridden by child classes
+        return $input;
     }
 
     abstract protected function is_top_level();

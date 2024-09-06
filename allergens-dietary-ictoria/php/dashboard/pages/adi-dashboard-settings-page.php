@@ -22,7 +22,7 @@ class ADI_Dashboard_Settings_Page extends ADI_Base_Menu_Page
             'Ictoria Plugin Settings',
             'Settings',
             'manage_options',
-            'allergens-dietary-ictoria-dashboard-settings',
+            'adi-dashboard-settings',
             [$this, 'render_page'],
             '',
             null
@@ -38,6 +38,6 @@ class ADI_Dashboard_Settings_Page extends ADI_Base_Menu_Page
 
     protected function get_parent_slug()
     {
-        return 'allergens-dietary-ictoria-dashboard';
+        return 'adi-dashboard';
     }
 }
