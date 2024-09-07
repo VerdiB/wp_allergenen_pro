@@ -24,6 +24,7 @@ class Allergens_Dietary_Ictoria_Dashboard
         add_action('admin_enqueue_scripts', [__CLASS__, 'adi_dashboard_script']);
 
         ADI_Dashboard_Main_Page::instance();
+        ADI_Dashboard_Allergens_Page::instance();
         ADI_Dashboard_Settings_Page::instance();
 
         // Other things can be initialized here if needed
