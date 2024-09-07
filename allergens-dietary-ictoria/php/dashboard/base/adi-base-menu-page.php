@@ -15,6 +15,17 @@ abstract class ADI_Base_Menu_Page
     protected $position = null;
     protected $sections = [];
 
+    private static $instances = [];
+
+    public static function instance()
+    {
+        $calledClass = static::class;
+        if (!isset(self::$instances[$calledClass])) {
+            self::$instances[$calledClass] = new static();
+        }
+        return self::$instances[$calledClass];
+    }
+
     public function __construct($page_title, $menu_title, $capability, $menu_slug, $callback, $icon_url = '', $position = null)
     {
         $this->page_title = $page_title;

@@ -6,16 +6,6 @@ if (!defined('ABSPATH')) {
 
 class ADI_Dashboard_Settings_Section extends ADI_Base_Section
 {
-    private static $_instance = null;
-
-    public static function instance()
-    {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
-    }
-
     public function __construct()
     {
         parent::__construct(

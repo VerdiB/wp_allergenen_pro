@@ -6,21 +6,11 @@ if (!defined('ABSPATH')) {
 
 class ADI_Dashboard_Settings_Page extends ADI_Base_Menu_Page
 {
-    private static $_instance = null;
-
-    public static function instance()
-    {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
-    }
-
     public function __construct()
     {
         parent::__construct(
-            'Ictoria Plugin Settings',
-            'Settings',
+            'Ictoria Plugin ' . __('Settings', 'text-domain'),
+            __('Settings', 'text-domain'),
             'manage_options',
             'adi-dashboard-settings',
             [$this, 'render_page'],

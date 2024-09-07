@@ -22,6 +22,10 @@ class Allergens_Dietary_Ictoria_Dashboard
     {
         add_action('admin_enqueue_scripts', [__CLASS__, 'adi_dashboard_style']);
         add_action('admin_enqueue_scripts', [__CLASS__, 'adi_dashboard_script']);
+
+        ADI_Dashboard_Main_Page::instance();
+        ADI_Dashboard_Settings_Page::instance();
+
         // Other things can be initialized here if needed
     }
 
@@ -68,7 +72,3 @@ spl_autoload_register(['Allergens_Dietary_Ictoria_Dashboard', 'autoload']);
 
 // Initialize the main dashboard class
 Allergens_Dietary_Ictoria_Dashboard::instance();
-
-// Initialize the dashboard pages (might have to look into how to do this dynamically later)
-ADI_Dashboard_Main_Page::instance();
-ADI_Dashboard_Settings_Page::instance();
