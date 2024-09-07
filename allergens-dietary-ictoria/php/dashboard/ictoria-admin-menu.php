@@ -4,11 +4,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('ADI_DASHBOARD_DIR', __DIR__);
+define('IAM_DIR', __DIR__);
 
-class Allergens_Dietary_Ictoria_Dashboard
+class Ictoria_Admin_Menu
 {
     private static $_instance = null;
+    private static $directories = [
+        IAM_DIR . '/' . 'utilities/base_classes/',
+        IAM_DIR . '/' . 'menu_ictoria-dashboard/',
+    ];
 
     public static function instance()
     {
@@ -20,26 +24,22 @@ class Allergens_Dietary_Ictoria_Dashboard
 
     private function __construct()
     {
-        add_action('admin_enqueue_scripts', [__CLASS__, 'adi_dashboard_style']);
-        add_action('admin_enqueue_scripts', [__CLASS__, 'adi_dashboard_script']);
+        add_action('admin_enqueue_scripts', [__CLASS__, 'iam_style']);
+        add_action('admin_enqueue_scripts', [__CLASS__, 'iam_script']);
 
-        ADI_Dashboard_Main_Page::instance();
-        ADI_Dashboard_Allergens_Page::instance();
-        ADI_Dashboard_Settings_Page::instance();
-
-        // Other things can be initialized here if needed
+        IAM_Menu_Ictoria_Dashboard::instance();
     }
 
-    public static function adi_dashboard_style()
+    public static function iam_style()
     {
-        wp_enqueue_style('adi-dashboard-css', plugins_url('assets/dashboard/css/adi-dashboard.css', ALLERGENS_DIETARY_ICTORIA_FILE));
+        wp_enqueue_style('iam-css', plugins_url('assets/css/iam.css', IAM_DIR));
     }
 
-    public static function adi_dashboard_script()
+    public static function iam_script()
     {
         wp_enqueue_script(
-            'adi-dashboard-js',
-            plugins_url('assets/dashboard/js/adi-dashboard.js', ALLERGENS_DIETARY_ICTORIA_FILE),
+            'iam-js',
+            plugins_url('assets/js/iam.js', IAM_DIR),
             '',
             false,
             false
@@ -48,17 +48,13 @@ class Allergens_Dietary_Ictoria_Dashboard
 
     public static function autoload($class_name)
     {
-        // Array of directories to search for classes
-        $directories = [
-            ADI_DASHBOARD_DIR . '/' . 'base/',
-            ADI_DASHBOARD_DIR . '/' . 'pages/',
-            ADI_DASHBOARD_DIR . '/' . 'sections/',
-        ];
-
         $file_name = str_replace('_', '-', strtolower($class_name)) . '.php';
-        if (strpos($class_name, 'ADI_') === 0) {
-            foreach ($directories as $directory) {
+        if (strpos($class_name, 'IAM_') === 0) {
+            foreach (self::$directories as $directory) {
                 $file = $directory . $file_name;
+
+                echo $file . '<br>';
+
                 if (file_exists($file)) {
                     require_once $file;
                     return;
@@ -69,7 +65,7 @@ class Allergens_Dietary_Ictoria_Dashboard
 }
 
 // Autoload classes
-spl_autoload_register(['Allergens_Dietary_Ictoria_Dashboard', 'autoload']);
+spl_autoload_register(['Ictoria_Admin_Menu', 'autoload']);
 
 // Initialize the main dashboard class
-Allergens_Dietary_Ictoria_Dashboard::instance();
+Ictoria_Admin_Menu::instance();
