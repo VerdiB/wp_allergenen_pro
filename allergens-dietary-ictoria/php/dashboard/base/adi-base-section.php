@@ -10,6 +10,17 @@ abstract class ADI_Base_Section
     protected $section_title;
     protected $fields = [];
 
+    private static $instances = [];
+
+    public static function instance()
+    {
+        $calledClass = static::class;
+        if (!isset(self::$instances[$calledClass])) {
+            self::$instances[$calledClass] = new static();
+        }
+        return self::$instances[$calledClass];
+    }
+
     public function __construct($section_id, $section_title)
     {
         $this->section_id = $section_id;

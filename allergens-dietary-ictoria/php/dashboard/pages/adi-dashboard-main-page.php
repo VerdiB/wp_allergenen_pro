@@ -6,16 +6,6 @@ if (!defined('ABSPATH')) {
 
 class ADI_Dashboard_Main_Page extends ADI_Base_Menu_Page
 {
-    private static $_instance = null;
-
-    public static function instance()
-    {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
-    }
-
     public function __construct()
     {
         parent::__construct(
@@ -25,7 +15,7 @@ class ADI_Dashboard_Main_Page extends ADI_Base_Menu_Page
             'adi-dashboard',
             [$this, 'render_page'],
             'dashicons-admin-settings',
-            56
+            null// 56
         );
 
         $this->add_section(new ADI_Dashboard_Main_Section());
