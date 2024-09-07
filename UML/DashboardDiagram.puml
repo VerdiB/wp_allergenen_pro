@@ -22,6 +22,8 @@ package "dashboard" {
         - $icon_url : string
         - $position : int
         - $sections : array
+        - {static} $instances : array
+        + {static} instance() : ADI_Base_Menu_Page
         + __construct(page_title: string, menu_title: string, capability: string, menu_slug: string, callback: callable, icon_url: string, position: int)
         + register_menu() : void
         + register_settings() : void
@@ -36,6 +38,8 @@ package "dashboard" {
         - $section_id : string
         - $section_title : string
         - $fields : array
+        - {static} $instances : array
+        + {static} instance() : ADI_Base_Section
         + __construct(section_id: string, section_title: string)
         + register_section(menu_slug: string) : void
         + add_field(field_id: string, field_title: string, callback: callable, args: array) : void
@@ -43,31 +47,23 @@ package "dashboard" {
     }
 
     class ADI_Dashboard_Main_Page {
-        - {static} $_instance : ADI_Dashboard_Main_Page
-        + {static} instance() : ADI_Dashboard_Main_Page
         - __construct() : void
         + is_top_level() : bool
         + get_parent_slug() : string
     }
 
     class ADI_Dashboard_Settings_Page {
-        - {static} $_instance : ADI_Dashboard_Settings_Page
-        + {static} instance() : ADI_Dashboard_Settings_Page
         - __construct() : void
         + is_top_level() : bool
         + get_parent_slug() : string
     }
 
     class ADI_Dashboard_Main_Section {
-        - {static} $_instance : ADI_Dashboard_Main_Section
-        + {static} instance() : ADI_Dashboard_Main_Section
         - __construct() : void
         + example_field_callback(args: array) : void
     }
 
     class ADI_Dashboard_Settings_Section {
-        - {static} $_instance : ADI_Dashboard_Settings_Section
-        + {static} instance() : ADI_Dashboard_Settings_Section
         - __construct() : void
         + field_callback(args: array) : void
     }
