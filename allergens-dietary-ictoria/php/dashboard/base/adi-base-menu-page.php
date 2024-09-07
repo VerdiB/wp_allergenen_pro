@@ -52,6 +52,14 @@ abstract class ADI_Base_Menu_Page
                 $this->icon_url,
                 $this->position
             );
+            add_submenu_page(
+                $this->menu_slug, // Parent slug (same as top-level)
+                $this->page_title, // Page title (submenu item title)
+                'Dashboard', // Submenu title (desired title)
+                $this->capability, // Capability required
+                $this->menu_slug, // Menu slug (same as parent for default)
+                [$this, 'render_page']// Callback function to render the page
+            );
         } else {
             add_submenu_page(
                 $this->get_parent_slug(),
