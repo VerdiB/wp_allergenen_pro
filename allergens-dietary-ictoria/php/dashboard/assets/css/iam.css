@@ -1,0 +1,145 @@
+@import "./poppins-font.css";
+
+:root {
+	--adi-dash-margin-x: 1rem;
+	--adi-dash-margin-y: 2rem;
+	--adi-dash-padding-x: 2.6rem;
+	--adi-dash-padding-y: 0.4rem;
+	--adi-dash-border-radius: 1.8rem;
+	--adi-dash-max-width: 64%;
+	// --adi-dash-max-width: 1280px;
+}
+
+#adi-dashboard {
+	font-family: "Poppins", sans-serif;
+	background-color: #262d60;
+	// margin: var(--adi-dash-margin);
+	padding: var(--adi-dash-padding-y) var(--adi-dash-padding-x);
+	margin: -10px -20px 0 -22px;
+	// border-radius: var(--adi-dash-border-radius);
+	color: white;
+	height: 100vh;
+	// height: calc(100vh - 7.5rem);
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		// color: rgba(255, 255, 255, 0.8);
+		color: white;
+	}
+}
+
+@media (max-width: 1024px) {
+	:root {
+		--adi-dash-max-width: 96%;
+	}
+}
+
+.adi-dashboard-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	max-width: var(--adi-dash-max-width);
+	margin: 0 auto;
+
+	.adi-dashboard-logo {
+		display: flex;
+		height: 96px;
+		width: calc(742px / (271 / 96));
+		vertical-align: middle;
+		// margin-left: -1.6rem;
+	}
+
+	h1 {
+		display: flex;
+		color: white;
+		font-weight: 600;
+		margin-top: -1.8rem;
+		// margin-left: -0.4rem;
+		font-size: 1.8rem;
+		background-image: linear-gradient(
+			to right top,
+			#ea5a57,
+			#ea5a57,
+			#f8b013,
+			#f8b013,
+			#f8b013
+		);
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+}
+
+.notice * {
+	color: black !important;
+}
+
+.adi-dashboard-form {
+	h2 {
+		color: rgba(255, 255, 255, 0.9);
+		font-style: italic;
+		margin-bottom: 0.4rem;
+	}
+
+	.adi-hero {
+		position: relative;
+
+		.adi-hero-menu {
+			display: flex;
+			// margin: 0 -0.8rem;
+
+			.adi-hero-menu-item {
+				padding: 0.6rem 0.8rem;
+			}
+		}
+
+		.adi-hero-wrapper {
+			display: flex;
+			flex-grow: 1;
+			height: 256px;
+
+			background-color: transparent;
+			background-image: linear-gradient(90deg, #3c2563d3 0%, #724895be 100%);
+
+			border-radius: var(--adi-dash-border-radius);
+			margin: 0 calc(var(--adi-dash-padding-x) * -1);
+			padding-top: 0.8rem;
+
+			.adi-hero-container {
+				display: flex;
+				padding: var(--adi-dash-padding-y) var(--adi-dash-padding-x);
+
+				.adi-hero-content-left,
+				.adi-hero-content-right {
+					display: flex;
+					flex-direction: column;
+				}
+				.adi-hero-content-left {
+					width: 40%;
+					min-width: 40%;
+					padding-right: var(--adi-dash-padding-x);
+				}
+				.adi-hero-content-right {
+					flex-direction: row;
+					justify-content: space-between;
+
+					.adi-hero-review {
+						display: flex;
+						flex-direction: column;
+						width: 30%;
+					}
+				}
+			}
+		}
+	}
+}
+
+.adi-dashboard-section {
+	display: flex;
+}
+
+.adi-dashboard-section-col {
+}
