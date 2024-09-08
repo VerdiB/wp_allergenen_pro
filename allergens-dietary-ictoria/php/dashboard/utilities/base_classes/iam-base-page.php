@@ -16,6 +16,7 @@ abstract class IAM_Base_Page
     protected $sections = [];
 
     private static $instances = [];
+    protected static $directories = [];
 
     public static function instance()
     {
@@ -36,8 +37,32 @@ abstract class IAM_Base_Page
         $this->icon_url = $icon_url;
         $this->position = $position;
 
+        // Register autoload function for sections
+        spl_autoload_register([$this, 'autoload']);
+
         add_action('admin_menu', [$this, 'register_menu']);
         add_action('admin_init', [$this, 'register_settings']);
+    }
+
+    public function autoload($class_name)
+    {
+        if (strpos($class_name, 'IAM_Menu') === 0) {
+            // Get the calling class name using Reflection
+            $reflection = new ReflectionClass($this);
+            $class_file = $reflection->getFileName(); // e.g., iam-menu-ictoria-dashboard.php
+            $parent_class_dir = basename(dirname($class_file)); // e.g., menu_ictoria-dashboard
+
+            // Convert class name to file name
+            $file_name = str_replace('_', '-', strtolower($class_name)) . '.php';
+
+            // Construct the file path
+            $file_path = IAM_DIR . '/' . $parent_class_dir . '/sections/' . $file_name;
+
+            // Load the file if it exists
+            if (file_exists($file_path)) {
+                require_once $file_path;
+            }
+        }
     }
 
     public function register_menu()
@@ -53,12 +78,12 @@ abstract class IAM_Base_Page
                 $this->position
             );
             add_submenu_page(
-                $this->menu_slug, // Parent slug (same as top-level)
-                $this->page_title, // Page title (submenu item title)
-                'Dashboard', // Submenu title (desired title)
-                $this->capability, // Capability required
-                $this->menu_slug, // Menu slug (same as parent for default)
-                [$this, 'render_page']// Callback function to render the page
+                $this->menu_slug,
+                $this->page_title,
+                'Dashboard',
+                $this->capability,
+                $this->menu_slug,
+                [$this, 'render_page']
             );
         } else {
             add_submenu_page(
@@ -108,11 +133,9 @@ abstract class IAM_Base_Page
 
     public function validate_settings($input)
     {
-        // Default validation function, can be overridden by child classes
         return $input;
     }
 
     abstract protected function is_top_level();
-
     abstract protected function get_parent_slug();
 }
