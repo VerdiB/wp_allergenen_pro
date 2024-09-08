@@ -53,8 +53,6 @@ class Ictoria_Admin_Menu
             foreach (self::$directories as $directory) {
                 $file = $directory . $file_name;
 
-                echo $file . '<br>';
-
                 if (file_exists($file)) {
                     require_once $file;
                     return;
