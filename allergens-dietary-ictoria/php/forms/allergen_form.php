@@ -57,7 +57,7 @@ class Allergens_Dietary_Ictoria_Form {
 	}
 
 	public function showForm( string $allergenName = null ) {
-		echo "<script>console.log('form added')</script>";
+
 		if ( ! empty( $_POST['submit'] ) ) {
 			self::$_formObject->submit( $_POST );
 		}
@@ -67,5 +67,3 @@ class Allergens_Dietary_Ictoria_Form {
 		echo '</form></div>';
 	}
 }
-
-echo "<script>console.log('form added')</script>";

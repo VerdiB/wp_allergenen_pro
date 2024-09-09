@@ -16,50 +16,44 @@ if ( ! interface_exists( 'I_Allergens_Dietary_Ictoria_Form' ) ) {
  * @implements I_Allergens_Dietary_Ictoria_Form
  * @see I_Allergens_Dietary_Ictoria_Form
  * @since 1.0.0
- * 
  */
-class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Ictoria_Form
-{
+class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Ictoria_Form {
+
 
 	/**
 	 * @brief Constructor for the Allergens_Dietary_Ictoria_License_Form class
 	 * for now it is empty and does nothing but it's common courtesy to have it
 	 * @return void
 	 */
-	public function __construct()
-	{
-		
+	public function __construct() {
 	}
 
-	public function showForm( string $allergenName = null )
-	{
+	public function showForm( string $allergenName = null ) {
 		if ( ! is_null( $allergenName ) ) {
 			return;
 		}
- 
-		$html = '<fieldset>
+
+		// TODO: Getting license key that is in use by site if it exists
+		$html  = '<fieldset>
 		<label for="license_key">' . __( 'License key', 'allergens-dietary-ictoria' ) . '</label>
-		<input type="text" name="license_key" id="license_key" value="' . get_option( 'license_key' ) . '">
-		<input type="submit" id="submitButton" name="submit">';
+		<input type="text" name="license_key" id="license_key" value="">
+		<input type="submit" class="button button-primary" id="submitButton" name="submit" value="'.__('Verify license key', 'allergens-dietary-ictoria').'">';
 		$html .= '</fieldset>';
 
 		echo $html;
-
 	}
 
-	public function submit( array $data )
-	{
-		//echo "<script>console.log(". $data['license_key'] .")</script>";
-		if ( ! empty( $data['license_key'] ) ) {
-			$post_data = sanitize_text_field($data['license_key']);
-			update_option( 'license_key', $post_data);
+	public function submit( array $data ) {
+		if ( ! empty( $data ) ) {
+			$post_data = $this->sanitize( $data );
+			// TODO: save the license key in the external database
+		} else {
+			return;
 		}
 	}
 
-	public function sanitize( array $data )
-	{
-		$data['license_key'] = sanitize_text_field( $data['license_key'] );
+	public function sanitize( array $data ) {
+		$data['license_key'] = sanitize_text_field( wp_unslash( $data['license_key'] ) );
 		return $data;
 	}
-
 }

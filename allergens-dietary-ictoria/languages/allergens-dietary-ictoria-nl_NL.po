@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Allergens-Dietary-Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2024-09-06 16:38+0200\n"
+"POT-Creation-Date: 2024-09-09 10:03+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -60,10 +60,14 @@ msgstr ""
 "%1$sWooCommerce is niet actief of niet geïnstalleerd. Installeer en activeer "
 "WooCommerce%2$s"
 
-#: php/MyPluginAddMenu.php:47 php/MyPluginAddMenu.php:48
-#: php/forms/allergen_form_license.php:41
+#: php/MyPluginAddMenu.php:50 php/MyPluginAddMenu.php:51
+#: php/forms/allergen_form_license.php:38
 msgid "License key"
 msgstr "Licentie sleutel"
+
+#: php/forms/allergen_form_license.php:40
+msgid "Verify license key"
+msgstr "Verifieer licentie sleutel"
 
 #: php/functions.php:22
 msgid "allergens-dietary-ictoria"
@@ -87,7 +91,7 @@ msgstr "geen "
 #: php/functions.php:171 php/functions.php:179 php/functions.php:187
 #: php/functions.php:195 php/functions.php:203 php/functions.php:211
 #: php/functions.php:219 php/functions.php:227 php/functions.php:235
-#: php/functions.php:243 php/functions.php:251 php/functions.php:298
+#: php/functions.php:243 php/functions.php:251 php/functions.php:297
 msgid "allergen"
 msgstr "allergeen"
 
@@ -102,7 +106,7 @@ msgstr "Pinda's"
 #: php/functions.php:221 php/functions.php:229 php/functions.php:237
 #: php/functions.php:245 php/functions.php:253 php/functions.php:261
 #: php/functions.php:269 php/functions.php:277 php/functions.php:285
-#: php/functions.php:300
+#: php/functions.php:299
 msgid "active"
 msgstr "actief"
 
@@ -112,7 +116,7 @@ msgstr "actief"
 #: php/functions.php:198 php/functions.php:206 php/functions.php:214
 #: php/functions.php:222 php/functions.php:230 php/functions.php:238
 #: php/functions.php:246 php/functions.php:254 php/functions.php:286
-#: php/functions.php:301
+#: php/functions.php:300
 msgid "exclude"
 msgstr "exclusief"
 
@@ -205,19 +209,17 @@ msgstr "Halal"
 msgid "Risk for pregnant women"
 msgstr "Risico voor zwangere vrouwen"
 
-#: php/functions.php:299
+#: php/functions.php:298
 msgid "key"
 msgstr ""
 
-#: php/functions.php:303
+#: php/functions.php:302
 msgid "url1"
 msgstr ""
 
-#: php/functions.php:308
-#, fuzzy
-#| msgid "allergen"
+#: php/functions.php:310
 msgid "add allergen"
-msgstr "allergeen"
+msgstr "Allergeen toevoegen"
 
 #: php/product_settings.php:26
 msgid "Allergens"
