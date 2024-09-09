@@ -16,7 +16,6 @@ abstract class IAM_Base_Page
     protected $sections = [];
 
     private static $instances = [];
-    protected static $directories = [];
 
     public static function instance()
     {
