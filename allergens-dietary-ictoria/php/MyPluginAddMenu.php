@@ -32,18 +32,43 @@ class MyPluginAddMenu {
 		// return self::addMyAdminMenu();
 	}
 
-	public function addMyAdminMenu() {
+    public function addMyAdminMenu() {
+        
+        add_menu_page(
+            __('Allergens and Dietary', 'allergens-dietary-ictoria'),
+            'Ictoria',
+            'manage_options',
+            'allergens-dietary-options',
+            array(
+                $this,
+                'myAdminPage'
+            )
+        );
 
-		add_menu_page(
-			'My Page Title',
-			'My Page',
-			'manage_options',
-			'my-menu-page-slug',
-			array(
-				$this,
-				'myAdminPage',
-			)
-		);
+        add_submenu_page(
+            'my-menu-page-slug',
+            __('License key', 'allergens-dietary-ictoria'),
+            __('License key', 'allergens-dietary-ictoria'),
+            'manage_options',
+            'allergens-dietary-license',
+            array(
+                $this,
+                'licenseform'
+            )
+        );
+
+        add_submenu_page(
+            'my-menu-page-slug',
+            __('allergens-dietary-ictoria'),
+            __('allergens-dietary-ictoria'),
+            'manage-options',
+            'allergens-dietary-add-allergens',
+            array(
+                $this,
+                'add-allergens'
+            )
+        );
+    }
 
 		add_submenu_page(
 			'my-menu-page-slug',
