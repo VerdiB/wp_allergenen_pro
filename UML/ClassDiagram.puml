@@ -60,6 +60,7 @@ package "php"{
         +generate_allergensdietary_htnl() : void
         +{static} plugin_action_links(links:array) : array
     }
+    
     package "forms"{
 
         enum FormType{
@@ -94,7 +95,96 @@ package "php"{
             - check_license_key(key:string) : boolean
         }
 
+    }
 
+    package "dashboard"{
+
+        class Ictoria_Admin_Menu {
+            - {static} _instance : Ictoria_Admin_Menu
+            - {static} directories : array
+            + {static} instance() : Ictoria_Admin_Menu
+            - __construct() : void
+            + {static} iam_style() : void
+            + {static} iam_script() : void
+            + {static} autoload(class_name : String) : void
+        }
+
+        abstract class IAM_Base_Page {
+            - page_title : string
+            - menu_title : string
+            - capability : string
+            - menu_slug : string
+            - callback : callable
+            - icon_url : string
+            - position : int
+            - sections : array
+            - {static} instances : array
+            + {static} instance() : IAM_Base_Page
+            + __construct(page_title: string, menu_title: string, capability: string, menu_slug: string, callback: callable, icon_url: string, position: int)
+            + register_menu() : void
+            + register_settings() : void
+            + render_page() : void
+            + add_section(section: IAM_Base_Section) : void
+            + validate_settings(input: mixed) : mixed
+            # is_top_level() : bool
+            # get_parent_slug() : string
+        }
+
+        abstract class IAM_Base_Section {
+            - section_id : string
+            - section_title : string
+            - fields : array
+            - {static} instances : array
+            + {static} instance() : IAM_Base_Section
+            + __construct(section_id: string, section_title: string)
+            + register_section(menu_slug: string) : void
+            + add_field(field_id: string, field_title: string, callback: callable, args: array) : void
+            + section_callback() : void
+        }
+
+        class IAM_Menu_Ictoria_Dashboard {
+            - __construct() : void
+            + is_top_level() : bool
+            + get_parent_slug() : string
+        }
+
+        class IAM_Menu_Ictoria_Dashboard_Welcome {
+            - __construct() : void
+            + example_field_callback(args: array) : void
+        }
+
+        class IAM_Menu_Ictoria_Dashboard_Another_One {
+            - __construct() : void
+            + example_field_callback(args: array) : void
+        }
+
+        class IAM_Menu_Settings {
+            - __construct() : void
+            + is_top_level() : bool
+            + get_parent_slug() : string
+        }
+
+        class IAM_Menu_Settings_Welcome {
+            - __construct() : void
+            + field_callback(args: array) : void
+        }
+
+        class IAM_Menu_Settings_Another_One {
+            - __construct() : void
+            + field_callback(args: array) : void
+        }
+
+        IAM_Menu_Ictoria_Dashboard --|> IAM_Base_Page
+        IAM_Menu_Ictoria_Dashboard_Welcome --|> IAM_Base_Section
+        IAM_Menu_Ictoria_Dashboard_Another_One --|> IAM_Base_Section
+
+        IAM_Menu_Settings --|> IAM_Base_Page
+        IAM_Menu_Settings_Welcome --|> IAM_Base_Section
+        IAM_Menu_Settings_Another_One --|> IAM_Base_Section
+
+        Ictoria_Admin_Menu ..> IAM_Menu_Ictoria_Dashboard : "manages"
+        Ictoria_Admin_Menu ..> IAM_Menu_Settings : "manages"
+        IAM_Base_Page *-r-> IAM_Base_Section : "has"
     }
 }
 
