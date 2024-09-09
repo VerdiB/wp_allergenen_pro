@@ -32,10 +32,10 @@ class MyPluginAddMenu {
     public function addMyAdminMenu() {
         
         add_menu_page(
-            'My Page Title',
-            'My Page',
+            __('Allergens and Dietary', 'allergens-dietary-ictoria'),
+            'Ictoria',
             'manage_options',
-            'my-menu-page-slug',
+            'allergens-dietary-options',
             array(
                 $this,
                 'myAdminPage'
@@ -51,6 +51,18 @@ class MyPluginAddMenu {
             array(
                 $this,
                 'licenseform'
+            )
+        );
+
+        add_submenu_page(
+            'my-menu-page-slug',
+            __('allergens-dietary-ictoria'),
+            __('allergens-dietary-ictoria'),
+            'manage-options',
+            'allergens-dietary-add-allergens',
+            array(
+                $this,
+                'add-allergens'
             )
         );
     }
