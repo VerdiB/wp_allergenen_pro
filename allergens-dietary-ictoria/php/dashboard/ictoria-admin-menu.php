@@ -12,6 +12,7 @@ class Ictoria_Admin_Menu
     private static $directories = [
         IAM_DIR . '/' . 'utilities/base_classes/',
         IAM_DIR . '/' . 'menu_ictoria-dashboard/',
+        IAM_DIR . '/' . 'menu_settings/',
     ];
 
     public static function instance()
@@ -28,6 +29,7 @@ class Ictoria_Admin_Menu
         add_action('admin_enqueue_scripts', [__CLASS__, 'iam_script']);
 
         IAM_Menu_Ictoria_Dashboard::instance();
+        IAM_Menu_Settings::instance();
     }
 
     public static function iam_style()
