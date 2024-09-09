@@ -4,14 +4,14 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class IAM_Menu_Ictoria_Dashboard_Welcome extends IAM_Base_Section
+class IAM_Menu_Settings_Welcome extends IAM_Base_Section
 {
     public function __construct()
     {
         parent::__construct(
             'iam_welcome_section',
-            __('Welcome Title', 'text-domain'),
-            'iam-dashboard'
+            __('Settings Welcome Title', 'text-domain'),
+            'iam-settings'
         );
 
         $this->add_field(
