@@ -56,7 +56,8 @@ class MyPluginAddMenu {
     }
 
     public function myAdminPage() {
-        // echo the HTML here ......
+        include "../php/forms/allergen_form.php";
+        showform();
     }
 
     public function licenseForm() {

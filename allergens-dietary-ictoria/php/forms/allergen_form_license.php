@@ -39,7 +39,8 @@ class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Icto
  
 		$html = '<fieldset>
 		<label for="license_key">' . __( 'License key', 'allergens-dietary-ictoria' ) . '</label>
-		<input type="text" name="license_key" id="license_key" value="' . get_option( 'license_key' ) . '">';
+		<input type="text" name="license_key" id="license_key" value="' . get_option( 'license_key' ) . '">
+		<input type="submit" id="submitButton" name="submit">';
 		$html .= '</fieldset>';
 
 		echo $html;
@@ -48,8 +49,10 @@ class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Icto
 
 	public function submit( array $data )
 	{
+		//echo "<script>console.log(". $data['license_key'] .")</script>";
 		if ( ! empty( $data['license_key'] ) ) {
-			update_option( 'license_key', $data['license_key'] );
+			$post_data = sanitize_text_field($data['license_key']);
+			update_option( 'license_key', $post_data);
 		}
 	}
 
