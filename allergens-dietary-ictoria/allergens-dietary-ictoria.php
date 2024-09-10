@@ -150,4 +150,21 @@ if(ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE){
 	$message = sprintf(__('%1$sWooCommerce is inactive or not installed. Please install & activate WooCommerce%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
 	Allergens_Dietary_Ictoria_Functions::error_notice($level, $message);
 }
+
+add_action('admin_menu', 'allergens_dietary_changelog_menu');
+function allergens_dietary_changelog_menu() {
+    add_menu_page('Changelog', 'Changelog', 'manage_options', 'allergens-dietary-changelog', 'allergens_dietary_changelog_pagina');
+}
+
+function allergens_dietary_changelog_pagina() {
+    echo '<div class="wrap">';
+    echo '<h1>Changelog</h1>';
+    echo '<p><strong>Versie 1.0.0</strong></p>';
+    echo '<ul>';
+    echo '<li>Eerste release van de Allergens and Dietary plugin</li>';
+    echo '<li>Mogelijkheid om allergenen en dieetrestricties toe te voegen aan WooCommerce producten</li>';
+    echo '</ul>';
+    echo '</div>';
+}
+?>
 ?>
