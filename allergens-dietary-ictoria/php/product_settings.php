@@ -4,6 +4,10 @@ if(!defined('ABSPATH')){
 	exit;
 }
 
+if ( ! class_exists( "Allergens_Dietary_Ictoria_Functions" ) ) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . "php/functions.php" ;
+}
+
 //this class contains functions used to add/remove allergens and dietary options to/from a WooCommerce product
 class Allergens_Dietary_Ictoria_Product_Settings{
 	private static $_instance = null;

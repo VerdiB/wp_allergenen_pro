@@ -8,7 +8,7 @@ if(!defined('ABSPATH')){
 Plugin Name: Allergens and Dietary
 Plugin URI:  
 Description: Adds Allergens and Dietary options that can be used with WooCommerce products
-Version:     1.00
+Version:     1.1.0
 Requires at least: 6.3.1
 Requires PHP: 7.4
 Author:      Ictoria.nl
@@ -151,20 +151,67 @@ if(ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE){
 	Allergens_Dietary_Ictoria_Functions::error_notice($level, $message);
 }
 
-add_action('admin_menu', 'allergens_dietary_changelog_menu');
-function allergens_dietary_changelog_menu() {
-    add_menu_page('Changelog', 'Changelog', 'manage_options', 'allergens-dietary-changelog', 'allergens_dietary_changelog_pagina');
+// Enqueue Thickbox scripts and styles
+add_action('admin_enqueue_scripts', 'load_thickbox');
+function load_thickbox() {
+    wp_enqueue_script('thickbox');
+    wp_enqueue_style('thickbox');
 }
 
-function allergens_dietary_changelog_pagina() {
+// Add a "View Details" link for the changelog
+add_filter('plugin_row_meta', 'add_changelog_view_link', 10, 2);
+function add_changelog_view_link($plugin_meta, $plugin_file) {
+    if ($plugin_file == 'allergens-dietary-ictoria/allergens-dietary-ictoria.php') {
+        $plugin_meta[] = '<a href="' . esc_url(admin_url('admin-ajax.php?action=view_changelog&TB_iframe=true&width=600&height=550')) . '" class="thickbox">Details bekijken</a>';
+    }
+    return $plugin_meta;
+}
+
+// Ajax handler for displaying changelog in Thickbox
+add_action('wp_ajax_view_changelog', 'display_changelog_in_thickbox');
+function display_changelog_in_thickbox() {
     echo '<div class="wrap">';
     echo '<h1>Changelog</h1>';
-    echo '<p><strong>Versie 1.0.0</strong></p>';
-    echo '<ul>';
-    echo '<li>Eerste release van de Allergens and Dietary plugin</li>';
-    echo '<li>Mogelijkheid om allergenen en dieetrestricties toe te voegen aan WooCommerce producten</li>';
-    echo '</ul>';
+    echo '<div>';
+    echo wpautop(get_plugin_changelog()); 
     echo '</div>';
+    echo '</div>';
+    exit;
 }
-?>
+
+// // Changelog voor admin menu
+// add_action('admin_menu', 'allergens_dietary_changelog_menu');
+// function allergens_dietary_changelog_menu() {
+//     add_menu_page('Changelog', 'Changelog', 'manage_options', 'allergens-dietary-changelog', 'allergens_dietary_changelog_pagina');
+// }
+
+function get_plugin_changelog() {
+    $readme_file = plugin_dir_path(__FILE__) . 'readme.txt';
+
+    if (file_exists($readme_file)) {
+        $content = file_get_contents($readme_file);
+        $changelog = '';
+        
+        $changelog_start = strpos($content, '== Changelog ==');
+        if ($changelog_start !== false) {
+            $changelog_start += strlen('== Changelog ==');
+            $changelog_end = strpos($content, '==', $changelog_start);
+            $changelog = substr($content, $changelog_start, $changelog_end - $changelog_start);
+        }
+        
+        return trim($changelog);
+    }
+
+    return 'Changelog not found.';
+}
+
+// // Changelog voor admin menu
+// function allergens_dietary_changelog_pagina() {
+//     echo '<div class="wrap">';
+//     echo '<h1>Changelog</h1>';
+//     echo '<div>';
+//     echo wpautop(get_plugin_changelog()); 
+//     echo '</div>';
+//     echo '</div>';
+// }
 ?>
