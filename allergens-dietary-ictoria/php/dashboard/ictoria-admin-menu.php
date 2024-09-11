@@ -9,6 +9,7 @@ define('IAM_DIR', __DIR__);
 class Ictoria_Admin_Menu
 {
     private static $_instance = null;
+    // page directories
     private static $directories = [
         IAM_DIR . '/' . 'utilities/base_classes/',
         IAM_DIR . '/' . 'page_ictoria-dashboard/',
@@ -28,7 +29,9 @@ class Ictoria_Admin_Menu
         add_action('admin_enqueue_scripts', [__CLASS__, 'iam_style']);
         add_action('admin_enqueue_scripts', [__CLASS__, 'iam_script']);
 
+        // top-level menu
         IAM_Page_Ictoria_Dashboard::instance();
+        // submenus
         IAM_Page_Settings::instance();
     }
 
