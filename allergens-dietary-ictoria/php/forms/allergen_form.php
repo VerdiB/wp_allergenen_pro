@@ -13,7 +13,7 @@ if ( ! class_exists( 'Allergens_Dietary_Ictoria_License_Form' ) ) {
 }
 
 if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Form' ) ) {
-	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form_allergen.php';
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_add_allergen.php';
 }
 
 enum FormType {

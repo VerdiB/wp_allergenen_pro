@@ -23,7 +23,7 @@ if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) 
 
 class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ictoria_Form {
 
-	private array $_allergen;
+	private ? array  $_allergen = null;
 
 	public function __construct() {
 	}
@@ -49,12 +49,12 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		$html  = '<fieldset>';
 		$html .= '<label for="allergen_name">' . __( 'Allergen name', 'allergens-dietary-ictoria' ) . '</label>';
-		$html .= '<input type="text" name="allergen_name" id="allergen_name" value="' . ( is_null( $this->_allergen['allergy_name'] ) ) ? '' : $this->_allergen['allergy_name'] . '">';
+		$html .= '<input type="text" name="allergen_name" id="allergen_name" value="' . ( is_null( $this->_allergen ) ) ? '' : $this->_allergen['allergy_name'] . '"/>';
 		$html .= '<label for="allergen_description">' . __( 'Allergen description', 'allergens-dietary-ictoria' ) . '</label>';
-		$html .= '<input type="text" name="allergen_description" id="allergen_description" value="' . ( is_null( $this->_allergen['allergy_description'] ) ) ? '' : $this->_allergen['allergy_description'] . '">';
+		$html .= '<input type="text" name="allergen_description" id="allergen_description" value="' . ( is_null( $this->_allergen ) ) ? '' : $this->_allergen['allergy_description'] . '"/>';
 		$html .= '<label for="allergen_icon">' . __( 'Allergen icon', 'allergens-dietary-ictoria' ) . '</label>';
-		$html .= '<input type="file" name="allergen_icon" id="allergen_icon">';
-		$html .= '<input type="submit" name="submit" class="button button-primary" value="' . __( 'Add allergen', 'allergens-dietary-ictoria' ) . '">';
+		$html .= '<input type="file" name="allergen_icon" id="allergen_icon" />';
+		$html .= '<input type="submit" name="submit" class="button button-primary" value="' . __( 'Add allergen', 'allergens-dietary-ictoria' ) . '" />';
 		$html .= '</fieldset>';
 
 		echo $html;
