@@ -45,7 +45,7 @@ abstract class IAM_Base_Page
 
     public function autoload($class_name)
     {
-        if (strpos($class_name, 'IAM_Menu') === 0) {
+        if (strpos($class_name, 'IAM_Page') === 0) {
             // Get the calling class name using Reflection
             $reflection = new ReflectionClass($this);
             $class_file = $reflection->getFileName(); // e.g., iam-menu-ictoria-dashboard.php

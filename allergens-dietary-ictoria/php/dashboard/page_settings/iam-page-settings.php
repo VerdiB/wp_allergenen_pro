@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class IAM_Menu_Ictoria_Dashboard extends IAM_Base_Page
+class IAM_Page_Settings extends IAM_Base_Page
 {
-    private static $page_base = 'IAM_Menu_Ictoria_Dashboard';
+    private static $page_base = 'IAM_Page_Settings';
     private static $page_sections = [
         'Welcome',
         'Another_One',
@@ -15,17 +15,17 @@ class IAM_Menu_Ictoria_Dashboard extends IAM_Base_Page
     public function __construct()
     {
         parent::__construct(
-            'Ictoria Plugin Dashboard',
-            'Ictoria',
+            'Settings',
+            'Settings',
             'manage_options',
-            'iam-dashboard',
+            'iam-settings',
             [$this, 'render_page'],
-            'dashicons-admin-settings',
-            null, // 56
+            '',
+            null,
         );
 
         foreach (self::$page_sections as $section_class) {
-            $class_name = self::$page_base . '_' . $section_class;
+            $class_name = self::$page_base . '_Section_' . $section_class;
             if (class_exists($class_name)) {
                 $this->add_section(new $class_name);
             }
@@ -34,11 +34,11 @@ class IAM_Menu_Ictoria_Dashboard extends IAM_Base_Page
 
     protected function is_top_level()
     {
-        return true;
+        return false;
     }
 
     protected function get_parent_slug()
     {
-        return ''; // No parent since it's top-level
+        return 'iam-dashboard';
     }
 }
