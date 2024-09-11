@@ -142,48 +142,48 @@ package "php"{
             + section_callback() : void
         }
 
-        class IAM_Menu_Ictoria_Dashboard {
+        class IAM_Page_Ictoria_Dashboard {
             - __construct() : void
             + is_top_level() : bool
             + get_parent_slug() : string
         }
 
-        class IAM_Menu_Ictoria_Dashboard_Welcome {
+        class IAM_Page_Ictoria_Dashboard_Section_Welcome {
             - __construct() : void
             + example_field_callback(args: array) : void
         }
 
-        class IAM_Menu_Ictoria_Dashboard_Another_One {
+        class IAM_Page_Ictoria_Dashboard_Section_Another_One {
             - __construct() : void
             + example_field_callback(args: array) : void
         }
 
-        class IAM_Menu_Settings {
+        class IAM_Page_Settings {
             - __construct() : void
             + is_top_level() : bool
             + get_parent_slug() : string
         }
 
-        class IAM_Menu_Settings_Welcome {
+        class IAM_Page_Settings_Welcome {
             - __construct() : void
             + field_callback(args: array) : void
         }
 
-        class IAM_Menu_Settings_Another_One {
+        class IAM_Page_Settings_Another_One {
             - __construct() : void
             + field_callback(args: array) : void
         }
 
-        IAM_Menu_Ictoria_Dashboard --|> IAM_Base_Page
-        IAM_Menu_Ictoria_Dashboard_Welcome --|> IAM_Base_Section
-        IAM_Menu_Ictoria_Dashboard_Another_One --|> IAM_Base_Section
+        IAM_Page_Ictoria_Dashboard --|> IAM_Base_Page
+        IAM_Page_Ictoria_Dashboard_Section_Welcome --|> IAM_Base_Section
+        IAM_Page_Ictoria_Dashboard_Section_Another_One --|> IAM_Base_Section
 
-        IAM_Menu_Settings --|> IAM_Base_Page
-        IAM_Menu_Settings_Welcome --|> IAM_Base_Section
-        IAM_Menu_Settings_Another_One --|> IAM_Base_Section
+        IAM_Page_Settings --|> IAM_Base_Page
+        IAM_Page_Settings_Welcome --|> IAM_Base_Section
+        IAM_Page_Settings_Another_One --|> IAM_Base_Section
 
-        Ictoria_Admin_Menu ..> IAM_Menu_Ictoria_Dashboard : "manages"
-        Ictoria_Admin_Menu ..> IAM_Menu_Settings : "manages"
+        Ictoria_Admin_Menu ..> IAM_Page_Ictoria_Dashboard : "manages"
+        Ictoria_Admin_Menu ..> IAM_Page_Settings : "manages"
         IAM_Base_Page *-r-> IAM_Base_Section : "has"
     }
 }
