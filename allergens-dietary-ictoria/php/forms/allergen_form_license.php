@@ -33,22 +33,27 @@ class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Icto
 			return;
 		}
 
+		// TODO: Getting license key that is in use by site if it exists
 		$html  = '<fieldset>
 		<label for="license_key">' . __( 'License key', 'allergens-dietary-ictoria' ) . '</label>
-		<input type="text" name="license_key" id="license_key" value="' . get_option( 'license_key' ) . '">';
+		<input type="text" name="license_key" id="license_key" value="">
+		<input type="submit" class="button button-primary" id="submitButton" name="submit" value="' . __( 'Verify license key', 'allergens-dietary-ictoria' ) . '">';
 		$html .= '</fieldset>';
 
 		echo $html;
 	}
 
 	public function submit( array $data ) {
-		if ( ! empty( $data['license_key'] ) ) {
-			update_option( 'license_key', $data['license_key'] );
+		if ( ! empty( $data ) ) {
+			$post_data = $this->sanitize( $data );
+			// TODO: save the license key in the external database
+		} else {
+			return;
 		}
 	}
 
 	public function sanitize( array $data ) {
-		$data['license_key'] = sanitize_text_field( $data['license_key'] );
+		$data['license_key'] = sanitize_text_field( wp_unslash( $data['license_key'] ) );
 		return $data;
 	}
 }

@@ -19,6 +19,10 @@ if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Form' ) ) {
 enum FormType {
 	case ALLERGENS;
 	case LICENSE;
+
+	public function match( FormType $formType ): bool {
+		return $this === $formType;
+	}
 }
 
 /**
@@ -42,6 +46,9 @@ class Allergens_Dietary_Ictoria_Form {
 		if ( FormType::LICENSE === self::$_formType ) {
 			self::$_formObject = new Allergens_Dietary_Ictoria_License_Form();
 		}
+		if ( ! isset( self::$_formType ) || false === self::$_formType->match(self::$_formType) ) {
+			throw new Exception( 'FormType not yet supported/implemented' );
+		}
 	}
 
 	public static function getInstance() {
@@ -60,6 +67,7 @@ class Allergens_Dietary_Ictoria_Form {
 	}
 
 	public function showForm( string $allergenName = null ) {
+
 		if ( ! empty( $_POST['submit'] ) ) {
 			self::$_formObject->submit( $_POST );
 		}

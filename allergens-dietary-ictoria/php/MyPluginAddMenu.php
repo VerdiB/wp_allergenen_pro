@@ -1,36 +1,33 @@
 <?php
-// exit if user can access this file directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+//exit if user can access this file directly
+if(!defined('ABSPATH')){
+    exit;
 }
 
 class MyPluginAddMenu {
 
-	private static $instance = null;
+    private static $instance = NULL;
 
-	/***
-	 * Main instance
-	 *
-	 * @staticvar   array   $instance
-	 * @return      The one true instance
-	 */
-	public static function instance() {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new MyPluginAddMenu();
-		}
-		return self::$instance;
-	}
+    /***
+     * Main instance
+     * 
+     * @staticvar   array   $instance
+     * @return      The one true instance
+     */
+    public static function instance() {
+        if ( is_null( self::$instance ) ) {
+            self::$instance = new MyPluginAddMenu();
+        }
+        return self::$instance;
+    }
 
-	private function __construct() {
-		add_action(
-			'admin_menu',
-			array(
-				$this,
-				'addMyAdminMenu',
-			)
-		);
-		// return self::addMyAdminMenu();
-	}
+    private function __construct(){
+        add_action('admin_menu', array(
+            $this,
+            'addMyAdminMenu'
+        ));
+        // return self::addMyAdminMenu();
+    }
 
 	public function addMyAdminMenu() {
 

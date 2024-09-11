@@ -65,6 +65,8 @@ package "php"{
         enum FormType{
             ALLERGENS
             LICENSE
+
+            + match(formType:FormType) : boolean
         }
 
         interface I_Allergens_Dietary_Ictoria_Form{
