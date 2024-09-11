@@ -12,6 +12,10 @@ if ( ! class_exists( 'Allergens_Dietary_Ictoria_License_Form' ) ) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form_license.php';
 }
 
+if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Form' ) ) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form_allergen.php';
+}
+
 enum FormType {
 	case ALLERGENS;
 	case LICENSE;
@@ -33,8 +37,7 @@ class Allergens_Dietary_Ictoria_Form {
 
 	private function __construct() {
 		if ( FormType::ALLERGENS === self::$_formType ) {
-			// self::$_formObject = new Allergens_Dietary_Ictoria_Allergen_Form();
-			throw new Exception( 'FormType not yet supported/implemented' );
+			self::$_formObject = new Allergens_Dietary_Ictoria_Allergen_Form();
 		}
 		if ( FormType::LICENSE === self::$_formType ) {
 			self::$_formObject = new Allergens_Dietary_Ictoria_License_Form();

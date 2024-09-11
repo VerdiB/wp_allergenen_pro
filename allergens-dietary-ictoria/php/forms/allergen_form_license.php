@@ -16,47 +16,39 @@ if ( ! interface_exists( 'I_Allergens_Dietary_Ictoria_Form' ) ) {
  * @implements I_Allergens_Dietary_Ictoria_Form
  * @see I_Allergens_Dietary_Ictoria_Form
  * @since 1.0.0
- * 
  */
-class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Ictoria_Form
-{
+class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Ictoria_Form {
+
 
 	/**
 	 * @brief Constructor for the Allergens_Dietary_Ictoria_License_Form class
 	 * for now it is empty and does nothing but it's common courtesy to have it
 	 * @return void
 	 */
-	public function __construct()
-	{
-		
+	public function __construct() {
 	}
 
-	public function showForm( string $allergenName = null )
-	{
+	public function showForm( string $allergenName = null ) {
 		if ( ! is_null( $allergenName ) ) {
 			return;
 		}
- 
-		$html = '<fieldset>
+
+		$html  = '<fieldset>
 		<label for="license_key">' . __( 'License key', 'allergens-dietary-ictoria' ) . '</label>
 		<input type="text" name="license_key" id="license_key" value="' . get_option( 'license_key' ) . '">';
 		$html .= '</fieldset>';
 
 		echo $html;
-
 	}
 
-	public function submit( array $data )
-	{
+	public function submit( array $data ) {
 		if ( ! empty( $data['license_key'] ) ) {
 			update_option( 'license_key', $data['license_key'] );
 		}
 	}
 
-	public function sanitize( array $data )
-	{
+	public function sanitize( array $data ) {
 		$data['license_key'] = sanitize_text_field( $data['license_key'] );
 		return $data;
 	}
-
 }
