@@ -65,7 +65,7 @@ class load_language{
 }
 
 $nl_NL = new load_language;
-
+$en_US = new load_language;
 
 //class that contains the functions that are used by the activation/deactivation/uninstall hooks
 class Allergens_Dietary_Ictoria_Startup{
