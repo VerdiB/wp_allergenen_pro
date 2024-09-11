@@ -6,7 +6,6 @@ if (!defined('ABSPATH')) {
 
 class IAM_Page_Settings extends IAM_Base_Page
 {
-    private static $page_base = 'IAM_Page_Settings';
     private static $page_sections = [
         'Welcome',
         'Another_One',
@@ -25,7 +24,7 @@ class IAM_Page_Settings extends IAM_Base_Page
         );
 
         foreach (self::$page_sections as $section_class) {
-            $class_name = self::$page_base . '_Section_' . $section_class;
+            $class_name = __CLASS__ . '_Section_' . $section_class;
             if (class_exists($class_name)) {
                 $this->add_section(new $class_name);
             }
