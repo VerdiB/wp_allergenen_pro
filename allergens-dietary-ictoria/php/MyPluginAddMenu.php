@@ -32,46 +32,21 @@ class MyPluginAddMenu {
 		// return self::addMyAdminMenu();
 	}
 
-    public function addMyAdminMenu() {
-        
-        add_menu_page(
-            __('Allergens and Dietary', 'allergens-dietary-ictoria'),
-            'Ictoria',
-            'manage_options',
-            'allergens-dietary-options',
-            array(
-                $this,
-                'myAdminPage'
-            )
-        );
+	public function addMyAdminMenu() {
 
-        add_submenu_page(
-            'my-menu-page-slug',
-            __('License key', 'allergens-dietary-ictoria'),
-            __('License key', 'allergens-dietary-ictoria'),
-            'manage_options',
-            'allergens-dietary-license',
-            array(
-                $this,
-                'licenseform'
-            )
-        );
-
-        add_submenu_page(
-            'my-menu-page-slug',
-            __('allergens-dietary-ictoria'),
-            __('allergens-dietary-ictoria'),
-            'manage-options',
-            'allergens-dietary-add-allergens',
-            array(
-                $this,
-                'add-allergens'
-            )
-        );
-    }
+		add_menu_page(
+			__( 'Allergens and Dietary', 'allergens-dietary-ictoria' ),
+			'Ictoria',
+			'manage_options',
+			'allergens-dietary-options',
+			array(
+				$this,
+				'myAdminPage',
+			)
+		);
 
 		add_submenu_page(
-			'my-menu-page-slug',
+			'allergens-dietary-options',
 			__( 'License key', 'allergens-dietary-ictoria' ),
 			__( 'License key', 'allergens-dietary-ictoria' ),
 			'manage_options',
@@ -81,9 +56,22 @@ class MyPluginAddMenu {
 				'licenseform',
 			)
 		);
+
+		add_submenu_page(
+			'allergens-dietary-options',
+			__( 'Add allergen', 'allergens-dietary-ictoria' ),
+			__( 'Add allergen', 'allergens-dietary-ictoria' ),
+			'manage_options',
+			'allergens-dietary-add-allergen',
+			array(
+				$this,
+				'addallergens',
+			)
+		);
 	}
 
 	public function myAdminPage() {
+		// echo the HTML here ......
 	}
 
 	public function licenseForm() {
@@ -91,6 +79,14 @@ class MyPluginAddMenu {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
 		}
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::LICENSE );
+		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
+	}
+
+	public function addallergens() {
+		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
+		}
+		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
 	}
 }
