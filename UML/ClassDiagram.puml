@@ -85,6 +85,7 @@ package "php"{
             - {static} instances : array
             + {static} instance() : IAM_Base_Page
             + __construct(page_title: string, menu_title: string, capability: string, menu_slug: string, callback: callable, icon_url: string, position: int)
+            + autoload(class_name) : void
             + register_menu() : void
             + register_settings() : void
             + render_page() : void
@@ -97,44 +98,55 @@ package "php"{
         abstract class IAM_Base_Section {
             - section_id : string
             - section_title : string
+            - section_class : string
             - fields : array
             - {static} instances : array
             + {static} instance() : IAM_Base_Section
-            + __construct(section_id: string, section_title: string)
+            + __construct(section_id: string, section_title: string, section_class: string)
             + register_section(menu_slug: string) : void
             + add_field(field_id: string, field_title: string, callback: callable, args: array) : void
             + section_callback() : void
         }
 
         class IAM_Page_Ictoria_Dashboard {
+            - page_sections : array
             - __construct() : void
             + is_top_level() : bool
             + get_parent_slug() : string
         }
 
         class IAM_Page_Ictoria_Dashboard_Section_Welcome {
+            - field_name : string
             - __construct() : void
-            + example_field_callback(args: array) : void
+            + section_callback() : void
+            + field_callback(args: array) : void
         }
 
         class IAM_Page_Ictoria_Dashboard_Section_Another_One {
+            - field_name : string
             - __construct() : void
-            + example_field_callback(args: array) : void
+            + section_callback() : void
+            + field_callback(args: array) : void
         }
 
         class IAM_Page_Settings {
+            - page_sections : array
             - __construct() : void
             + is_top_level() : bool
             + get_parent_slug() : string
         }
 
         class IAM_Page_Settings_Welcome {
+            - field_name : string
             - __construct() : void
+            + section_callback() : void
             + field_callback(args: array) : void
         }
 
         class IAM_Page_Settings_Another_One {
+            - field_name : string
             - __construct() : void
+            + section_callback() : void
             + field_callback(args: array) : void
         }
 
