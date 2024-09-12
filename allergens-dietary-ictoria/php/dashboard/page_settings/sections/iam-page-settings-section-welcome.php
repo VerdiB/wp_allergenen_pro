@@ -6,26 +6,35 @@ if (!defined('ABSPATH')) {
 
 class IAM_Page_Settings_Section_Welcome extends IAM_Base_Section
 {
+    private static $field_name = '_' . 'field_name';
+
     public function __construct()
     {
         parent::__construct(
-            'iam_page_settings_section_welcome',
-            __('Welcome Title', 'text-domain'),
-            'iam-settings'
+            strtolower(__CLASS__),
+            __('Welcome Title in settings', 'text-domain'),
+            'iam-settings-section-welcome'
         );
 
         $this->add_field(
-            'iam_page_settings_section_welcome_field',
+            strtolower(__CLASS__ . self::$field_name),
             __('Welcome Field', 'text-domain'),
             [$this, 'field_callback'],
-            ['label_for' => 'iam_page_settings_section_welcome_field']
+            ['label_for' => strtolower(__CLASS__ . self::$field_name),'class' => 'iam-settings-section-welcome-field']
         );
+    }
+
+    public function section_callback()
+    {
+        echo '<p>Section description here.</p>';
+
     }
 
     public function field_callback($args)
     {
-        $option_value = get_option('iam_page_settings_section_welcome_field');
+        $option_value = get_option(strtolower(__CLASS__ . self::$field_name));
 
-        echo '<input type="text" id="' . esc_attr($args['label_for']) . '" name="iam_page_settings_section_welcome_field" value="' . esc_attr($option_value) . '" />';
+        echo '<input type="text" id="' . esc_attr($args['label_for']) . '" name="' . strtolower(__CLASS__ . self::$field_name) . '" value="' . esc_attr($option_value) . '" />';
     }
+
 }

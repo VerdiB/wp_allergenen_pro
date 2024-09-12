@@ -6,7 +6,6 @@ if (!defined('ABSPATH')) {
 
 class IAM_Page_Ictoria_Dashboard_Section_Another_One extends IAM_Base_Section
 {
-
     private static $field_name = '_' . 'field_name';
 
     public function __construct()
@@ -14,14 +13,15 @@ class IAM_Page_Ictoria_Dashboard_Section_Another_One extends IAM_Base_Section
         parent::__construct(
             strtolower(__CLASS__),
             __('Another One Title', 'text-domain'),
-            'iam-dashboard-section-welcome'
+            str_replace('_', '-', strtolower(__CLASS__))
         );
 
         $this->add_field(
             strtolower(__CLASS__ . self::$field_name),
             __('Another One Field', 'text-domain'),
             [$this, 'field_callback'],
-            ['label_for' => strtolower(__CLASS__ . self::$field_name)]
+            ['label_for' => strtolower(__CLASS__ . self::$field_name), 'class' =>
+                str_replace('_', '-', strtolower(__CLASS__)) . '-field']
         );
     }
 

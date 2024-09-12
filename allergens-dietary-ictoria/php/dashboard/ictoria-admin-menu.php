@@ -37,14 +37,14 @@ class Ictoria_Admin_Menu
 
     public static function iam_style()
     {
-        wp_enqueue_style('iam-css', plugins_url('assets/css/iam.css', IAM_DIR));
+        wp_enqueue_style('iam-css', plugins_url('dashboard/assets/css/iam.css', IAM_DIR));
     }
 
     public static function iam_script()
     {
         wp_enqueue_script(
             'iam-js',
-            plugins_url('assets/js/iam.js', IAM_DIR),
+            plugins_url('dashboard/assets/js/iam.js', IAM_DIR),
             '',
             false,
             false
