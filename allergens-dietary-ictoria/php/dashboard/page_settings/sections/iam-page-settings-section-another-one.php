@@ -6,26 +6,35 @@ if (!defined('ABSPATH')) {
 
 class IAM_Page_Settings_Section_Another_One extends IAM_Base_Section
 {
+    private static $field_name = '_' . 'field_name';
+
     public function __construct()
     {
         parent::__construct(
-            'iam_page_settings_section_another_one',
-            __('Another one Title', 'text-domain'),
-            'iam-settings'
+            strtolower(__CLASS__),
+            __('Another One Title in settings', 'text-domain'),
+            'iam-settings-section-another-one'
         );
 
         $this->add_field(
-            'iam_page_settings_section_another_one_field',
-            __('Another one Field', 'text-domain'),
+            strtolower(__CLASS__ . self::$field_name),
+            __('Another One Field', 'text-domain'),
             [$this, 'field_callback'],
-            ['label_for' => 'iam_page_settings_section_another_one_field']
+            ['label_for' => strtolower(__CLASS__ . self::$field_name), 'class' => 'iam-settings-section-another-one-field']
         );
+    }
+
+    public function section_callback()
+    {
+        echo '<p>Section description here.</p>';
+
     }
 
     public function field_callback($args)
     {
-        $option_value = get_option('iam_page_settings_section_another_one_field');
+        $option_value = get_option(strtolower(__CLASS__ . self::$field_name));
 
-        echo '<input type="text" id="' . esc_attr($args['label_for']) . '" name="iam_page_settings_section_another_one_field" value="' . esc_attr($option_value) . '" />';
+        echo '<input type="text" id="' . esc_attr($args['label_for']) . '" name="' . strtolower(__CLASS__ . self::$field_name) . '" value="' . esc_attr($option_value) . '" />';
     }
+
 }
