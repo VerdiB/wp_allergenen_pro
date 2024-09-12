@@ -8,6 +8,7 @@ abstract class IAM_Base_Section
 {
     protected $section_id;
     protected $section_title;
+    protected $section_class;
     protected $fields = [];
 
     private static $instances = [];
@@ -21,10 +22,11 @@ abstract class IAM_Base_Section
         return self::$instances[$calledClass];
     }
 
-    public function __construct($section_id, $section_title)
+    public function __construct($section_id, $section_title, $section_class)
     {
         $this->section_id = $section_id;
         $this->section_title = $section_title;
+        $this->section_class = $section_class;
     }
 
     public function register_section($menu_slug)
@@ -33,7 +35,8 @@ abstract class IAM_Base_Section
             $this->section_id,
             $this->section_title,
             [$this, 'section_callback'],
-            $menu_slug
+            $menu_slug,
+            ['before_section' => '<div class="' . $this->section_class . '">', 'after_section' => '</div>']
         );
 
         foreach ($this->fields as $field) {
