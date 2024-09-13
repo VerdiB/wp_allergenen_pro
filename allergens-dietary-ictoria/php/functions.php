@@ -1,28 +1,8 @@
 <?php
 // exit if user can access this file directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if (!defined('ABSPATH')) {
+    exit;
 }
-
-
-//class that contains functions that are used by multiple classes/files or do not belong in another class
-class Allergens_Dietary_Ictoria_Functions{
-	
-	//function to get a translation of all text contained within __() functions throughout the plugin IF the .mo and .po files for the local/server language are available
-	public static function load_textdomain(){
-		load_plugin_textdomain(' allergens-dietary-ictoria', false, basename(ALLERGENS_DIETARY_ICTORIA_FILE).'/l10n'); 
-	}
-	
-	//Get all relevant plugin settings from the WP options table
-	public static function get_settings(){
-		return get_option('allergens_dietary_ictoria_settings');
-	}
-	
-	//Get all allergens and dietary options added by this plugin from the WP options table
-	public static function get_options(){
-		return get_option('allergens_dietary_ictoria_options');
-
-// class that contains functions that are used by multiple classes/files or do not belong in another class
 
 /**
  * @author V.B.
@@ -33,305 +13,316 @@ class Allergens_Dietary_Ictoria_Functions{
  * this is also part of the planning in the future.
  */
 
-class Allergens_Dietary_Ictoria_Functions {
+//class that contains functions that are used by multiple classes/files or do not belong in another class
+class Allergens_Dietary_Ictoria_Functions
+{
 
-	// function to get a translation of all text contained within __() functions throughout the plugin IF the .mo and .po files for the local/server language are available
-	public static function load_textdomain() {
-		load_plugin_textdomain( __( 'allergens-dietary-ictoria', 'allergens-dietary-ictoria' ), false, basename( ALLERGENS_DIETARY_ICTORIA_FILE ) . '/l10n' );
-	}
+    //function to get a translation of all text contained within __() functions throughout the plugin IF the .mo and .po files for the local/server language are available
+    public static function load_textdomain()
+    {
+        load_plugin_textdomain(' allergens-dietary-ictoria', false, basename(ALLERGENS_DIETARY_ICTORIA_FILE) . '/l10n');
+    }
 
-	// Get all relevant plugin settings from the WP options table
-	public static function get_settings() {
-		return get_option( __( 'allergens_dietary_ictoria_settings', 'allergens-dietary-ictoria' ) );
-	}
+    //Get all relevant plugin settings from the WP options table
+    public static function get_settings()
+    {
+        return get_option('allergens_dietary_ictoria_settings');
+    }
 
-	// Get all allergens and dietary options added by this plugin from the WP options table
-	public static function get_options() {
-		return get_option( __( 'allergens_dietary_ictoria_options', 'allergens-dietary-ictoria' ) );
+    //Get all allergens and dietary options added by this plugin from the WP options table
+    public static function get_options()
+    {
+        return get_option('allergens_dietary_ictoria_options');
+    }
 
-	}
+    // //adds the external css file(s) to the current WP execution
+    // public static function load_style(){
+    // wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/css/allergens-dietary-ictoria.css'));
+    // wp_enqueue_style('allergens-dietary-ictoria-css');
+    // }
 
-	// //adds the external css file(s) to the current WP execution
-	// public static function load_style(){
-	// wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/css/allergens-dietary-ictoria.css'));
-	// wp_enqueue_style('allergens-dietary-ictoria-css');
-	// }
+    // //adds the external js file(s) to the current WP execution
+    // public static function load_admin_js(){
+    // wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/css/allergens-dietary-ictoria.css'));
+    // wp_enqueue_style('allergens-dietary-ictoria-css');
+    // wp_register_script('allergens-dietary-admin-js', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/js/admin_set_options_by_category.js'), array('jquery'));
+    // wp_enqueue_script( 'allergens-dietary-admin-js');
+    // }
 
-	// //adds the external js file(s) to the current WP execution
-	// public static function load_admin_js(){
-	// wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/css/allergens-dietary-ictoria.css'));
-	// wp_enqueue_style('allergens-dietary-ictoria-css');
-	// wp_register_script('allergens-dietary-admin-js', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/js/admin_set_options_by_category.js'), array('jquery'));
-	// wp_enqueue_script( 'allergens-dietary-admin-js');
-	// }
+    // adds the external css file(s) to the current WP execution
+    public static function load_style()
+    {
+        add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_styles'));
+        add_action('admin_enqueue_scripts', array(__CLASS__, 'enqueue_admin_styles'));
+    }
 
-	// adds the external css file(s) to the current WP execution
-	public static function load_style() {
-		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_admin_styles' ) );
-	}
+    public static function enqueue_styles()
+    {
+        wp_enqueue_style('allergens-dietary-ictoria-css', plugins_url('assets/css/allergens-dietary-ictoria.css', ALLERGENS_DIETARY_ICTORIA_FILE));
+    }
 
-	public static function enqueue_styles() {
-		wp_enqueue_style( 'allergens-dietary-ictoria-css', plugins_url( 'assets/css/allergens-dietary-ictoria.css', ALLERGENS_DIETARY_ICTORIA_FILE ) );
-	}
+    public static function enqueue_admin_styles()
+    {
+        // wp_enqueue_style('allergens-dietary-ictoria-admin-css', plugins_url('assets/css/allergens-dietary-ictoria-admin.css', ALLERGENS_DIETARY_ICTORIA_FILE));
+        wp_enqueue_style('allergens-dietary-ictoria-admin-css', plugins_url('assets/css/allergens-dietary-ictoria.css', ALLERGENS_DIETARY_ICTORIA_FILE));
+    }
 
-	public static function enqueue_admin_styles() {
-		// wp_enqueue_style('allergens-dietary-ictoria-admin-css', plugins_url('assets/css/allergens-dietary-ictoria-admin.css', ALLERGENS_DIETARY_ICTORIA_FILE));
-		wp_enqueue_style( 'allergens-dietary-ictoria-admin-css', plugins_url( 'assets/css/allergens-dietary-ictoria.css', ALLERGENS_DIETARY_ICTORIA_FILE ) );
-	}
+    // Enqueue admin JS script
+    public static function load_admin_js()
+    {
+        add_action('admin_enqueue_scripts', array(__CLASS__, 'enqueue_admin_scripts'));
+    }
 
-	// Enqueue admin JS script
-	public static function load_admin_js() {
-		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_admin_scripts' ) );
-	}
+    public static function enqueue_admin_scripts()
+    {
+        wp_enqueue_script(
+            'allergens-dietary-admin-js',
+            plugins_url('assets/js/admin_set_options_by_category.js', ALLERGENS_DIETARY_ICTORIA_FILE),
+            array('jquery'),
+            false,
+            true
+        );
+    }
 
-	public static function enqueue_admin_scripts() {
-		wp_enqueue_script(
-			'allergens-dietary-admin-js',
-			plugins_url( 'assets/js/admin_set_options_by_category.js', ALLERGENS_DIETARY_ICTORIA_FILE ),
-			array( 'jquery' ),
-			false,
-			true
-		);
-	}
-
-	// function that handles error notices of this plugin. Every error notice generated by this plugin will call this function, sending both the notice level(WP css class) and the(translated) message
-	public static function error_notice( $level, $message ) {
-		$message_header = sprintf( __( '%1$sAllergens and Dietary is inactive:%2$s', 'allergens-dietary-ictoria' ), '<p><strong>', '</strong></p>' );
-		$message_full   = $message_header . $message;
-		add_action(
-			'admin_notices',
-			static function () use ( $level, $message_full ) {
-				echo '<div class="notice ' . esc_attr( $level ) . '" style="padding:12px 12px">
-					' . wp_kses_post( $message_full ) . '
+    // function that handles error notices of this plugin. Every error notice generated by this plugin will call this function, sending both the notice level(WP css class) and the(translated) message
+    public static function error_notice($level, $message)
+    {
+        $message_header = sprintf(__('%1$sAllergens and Dietary is inactive:%2$s', 'allergens-dietary-ictoria'), '<p><strong>', '</strong></p>');
+        $message_full = $message_header . $message;
+        add_action(
+            'admin_notices',
+            static function () use ($level, $message_full) {
+                echo '<div class="notice ' . esc_attr($level) . '" style="padding:12px 12px">
+					' . wp_kses_post($message_full) . '
 				</div>';
-			}
-		);
-	}
+            }
+        );
+    }
 
-	public function upload_language_file() {
-		$language_path          = WP_LANG_DIR . '/plugins';
-		$language_file_basename = 'allergens-dietary-ictoria';
-		$user_locale            = get_user_locale();
-		$files_templates        = array(
-			'.po', // Default template for all locales.
-			'.mo',
-		);
+    public function upload_language_file()
+    {
+        $language_path = WP_LANG_DIR . '/plugins';
+        $language_file_basename = 'allergens-dietary-ictoria';
+        $user_locale = get_user_locale();
+        $files_templates = array(
+            '.po', // Default template for all locales.
+            '.mo',
+        );
 
-		foreach ( $files_templates as $files_template ) {
-			$language_file_fullname = $language_file_basename . $user_locale . $files_template;
-			$plugin_language_file   = ALLERGENS_DIETARY_ICTORIA . '/languages/' . $language_file_fullname;
+        foreach ($files_templates as $files_template) {
+            $language_file_fullname = $language_file_basename . $user_locale . $files_template;
+            $plugin_language_file = ALLERGENS_DIETARY_ICTORIA . '/languages/' . $language_file_fullname;
 
-			if ( file_exists( $plugin_language_file ) && $language_path . '/' . $language_file_fullname ) {
+            if (file_exists($plugin_language_file) && $language_path . '/' . $language_file_fullname) {
 
-				copy( $plugin_language_file, $language_path . '/' . $language_file_fullname );
-			}
-		}
-	}
+                copy($plugin_language_file, $language_path . '/' . $language_file_fullname);
+            }
+        }
+    }
 
+    // return an array containing all allergens and dietary options that this plugin adds
+    public static function default_options()
+    {
+        // Every option has a category, title, status, filter-action, filter-extra and icon
+        // status is used to enable/disable an option globally
+        // filter-action is used to tell the filter if products with the selected option should be included or excluded
+        // filter-extra is used to add extra text in front of the option in the filter menu
+        $no = __('no ', 'allergens-dietary-ictoria');
+        $options = array(
+            'peanuts' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Peanuts', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_peanuts.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'nuts' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Nuts', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_nuts.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'sesame' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Sesame', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_sesame.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'lupin' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Lupin', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_lupin.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'soya' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Soya', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_soya.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'mustard' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Mustard', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_mustard.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'eggs' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Eggs', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_eggs.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'dairy' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Dairy', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_dairy.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'fish' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Fish', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_fish.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'crustaceans' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Crustaceans', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_crustaceans.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'molluscs' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Molluscs', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_molluscs.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'gluten' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Gluten', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_gluten.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'corn' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Corn', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_corn.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'wheat' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Wheat', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_wheat.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'celery' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Celery', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_celery.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'sulfite' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Sulfite', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_sulfite.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'alcohol' => array(
+                'category' => __('allergen', 'allergens-dietary-ictoria'),
+                'title' => __('Alcohol', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => $no,
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/allergens_alcohol.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'vegetarian' => array(
+                'category' => __('dietary', 'allergens-dietary-ictoria'),
+                'title' => __('Vegetarian', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('include', 'allergens-dietary-ictoria'),
+                'filter-extra' => '',
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/dietary_vegetarian.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'vegan' => array(
+                'category' => __('dietary', 'allergens-dietary-ictoria'),
+                'title' => __('Vegan', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('include', 'allergens-dietary-ictoria'),
+                'filter-extra' => '',
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/dietary_vegan.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'halal' => array(
+                'category' => __('dietary', 'allergens-dietary-ictoria'),
+                'title' => __('Halal', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('include', 'allergens-dietary-ictoria'),
+                'filter-extra' => '',
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/dietary_halal.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+            'pregnant' => array(
+                'category' => __('dietary', 'allergens-dietary-ictoria'),
+                'title' => __('Risk for pregnant women', 'allergens-dietary-ictoria'),
+                'status' => __('active', 'allergens-dietary-ictoria'),
+                'filter-action' => __('exclude', 'allergens-dietary-ictoria'),
+                'filter-extra' => '',
+                '',
+                'icon' => plugins_url('allergens-dietary-ictoria/assets/icons/dietary_pregnant.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME),
+            ),
+        );
 
-	// return an array containing all allergens and dietary options that this plugin adds
-	public static function default_options() {
-		// Every option has a category, title, status, filter-action, filter-extra and icon
-		// status is used to enable/disable an option globally
-		// filter-action is used to tell the filter if products with the selected option should be included or excluded
-		// filter-extra is used to add extra text in front of the option in the filter menu
-		$no      = __( 'no ', 'allergens-dietary-ictoria' );
-		$options = array(
-			'peanuts'     => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Peanuts', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_peanuts.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'nuts'        => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Nuts', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_nuts.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'sesame'      => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Sesame', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_sesame.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'lupin'       => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Lupin', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_lupin.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'soya'        => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Soya', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_soya.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'mustard'     => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Mustard', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_mustard.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'eggs'        => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Eggs', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_eggs.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'dairy'       => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Dairy', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_dairy.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'fish'        => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Fish', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_fish.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'crustaceans' => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Crustaceans', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_crustaceans.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'molluscs'    => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Molluscs', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_molluscs.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'gluten'      => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Gluten', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_gluten.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'corn'        => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Corn', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_corn.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'wheat'       => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Wheat', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_wheat.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'celery'      => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Celery', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_celery.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'sulfite'     => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Sulfite', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_sulfite.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'alcohol'     => array(
-				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Alcohol', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_alcohol.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'vegetarian'  => array(
-				'category'      => __( 'dietary', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Vegetarian', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'include', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => '',
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/dietary_vegetarian.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'vegan'       => array(
-				'category'      => __( 'dietary', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Vegan', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'include', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => '',
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/dietary_vegan.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'halal'       => array(
-				'category'      => __( 'dietary', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Halal', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'include', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => '',
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/dietary_halal.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-			'pregnant'    => array(
-				'category'      => __( 'dietary', 'allergens-dietary-ictoria' ),
-				'title'         => __( 'Risk for pregnant women', 'allergens-dietary-ictoria' ),
-				'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
-				'filter-extra'  => '',
-				'',
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/dietary_pregnant.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-			),
-		);
+        $attributes_allergen =
+            add_query_arg(
+            array(
+                'key' => array(
+                    'category' => __('allergen', 'allergens-dietary-ictoria'),
+                    'title' => __('key', 'allergens-dietary-ictoria'),
+                    'status' => __('active', 'allergens-dietary-ictoria'),
+                    'filter-action' => __('exclude', 'allegens-dietary-ictoria'),
+                    'filter-extra' => $no,
+                    'icon' => __('url1', 'allegens-dietary-ictoria'), // icon upload option in WP-dashboard
+                    ALLERGENS_DIETARY_ICTORIA_DIRNAME,
+                ),
+            )
+        );
 
-		$attributes_allergen =
-		add_query_arg(
-			array(
-				'key' => array(
-					'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-					'title'         => __( 'key', 'allergens-dietary-ictoria' ),
-					'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-					'filter-action' => __( 'exclude', 'allegens-dietary-ictoria' ),
-					'filter-extra'  => $no,
-					'icon'          => __( 'url1', 'allegens-dietary-ictoria' ), // icon upload option in WP-dashboard
-					ALLERGENS_DIETARY_ICTORIA_DIRNAME,
-				),
-			)
-		);
+        // add allergen button in WordPress
+        submit_button(
+            __('add allergen', 'allergens-dietary-ictoria'),
+            'primary', // CSS class for the button
+            true, // Wrap the button in a <p> tag
+            $attributes_allergen // Additional attributes like 'id'
+        );
 
-		// add allergen button in WordPress
-		submit_button(
-			__( 'add allergen', 'allergens-dietary-ictoria' ),
-			'primary', // CSS class for the button
-			true,  // Wrap the button in a <p> tag
-			$attributes_allergen // Additional attributes like 'id'
-		);
-
-				return $options;
-	}
+        return $options;
+    }
 }
