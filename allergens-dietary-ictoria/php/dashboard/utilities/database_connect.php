@@ -5,10 +5,23 @@ if (!defined('ABSPATH')) {
 
 class IAM_Database_Connect
 {
+    private static $_instance = null;
+
+    public static function instance()
+    {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new IAM_Database_Connect();
+        }
+    }
+
+    public function __construct()
+    {
+        self::populate_allergen_table();
+    }
+
     public static function get_local_options()
     {
-        $options = Allergens_Dietary_Ictoria_Functions::default_options();
-        return $options;
+        return Allergens_Dietary_Ictoria_Functions::default_options();
     }
 
     public static function insert_allergen($name, $description)
@@ -27,4 +40,21 @@ class IAM_Database_Connect
             )
         );
     }
+
+    public static function populate_allergen_table()
+    {
+        $options = self::get_local_options();
+
+        foreach ($options as $allergen => $value) {
+            $title = $value['title'];
+            $description = $title . ' description text';
+
+            $category = $value['category'];
+            if ($category == 'allergen') {
+                self::insert_allergen($title, $description);
+            }
+
+        }
+    }
 }
+IAM_Database_Connect::instance();
