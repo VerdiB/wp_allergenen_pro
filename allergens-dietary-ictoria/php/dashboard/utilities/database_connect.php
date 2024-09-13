@@ -11,12 +11,8 @@ class IAM_Database_Connect
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new IAM_Database_Connect();
+            self::populate_allergen_table();
         }
-    }
-
-    public function __construct()
-    {
-        self::populate_allergen_table();
     }
 
     public static function get_local_options()
@@ -55,6 +51,15 @@ class IAM_Database_Connect
             }
 
         }
+    }
+
+    public static function get_allergens()
+    {
+        global $wpdb;
+
+        $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}allergens_dietary_ictoria_allergy");
+        $allergens = $wpdb->get_results($sql);
+        return $allergens;
     }
 }
 IAM_Database_Connect::instance();
