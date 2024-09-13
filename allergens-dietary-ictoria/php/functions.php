@@ -33,8 +33,6 @@ class Allergens_Dietary_Ictoria_Functions
     public static function get_options()
     {
         return get_option('allergens_dietary_ictoria_options');
-        return get_option(__('allergens_dietary_ictoria_options', 'allergens-dietary-ictoria'));
-
     }
 
     // //adds the external css file(s) to the current WP execution
