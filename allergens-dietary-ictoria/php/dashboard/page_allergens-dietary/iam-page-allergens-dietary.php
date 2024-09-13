@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) {
 class IAM_Page_Allergens_Dietary extends IAM_Base_Page
 {
     private static $page_sections = [
+        'Landing',
     ];
 
     public function __construct()
@@ -39,3 +40,4 @@ class IAM_Page_Allergens_Dietary extends IAM_Base_Page
         return 'iam-dashboard';
     }
 }
+// $options = Allergens_Dietary_Ictoria_Functions::get_options();
