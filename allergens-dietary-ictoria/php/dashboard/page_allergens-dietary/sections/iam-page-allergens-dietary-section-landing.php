@@ -25,14 +25,18 @@ class IAM_Page_Allergens_Dietary_Section_Landing extends IAM_Base_Section
             $title = $value['title'];
             $description = $title . ' description text';
 
-            echo $db->insert_allergen($title, $description);
+            $category = $value['category'];
+            if ($category == 'allergen') {
+                $db->insert_allergen($title, $description);
 
-            // echo <<<HTML
-            // <pre>
-            //     $title:
-            //     $description
-            // </pre>
-            // HTML;
+                echo <<<HTML
+                <pre>
+                    $title:
+                    $category
+                </pre>
+                HTML;
+            }
+
         }
     }
 
