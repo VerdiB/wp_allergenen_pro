@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Allergens_Dietary_Ictoria_Attachment_Queries {
 	private static ?self $_instance = null;
+	private const PATH = ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/assets/icons/custom/';
 
 	public static function getInstance() {
 		if ( self::$_instance === null ) {
@@ -24,8 +25,8 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 		$wpdb->insert(
 			$table_name,
 			array(
-				'attachment_name' => $data['attachment_name'],
-				'attachment_path' => $data['attachment_path'],
+				'attachment_name' => $data['name'],
+				'attachment_path' => self::PATH . $data['full_path'],
 			)
 		);
 
@@ -58,11 +59,11 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 		$wpdb->update(
 			$table_name,
 			array(
-				'attachment_name' => $data['attachment_name'],
-				'attachment_path' => $data['attachment_path'],
+				'attachment_name' => $data['name'],
+				'attachment_path' => self::PATH . $data['name'],
 			),
 			array(
-				'attachment_name' => $data['attachment_name'],
+				'attachment_name' => $data['name'],
 			)
 		);
 	}
@@ -77,15 +78,18 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 	 */
 	private function placeAttachment( array $data ) {
 		$upload_dir = wp_upload_dir();
-		$upload_dir = $upload_dir['basedir'] . '/allergens-dietary-ictoria/assets/icons/custom/';
-		$file       = $upload_dir . basename( $data['attachment_path'] );
+		$upload_dir = $upload_dir['basedir'] . '/allergens-dietary-ictoria/icons/custom/';
 
 		if ( ! file_exists( $upload_dir ) ) {
 			mkdir( $upload_dir, 0777, true );
 		}
 
-		if ( ! move_uploaded_file( $data['attachment_path'], $file ) ) {
-			throw new Exception( __( 'The file could not be moved' ) );
+		$full_path = $upload_dir . $data['full_path'];
+
+		if ( ! file_exists( $full_path ) ) {
+			move_uploaded_file( $data['name'], $full_path );
 		}
+
+
 	}
 }

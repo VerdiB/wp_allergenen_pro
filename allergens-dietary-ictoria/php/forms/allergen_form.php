@@ -38,6 +38,7 @@ class Allergens_Dietary_Ictoria_Form {
 	private static ?self $_instance = null;
 	private static FormType $_formType;
 	private static I_Allergens_Dietary_Ictoria_Form $_formObject;
+	private /*associative*/ array $_data;
 
 	private function __construct() {
 		if ( FormType::ALLERGENS === self::$_formType ) {
@@ -68,11 +69,17 @@ class Allergens_Dietary_Ictoria_Form {
 
 	public function showForm( string $allergenName = null ) {
 
+		if ( ! empty( $_POST ) ) {
+			$_data = $_POST;
+		}
+		if ( ! empty( $_FILES ) ) {
+			$_data = array_merge( $_data, $_FILES );
+		}
 		if ( ! empty( $_POST['submit'] ) ) {
-			self::$_formObject->submit( $_POST );
+			self::$_formObject->submit( $_data );
 		}
 
-		echo '<div class="allergens_form"><form action="" method="post" class="add_allergens_form">';
+		echo '<div class="allergens_form"><form action="" method="post" enctype="multipart/form-data" class="add_allergens_form">';
 		self::$_formObject->showForm( $allergenName );
 		echo '</form></div>';
 	}
