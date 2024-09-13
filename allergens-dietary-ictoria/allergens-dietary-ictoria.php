@@ -153,66 +153,14 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
     include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/products.php';
     include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/filter.php';
 
-	// Load dashboard
-	include_once(ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/php/dashboard/ictoria-admin-menu.php');
-	
-	Allergens_Dietary_Ictoria_Products::instance();
-	Allergens_Dietary_Ictoria_Filter::instance();
-	Allergens_Dietary_Ictoria_Functions::load_style();
-	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/MyPluginAddMenu.php';
-	MyPluginAddMenu::instance();
-
-if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
-    if (is_admin()) {
-        //class is used to add the plugin to the list of integrated plugins that WooCommerce uses
-        class Allergens_Dietary_Ictoria_Wc_Integration_Startup
-        {
-            public function __construct()
-            {
-                add_action('plugins_loaded', array($this, 'init_integration'));
-            }
-
-            public function init_integration()
-            {
-                //Check if the WC_Integration class exists
-                if (class_exists('WC_Integration')) {
-                    include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/wc_integration.php';
-                    add_filter('woocommerce_integrations', array($this, 'add_integration'));
-                    //load the plugin admin js files
-                    Allergens_Dietary_Ictoria_Functions::load_admin_js();
-                } else {
-                    //the integration class of WooCommerce was not found, show error message
-                    $level = 'notice-error';
-                    $message = sprintf(__('%1$sThe WooCommerce Integration class was not found. Please make sure WooCommerce is installed correctly%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
-                    Allergens_Dietary_Ictoria_Functions::error_notice($level, $message);
-                }
-            }
-
-            public function add_integration($integrations)
-            {
-                $integrations[] = 'Allergens_Dietary_Ictoria_Wc_Integration_Settings';
-                return $integrations;
-            }
-        }
-        $Allergens_Dietary_Ictoria_Wc_Integration_Startup = new Allergens_Dietary_Ictoria_Wc_Integration_Startup(__FILE__);
-        //load and run the plugin admin files
-        include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/product_settings.php';
-        Allergens_Dietary_Ictoria_Product_Settings::instance();
-
-        include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/activator.php';
-        Allergens_Dietary_Ictoria_Activator::activate();
-
-    }
-    //load generic files used by the plugin when active
-    include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/products.php';
-    include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/filter.php';
-
-    // Load dashboard/admin-menu
     include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/dashboard/ictoria-admin-menu.php';
 
     Allergens_Dietary_Ictoria_Products::instance();
     Allergens_Dietary_Ictoria_Filter::instance();
     Allergens_Dietary_Ictoria_Functions::load_style();
+    include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/MyPluginAddMenu.php';
+    MyPluginAddMenu::instance();
+
 } else {
     // WooCommerce is not installed or inactive, show error message
     $level = 'notice-error';
