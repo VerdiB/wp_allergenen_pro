@@ -9,6 +9,7 @@ abstract class IAM_Base_Section
     protected $section_id;
     protected $section_title;
     protected $section_class;
+    protected $enable_options_group;
     protected $fields = [];
 
     private static $instances = [];
@@ -22,11 +23,12 @@ abstract class IAM_Base_Section
         return self::$instances[$calledClass];
     }
 
-    public function __construct($section_id, $section_title, $section_class)
+    public function __construct($section_id, $section_title, $section_class, $enable_options_group = true)
     {
         $this->section_id = $section_id;
         $this->section_title = $section_title;
         $this->section_class = $section_class;
+        $this->enable_options_group = $enable_options_group;
     }
 
     public function register_section($menu_slug)
@@ -49,7 +51,9 @@ abstract class IAM_Base_Section
                 $field['args']
             );
 
-            register_setting($menu_slug . '_options_group', $field['id']);
+            if ($this->enable_options_group) {
+                register_setting($menu_slug . '_options_group', $field['id']);
+            }
         }
     }
 
