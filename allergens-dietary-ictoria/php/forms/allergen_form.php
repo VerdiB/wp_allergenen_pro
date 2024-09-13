@@ -47,7 +47,7 @@ class Allergens_Dietary_Ictoria_Form {
 		if ( FormType::LICENSE === self::$_formType ) {
 			self::$_formObject = new Allergens_Dietary_Ictoria_License_Form();
 		}
-		if ( ! isset( self::$_formType ) || false === self::$_formType->match(self::$_formType) ) {
+		if ( ! isset( self::$_formType ) || false === self::$_formType->match( self::$_formType ) ) {
 			throw new Exception( 'FormType not yet supported/implemented' );
 		}
 	}

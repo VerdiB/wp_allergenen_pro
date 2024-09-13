@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Allergens_Dietary_Ictoria_Attachment_Queries {
 	private static ?self $_instance = null;
-	private const PATH = ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/assets/icons/custom/';
+	private const PATH              = ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/assets/icons/custom/';
 
 	public static function getInstance() {
 		if ( self::$_instance === null ) {
@@ -89,7 +89,5 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 		if ( ! file_exists( $full_path ) ) {
 			move_uploaded_file( $data['name'], $full_path );
 		}
-
-
 	}
 }

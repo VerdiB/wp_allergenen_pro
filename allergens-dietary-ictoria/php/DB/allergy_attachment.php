@@ -50,18 +50,18 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 
 	public function updateallergyAttachment( array $data ) {
 		global $wpdb;
- 
+
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
 		$wpdb->update(
 			$table_name,
 			array(
 				'allergy_name'    => $data['allergen_name'],
-				'attachment_name' => $data['allergen_icon']['name']
+				'attachment_name' => $data['allergen_icon']['name'],
 			),
 			array(
 				'allergy_name'    => $data['allergen_name'],
-				'attachment_name' => $data['allergen_icon']['name']
+				'attachment_name' => $data['allergen_icon']['name'],
 			)
 		);
 
