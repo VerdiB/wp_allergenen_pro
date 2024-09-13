@@ -13,6 +13,7 @@ class Ictoria_Admin_Menu
     private static $directories = [
         IAM_DIR . '/' . 'utilities/base_classes/',
         IAM_DIR . '/' . 'page_ictoria-dashboard/',
+        IAM_DIR . '/' . 'page_allergens-dietary/',
         IAM_DIR . '/' . 'page_settings/',
     ];
 
@@ -32,6 +33,7 @@ class Ictoria_Admin_Menu
         // top-level menu
         IAM_Page_Ictoria_Dashboard::instance();
         // submenus
+        IAM_Page_Allergens_Dietary::instance();
         IAM_Page_Settings::instance();
     }
 

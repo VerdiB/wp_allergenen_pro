@@ -8,14 +8,13 @@ class IAM_Page_Ictoria_Dashboard extends IAM_Base_Page
 {
     // add page sections here
     private static $page_sections = [
-        'Welcome',
-        'Another_One',
+        'Allergens_Dietary',
     ];
 
     public function __construct()
     {
         parent::__construct(
-            'Ictoria Plugin Dashboard',
+            'Ictoria Plugin Suite Dashboard',
             'Ictoria',
             'manage_options',
             'iam-dashboard',
@@ -30,6 +29,20 @@ class IAM_Page_Ictoria_Dashboard extends IAM_Base_Page
                 $this->add_section(new $class_name);
             }
         }
+    }
+
+    public function render_page()
+    {
+        if (!current_user_can($this->capability)) {
+            return;
+        }
+
+        echo '<div class="wrap">';
+        echo '<div class="' . $this->menu_slug . '">';
+        echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
+        do_settings_sections($this->menu_slug);
+        echo '</div>';
+        echo '</div>';
     }
 
     protected function is_top_level()
