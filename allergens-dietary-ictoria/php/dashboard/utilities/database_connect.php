@@ -105,6 +105,8 @@ class IAM_Database_Connect
         $sql_allergens = "SELECT * FROM {$wpdb->prefix}allergens_dietary_ictoria_allergy";
         $allergens = $wpdb->get_results($sql_allergens);
 
+        $response = [];
+
         foreach ($allergens as $allergen) {
             // Get the attachment name from the allergy_attachment table using the allergy name
             $sql_attachment = $wpdb->prepare(
@@ -126,11 +128,14 @@ class IAM_Database_Connect
                     // Use plugins_url() to get the correct URL for the icon
                     $icon_url = plugins_url('assets/icons/' . basename($attachment_path_result->attachment_path), ALLERGENS_DIETARY_ICTORIA_BASE);
 
-                    echo '<img src="' . esc_url($icon_url) . '" alt="Allergen Icon"><br>';
-                    echo $allergen->allergy_name . '<br><br>';
+                    // echo '<img src="' . esc_url($icon_url) . '" alt="Allergen Icon"><br>';
+                    // echo $allergen->allergy_name . '<br><br>';
+
+                    $response[strtolower($allergen->allergy_name)] = ['allergen_name' => $allergen->allergy_name, 'icon_url' => $icon_url];
                 }
             }
         }
+        return $response;
     }
 }
 
