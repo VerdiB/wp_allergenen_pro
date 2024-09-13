@@ -16,7 +16,7 @@ class IAM_Page_Allergens_Dietary extends IAM_Base_Page
             'Allergens & Dietary Plugin',
             'Allergens & Dietary',
             'manage_options',
-            'allergens-dietary-add-allergen',
+            'iam-allergens-dietary',
             [$this, 'render_page'],
             '',
             null,
@@ -49,10 +49,9 @@ class IAM_Page_Allergens_Dietary extends IAM_Base_Page
         echo '<div class="wrap">';
         echo '<div class="' . $this->menu_slug . '">';
         echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
-        echo '<form action="options.php" method="post">';
-        settings_fields($this->menu_slug . '_options_group');
+
         do_settings_sections($this->menu_slug);
-        echo '</form>';
+
         echo '</div>';
         echo '</div>';
     }
