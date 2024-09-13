@@ -4,6 +4,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+
+//class that contains functions that are used by multiple classes/files or do not belong in another class
+class Allergens_Dietary_Ictoria_Functions{
+	
+	//function to get a translation of all text contained within __() functions throughout the plugin IF the .mo and .po files for the local/server language are available
+	public static function load_textdomain(){
+		load_plugin_textdomain(' allergens-dietary-ictoria', false, basename(ALLERGENS_DIETARY_ICTORIA_FILE).'/l10n'); 
+	}
+	
+	//Get all relevant plugin settings from the WP options table
+	public static function get_settings(){
+		return get_option('allergens_dietary_ictoria_settings');
+	}
+	
+	//Get all allergens and dietary options added by this plugin from the WP options table
+	public static function get_options(){
+		return get_option('allergens_dietary_ictoria_options');
+
 // class that contains functions that are used by multiple classes/files or do not belong in another class
 
 /**
@@ -30,6 +48,7 @@ class Allergens_Dietary_Ictoria_Functions {
 	// Get all allergens and dietary options added by this plugin from the WP options table
 	public static function get_options() {
 		return get_option( __( 'allergens_dietary_ictoria_options', 'allergens-dietary-ictoria' ) );
+
 	}
 
 	// //adds the external css file(s) to the current WP execution
