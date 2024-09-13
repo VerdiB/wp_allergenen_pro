@@ -6,13 +6,12 @@ if (!defined('ABSPATH')) {
 
 class IAM_Page_Allergens_Dietary_Section_Add_Allergen extends IAM_Base_Section
 {
-    public static $allergen_data = array();
 
     public function __construct()
     {
         parent::__construct(
             strtolower(__CLASS__),
-            __('Add Allergen', 'text-domain'),
+            __('Add Allergen', 'allergens-dietary-ictoria'),
             str_replace('_', '-', strtolower(__CLASS__)),
             false
         );

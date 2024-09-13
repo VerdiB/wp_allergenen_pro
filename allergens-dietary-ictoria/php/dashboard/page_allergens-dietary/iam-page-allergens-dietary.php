@@ -8,6 +8,7 @@ class IAM_Page_Allergens_Dietary extends IAM_Base_Page
 {
     private static $page_sections = [
         'Add_Allergen',
+        'All_Allergens',
     ];
 
     public function __construct()
