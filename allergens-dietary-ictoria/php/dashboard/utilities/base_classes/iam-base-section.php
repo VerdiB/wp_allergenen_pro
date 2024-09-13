@@ -38,7 +38,7 @@ abstract class IAM_Base_Section
             $this->section_title,
             [$this, 'section_callback'],
             $menu_slug,
-            ['before_section' => '<div class="' . $this->section_class . '">', 'after_section' => '</div>']
+            [], // ['before_section' => '<div class="' . $this->section_class . '">', 'after_section' => '</div>']
         );
 
         foreach ($this->fields as $field) {

@@ -6,7 +6,6 @@ if (!defined('ABSPATH')) {
 
 class IAM_Page_Allergens_Dietary_Section_All_Allergens extends IAM_Base_Section
 {
-    public static $allergen_data = array();
 
     public function __construct()
     {
@@ -14,7 +13,7 @@ class IAM_Page_Allergens_Dietary_Section_All_Allergens extends IAM_Base_Section
             strtolower(__CLASS__),
             __('All Allergens', 'allergens-dietary-ictoria'),
             str_replace('_', '-', strtolower(__CLASS__)),
-            false
+            true
         );
 
         require_once IAM_DIR . '/utilities/database_connect.php';

@@ -41,52 +41,109 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
      */
     public function showForm(?string $allergenName = null)
     {
+        // if (!is_null($allergenName)) {
+        //     // TODO: Implement showForm() method. when the allergen name is not null
+        //     if (!class_exists('Allergens_Dietary_Ictoria_Allergy_Attachment_Queries')) {
+        //         require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
+        //     }
+        //     $this->_allergen = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllergyAttachment($allergenName);
+        //     return;
+        // }
+
         if (!is_null($allergenName)) {
-            // TODO: Implement showForm() method. when the allergen name is not null
-            if (!class_exists('Allergens_Dietary_Ictoria_Allergy_Attachment_Queries')) {
-                require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
-            }
+            // When allergenName is provided, fetch its data
             $this->_allergen = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllergyAttachment($allergenName);
             return;
         }
 
-        $html_allergenName_id = 'allergen_name';
-        $html_allergenName_label = __('Allergen name', 'allergens-dietary-ictoria');
-        $html_allergenName_value = ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '');
+        // Field: Allergen Name
+        $html_allergenName = [
+            'id' => 'allergen_name',
+            'label' => __('Allergen name', 'allergens-dietary-ictoria'),
+            'value' => (!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '',
+        ];
 
-        $html_allergenDescription_id = 'allergen_description';
-        $html_allergenDescription_label = __('Allergen description', 'allergens-dietary-ictoria');
-        $html_allergenDescription_value = ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '');
+        // Field: Allergen Description
+        $html_allergenDescription = [
+            'id' => 'allergen_description',
+            'label' => __('Allergen description', 'allergens-dietary-ictoria'),
+            'value' => (!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '',
+        ];
 
-        $html_allergenIcon_id = 'allergen_icon';
-        $html_allergenIcon_label = __('Allergen icon', 'allergens-dietary-ictoria');
+        // Field: Allergen Icon
+        $html_allergenIcon = [
+            'id' => 'allergen_icon',
+            'label' => __('Allergen icon', 'allergens-dietary-ictoria'),
+        ];
 
-        $html_submitButton_value = __('Add allergen', 'allergens-dietary-ictoria');
+        // Submit Button
+        $html_submitButton = [
+            'id' => 'submit_button',
+            'label' => __('Submit', 'allergens-dietary-ictoria'),
+            'value' => __('Add allergen', 'allergens-dietary-ictoria'),
+        ];
 
-        $html = <<<HTML
-				<fieldset>
-					<div>
-						<label for="{$html_allergenName_id}">{$html_allergenName_label}</label>
-						<input type="text" name="{$html_allergenName_id}" id="{$html_allergenName_id}" value="{$html_allergenName_value}"/>
-					</div>
+        // Combine into a response array
+        $response = [
+            'fields' => [
+                'allergen_name' => $html_allergenName,
+                'allergen_description' => $html_allergenDescription,
+                'allergen_icon' => $html_allergenIcon,
+            ],
+            'submit_button' => $html_submitButton,
+        ];
 
-					<div>
-						<label for="{$html_allergenDescription_id}">{$html_allergenDescription_label}</label>
-						<input type="text" name="{$html_allergenDescription_id}" id="{$html_allergenDescription_id}" value="{$html_allergenDescription_value}"/>
-					</div>
+        // Return the data (instead of rendering HTML directly)
+        return $response;
 
-					<div>
-						<label for="{$html_allergenIcon_id}">{$html_allergenIcon_label}</label>
-						<input type="file" name="{$html_allergenIcon_id}" id="{$html_allergenIcon_id}"/>
-					</div>
+        /** */
+        // $html_allergenName_id = 'allergen_name';
+        // $html_allergenName_label = __('Allergen name', 'allergens-dietary-ictoria');
+        // $html_allergenName_value = ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '');
 
-					<div>
-						<input type="submit" name="submit" class="button button-primary" value="{$html_submitButton_value}" />
-					</div>
-				</fieldset>
-				HTML;
+        // $html_allergenDescription_id = 'allergen_description';
+        // $html_allergenDescription_label = __('Allergen description', 'allergens-dietary-ictoria');
+        // $html_allergenDescription_value = ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '');
 
-        echo $html;
+        // $html_allergenIcon_id = 'allergen_icon';
+        // $html_allergenIcon_label = __('Allergen icon', 'allergens-dietary-ictoria');
+
+        // $html_submitButton_value = __('Add allergen', 'allergens-dietary-ictoria');
+
+        // $response = [];
+
+        // $response['html_allergenName'] = ['id' => $html_allergenName_id, 'label' => $html_allergenName_label, 'value' => $html_allergenName_value];
+        // $response['html_allergenDescription'] = ['id' => $html_allergenDescription_id, 'label' => $html_allergenDescription_label, 'value' => $html_allergenDescription_value];
+        // $response['html_allergenIcon'] = ['id' => $html_allergenIcon_id, 'label' => $html_allergenIcon_label];
+        // $response['html_submitButton'] = ['value' => $html_submitButton_value];
+
+        // var_dump($response);
+        // return $response;
+        /** */
+        // $html = <<<HTML
+        //         <fieldset>
+        //             <div>
+        //                 <label for="{$html_allergenName_id}">{$html_allergenName_label}</label>
+        //                 <input type="text" name="{$html_allergenName_id}" id="{$html_allergenName_id}" value="{$html_allergenName_value}"/>
+        //             </div>
+
+        //             <div>
+        //                 <label for="{$html_allergenDescription_id}">{$html_allergenDescription_label}</label>
+        //                 <input type="text" name="{$html_allergenDescription_id}" id="{$html_allergenDescription_id}" value="{$html_allergenDescription_value}"/>
+        //             </div>
+
+        //             <div>
+        //                 <label for="{$html_allergenIcon_id}">{$html_allergenIcon_label}</label>
+        //                 <input type="file" name="{$html_allergenIcon_id}" id="{$html_allergenIcon_id}"/>
+        //             </div>
+
+        //             <div>
+        //                 <input type="submit" name="submit" class="button button-primary" value="{$html_submitButton_value}" />
+        //             </div>
+        //         </fieldset>
+        //         HTML;
+
+        // echo $html;
     }
 
     /**

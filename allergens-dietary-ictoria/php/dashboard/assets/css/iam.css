@@ -39,3 +39,8 @@
 		}
 	}
 }
+
+.iam-page-allergens-dietary-section-add-allergen {
+	max-width: 945px;
+	/* display: none !important; */
+}
