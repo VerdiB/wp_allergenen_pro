@@ -24,6 +24,7 @@ if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) 
 class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ictoria_Form {
 
 	private ? array  $_allergen = null;
+	private const MIME_TYPES = [ 'image/png', 'image/jpeg','image/jpg' ];
 
 	public function __construct() {
 	}
@@ -80,14 +81,15 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		( false === Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] ) ) ?
 			Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->addAllergens( $data ) :
 			Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->updateAllergens( $data );
-		if ( false === file_is_valid_image( $data['allergen_icon'] ) ) {
+		
+		if ( false === wp_check_filetype( $data['allergen_icon']['name'], self::MIME_TYPES ) ) {
 			throw new Exception( __( 'The file is not a valid image' ) );
 			return;
 		} else {
 
-			( false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon'] ) ) ?
-				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data ) :
-				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->updateAttachment( $data );
+			( false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] ) ) ?
+				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] ) :
+				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->updateAttachment( $data['allergen_icon'] );
 		}
 
 		( false === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'] ) ) ?
@@ -106,7 +108,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	public function sanitize( array $data ) {
 		$data['allergen_name']        = sanitize_text_field( wp_unslash( $data['allergen_name'] ) );
 		$data['allergen_description'] = sanitize_text_field( wp_unslash( $data['allergen_description'] ) );
-		$data['allergen_icon']        = sanitize_file_name( $data['allergen_icon'] );
+		$data['allergen_icon']['name']        = sanitize_file_name( $data['allergen_icon']['name'] );
 
 		return $data;
 	}

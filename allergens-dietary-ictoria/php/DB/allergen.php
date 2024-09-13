@@ -47,8 +47,12 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		$wpdb->insert(
 			$table_name,
 			array(
-				'allergy_name'        => $data['allergy_name'],
-				'allergy_description' => $data['allergy_description'],
+				'allergy_name'        => $data['allergen_name'],
+				'allergy_description' => $data['allergen_description'],
+			),
+			array(
+				'%s',
+				'%s',
 			)
 		);
 		return ( isset( $wpdb->insert_id ) ) ? true : false;
@@ -77,11 +81,11 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		$wpdb->update(
 			$table_name,
 			array(
-				'allergy_name'        => $data['allergy_name'],
-				'allergy_description' => $data['allergy_description'],
+				'allergy_name'        => $data['allergen_name'],
+				'allergy_description' => $data['allergen_description'],
 			),
 			array(
-				'allergy_name' => $data['allergy_name'],
+				'allergy_name' => $data['allergen_name'],
 			)
 		);
 	}
