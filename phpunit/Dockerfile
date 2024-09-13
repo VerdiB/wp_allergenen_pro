@@ -21,16 +21,18 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 # # Voeg wp test config aan het PATH
 
 # Installeer PHPUnit via Composer
-RUN composer global require --dev phpunit/phpunit ^9 \
+RUN composer global require --dev phpunit/phpunit ^11 \
 && ln -s /root/.composer/vendor/bin/phpunit /usr/local/bin/phpunit
 
 # Installeer WP-unit via Composer
-RUN composer global require --dev wp-phpunit/wp-phpunit ^6\
-&& ln -s /root/.composer/vendor/bin/wpunit /usr/local/bin/wpunit
+# RUN composer global require --dev wp-phpunit/wp-phpunit ^6\
+# && ln -s /root/.composer/vendor/bin/wpunit /usr/local/bin/wpunit
 
 #  voeg config aan wordpress root toe
-# COPY ../tests/wp-tests-config.php /root/.composer/vendor/bin/wp-tests-config.php
+# COPY ../phpunit/unit/wp-tests-config.php /root/.composer/vendor/bin/wp-tests-config.php
 
-WORKDIR /var/www/html
+WORKDIR /var/www/html/wordpress-tests
 
-ENTRYPOINT [ "phpunit", "--verbose", "./wordpress-tests" ]
+ENTRYPOINT [ "phpunit", "--configuration", "phpunit.xml" ]
+
+# ENTRYPOINT [ "phpunit", "--testsuite", unit ]
