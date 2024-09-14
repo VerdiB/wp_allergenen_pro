@@ -1,7 +1,7 @@
 @import "./poppins-font.css";
 
 .iam-page-allergens-dietary-section-add-allergen,
-.iam-page-allergens-dietary-section-all-allergens {
+.iam-page-allergens-dietary-section-manage-allergens {
 	max-width: 945px;
 	/* display: none !important; */
 }
@@ -15,6 +15,10 @@
 			flex-direction: column;
 			width: 50%;
 
+			label {
+				min-width: 30%;
+			}
+
 			div {
 				display: flex;
 				flex-direction: row;
@@ -25,20 +29,21 @@
 				input[type="file"],
 				input[type="text"] {
 					margin-left: auto;
+					flex-grow: 1;
 				}
 			}
 		}
 	}
 }
 
-.iam-page-allergens-dietary-section-all-allergens {
+.iam-page-allergens-dietary-section-manage-allergens {
 	div {
 		display: flex;
 		flex-wrap: wrap;
 		width: 80%;
 		min-width: 50px;
 
-		.iam-page-allergens-dietary-section-all-allergens-allergen {
+		.iam-page-allergens-dietary-section-manage-allergens-allergen {
 			width: 10%;
 			display: flex;
 			flex-direction: column;

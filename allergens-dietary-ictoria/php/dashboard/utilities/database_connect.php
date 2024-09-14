@@ -25,6 +25,7 @@ class IAM_Database_Connect
         if (is_null(self::$_instance)) {
             self::$_instance = new IAM_Database_Connect();
 
+            // Use this to populate the table with the options from functions.php
             // self::populate_allergen_table();
         }
     }
@@ -32,23 +33,6 @@ class IAM_Database_Connect
     public static function get_local_options()
     {
         return Allergens_Dietary_Ictoria_Functions::default_options();
-    }
-
-    public static function insert_allergen($name, $description)
-    {
-        global $wpdb;
-
-        dbDelta(
-            $wpdb->query(
-                $wpdb->prepare(
-                    "INSERT INTO {$wpdb->prefix}allergens_dietary_ictoria_allergy (allergy_name, allergy_description) VALUES (%s, %s)",
-                    array(
-                        $name,
-                        $description,
-                    )
-                )
-            )
-        );
     }
 
     public static function populate_allergen_table()
@@ -63,36 +47,40 @@ class IAM_Database_Connect
         $options = self::get_local_options();
 
         foreach ($options as $key => $value) {
-            $allergen_name = $value['title'];
-            $description = $allergen_name . ' description text';
-            $icon_path = $value['icon'];
+            // Check if the option is of type 'allergen'
+            if (isset($value['category']) && $value['category'] === __('allergen', 'allergens-dietary-ictoria')) {
 
-            // Step 1: Check if allergen exists, if not, add it
-            if (!$allergen_queries->checkAllergenExists($allergen_name)) {
-                $allergen_data = array(
-                    'allergen_name' => $allergen_name,
-                    'allergen_description' => $description,
+                $allergen_name = $value['title'];
+                $description = $allergen_name . ' description text';
+                $icon_path = $value['icon'];
+
+                // Step 1: Check if allergen exists, if not, add it
+                if (!$allergen_queries->checkAllergenExists($allergen_name)) {
+                    $allergen_data = array(
+                        'allergen_name' => $allergen_name,
+                        'allergen_description' => $description,
+                    );
+                    $allergen_queries->addAllergens($allergen_data);
+                }
+
+                // Step 2: Handle the attachment (icon)
+                $attachment_data = array(
+                    'name' => basename($icon_path),
+                    'full_path' => basename($icon_path),
                 );
-                $allergen_queries->addAllergens($allergen_data);
-            }
 
-            // Step 2: Handle the attachment (icon)
-            $attachment_data = array(
-                'name' => basename($icon_path),
-                'full_path' => basename($icon_path),
-            );
+                // Step 3: Check if the attachment exists in the attachments table, if not, add it
+                if (!$attachment_queries->checkAttachmentExists($attachment_data['name'])) {
+                    $attachment_queries->addAttachment($attachment_data);
+                }
 
-            // Step 3: Check if the attachment exists in the attachments table, if not, add it
-            if (!$attachment_queries->checkAttachmentExists($attachment_data['name'])) {
-                $attachment_queries->addAttachment($attachment_data);
-            }
-
-            // Step 4: Link the allergen with the attachment in the allergy_attachment table
-            if (!$allergy_attachment_queries->checkAllergyAttachmentExists($allergen_name)) {
-                $allergy_attachment_queries->addallergyAttachment(array(
-                    'allergen_name' => $allergen_name,
-                    'allergen_icon' => array('name' => $attachment_data['name']),
-                ));
+                // Step 4: Link the allergen with the attachment in the allergy_attachment table
+                if (!$allergy_attachment_queries->checkAllergyAttachmentExists($allergen_name)) {
+                    $allergy_attachment_queries->addallergyAttachment(array(
+                        'allergen_name' => $allergen_name,
+                        'allergen_icon' => array('name' => $attachment_data['name']),
+                    ));
+                }
             }
         }
     }
@@ -137,6 +125,33 @@ class IAM_Database_Connect
         }
         return $response;
     }
+
+    public static function allergen_exists(string $allergenName): bool
+    {
+        $allergen_queries = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
+        return $allergen_queries->checkAllergenExists($allergenName);
+    }
+
+    public static function is_allergen_activated(string $allergenName): bool
+    {
+        $allergen_queries = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
+        $allergen = $allergen_queries->getAllergen($allergenName);
+
+        if (empty($allergen)) {
+            return false;
+        }
+
+        // Assuming only one result is returned
+        $allergen = $allergen[0];
+        return (bool) $allergen->allergy_activated;
+    }
+
+    public static function toggle_allergen_activation(string $allergenName, bool $activate): bool
+    {
+        $allergen_queries = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
+        return $allergen_queries->toggleAllergenActivation($allergenName, $activate);
+    }
+
 }
 
 IAM_Database_Connect::instance();

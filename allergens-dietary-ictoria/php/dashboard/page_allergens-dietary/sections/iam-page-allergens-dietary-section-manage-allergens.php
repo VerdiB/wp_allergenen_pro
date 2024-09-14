@@ -4,14 +4,14 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class IAM_Page_Allergens_Dietary_Section_All_Allergens extends IAM_Base_Section
+class IAM_Page_Allergens_Dietary_Section_Manage_Allergens extends IAM_Base_Section
 {
 
     public function __construct()
     {
         parent::__construct(
             strtolower(__CLASS__),
-            __('All Allergens', 'allergens-dietary-ictoria'),
+            __('Manage Allergens', 'allergens-dietary-ictoria'),
             str_replace('_', '-', strtolower(__CLASS__)),
             true
         );
