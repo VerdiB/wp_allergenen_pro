@@ -4,13 +4,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class IAM_Page_Ictoria_Dashboard_Section_Allergens_Dietary extends IAM_Base_Section
+class IAM_Page_Ictoria_Dashboard_Section_Dashboard extends IAM_Base_Section
 {
     public function __construct()
     {
         parent::__construct(
             strtolower(__CLASS__),
-            __('Allergens & Dietary Plugin', 'text-domain'),
+            '',
             str_replace('_', '-', strtolower(__CLASS__))
         );
     }
@@ -23,12 +23,7 @@ class IAM_Page_Ictoria_Dashboard_Section_Allergens_Dietary extends IAM_Base_Sect
          * https://www.phptutorial.net/php-tutorial/php-heredoc/
          */
         $html = <<<HTML
-        <div class="iam-dashboard-section $section_class">
-            <h2>Allergens & Dietary</h2>
-            <a href="$allergens_dietary_url">
-                <button>check it out</button>
-            </a>
-        </div>
+            This is text
         HTML;
 
         echo $html;

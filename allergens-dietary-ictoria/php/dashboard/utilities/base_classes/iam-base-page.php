@@ -114,14 +114,16 @@ abstract class IAM_Base_Page
         echo '</div>';
     }
 
-    protected function render_sections()
+    protected function render_sections($enable_header = true)
     {
         foreach ($this->sections as $section) {
             // Ensure the section is an instance of IAM_Base_Section
             if ($section instanceof IAM_Base_Section) {
                 // Call the section's callback method
                 echo '<div class="' . $section->get_section_class() . '">';
-                echo '<h2>' . $section->get_section_title() . '</h2>';
+                if ($enable_header) {
+                    echo '<h2>' . $section->get_section_title() . '</h2>';
+                }
                 $section->section_callback();
                 echo '</div>';
             }
