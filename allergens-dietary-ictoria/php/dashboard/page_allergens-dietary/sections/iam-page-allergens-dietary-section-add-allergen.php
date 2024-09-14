@@ -45,8 +45,10 @@ class IAM_Page_Allergens_Dietary_Section_Add_Allergen extends IAM_Base_Section
         // echo '<div class="allergens_form"><form action="" method="post" enctype="multipart/form-data" class="add_allergens_form">';
         // echo '</form></div>';
 
+        $content_class = str_replace('_', '-', strtolower(__CLASS__));
+
         $html = <<<HTML
-        <form action="" method="post" enctype="multipart/form-data" class="add_allergens_form">
+        <form action="" method="post" enctype="multipart/form-data" class="$content_class">
             <fieldset>
                 <div>
                     <label for="{$html_allergenName_id}">{$html_allergenName_label}</label>

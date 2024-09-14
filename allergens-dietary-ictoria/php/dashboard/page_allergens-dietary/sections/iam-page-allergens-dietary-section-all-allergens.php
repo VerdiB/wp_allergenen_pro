@@ -24,7 +24,7 @@ class IAM_Page_Allergens_Dietary_Section_All_Allergens extends IAM_Base_Section
         $allergens = IAM_Database_Connect::get_allergens_with_attachments();
 
         $html_allergens = '';
-        $allergen_class = str_replace('_', '-', strtolower(__CLASS__)) . '-content-allergen';
+        $allergen_class = str_replace('_', '-', strtolower(__CLASS__)) . '-allergen';
 
         foreach ($allergens as $allergen => $value) {
 
@@ -41,7 +41,7 @@ class IAM_Page_Allergens_Dietary_Section_All_Allergens extends IAM_Base_Section
 
         }
 
-        $content_class = str_replace('_', '-', strtolower(__CLASS__)) . '-content';
+        $content_class = str_replace('_', '-', strtolower(__CLASS__));
 
         $html = <<<HTML
         <div class="$content_class">

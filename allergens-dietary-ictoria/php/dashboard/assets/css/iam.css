@@ -1,6 +1,6 @@
 @import "./poppins-font.css";
 
-.add_allergens_form {
+.iam-page-allergens-dietary-section-add-allergen {
 	fieldset {
 		display: flex;
 		flex-direction: column;
@@ -21,11 +21,11 @@
 	}
 }
 
-.iam-page-allergens-dietary-section-all-allergens-content {
+.iam-page-allergens-dietary-section-all-allergens {
 	display: flex;
 	flex-wrap: wrap;
 
-	.iam-page-allergens-dietary-section-all-allergens-content-allergen {
+	.iam-page-allergens-dietary-section-all-allergens-allergen {
 		width: 10%;
 		display: flex;
 		flex-direction: column;
