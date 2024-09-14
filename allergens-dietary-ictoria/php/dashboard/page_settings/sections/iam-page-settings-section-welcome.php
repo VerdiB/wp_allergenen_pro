@@ -16,12 +16,6 @@ class IAM_Page_Settings_Section_Welcome extends IAM_Base_Section
             'iam-settings-section-welcome'
         );
 
-        $this->add_field(
-            strtolower(__CLASS__ . self::$field_name),
-            __('Welcome Field', 'text-domain'),
-            [$this, 'field_callback'],
-            ['label_for' => strtolower(__CLASS__ . self::$field_name),'class' => 'iam-settings-section-welcome-field']
-        );
     }
 
     public function section_callback()

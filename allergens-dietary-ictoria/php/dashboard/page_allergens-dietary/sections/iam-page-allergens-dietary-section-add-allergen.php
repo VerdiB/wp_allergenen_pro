@@ -25,30 +25,25 @@ class IAM_Page_Allergens_Dietary_Section_Add_Allergen extends IAM_Base_Section
         Allergens_Dietary_Ictoria_Form::setFormType(FormType::ALLERGENS);
         $response = Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
 
-        // echo '<pre>';
-        // var_dump($response);
-        // echo '</pre>';
-
+        // Allergen name values
         $html_allergenName_id = $response['fields']['allergen_name']['id'];
         $html_allergenName_label = $response['fields']['allergen_name']['label'];
         $html_allergenName_value = $response['fields']['allergen_name']['value'];
 
+        // Allergen description values
         $html_allergenDescription_id = $response['fields']['allergen_description']['id'];
         $html_allergenDescription_label = $response['fields']['allergen_description']['label'];
         $html_allergenDescription_value = $response['fields']['allergen_description']['value'];
 
+        // Allergen icon values
         $html_allergenIcon_id = $response['fields']['allergen_icon']['id'];
         $html_allergenIcon_label = $response['fields']['allergen_icon']['label'];
 
+        // Submit button value
         $html_submitButton_value = $response['submit_button']['value'];
 
-        // echo '<div class="allergens_form"><form action="" method="post" enctype="multipart/form-data" class="add_allergens_form">';
-        // echo '</form></div>';
-
-        $content_class = str_replace('_', '-', strtolower(__CLASS__));
-
         $html = <<<HTML
-        <form action="" method="post" enctype="multipart/form-data" class="$content_class">
+        <form action="" method="post" enctype="multipart/form-data">
             <fieldset>
                 <div>
                     <label for="{$html_allergenName_id}">{$html_allergenName_label}</label>

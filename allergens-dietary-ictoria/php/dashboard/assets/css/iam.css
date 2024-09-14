@@ -1,46 +1,55 @@
 @import "./poppins-font.css";
 
+.iam-page-allergens-dietary-section-add-allergen,
+.iam-page-allergens-dietary-section-all-allergens {
+	max-width: 945px;
+	/* display: none !important; */
+}
+
 .iam-page-allergens-dietary-section-add-allergen {
-	fieldset {
-		display: flex;
-		flex-direction: column;
-		max-width: 50%;
+	margin-bottom: 1rem;
 
-		div {
+	form {
+		fieldset {
 			display: flex;
-			flex-direction: row;
-			align-items: center;
-			margin-bottom: 0.5rem;
+			flex-direction: column;
+			width: 50%;
 
-			input[type="submit"],
-			input[type="file"],
-			input[type="text"] {
-				margin-left: auto;
+			div {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				margin-bottom: 0.5rem;
+
+				input[type="submit"],
+				input[type="file"],
+				input[type="text"] {
+					margin-left: auto;
+				}
 			}
 		}
 	}
 }
 
 .iam-page-allergens-dietary-section-all-allergens {
-	display: flex;
-	flex-wrap: wrap;
-
-	.iam-page-allergens-dietary-section-all-allergens-allergen {
-		width: 10%;
+	div {
 		display: flex;
-		flex-direction: column;
-		align-items: center;
-		margin-bottom: 1rem;
+		flex-wrap: wrap;
+		width: 80%;
+		min-width: 50px;
 
-		img {
-			background: #11164d;
-			border-radius: 8px;
-			color: white;
+		.iam-page-allergens-dietary-section-all-allergens-allergen {
+			width: 10%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-bottom: 1rem;
+
+			img {
+				background: #11164d;
+				border-radius: 8px;
+				color: white;
+			}
 		}
 	}
-}
-
-.iam-page-allergens-dietary-section-add-allergen {
-	max-width: 945px;
-	/* display: none !important; */
 }

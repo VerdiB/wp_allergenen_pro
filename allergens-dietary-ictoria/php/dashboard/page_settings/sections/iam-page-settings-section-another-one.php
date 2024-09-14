@@ -16,12 +16,6 @@ class IAM_Page_Settings_Section_Another_One extends IAM_Base_Section
             'iam-settings-section-another-one'
         );
 
-        $this->add_field(
-            strtolower(__CLASS__ . self::$field_name),
-            __('Another One Field', 'text-domain'),
-            [$this, 'field_callback'],
-            ['label_for' => strtolower(__CLASS__ . self::$field_name), 'class' => 'iam-settings-section-another-one-field']
-        );
     }
 
     public function section_callback()

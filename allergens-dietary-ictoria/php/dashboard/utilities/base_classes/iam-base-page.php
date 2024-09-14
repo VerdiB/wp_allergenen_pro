@@ -40,7 +40,6 @@ abstract class IAM_Base_Page
         spl_autoload_register([$this, 'autoload']);
 
         add_action('admin_menu', [$this, 'register_menu']);
-        add_action('admin_init', [$this, 'register_settings']);
     }
 
     public function autoload($class_name)
@@ -48,8 +47,8 @@ abstract class IAM_Base_Page
         if (strpos($class_name, 'IAM_Page') === 0) {
             // Get the calling class name using Reflection
             $reflection = new ReflectionClass($this);
-            $class_file = $reflection->getFileName(); // e.g., iam-menu-ictoria-dashboard.php
-            $parent_class_dir = basename(dirname($class_file)); // e.g., menu_ictoria-dashboard
+            $class_file = $reflection->getFileName();
+            $parent_class_dir = basename(dirname($class_file));
 
             // Convert class name to file name
             $file_name = str_replace('_', '-', strtolower($class_name)) . '.php';
@@ -96,19 +95,6 @@ abstract class IAM_Base_Page
         }
     }
 
-    public function register_settings()
-    {
-        register_setting(
-            $this->menu_slug . '_options_group',
-            $this->menu_slug . '_options',
-            [$this, 'validate_settings']
-        );
-
-        foreach ($this->sections as $section) {
-            $section->register_section($this->menu_slug);
-        }
-    }
-
     public function render_page()
     {
         if (!current_user_can($this->capability)) {
@@ -116,25 +102,41 @@ abstract class IAM_Base_Page
         }
 
         echo '<div class="wrap">';
-        echo '<div class="' . $this->menu_slug . '">';
-        echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
-        echo '<form action="options.php" method="post">';
-        settings_fields($this->menu_slug . '_options_group');
-        do_settings_sections($this->menu_slug);
-        submit_button();
-        echo '</form>';
+
+        // Debug: Output sections array
+        // echo '<pre>';
+        // var_dump($this->sections);
+        // echo '</pre>';
+
+        // Call the method responsible for rendering sections
+        $this->render_sections();
+
         echo '</div>';
-        echo '</div>';
+    }
+
+    protected function render_sections()
+    {
+        foreach ($this->sections as $section) {
+            // Ensure the section is an instance of IAM_Base_Section
+            if ($section instanceof IAM_Base_Section) {
+                // Call the section's callback method
+                echo '<div class="' . $section->get_section_class() . '">';
+                echo '<h2>' . $section->get_section_title() . '</h2>';
+                $section->section_callback();
+                echo '</div>';
+            }
+        }
     }
 
     public function add_section($section)
     {
+        // Ensure no duplicate sections are added
+        foreach ($this->sections as $existing_section) {
+            if ($existing_section->get_section_id() === $section->get_section_id()) {
+                return; // Section already exists
+            }
+        }
         $this->sections[] = $section;
-    }
-
-    public function validate_settings($input)
-    {
-        return $input;
     }
 
     abstract protected function is_top_level();

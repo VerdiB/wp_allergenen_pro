@@ -41,10 +41,8 @@ class IAM_Page_Allergens_Dietary_Section_All_Allergens extends IAM_Base_Section
 
         }
 
-        $content_class = str_replace('_', '-', strtolower(__CLASS__));
-
         $html = <<<HTML
-        <div class="$content_class">
+        <div class="all-allergens-wrapper">
             $html_allergens
         </div>
         HTML;
