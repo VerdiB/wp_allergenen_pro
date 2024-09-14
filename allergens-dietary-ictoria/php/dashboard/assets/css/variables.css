@@ -1,4 +1,18 @@
 :root {
 	--iam-primary-accent-color: #11164d;
 	--iam-primary-accent-font-color: #e0e0eb;
+
+	--iam-primary-gradient-background-fallback: rgb(17, 22, 77);
+	--iam-primary-gradient-background: linear-gradient(
+		27deg,
+		rgba(17, 22, 77, 1) 0%,
+		rgba(27, 35, 121, 1) 35%,
+		rgba(60, 177, 228, 1) 100%
+	);
+	--iam-primary-gradient-background-big: linear-gradient(
+		52deg,
+		rgba(17, 22, 77, 1) 0%,
+		rgba(27, 35, 121, 1) 35%,
+		rgba(60, 177, 228, 1) 100%
+	);
 }

@@ -1,5 +1,9 @@
 @import "./variables.css";
 
+/* 
+ * Main dashboard container.
+ * 
+ */
 @media only screen and (max-width: 1280px) {
 	.iam-dashboard {
 		width: 800px;
@@ -15,7 +19,6 @@
 		width: 100%;
 	}
 }
-
 .iam-dashboard {
 	/* Set parent div as relative
    * to enable absolute positioning
@@ -42,28 +45,113 @@
 	h1 {
 		text-align: center;
 	}
+}
+/* End Main dashboard container. */
 
-	.iam-page-ictoria-dashboard-section-dashboard {
-		/* Color variables are set in variables.css.
-     */
-		background-color: var(--iam-primary-accent-color);
-		color: var(--iam-primary-accent-font-color);
-
-		/* Set margin and padding
-     * to 20px/-20px to enable
-     * this div to be wider but
-     * still keep its original
-     * width.
-     *
-     * Variable for offset is set
-     * calc() multiplied by -1
-     * to output negative (-20px)
-     */
-		--iam-section-dashboard-offset: 20px;
-		padding: 0.6rem var(--iam-section-dashboard-offset);
-		margin: 0 calc(var(--iam-section-dashboard-offset) * -1);
-
-		height: 12rem;
-		border-radius: 12px;
+/* 
+ * Section dashboard container.
+ * 
+ */
+@media only screen and (min-width: 1280px) {
+	.iam-dashboard-hero {
+		background: var(--iam-primary-gradient-background-big);
 	}
+}
+.iam-dashboard-hero {
+	/* Color variables are set in variables.css.
+   */
+	background-color: var(--iam-primary-gradient-background-fallback);
+	background: var(--iam-primary-gradient-background);
+	color: var(--iam-primary-accent-font-color);
+
+	/* Set margin and padding
+   * to 20px/-20px to enable
+   * this div to be wider but
+   * still keep its original
+   * width.
+   *
+   * Variable for offset is set
+   * calc() multiplied by -1
+   * to output negative (-20px)
+   */
+	--iam-section-dashboard-offset: 20px;
+	padding: 2rem var(--iam-section-dashboard-offset);
+	margin: 0 calc(var(--iam-section-dashboard-offset) * -1);
+
+	/* height: 12rem; */
+	border-radius: 12px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+/* End Section dashboard container. */
+
+/* 
+ * Section dashboard hero item.
+ * 
+ */
+.iam-dashboard-hero-item {
+	display: flex;
+	/* align-items: center; */
+	min-width: calc(50% - 2rem);
+	width: auto;
+	max-width: 60%;
+
+	.iam-dashboard-hero-item-content {
+		min-height: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+
+		h2 {
+			color: #fff;
+			margin: 0;
+			padding: 0;
+		}
+
+		p {
+			margin: 0;
+			padding: 0;
+		}
+
+		.iam-dashboard-hero-item-content-header {
+			display: flex;
+			flex-direction: column;
+			gap: 0.4rem;
+			flex-grow: 1;
+		}
+
+		.iam-dashboard-hero-item-content-footer {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			span:first-of-type {
+				font-size: 1.6rem;
+			}
+		}
+	}
+}
+.iam-dashboard-hero-item-img {
+	border-radius: 12px;
+	margin-left: 1rem;
+}
+.iam-dashboard-hero-button {
+	background: #2464ad;
+	color: var(--iam-primary-accent-font-color);
+	padding: 0.4rem 1.2rem;
+	border-radius: 6px;
+	border: none;
+	cursor: pointer;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	transition: color 0.25s ease-out, background-color 0.25s ease-out,
+		box-shadow 0.25s ease-out;
+}
+.iam-dashboard-hero-button:hover {
+	background: #8aadc4;
+	color: #000000;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }

@@ -15,15 +15,32 @@ class IAM_Page_Ictoria_Dashboard_Section_Dashboard extends IAM_Base_Section
         );
     }
 
+    public function get_section_class()
+    {
+        return 'iam-dashboard-hero';
+    }
+
     public function section_callback()
     {
-        $section_class = str_replace('_', '-', strtolower(__CLASS__));
-        $allergens_dietary_url = admin_url('admin.php?page=iam-allergens-dietary');
         /* PHP Heredoc
          * https://www.phptutorial.net/php-tutorial/php-heredoc/
          */
         $html = <<<HTML
-            This is text
+        <div class="iam-dashboard-hero-item">
+            <div class="iam-dashboard-hero-item-content">
+                <div class="iam-dashboard-hero-item-content-header">
+                    <h2>Allergens & Dietary plugin</h2>
+                    <p>This is the description for the allergen plugin. And this is some more filler text, maybe lorem ipsum would be better.</p>
+                </div>
+
+                <div class="iam-dashboard-hero-item-content-footer">
+                    <span>&euro; 0,00</span>
+                    <button class="iam-dashboard-hero-button">Button</button>
+                </div>
+            </div>
+
+            <img src="https://placehold.co/128" class="iam-dashboard-hero-item-img" alt="Placeholder image">
+        </div>
         HTML;
 
         echo $html;
