@@ -15,8 +15,6 @@ class IAM_Page_Allergens_Dietary_Section_Manage_Allergens extends IAM_Base_Secti
             str_replace('_', '-', strtolower(__CLASS__)),
             true
         );
-
-        require_once IAM_DIR . '/utilities/database_connect.php';
     }
 
     public function get_section_class()
@@ -37,8 +35,8 @@ class IAM_Page_Allergens_Dietary_Section_Manage_Allergens extends IAM_Base_Secti
             $allergen_icon = $value['icon_url'];
 
             $html_allergens .= <<<HTML
-            <div class="$allergen_class active">
-                <img src="$allergen_icon" alt="$allergen" width="50" height="50">
+            <div class="$allergen_class">
+                <img src="$allergen_icon" alt="$allergen" title="$allergen_name" width="50" height="50">
 
                 <!-- <span>$allergen_name</span> -->
             </div>

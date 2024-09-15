@@ -11,6 +11,7 @@ class Ictoria_Admin_Menu
     private static $_instance = null;
     // page directories
     private static $directories = [
+        IAM_DIR . '/' . 'utilities/',
         IAM_DIR . '/' . 'utilities/base_classes/',
         IAM_DIR . '/' . 'page_ictoria-dashboard/',
         IAM_DIR . '/' . 'page_allergens-dietary/',
@@ -27,12 +28,17 @@ class Ictoria_Admin_Menu
 
     private function __construct()
     {
+        add_action('rest_api_init', ['IAM_Rest_Routes', 'register_iam_rest_routes']);
+
         add_action('admin_enqueue_scripts', [__CLASS__, 'iam_style']);
         add_action('admin_enqueue_scripts', [__CLASS__, 'iam_script']);
 
-        // top-level menu
+        // IAM_Database_Connect::instance();
+        // IAM_Rest_Routes::instance();
+
+        // // top-level menu
         IAM_Page_Ictoria_Dashboard::instance();
-        // submenus
+        // // submenus
         IAM_Page_Allergens_Dietary::instance();
         IAM_Page_Settings::instance();
     }

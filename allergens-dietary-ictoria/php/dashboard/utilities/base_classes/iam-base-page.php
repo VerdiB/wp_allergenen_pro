@@ -38,7 +38,6 @@ abstract class IAM_Base_Page
 
         // Register autoload function for sections
         spl_autoload_register([$this, 'autoload']);
-
         add_action('admin_menu', [$this, 'register_menu']);
     }
 

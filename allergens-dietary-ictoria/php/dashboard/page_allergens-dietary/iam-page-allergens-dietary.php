@@ -53,4 +53,3 @@ class IAM_Page_Allergens_Dietary extends IAM_Base_Page
         echo '</div>';
     }
 }
-// $options = Allergens_Dietary_Ictoria_Functions::get_options();
