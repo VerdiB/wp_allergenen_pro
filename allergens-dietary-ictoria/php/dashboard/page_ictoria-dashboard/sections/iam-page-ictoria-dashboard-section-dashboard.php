@@ -35,7 +35,7 @@ class IAM_Page_Ictoria_Dashboard_Section_Dashboard extends IAM_Base_Section
 
                 <div class="iam-dashboard-hero-item-content-footer">
                     <span>&euro; 0,00</span>
-                    <button class="iam-dashboard-hero-button">Button</button>
+                    <button class="iam-dashboard-hero-button">Install now</button>
                 </div>
             </div>
 

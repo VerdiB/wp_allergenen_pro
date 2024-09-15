@@ -17,6 +17,11 @@ class IAM_Page_Allergens_Dietary_Section_Add_Allergen extends IAM_Base_Section
         );
     }
 
+    public function get_section_class()
+    {
+        return 'iam-allergens-dietary-add-allergen';
+    }
+
     public function section_callback()
     {
         if (!class_exists('Allergens_Dietary_Ictoria_Form')) {

@@ -6,7 +6,6 @@ if (!defined('ABSPATH')) {
 
 class IAM_Page_Ictoria_Dashboard extends IAM_Base_Page
 {
-    // add page sections here
     private static $page_sections = [
         'Dashboard',
         'Allergens_Dietary',
@@ -48,7 +47,7 @@ class IAM_Page_Ictoria_Dashboard extends IAM_Base_Page
         echo '<div class="' . $this->menu_slug . '">';
         echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
 
-        parent::render_sections(false, 'iam-dashboard-hero');
+        parent::render_sections(false);
 
         echo '</div>';
         echo '</div>';

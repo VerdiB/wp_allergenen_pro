@@ -47,7 +47,7 @@ class IAM_Page_Allergens_Dietary extends IAM_Base_Page
         echo '<div class="' . $this->menu_slug . '">';
         echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
 
-        parent::render_sections();
+        parent::render_sections(true);
 
         echo '</div>';
         echo '</div>';

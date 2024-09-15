@@ -1,79 +1,24 @@
 @import "./variables.css";
+@import "./variables.css";
 
-/* 
- * Main dashboard container.
- * 
- */
-@media only screen and (max-width: 1280px) {
-	.iam-dashboard {
-		width: 800px;
-	}
-}
-@media only screen and (max-width: 1024px) {
-	.iam-dashboard {
-		width: 640px;
-	}
-}
-@media only screen and (max-width: 720px) {
-	.iam-dashboard {
-		width: 100%;
-	}
-}
 .iam-dashboard {
-	/* Set parent div as relative
-   * to enable absolute positioning
-   * of child elements.
-   */
 	position: relative;
-
-	/* Set display to flex
-   * to enable flexbox layout
-   * and flex-direction to column
-   * to enable vertical layout.
-   */
-	/* display: flex; */
 	flex-direction: column;
-
 	height: 100vh;
 	min-height: 100vh;
 	max-height: 100vh;
-
 	max-width: 1280px;
-
 	margin: 0 auto;
 
 	h1 {
 		text-align: center;
 	}
 }
-/* End Main dashboard container. */
-
-/* 
- * Section dashboard container.
- * 
- */
-@media only screen and (min-width: 1280px) {
-	.iam-dashboard-hero {
-		background: var(--iam-primary-gradient-background-big);
-	}
-}
 .iam-dashboard-hero {
-	/* Color variables are set in variables.css.
-   */
 	background-color: var(--iam-primary-gradient-background-fallback);
 	background: var(--iam-primary-gradient-background);
 	color: var(--iam-primary-accent-font-color);
 
-	/* Set margin and padding
-   * to 20px/-20px to enable
-   * this div to be wider but
-   * still keep its original
-   * width.
-   *
-   * Variable for offset is set
-   * calc() multiplied by -1
-   * to output negative (-20px)
-   */
 	--iam-section-dashboard-offset: 20px;
 	padding: 2rem var(--iam-section-dashboard-offset);
 	margin: 0 calc(var(--iam-section-dashboard-offset) * -1);
@@ -87,18 +32,9 @@
 	flex-wrap: wrap;
 	gap: 1rem;
 }
-/* End Section dashboard container. */
-
-/* 
- * Section dashboard hero item.
- * 
- */
 .iam-dashboard-hero-item {
 	display: flex;
 	/* align-items: center; */
-	min-width: calc(50% - 2rem);
-	width: auto;
-	max-width: 60%;
 
 	.iam-dashboard-hero-item-content {
 		min-height: 100%;
@@ -134,10 +70,11 @@
 			}
 		}
 	}
-}
-.iam-dashboard-hero-item-img {
-	border-radius: 12px;
-	margin-left: 1rem;
+
+	.iam-dashboard-hero-item-img {
+		border-radius: 12px;
+		margin-left: 1rem;
+	}
 }
 .iam-dashboard-hero-button {
 	background: #2464ad;
@@ -154,4 +91,48 @@
 	background: #8aadc4;
 	color: #000000;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+/* For screens bigger than 1280px */
+@media only screen and (min-width: 1280px) {
+	.iam-dashboard {
+		width: 1024px;
+	}
+	.iam-dashboard-hero {
+		background: var(--iam-primary-gradient-background-big);
+	}
+	.iam-dashboard-hero-item {
+		width: 60%; /* Flexibility instead of fixed 1024px */
+	}
+}
+
+/* For screens smaller than 1280px */
+@media only screen and (max-width: 1280px) {
+	.iam-dashboard {
+		width: 800px;
+	}
+	.iam-dashboard-hero-item {
+		width: 80%; /* Flexibility instead of fixed 1024px */
+	}
+}
+
+/* For screens smaller than 1024px */
+@media only screen and (max-width: 1024px) {
+	.iam-dashboard {
+		width: 640px;
+	}
+	.iam-dashboard-hero-item {
+		width: 90%; /* Make the item more flexible */
+	}
+}
+
+/* For screens smaller than 720px */
+@media only screen and (max-width: 720px) {
+	.iam-dashboard {
+		width: 100%;
+	}
+	.iam-dashboard-hero-item {
+		width: 100%;
+		max-width: 100%; /* Ensure it does not exceed the full width */
+	}
 }
