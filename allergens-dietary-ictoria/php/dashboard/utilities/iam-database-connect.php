@@ -120,7 +120,8 @@ class IAM_Database_Connect
     public static function toggle_allergen_activation($request)
     {
         $allergenName = $request->get_param('name');
-        $activate = $request->get_param('activate');
+        $activate = filter_var($request->get_param('activate'), FILTER_VALIDATE_BOOLEAN);
+
         $allergen_queries = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
 
         if (!$allergen_queries->checkAllergenExists($allergenName)) {

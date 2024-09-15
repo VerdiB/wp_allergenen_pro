@@ -103,7 +103,7 @@ abstract class IAM_Rest_Routes
                     'activate' => [
                         'required' => true,
                         'validate_callback' => function ($param) {
-                            return is_bool($param);
+                            return is_string($param) && in_array(strtolower($param), ['true', 'false', '1', '0']);
                         },
                     ],
                 ],
