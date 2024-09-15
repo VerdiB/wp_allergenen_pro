@@ -1,0 +1,31 @@
+@import "../assets/css/variables.css";
+
+.iam-settings {
+}
+/* For screens bigger than 1280px */
+@media only screen and (min-width: 1280px) {
+	.iam-settings {
+		width: 1024px;
+	}
+}
+
+/* For screens smaller than 1280px */
+@media only screen and (max-width: 1280px) {
+	.iam-settings {
+		width: 800px;
+	}
+}
+
+/* For screens smaller than 1024px */
+@media only screen and (max-width: 1024px) {
+	.iam-settings {
+		width: 640px;
+	}
+}
+
+/* For screens smaller than 720px */
+@media only screen and (max-width: 720px) {
+	.iam-settings {
+		width: 100%;
+	}
+}
