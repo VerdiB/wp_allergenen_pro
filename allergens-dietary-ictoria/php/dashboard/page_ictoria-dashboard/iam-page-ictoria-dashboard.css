@@ -3,9 +3,9 @@
 .iam-dashboard {
 	position: relative;
 	flex-direction: column;
-	height: 100vh;
+	/* height: 100vh;
 	min-height: 100vh;
-	max-height: 100vh;
+	max-height: 100vh; */
 	max-width: 1280px;
 	margin: 0 auto;
 
@@ -87,7 +87,7 @@
 		box-shadow 0.25s ease-out;
 }
 .iam-dashboard-hero-button:hover {
-	background: #8aadc4;
+	background: #cfe2ee;
 	color: #000000;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
