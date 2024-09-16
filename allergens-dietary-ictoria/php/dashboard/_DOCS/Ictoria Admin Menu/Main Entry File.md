@@ -6,7 +6,7 @@ Besides [ictoria-admin-menu.php](../../ictoria-admin-menu.php) there also is [ic
 
 ## Setup & Autoloader
 
-Each page had its own directory `page_title`, entry files `iam-page-title.php` and sections `sections/iam-page-title-section-title.php`, it is important to follow the naming & file structure for everything to load automatically.
+Each page has its own directory `page_title`, entry files `iam-page-title.php` and sections `sections/iam-page-title-section-title.php`, it is important to follow the [file naming structure](./README.md) for everything to load automatically.
 
 - **$directories** <br>- The directories array holds the paths of directories inside `dashboard` that need to be checked by the autoloader, **it is important to add onto this if you make a new page**.
 - **$autoload_styles & $autoload_scripts** <br>- These arrays are populated during the main `autoload()` to hold the scripts and styles for each page so they can be enqueued.
@@ -71,7 +71,6 @@ It is important to instantiate each page here as well. <sup>_I am still working 
 ```php
     private function __construct()
     {
-
         /* Register the rest API routes.
          */
         add_action('rest_api_init', ['IAM_Rest_Routes', 'register_iam_rest_routes']);
@@ -231,11 +230,13 @@ Ictoria_Admin_Menu::instance();
 
 ## References
 
+- https://developer.wordpress.org/reference/functions/plugins_url/
 - https://developer.wordpress.org/reference/functions/add_action/
 - https://developer.wordpress.org/reference/hooks/rest_api_init/
 - https://developer.wordpress.org/reference/hooks/admin_enqueue_scripts/
 - https://developer.wordpress.org/reference/functions/wp_enqueue_style/
 - https://developer.wordpress.org/reference/functions/wp_enqueue_script/
+- https://www.php.net/manual/en/function.basename.php
 - https://www.php.net/manual/en/function.strtolower.php
 - https://www.php.net/manual/en/function.str-replace.php
 - https://www.php.net/manual/en/function.strpos.php
