@@ -4,6 +4,7 @@ mysql/
 wordpress/
 phpunit/tests/*.bak
 phpunit/tests/testdox.*
+phpunit/tests/*.log
 phpunit/tests/*.cache
 *.code-workspace
 vendor/
