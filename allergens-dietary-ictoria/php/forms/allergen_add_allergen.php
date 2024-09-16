@@ -50,7 +50,11 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		$html  = '<fieldset>';
 		$html .= '<label for="allergen_name">' . __( 'Allergen name', 'allergens-dietary-ictoria' ) . '</label>';
-		$html .= '<input type="text" name="allergen_name" id="allergen_name" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_name'] : '' ) . '"/>';
+		$html .= '<input type="text" name="allergen_name" id="allergen_name" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_name'] : '' ) . '" required/>';
+		$html .= '<label for="type">' . __( 'Type', 'allergens-dietary-ictoria' ) . '</label>';
+		$html .= '<select name="type" id="type" required>';
+		$html .= self::do_dropdown();
+		$html .= '</select>';
 		$html .= '<label for="allergen_description">' . __( 'Allergen description', 'allergens-dietary-ictoria' ) . '</label>';
 		$html .= '<input type="text" name="allergen_description" id="allergen_description" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_description'] : '' ) . '"/>';
 		$html .= '<label for="allergen_icon">' . __( 'Allergen icon', 'allergens-dietary-ictoria' ) . '</label>';
@@ -73,6 +77,10 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 */
 	public function submit( array $data ) {
 		$data = $this->sanitize( $data );
+		
+		echo '<pre> form data:';
+		var_dump($data);
+		echo '</pre>';
 
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
@@ -108,8 +116,31 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	public function sanitize( array $data ) {
 		$data['allergen_name']         = sanitize_text_field( wp_unslash( $data['allergen_name'] ) );
 		$data['allergen_description']  = sanitize_text_field( wp_unslash( $data['allergen_description'] ) );
+		$data['type']                  = absint( sanitize_text_field( wp_unslash( $data['type'] ) ) );
 		$data['allergen_icon']['name'] = sanitize_file_name( $data['allergen_icon']['name'] );
+		
+		if ($data['type'] > 1 || $data['type'] < 0) {
+			$data['type'] = 1;
+		}
 
 		return $data;
 	}
-}
+
+	private function do_dropdown() {
+		$html = '';
+		if ( empty( $this->_allergen ['is_allergy']) ) {
+			$html = '<option value="1" selected>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
+			$html .= '<option value="0">' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
+			return $html;
+		}
+
+		if ($this->_allergen['is_allergy'] === 1) {
+			$html = '<option value="1" selected>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
+			$html .= '<option value="0">' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
+		} else {
+			$html = '<option value="1">' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
+			$html .= '<option value="0" selected>' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
+		}
+		return $html;
+	}
+}	

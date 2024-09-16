@@ -73,7 +73,11 @@ class Allergens_Dietary_Ictoria_Form {
 			$_data = $_POST;
 		}
 		if ( ! empty( $_FILES ) ) {
+			// var_dump( $_FILES );
 			$_data = array_merge( $_data, $_FILES );
+			echo '<pre>';
+			var_dump( $_data );
+			echo '</pre>';
 		}
 		if ( ! empty( $_POST['submit'] ) ) {
 			self::$_formObject->submit( $_data );
