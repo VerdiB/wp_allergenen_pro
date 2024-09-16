@@ -9,6 +9,7 @@ jQuery(document).ready(function () {
 		function (event) {
 			$target = $j(event.target)
 
+			// something like this could be used to make a rest api call
 			// $j.ajax({
 			// 	type: "POST",
 			// 	url: "submit_data.php",

@@ -102,11 +102,6 @@ abstract class IAM_Base_Page
 
         echo '<div class="wrap">';
 
-        // Debug: Output sections array
-        // echo '<pre>';
-        // var_dump($this->sections);
-        // echo '</pre>';
-
         // Call the method responsible for rendering sections
         $this->render_sections();
 

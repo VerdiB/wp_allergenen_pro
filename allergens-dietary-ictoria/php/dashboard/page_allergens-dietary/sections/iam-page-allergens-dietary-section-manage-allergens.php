@@ -37,21 +37,21 @@ class IAM_Page_Allergens_Dietary_Section_Manage_Allergens extends IAM_Base_Secti
             $html_allergens .= <<<HTML
             <div class="$allergen_class">
                 <img src="$allergen_icon" alt="$allergen" title="$allergen_name" width="50" height="50">
-
-                <!-- <span>$allergen_name</span> -->
             </div>
             HTML;
 
         }
 
         $wrapper_class = $this->get_section_class() . '-all-allergens';
+
         $html = <<<HTML
         <p>Disable/enable, edit, add or remove allergens</p>
         <div class="$wrapper_class">
             $html_allergens
         </div>
         HTML;
-
+        
+        // this is what gets output by iam-page-allergens-dietary.php render_page() -> parent::render_sections(true);
         echo $html;
     }
 

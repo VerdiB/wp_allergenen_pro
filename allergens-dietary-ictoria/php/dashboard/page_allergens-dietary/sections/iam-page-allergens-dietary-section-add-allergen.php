@@ -72,6 +72,7 @@ class IAM_Page_Allergens_Dietary_Section_Add_Allergen extends IAM_Base_Section
         </form>
         HTML;
 
+        // this is what gets output by iam-page-allergens-dietary.php render_page() -> parent::render_sections(true);
         echo $html;
     }
 
