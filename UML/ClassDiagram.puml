@@ -60,7 +60,6 @@ package "php"{
         +generate_allergensdietary_htnl() : void
         +{static} plugin_action_links(links:array) : array
     }
-    
     package "forms"{
 
         enum FormType{
@@ -95,108 +94,7 @@ package "php"{
             - check_license_key(key:string) : boolean
         }
 
-    }
 
-    package "dashboard"{
-
-        class Ictoria_Admin_Menu {
-            - {static} _instance : Ictoria_Admin_Menu
-            - {static} directories : array
-            + {static} instance() : Ictoria_Admin_Menu
-            - __construct() : void
-            + {static} iam_style() : void
-            + {static} iam_script() : void
-            + {static} autoload(class_name : String) : void
-        }
-
-        abstract class IAM_Base_Page {
-            - page_title : string
-            - menu_title : string
-            - capability : string
-            - menu_slug : string
-            - callback : callable
-            - icon_url : string
-            - position : int
-            - sections : array
-            - {static} instances : array
-            + {static} instance() : IAM_Base_Page
-            + __construct(page_title: string, menu_title: string, capability: string, menu_slug: string, callback: callable, icon_url: string, position: int)
-            + autoload(class_name) : void
-            + register_menu() : void
-            + register_settings() : void
-            + render_page() : void
-            + add_section(section: IAM_Base_Section) : void
-            + validate_settings(input: mixed) : mixed
-            # is_top_level() : bool
-            # get_parent_slug() : string
-        }
-
-        abstract class IAM_Base_Section {
-            - section_id : string
-            - section_title : string
-            - section_class : string
-            - fields : array
-            - {static} instances : array
-            + {static} instance() : IAM_Base_Section
-            + __construct(section_id: string, section_title: string, section_class: string)
-            + register_section(menu_slug: string) : void
-            + add_field(field_id: string, field_title: string, callback: callable, args: array) : void
-            + section_callback() : void
-        }
-
-        class IAM_Page_Ictoria_Dashboard {
-            - page_sections : array
-            - __construct() : void
-            + is_top_level() : bool
-            + get_parent_slug() : string
-        }
-
-        class IAM_Page_Ictoria_Dashboard_Section_Welcome {
-            - field_name : string
-            - __construct() : void
-            + section_callback() : void
-            + field_callback(args: array) : void
-        }
-
-        class IAM_Page_Ictoria_Dashboard_Section_Another_One {
-            - field_name : string
-            - __construct() : void
-            + section_callback() : void
-            + field_callback(args: array) : void
-        }
-
-        class IAM_Page_Settings {
-            - page_sections : array
-            - __construct() : void
-            + is_top_level() : bool
-            + get_parent_slug() : string
-        }
-
-        class IAM_Page_Settings_Welcome {
-            - field_name : string
-            - __construct() : void
-            + section_callback() : void
-            + field_callback(args: array) : void
-        }
-
-        class IAM_Page_Settings_Another_One {
-            - field_name : string
-            - __construct() : void
-            + section_callback() : void
-            + field_callback(args: array) : void
-        }
-
-        IAM_Page_Ictoria_Dashboard --|> IAM_Base_Page
-        IAM_Page_Ictoria_Dashboard_Section_Welcome --|> IAM_Base_Section
-        IAM_Page_Ictoria_Dashboard_Section_Another_One --|> IAM_Base_Section
-
-        IAM_Page_Settings --|> IAM_Base_Page
-        IAM_Page_Settings_Welcome --|> IAM_Base_Section
-        IAM_Page_Settings_Another_One --|> IAM_Base_Section
-
-        Ictoria_Admin_Menu ..> IAM_Page_Ictoria_Dashboard : "manages"
-        Ictoria_Admin_Menu ..> IAM_Page_Settings : "manages"
-        IAM_Base_Page *-r-> IAM_Base_Section : "has"
     }
 }
 
