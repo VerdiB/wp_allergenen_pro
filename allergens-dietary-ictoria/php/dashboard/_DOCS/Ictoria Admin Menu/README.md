@@ -2,6 +2,12 @@
 
 This adds a WordPress Admin menu to the WordPress dashboard sidebar named `Ictoria`, which will be the main interface for Ictoria plugins i.e. `Allergens & Dietary`.
 
+## Loading pages
+
+When loading in the [dashboard/ictoria-admin-menu.php](../../ictoria-admin-menu.php) file it instantiates itself and registers the pages/submenus via an autoloader. Each page extends the [IAM_Base_Page](../../utilities/base_classes/iam-base-page.php) class.
+
+It automatically loads all pages that are added into the `$directories` array, it also loads in the [base classes](../Ictoria%20Admin%20Menu/Utilities/Base%20Classes/README.md) [IAM_Base_Page](../Ictoria%20Admin%20Menu/Utilities/Base%20Classes/IAM_Base_Page.md) and [IAM_Base_Section](../Ictoria%20Admin%20Menu/Utilities/Base%20Classes/IAM_Base_Section.md), this is where the main logic of the pages and sections resides, things like child instantiation, hook registration, settings, options etc.
+
 ## Naming & File Structure
 
 For the file naming structure there is a simple logic by always using dashes ( - ) to join words and adding nested items onto the file in the same pattern.

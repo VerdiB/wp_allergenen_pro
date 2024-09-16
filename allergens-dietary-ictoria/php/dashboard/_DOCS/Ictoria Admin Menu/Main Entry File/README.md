@@ -1,12 +1,12 @@
 # Main Entry File
 
-The main entry file for the dashboard is [ictoria-admin-menu.php](../../ictoria-admin-menu.php). This file loads in all the pages, utilities and its corrsponding assets.
+The main entry file for the dashboard is [ictoria-admin-menu.php](../../../ictoria-admin-menu.php). This file loads in all the pages, utilities and its corrsponding assets.
 
-Besides [ictoria-admin-menu.php](../../ictoria-admin-menu.php) there also is [ictoria-admin-menu.css](../../ictoria-admin-menu.css) and [ictoria-admin-menu.js](../../ictoria-admin-menu.js), these files get enqueued in the `iam_style()` & `iam_script()` functions.
+Besides [ictoria-admin-menu.php](../../../ictoria-admin-menu.php) there also is [ictoria-admin-menu.css](../../../ictoria-admin-menu.css) and [ictoria-admin-menu.js](../../../ictoria-admin-menu.js), these files get enqueued in the `iam_style()` & `iam_script()` functions.
 
 ## Setup & Autoloader
 
-Each page has its own directory `page_title`, entry files `iam-page-title.php` and sections `sections/iam-page-title-section-title.php`, it is important to follow the [file naming structure](./README.md) for everything to load automatically.
+Each page has its own directory `page_title`, entry files `iam-page-title.php` and sections `sections/iam-page-title-section-title.php`, it is important to follow the [file naming structure](../README.md) for everything to load automatically.
 
 - **$directories** <br>- The directories array holds the paths of directories inside `dashboard` that need to be checked by the autoloader, **it is important to add onto this if you make a new page**.
 - **$autoload_styles & $autoload_scripts** <br>- These arrays are populated during the main `autoload()` to hold the scripts and styles for each page so they can be enqueued.
@@ -61,7 +61,7 @@ class Ictoria_Admin_Menu
 
 ### \_\_construct()
 
-During [`Ictoria_Admin_Menu`](../../ictoria-admin-menu.php)`::__construct()` the actions registering the [IAM_Rest_Routes](../../utilities/iam-rest-routes.php) and for enqueue'ing the main css/js files, but also each of the pages' css/jss that got added to `$autoload_styles` & `$autoload_scripts` during the [`Ictoria_Admin_Menu`](../../ictoria-admin-menu.php)`::autoload()`.
+During [`Ictoria_Admin_Menu`](../../../ictoria-admin-menu.php)`::__construct()` the actions registering the [IAM_Rest_Routes](../../../utilities/iam-rest-routes.php) and for enqueue'ing the main css/js files, but also each of the pages' css/jss that got added to `$autoload_styles` & `$autoload_scripts` during the [`Ictoria_Admin_Menu`](../../../ictoria-admin-menu.php)`::autoload()`.
 
 It is important to instantiate each page here as well. <sup>_I am still working on creating a function for doing this automatically._</sup>
 
@@ -93,9 +93,11 @@ It is important to instantiate each page here as well. <sup>_I am still working 
 
 ### iam_style()
 
-In [`Ictoria_Admin_Menu`](../../ictoria-admin-menu.php)`::iam_style()` the adding of css to the WordPress queue happens, the _foreach_ loop goes through the items added to `$autoload_styles` and adds them to the queue as well.
+In [`Ictoria_Admin_Menu`](../../../ictoria-admin-menu.php)`::iam_style()` the adding of css to the WordPress queue happens, the _foreach_ loop goes through the items added to `$autoload_styles` and adds them to the queue as well.
 
-The [variables.css](../../assets/css/variables.css) <sup>[[\*1]](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)</sup> is where the css variables that are to be used globally reside. e.g. `--iam-primary-background-color: red;` which can then be referenced in other css files like this `background-color: var(--iam-primary-background-color);`.
+The [variables.css](../../../assets/css/variables.css) <sup>[^css-variables]</sup> is where the css variables that are to be used globally reside. e.g. `--iam-primary-background-color: red;` which can then be referenced in other css files like this `background-color: var(--iam-primary-background-color);`.
+
+[^css-variables]: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 
 <details>
   <summary>Click to show code (function iam_style()):</summary>
@@ -158,7 +160,7 @@ This speaks for itself, as the above, it enqueues but this time the js files.
 
 ### autoload($class_name)
 
-The autoload function is used by [spl_autoload_register](https://www.php.net/manual/en/function.spl-autoload-register.php) to load the pages. It takes $class_name as a argument to convert to the [file naming structure](./README.md).
+The autoload function is used by [spl_autoload_register](https://www.php.net/manual/en/function.spl-autoload-register.php) to load the pages. It takes $class_name as a argument to convert to the [file naming structure](../README.md).
 
 <details>
   <summary>Click to show code (function autoload($class_name)):</summary>
