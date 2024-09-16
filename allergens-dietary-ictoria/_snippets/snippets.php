@@ -8,18 +8,17 @@ public static function instance(){
 		self::$_instance = new Allergens_Dietary_Ictoria_Startup();
 	}
 }
-//run outside the class to initiate the class.
+// run outside the class to initiate the class.
 Allergens_Wp_Ictoria_Startup::instance();
 
 
-//custom debug code bases (only for testing)
+// custom debug code bases (only for testing)
 error_log('a'.PHP_EOL, 3, ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/debug.log');
 error_log(json_encode($array).PHP_EOL, 3, ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/debug.log');
 
 
-//force update options with new default settings
-//$options = Allergens_Dietary_Ictoria_Functions::default_options();
-//update_option('allergens_dietary_ictoria_options', $options, true);
+// force update options with new default settings
+// $options = Allergens_Dietary_Ictoria_Functions::default_options();
+// update_option('allergens_dietary_ictoria_options', $options, true);
 
 */
-?>

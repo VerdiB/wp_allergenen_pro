@@ -6,3 +6,5 @@ phpunit/tests/*.bak
 phpunit/tests/testdox.*
 phpunit/tests/*.cache
 *.code-workspace
+vendor/
+composer.*
