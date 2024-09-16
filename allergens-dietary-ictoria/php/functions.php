@@ -314,15 +314,15 @@ class Allergens_Dietary_Ictoria_Functions
                 ),
             )
         );
-        /*
+
         // add allergen button in WordPress
-        submit_button(
-        __('add allergen', 'allergens-dietary-ictoria'),
-        'primary', // CSS class for the button
-        true, // Wrap the button in a <p> tag
-        $attributes_allergen // Additional attributes like 'id'
-        );
-         */
+        // submit_button(
+        //     __('add allergen', 'allergens-dietary-ictoria'),
+        //     'primary', // CSS class for the button
+        //     true, // Wrap the button in a <p> tag
+        //     $attributes_allergen // Additional attributes like 'id'
+        // );
+
         return $options;
     }
 }

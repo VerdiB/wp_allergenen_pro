@@ -34,7 +34,8 @@ class Allergens_Dietary_Ictoria_Activator
         $sql_allergy = $wpdb->query(
             "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_allergy(
 						allergy_name VARCHAR(50) NOT NULL PRIMARY KEY,
-						allergy_description VARCHAR(255))"
+						allergy_description VARCHAR(255),
+						allergy_activated TINYINT(1) DEFAULT 0)"
         );
 
         $sql_allergy_attachment = $wpdb->query(

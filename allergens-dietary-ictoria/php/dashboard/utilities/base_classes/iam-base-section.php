@@ -9,18 +9,6 @@ abstract class IAM_Base_Section
     protected $section_id;
     protected $section_title;
     protected $section_class;
-    protected $fields = [];
-
-    private static $instances = [];
-
-    public static function instance()
-    {
-        $calledClass = static::class;
-        if (!isset(self::$instances[$calledClass])) {
-            self::$instances[$calledClass] = new static();
-        }
-        return self::$instances[$calledClass];
-    }
 
     public function __construct($section_id, $section_title, $section_class)
     {
@@ -31,40 +19,27 @@ abstract class IAM_Base_Section
 
     public function register_section($menu_slug)
     {
-        add_settings_section(
-            $this->section_id,
-            $this->section_title,
-            [$this, 'section_callback'],
-            $menu_slug,
-            ['before_section' => '<div class="' . $this->section_class . '">', 'after_section' => '</div>']
-        );
-
-        foreach ($this->fields as $field) {
-            add_settings_field(
-                $field['id'],
-                $field['title'],
-                $field['callback'],
-                $menu_slug,
-                $this->section_id,
-                $field['args']
-            );
-
-            register_setting($menu_slug . '_options_group', $field['id']);
-        }
-    }
-
-    public function add_field($field_id, $field_title, $callback, $args = [])
-    {
-        $this->fields[] = [
-            'id' => $field_id,
-            'title' => $field_title,
-            'callback' => $callback,
-            'args' => $args,
-        ];
+        // You can choose to add section-specific functionality here if needed
     }
 
     public function section_callback()
     {
+        // Default callback, should be overridden in subclasses
         echo '<p>Section description here.</p>';
+    }
+
+    public function get_section_id()
+    {
+        return $this->section_id;
+    }
+
+    public function get_section_title()
+    {
+        return $this->section_title;
+    }
+
+    public function get_section_class()
+    {
+        return $this->section_class;
     }
 }

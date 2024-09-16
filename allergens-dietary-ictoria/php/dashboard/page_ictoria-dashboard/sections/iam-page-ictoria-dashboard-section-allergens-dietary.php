@@ -15,6 +15,11 @@ class IAM_Page_Ictoria_Dashboard_Section_Allergens_Dietary extends IAM_Base_Sect
         );
     }
 
+    public function get_section_class()
+    {
+        return 'iam-dashboard-allergens-dietary';
+    }
+
     public function section_callback()
     {
         $section_class = str_replace('_', '-', strtolower(__CLASS__));
@@ -24,6 +29,7 @@ class IAM_Page_Ictoria_Dashboard_Section_Allergens_Dietary extends IAM_Base_Sect
          */
         $html = <<<HTML
         <div class="iam-dashboard-section $section_class">
+            <h2>Allergens & Dietary</h2>
             <a href="$allergens_dietary_url">
                 <button>check it out</button>
             </a>

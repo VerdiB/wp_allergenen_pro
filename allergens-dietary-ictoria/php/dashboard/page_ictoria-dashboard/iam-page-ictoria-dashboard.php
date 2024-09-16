@@ -6,15 +6,15 @@ if (!defined('ABSPATH')) {
 
 class IAM_Page_Ictoria_Dashboard extends IAM_Base_Page
 {
-    // add page sections here
     private static $page_sections = [
+        'Dashboard',
         'Allergens_Dietary',
     ];
 
     public function __construct()
     {
         parent::__construct(
-            'Ictoria Plugin Suite Dashboard',
+            'Ictoria Plugin Suite',
             'Ictoria',
             'manage_options',
             'iam-dashboard',
@@ -31,20 +31,6 @@ class IAM_Page_Ictoria_Dashboard extends IAM_Base_Page
         }
     }
 
-    public function render_page()
-    {
-        if (!current_user_can($this->capability)) {
-            return;
-        }
-
-        echo '<div class="wrap">';
-        echo '<div class="' . $this->menu_slug . '">';
-        echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
-        do_settings_sections($this->menu_slug);
-        echo '</div>';
-        echo '</div>';
-    }
-
     protected function is_top_level()
     {
         return true;
@@ -53,6 +39,18 @@ class IAM_Page_Ictoria_Dashboard extends IAM_Base_Page
     protected function get_parent_slug()
     {
         return ''; // No parent since it's top-level
+    }
+
+    public function render_page()
+    {
+        echo '<div class="wrap">';
+        echo '<div class="' . $this->menu_slug . '">';
+        echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
+
+        parent::render_sections(false);
+
+        echo '</div>';
+        echo '</div>';
     }
 
 }
