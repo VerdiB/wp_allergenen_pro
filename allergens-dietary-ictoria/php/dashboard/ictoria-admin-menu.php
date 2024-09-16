@@ -19,6 +19,7 @@ class Ictoria_Admin_Menu
     ];
     private static $autoload_styles = [];
     private static $autoload_scripts = [];
+    private static $autoload_pages = [];
 
     public static function instance()
     {
@@ -36,9 +37,20 @@ class Ictoria_Admin_Menu
         add_action('admin_enqueue_scripts', [__CLASS__, 'iam_script']);
 
         // Initialize page classes
-        IAM_Page_Ictoria_Dashboard::instance();
-        IAM_Page_Allergens_Dietary::instance();
-        IAM_Page_Settings::instance();
+        // IAM_Page_Ictoria_Dashboard::instance();
+        // IAM_Page_Allergens_Dietary::instance();
+        // IAM_Page_Settings::instance();
+        foreach (self::$autoload_pages as $class_name) {
+            echo $class_name;
+            $page = new $class_name();
+            $page->instance();
+        }
+    }
+    public static function instantiate_page(string $class_name)
+    {
+        if (class_exists($class_name)) {
+            return new $class_name();
+        }
     }
 
     public static function iam_style()
@@ -87,7 +99,7 @@ class Ictoria_Admin_Menu
             foreach (self::$directories as $directory) {
                 if (file_exists($directory . $file_name)) {
                     require_once $directory . $file_name;
-
+                    self::$autoload_pages[] = $class_name;
                     // Only consider directories starting with 'page_'
                     if (strpos(basename($directory), 'page_') === 0) {
                         // Check and enqueue CSS file
