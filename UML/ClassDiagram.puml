@@ -60,7 +60,6 @@ package "php"{
         +generate_allergensdietary_htnl() : void
         +{static} plugin_action_links(links:array) : array
     }
-    
     package "forms"{
 
         enum FormType{
@@ -101,7 +100,6 @@ package "php"{
             - check_license_key(key:string) : boolean
         }
 
-    }
 
     package "DB" {
         class Allergens_Dietary_Ictoria_Allergen_Queries{
