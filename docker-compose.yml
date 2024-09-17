@@ -57,36 +57,26 @@ services:
       - ./wordpress:/var/www/html/
     depends_on:
       - wordpress
-    
     networks:
       development:
 
-  # mysql-unit:
-  #   image: "mysql:latest"
-  #   environment:
-  #     MYSQL_DATABASE: wordpress_test
-  #     MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-  #   volumes:
-  #     - ./mysql:/var/lib/mysql
-  #   networks:
-  #     development:
+  wpcli:
+    image: wordpress:cli
+    volumes:
+      - ./wordpress:/var/www/html/
+    depends_on:
+      - mysql
+      - wordpress
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: ""
+      WORDPRESS_DB_NAME: wordpress
+    networks:
+      development:
 
 volumes:
   wp-plugins:
-
-wpcli:
-  image: wordpress:cli
-  volumes:
-    - ./html:/var/www/html
-  depends_on:
-    - db
-    - wordpress
-  environment:
-    WORDPRESS_DB_HOST: db:3306
-    WORDPRESS_DB_USER: exampleuser
-    WORDPRESS_DB_PASSWORD: examplepass
-    WORDPRESS_DB_NAME: exampledb
-
 
 networks:
   development:
