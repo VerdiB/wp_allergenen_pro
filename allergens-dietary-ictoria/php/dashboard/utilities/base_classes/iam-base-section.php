@@ -19,7 +19,6 @@ abstract class IAM_Base_Section
 
     public function section_callback()
     {
-        // Default callback, should be overridden in subclasses
         echo '<p>Section description here.</p>';
     }
 

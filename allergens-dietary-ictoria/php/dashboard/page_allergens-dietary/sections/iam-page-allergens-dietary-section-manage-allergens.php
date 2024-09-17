@@ -1,5 +1,4 @@
 <?php
-// Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -50,8 +49,7 @@ class IAM_Page_Allergens_Dietary_Section_Manage_Allergens extends IAM_Base_Secti
             $html_allergens
         </div>
         HTML;
-        
-        // this is what gets output by iam-page-allergens-dietary.php render_page() -> parent::render_sections(true);
+
         echo $html;
     }
 
