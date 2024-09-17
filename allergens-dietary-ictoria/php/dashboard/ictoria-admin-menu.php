@@ -1,5 +1,4 @@
 <?php
-// Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -9,7 +8,6 @@ define('IAM_DIR', __DIR__);
 class Ictoria_Admin_Menu
 {
     private static $_instance = null;
-    // Page directories
     private static $directories = [
         IAM_DIR . '/utilities/',
         IAM_DIR . '/utilities/base_classes/',
@@ -19,6 +17,7 @@ class Ictoria_Admin_Menu
     ];
     private static $autoload_styles = [];
     private static $autoload_scripts = [];
+    private static $autoload_pages = [];
 
     public static function instance()
     {
@@ -35,7 +34,6 @@ class Ictoria_Admin_Menu
         add_action('admin_enqueue_scripts', [__CLASS__, 'iam_style']);
         add_action('admin_enqueue_scripts', [__CLASS__, 'iam_script']);
 
-        // Initialize page classes
         IAM_Page_Ictoria_Dashboard::instance();
         IAM_Page_Allergens_Dietary::instance();
         IAM_Page_Settings::instance();
@@ -43,7 +41,6 @@ class Ictoria_Admin_Menu
 
     public static function iam_style()
     {
-        // Load base CSS
         wp_enqueue_style(
             'variables-css',
             plugins_url('assets/css/variables.css', IAM_DIR)
@@ -54,7 +51,6 @@ class Ictoria_Admin_Menu
             plugins_url('dashboard/ictoria-admin-menu.css', IAM_DIR)
         );
 
-        // Enqueue autoloaded styles
         foreach (self::$autoload_styles as $handle => $style) {
             wp_enqueue_style($handle, plugins_url($style[0], IAM_DIR), $style[1], $style[2]);
         }
@@ -70,7 +66,6 @@ class Ictoria_Admin_Menu
             true
         );
 
-        // Enqueue autoloaded scripts
         foreach (self::$autoload_scripts as $handle => $script) {
             wp_enqueue_script($handle, plugins_url($script[0], IAM_DIR), $script[1], $script[2], $script[3]);
         }
@@ -88,9 +83,7 @@ class Ictoria_Admin_Menu
                 if (file_exists($directory . $file_name)) {
                     require_once $directory . $file_name;
 
-                    // Only consider directories starting with 'page_'
                     if (strpos(basename($directory), 'page_') === 0) {
-                        // Check and enqueue CSS file
                         if (file_exists($directory . $file_name_css)) {
                             self::$autoload_styles[$name . '-css'] = [
                                 'dashboard/page_' . str_replace('iam-page-', '', $name) . '/' . $file_name_css,
@@ -99,7 +92,6 @@ class Ictoria_Admin_Menu
                             ];
                         }
 
-                        // Check and enqueue JS file
                         if (file_exists($directory . $file_name_js)) {
                             self::$autoload_scripts[$name . '-js'] = [
                                 'dashboard/page_' . str_replace('iam-page-', '', $name) . '/' . $file_name_js,
@@ -117,8 +109,6 @@ class Ictoria_Admin_Menu
     }
 }
 
-// Autoload classes
 spl_autoload_register(['Ictoria_Admin_Menu', 'autoload']);
 
-// Initialize the main dashboard class
 Ictoria_Admin_Menu::instance();

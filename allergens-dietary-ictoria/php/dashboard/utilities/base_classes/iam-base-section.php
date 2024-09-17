@@ -17,14 +17,8 @@ abstract class IAM_Base_Section
         $this->section_class = $section_class;
     }
 
-    public function register_section($menu_slug)
-    {
-        // You can choose to add section-specific functionality here if needed
-    }
-
     public function section_callback()
     {
-        // Default callback, should be overridden in subclasses
         echo '<p>Section description here.</p>';
     }
 

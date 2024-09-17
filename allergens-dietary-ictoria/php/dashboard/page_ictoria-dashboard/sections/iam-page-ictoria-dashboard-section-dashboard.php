@@ -1,5 +1,4 @@
 <?php
-// Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -22,9 +21,7 @@ class IAM_Page_Ictoria_Dashboard_Section_Dashboard extends IAM_Base_Section
 
     public function section_callback()
     {
-        /* PHP Heredoc
-         * https://www.phptutorial.net/php-tutorial/php-heredoc/
-         */
+
         $html = <<<HTML
         <div class="iam-dashboard-hero-item">
             <div class="iam-dashboard-hero-item-content">

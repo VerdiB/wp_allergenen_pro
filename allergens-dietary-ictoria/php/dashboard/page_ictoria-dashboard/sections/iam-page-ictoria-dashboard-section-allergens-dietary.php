@@ -1,5 +1,4 @@
 <?php
-// Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -24,9 +23,7 @@ class IAM_Page_Ictoria_Dashboard_Section_Allergens_Dietary extends IAM_Base_Sect
     {
         $section_class = str_replace('_', '-', strtolower(__CLASS__));
         $allergens_dietary_url = admin_url('admin.php?page=iam-allergens-dietary');
-        /* PHP Heredoc
-         * https://www.phptutorial.net/php-tutorial/php-heredoc/
-         */
+
         $html = <<<HTML
         <div class="iam-dashboard-section $section_class">
             <h2>Allergens & Dietary</h2>

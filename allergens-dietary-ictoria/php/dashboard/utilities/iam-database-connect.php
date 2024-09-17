@@ -3,9 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Include the files for the required classes
 if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
-    require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php'; // Add this line
+    require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 }
 
 if (!class_exists('Allergens_Dietary_Ictoria_Allergy_Attachment_Queries')) {
@@ -27,7 +26,6 @@ class IAM_Database_Connect
         }
     }
 
-    // Get a specific allergen by name
     public static function get_allergen_by_name($request)
     {
         $allergenName = $request->get_param('name');
@@ -35,7 +33,6 @@ class IAM_Database_Connect
         return $allergen_queries->getAllergen($allergenName);
     }
 
-    // Get all allergens with their respective attachments
     public static function get_allergens_with_attachments()
     {
         global $wpdb;
@@ -45,7 +42,6 @@ class IAM_Database_Connect
 
         $response = [];
         foreach ($allergens as $allergen) {
-            // Get the attachment for each allergen
             $sql_attachment = $wpdb->prepare(
                 "SELECT attachment_name FROM {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment WHERE allergy_name = %s",
                 $allergen->allergy_name
@@ -71,7 +67,6 @@ class IAM_Database_Connect
         return $response;
     }
 
-    // Add a new allergen
     public static function add_allergen($request)
     {
         $data = $request->get_json_params();
@@ -85,7 +80,6 @@ class IAM_Database_Connect
         return new WP_REST_Response($success ? "Allergen added successfully" : "Failed to add allergen", $success ? 200 : 500);
     }
 
-    // Update an existing allergen
     public static function update_allergen($request)
     {
         $data = $request->get_json_params();
@@ -99,7 +93,6 @@ class IAM_Database_Connect
         return new WP_REST_Response("Allergen updated successfully", 200);
     }
 
-    // Delete an allergen by name
     public static function delete_allergen($request)
     {
         $allergenName = $request->get_param('name');
@@ -116,7 +109,6 @@ class IAM_Database_Connect
         return new WP_REST_Response("Allergen deleted successfully", 200);
     }
 
-    // Toggle allergen activation status
     public static function toggle_allergen_activation($request)
     {
         $allergenName = $request->get_param('name');

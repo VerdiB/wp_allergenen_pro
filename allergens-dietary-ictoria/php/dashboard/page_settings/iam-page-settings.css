@@ -1,7 +1,9 @@
 @import "../assets/css/variables.css";
 
 .iam-settings {
+	width: auto;
 }
+
 /* For screens bigger than 1280px */
 @media only screen and (min-width: 1280px) {
 	.iam-settings {
