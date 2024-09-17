@@ -14,7 +14,9 @@
 
 ## To-do list
 
-- [ ] REST API: Expand on functions in `iam-database-connect.php`, currently only changes things in `wp_allergens_dietary_ictoria_allergy` table.
+- [ ] REST API: <br>- Expand on functions in `iam-database-connect.php`, currently only changes things in `wp_allergens_dietary_ictoria_allergy` table.
+- [ ] Split CSS: <br>- Move the CSS for sections to separate files and import them in the main page CSS file. This prevents clutter and keeps the mind set of keeping things together.
+- [ ] Split JS: <br>- Same as Split CSS above.
 
 ## References
 
