@@ -1,0 +1,135 @@
+.iam-dashboard {
+	position: relative;
+	flex-direction: column;
+	/* height: 100vh;
+	min-height: 100vh;
+	max-height: 100vh; */
+	max-width: 1280px;
+	margin: 0 auto;
+
+	h1 {
+		text-align: center;
+	}
+}
+.iam-dashboard-hero {
+	background-color: var(--iam-primary-gradient-background-fallback);
+	background: var(--iam-primary-gradient-background);
+	color: var(--iam-primary-accent-font-color);
+
+	--iam-section-dashboard-offset: 20px;
+	padding: 2rem var(--iam-section-dashboard-offset);
+	margin: 0 calc(var(--iam-section-dashboard-offset) * -1);
+
+	/* height: 12rem; */
+	border-radius: 12px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+.iam-dashboard-hero-item {
+	display: flex;
+	/* align-items: center; */
+
+	.iam-dashboard-hero-item-content {
+		min-height: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+
+		h2 {
+			color: #fff;
+			margin: 0;
+			padding: 0;
+		}
+
+		p {
+			margin: 0;
+			padding: 0;
+		}
+
+		.iam-dashboard-hero-item-content-header {
+			display: flex;
+			flex-direction: column;
+			gap: 0.4rem;
+			flex-grow: 1;
+		}
+
+		.iam-dashboard-hero-item-content-footer {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			span:first-of-type {
+				font-size: 1.6rem;
+			}
+		}
+	}
+
+	.iam-dashboard-hero-item-img {
+		border-radius: 12px;
+		margin-left: 1rem;
+	}
+}
+.iam-dashboard-hero-button {
+	background: #2464ad;
+	color: var(--iam-primary-accent-font-color);
+	padding: 0.4rem 1.2rem;
+	border-radius: 6px;
+	border: none;
+	cursor: pointer;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	transition: color 0.25s ease-out, background-color 0.25s ease-out,
+		box-shadow 0.25s ease-out;
+}
+.iam-dashboard-hero-button:hover {
+	background: #cfe2ee;
+	color: #000000;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+/* For screens bigger than 1280px */
+@media only screen and (min-width: 1280px) {
+	.iam-dashboard {
+		width: 1024px;
+	}
+	.iam-dashboard-hero {
+		background: var(--iam-primary-gradient-background-big);
+	}
+	.iam-dashboard-hero-item {
+		width: 60%; /* Flexibility instead of fixed 1024px */
+	}
+}
+
+/* For screens smaller than 1280px */
+@media only screen and (max-width: 1280px) {
+	.iam-dashboard {
+		width: 800px;
+	}
+	.iam-dashboard-hero-item {
+		width: 80%; /* Flexibility instead of fixed 1024px */
+	}
+}
+
+/* For screens smaller than 1024px */
+@media only screen and (max-width: 1024px) {
+	.iam-dashboard {
+		width: 640px;
+	}
+	.iam-dashboard-hero-item {
+		width: 90%; /* Make the item more flexible */
+	}
+}
+
+/* For screens smaller than 720px */
+@media only screen and (max-width: 720px) {
+	.iam-dashboard {
+		width: 100%;
+	}
+	.iam-dashboard-hero-item {
+		width: 100%;
+		max-width: 100%; /* Ensure it does not exceed the full width */
+	}
+}

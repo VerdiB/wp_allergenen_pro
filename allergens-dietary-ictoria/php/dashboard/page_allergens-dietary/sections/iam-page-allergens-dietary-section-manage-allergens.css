@@ -1,0 +1,40 @@
+.iam-allergens-dietary-manage-allergens {
+	.iam-allergens-dietary-manage-allergens-all-allergens {
+		max-width: 82%;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.65rem;
+		padding: 1rem;
+		border-radius: 6px;
+		background-color: rgba(0, 0, 0, 0.08);
+		border: solid 1px rgba(0, 0, 0, 0.08);
+
+		--iam-allergen-icon-size: 64px;
+		.iam-allergens-dietary-manage-allergens-all-allergens-allergen {
+			width: var(--iam-allergen-icon-size);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			/* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); */
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.12);
+			border-radius: 12px;
+			overflow: hidden;
+
+			img {
+				width: var(--iam-allergen-icon-size);
+				height: var(--iam-allergen-icon-size);
+				background: #11164d;
+				color: white;
+			}
+			span {
+				padding: 0.25rem 0;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+		}
+
+		.iam-allergens-dietary-allergen-selected {
+			opacity: 0.6;
+		}
+	}
+}
