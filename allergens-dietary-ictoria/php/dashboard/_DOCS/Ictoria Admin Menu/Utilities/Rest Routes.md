@@ -6,11 +6,204 @@ The rest routes use the WordPress [REST API](https://developer.wordpress.org/res
 
 As we are using the `iam/v2` namespace, all routes registered are able to be seen by going to [http://localhost:8080/wp-json/iam/v2/](http://localhost:8080/wp-json/iam/v2/), routes can also be called like this e.g. [http://localhost:8080/wp-json/iam/v2/allergens-dietary/get-allergen?name=soya](http://localhost:8080/wp-json/iam/v2/allergens-dietary/get-allergen?name=soya) (if it exists in the DB), but this can only be done with `GET` routes, the others need something like PostMan/Insomnia or a vscode extension like REST API Client.
 
+<details>
+  <summary>Click to show 'http://localhost:8080/wp-json/iam/v2/' response:</summary>
+
+```JSON
+{
+    "namespace": "iam/v2",
+    "routes": {
+        "/iam/v2": {
+            "namespace": "iam/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "namespace": {
+                            "default": "iam/v2",
+                            "required": false
+                        },
+                        "context": {
+                            "default": "view",
+                            "required": false
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "http://localhost:8080/wp-json/iam/v2"
+                    }
+                ]
+            }
+        },
+        "/iam/v2/allergens-dietary/get-allergen": {
+            "namespace": "iam/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "name": {
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "http://localhost:8080/wp-json/iam/v2/allergens-dietary/get-allergen"
+                    }
+                ]
+            }
+        },
+        "/iam/v2/allergens-dietary/allergens-with-attachments": {
+            "namespace": "iam/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": []
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "http://localhost:8080/wp-json/iam/v2/allergens-dietary/allergens-with-attachments"
+                    }
+                ]
+            }
+        },
+        "/iam/v2/allergens-dietary/add-allergen": {
+            "namespace": "iam/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": []
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "http://localhost:8080/wp-json/iam/v2/allergens-dietary/add-allergen"
+                    }
+                ]
+            }
+        },
+        "/iam/v2/allergens-dietary/update-allergen": {
+            "namespace": "iam/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": []
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "http://localhost:8080/wp-json/iam/v2/allergens-dietary/update-allergen"
+                    }
+                ]
+            }
+        },
+        "/iam/v2/allergens-dietary/delete-allergen": {
+            "namespace": "iam/v2",
+            "methods": [
+                "DELETE"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "DELETE"
+                    ],
+                    "args": {
+                        "name": {
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "http://localhost:8080/wp-json/iam/v2/allergens-dietary/delete-allergen"
+                    }
+                ]
+            }
+        },
+        "/iam/v2/allergens-dietary/toggle-activation": {
+            "namespace": "iam/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "name": {
+                            "required": true
+                        },
+                        "activate": {
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "http://localhost:8080/wp-json/iam/v2/allergens-dietary/toggle-activation"
+                    }
+                ]
+            }
+        }
+    },
+    "_links": {
+        "up": [
+            {
+                "href": "http://localhost:8080/wp-json/"
+            }
+        ]
+    }
+}
+```
+
+</details>
+
 ## Code Explanation
 
 The start is self explanatory, I've used an abstract class for possible future implementation of expanding upon the rest routes by each page if necessary. This follows the mindset of keeping things together that are related and using bases/prototypes to expand on and/or use _if needed_.
 
 Also note we are using `allergens-dietary/` at the start of each route because it is related to the allergens-dietary page. You could nest deeper but this should not be done manually, that is something that should be done if/when the routes modularization per page exists and be done with an autoloader in a base class for routes or something.
+
+The functions called here are found in [Database Connect](Database%20Connect.md).
 
 <details>
   <summary>Click to show code (class IAM_Rest_Routes):</summary>
@@ -40,6 +233,21 @@ abstract class IAM_Rest_Routes
 This function is the callback that is usedto register the routes in the [Main Entry File](../Main%20Entry%20File/README.md) `__construct()`. It's contents will be split per [register_rest_route()](https://developer.wordpress.org/reference/functions/register_rest_route/).
 
 #### Get Allergen By Name
+
+<details>
+  <summary>Click to show 'http://localhost:8080/wp-json/iam/v2/allergens-dietary/get-allergen?name=soya' response:</summary>
+
+```JSON
+[
+    {
+        "allergy_name": "Soya",
+        "allergy_description": "Soya description text",
+        "allergy_activated": "1"
+    }
+]
+```
+
+</details>
 
 <details>
   <summary>Click to show code (function register_rest_route()):</summary>
@@ -79,6 +287,87 @@ This function is the callback that is usedto register the routes in the [Main En
 #### Get Allergens With Attachments
 
 <details>
+  <summary>Click to show 'http://localhost:8080/wp-json/iam/v2/allergens-dietary/allergens-with-attachments' response:</summary>
+
+```JSON
+{
+    "alcohol": {
+        "allergen_name": "Alcohol",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_alcohol.png"
+    },
+    "celery": {
+        "allergen_name": "Celery",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_celery.png"
+    },
+    "corn": {
+        "allergen_name": "Corn",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_corn.png"
+    },
+    "crustaceans": {
+        "allergen_name": "Crustaceans",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_crustaceans.png"
+    },
+    "dairy": {
+        "allergen_name": "Dairy",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_dairy.png"
+    },
+    "eggs": {
+        "allergen_name": "Eggs",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_eggs.png"
+    },
+    "fish": {
+        "allergen_name": "Fish",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_fish.png"
+    },
+    "gluten": {
+        "allergen_name": "Gluten",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_gluten.png"
+    },
+    "lupin": {
+        "allergen_name": "Lupin",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_lupin.png"
+    },
+    "molluscs": {
+        "allergen_name": "Molluscs",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_molluscs.png"
+    },
+    "mustard": {
+        "allergen_name": "Mustard",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_mustard.png"
+    },
+    "nuts": {
+        "allergen_name": "Nuts",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_nuts.png"
+    },
+    "peanuts": {
+        "allergen_name": "Peanuts",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_peanuts.png"
+    },
+    "sesame": {
+        "allergen_name": "Sesame",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_sesame.png"
+    },
+    "soya": {
+        "allergen_name": "Soya",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_soya.png"
+    },
+    "sulfite": {
+        "allergen_name": "Sulfite",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_sulfite.png"
+    },
+    "test": {
+        "allergen_name": "test",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_gluten.png"
+    },
+    "wheat": {
+        "allergen_name": "Wheat",
+        "icon_url": "http://localhost:8080/wp-content/plugins/allergens-dietary-ictoria/assets/icons/allergens_wheat.png"
+    }
+}
+```
+
+</details>
+<details>
   <summary>Click to show code (function register_rest_route()):</summary>
 
 ```php
@@ -99,6 +388,10 @@ This function is the callback that is usedto register the routes in the [Main En
 </details>
 
 #### Add New Allergen
+
+```JSON
+"Allergen added successfully" : "Failed to add allergen"
+```
 
 <details>
   <summary>Click to show code (function register_rest_route()):</summary>
@@ -131,6 +424,10 @@ This function is the callback that is usedto register the routes in the [Main En
 
 #### Update Allergen
 
+```JSON
+"Allergen not found" : "Allergen updated successfully"
+```
+
 <details>
   <summary>Click to show code (function register_rest_route()):</summary>
 
@@ -153,6 +450,10 @@ This function is the callback that is usedto register the routes in the [Main En
 </details>
 
 #### Delete Allergen
+
+```JSON
+"Allergen not found" : "Allergen updated successfully"
+```
 
 <details>
   <summary>Click to show code (function register_rest_route()):</summary>
@@ -184,6 +485,10 @@ This function is the callback that is usedto register the routes in the [Main En
 </details>
 
 #### Toggle Allergen Activation
+
+```JSON
+"Allergen not found" : "Allergen activation toggled successfully" : "Failed to toggle allergen activation"
+```
 
 <details>
   <summary>Click to show code (function register_rest_route()):</summary>
