@@ -74,6 +74,20 @@ services:
 volumes:
   wp-plugins:
 
+wpcli:
+  image: wordpress:cli
+  volumes:
+    - ./html:/var/www/html
+  depends_on:
+    - db
+    - wordpress
+  environment:
+    WORDPRESS_DB_HOST: db:3306
+    WORDPRESS_DB_USER: exampleuser
+    WORDPRESS_DB_PASSWORD: examplepass
+    WORDPRESS_DB_NAME: exampledb
+
+
 networks:
   development:
     ipam:
