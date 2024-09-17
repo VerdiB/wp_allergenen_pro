@@ -36,10 +36,10 @@ The naming structure used is for the autoloaders to work properly without using 
 
 The files that follow this naming could/should be considered as indexes, as they initiate the chain for all it's appended items e.g. `iam-page-title-section-title` is loaded in via `iam-page-title`.
 
-## Database_Connect & Rest_Routes
+## [Base Classes](../utilities/base_classes/README.md)
 
-Everything is set-up to make it as simple as possible to output custom HTML, CSS & JavaScript. There is a are REST API routes to do basic CRUD actions on the database via the functions defined in `database_connect.php` which implement the functions from the `DB` directory.
+## [Database_Connect](../utilities/Rest%20Routes.md)
 
-## Pages & Sections
+## [Rest_Routes](../utilities/Database%20Connect.md)
 
-Each page is built up out of sections which are located in the dedicated `page_my-submenu/sections` directory.
+## [Pages & Sections](../Pages/README.md)
