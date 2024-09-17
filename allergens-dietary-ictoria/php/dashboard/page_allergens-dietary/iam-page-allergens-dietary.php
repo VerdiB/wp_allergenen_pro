@@ -53,7 +53,7 @@ class IAM_Page_Allergens_Dietary extends IAM_Base_Page
 
         parent::render_sections(true);
 
-        echo '</h1>';
+        echo '</div>';
         echo '</div>';
     }
 }
