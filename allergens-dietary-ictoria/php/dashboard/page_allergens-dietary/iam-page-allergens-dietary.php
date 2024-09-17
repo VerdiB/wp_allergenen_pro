@@ -51,18 +51,7 @@ class IAM_Page_Allergens_Dietary extends IAM_Base_Page
         // <h1>Allergens & Dietary Plugin</h1>
         echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
 
-        // parent::render_sections(true); outputs this:
-        //
-        // <div class="iam-allergens-dietary-add-allergen">
-        //  sections/iam-page-allergens-dietary-section-add-allergen.php-->render_sections()
-        //  html gets output here ...
-        // </div>
-        // <div class="iam-allergens-dietary-manage-allergens">
-        //  sections/iam-page-allergens-dietary-section-manage-allergens.php-->render_sections()
-        //  html gets output here ...
-        // </div>
         parent::render_sections(true);
-        // iam-base-page.php->render_sections($enable_header = true) shows the h2 header given in a sections' __construct() second argument ($section_title)
 
         echo '</h1>';
         echo '</div>';
