@@ -12,6 +12,10 @@
   - [Database Connect](./Ictoria%20Admin%20Menu/Utilities/Database%20Connect.md) [^iam-database-connect]
   - [Templates](./Ictoria%20Admin%20Menu/Utilities/Templates/README.md)
 
+## To-do list
+
+- [ ] REST API: Expand on functions in `iam-database-connect.php`, currently only changes things in `wp_allergens_dietary_ictoria_allergy` table.
+
 ## References
 
 The code that this dashboard is based on (converted to OOP syntaxing and heavily modified):
