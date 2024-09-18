@@ -45,7 +45,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
 			}
 			$this->_allergen = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllergyAttachment( $allergenName );
-			return;
+			echo '<pre>';
+			var_dump( $this->_allergen );
+			echo '</pre>';
 		}
 
 		$html  = '<fieldset>';
@@ -78,10 +80,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	public function submit( array $data ) {
 		$data = $this->sanitize( $data );
 		
-		echo '<pre> form data:';
-		var_dump($data);
-		echo '</pre>';
-
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 		}
@@ -95,7 +93,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			return;
 		} else {
 
-			( false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] ) ) ?
+			( false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] ) && !empty($this->_allergen) ) ?
 				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] ) :
 				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->updateAttachment( $data['allergen_icon'] );
 		}
