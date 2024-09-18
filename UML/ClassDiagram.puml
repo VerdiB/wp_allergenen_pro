@@ -75,7 +75,7 @@ package "php"{
             + sanitize(data:array) : array
         }
 
-        class Allergens_Dietary_Ictoria_Allergens_Form{
+        class Allergens_Dietary_Ictoria_Form{
             -{static} _instance : Allergens_Dietary_Ictoria_Allergens_Form
             -{static} formType : FormType
             -{static} formObject : I_Allergens_Dietary_Ictoria_Form
@@ -86,15 +86,52 @@ package "php"{
             + showForm(allergenName:String) : void
         }
 
-        class Allergens_Dietary_Ictoria_License_Form{
-            + getInstance() : Allergens_Dietary_Ictoria_License_Form
-            + setFormType(formType:FormType) : void
-            + getFormType() : FormType
+        class Allergens_Dietary_Ictoria_Allergens_Form{
+            - _allergen : array
             + showForm(allergenName:String) : void
+            + submit(data:array) : void
+            + sanitize(data:array) : array
+        }
+
+        class Allergens_Dietary_Ictoria_License_Form{
+            + showForm(allergenName:String) : void
+            + submit(data:array) : void
+            + sanitize(data:array) : array
             - check_license_key(key:string) : boolean
         }
 
+    }
 
+    package "DB" {
+        class Allergens_Dietary_Ictoria_Allergen_Queries{
+            -{static} _instance : Allergens_Dietary_Ictoria_Allergen_Queries
+            +{static} getInstance() : Allergens_Dietary_Ictoria_Allergen_Queries
+            - __construct() : void
+            + addAllergens(data:array) : boolean
+            + checkAllergenExists(allergenName:string) : boolean
+            + updateAllergen(data:array) : void
+            + getAllergen(allergenName:string) : array
+        }
+
+        class Allergens_Dietary_Ictoria_Attachment_Queries{
+            -{static} _instance : Allergens_Dietary_Ictoria_Attachment_Queries
+            +{static} getInstance() : Allergens_Dietary_Ictoria_Attachment_Queries
+            - __construct() : void
+            + addAttachment(data:array) : boolean
+            + checkAttachmentExists(attachmentName:string) : boolean
+            + updateAttachment(data:array) : void
+            + getAttachment(attachmentName:string) : array
+        }
+
+        class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries{
+            -{static} _instance : Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
+            +{static} getInstance() : Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
+            - __construct() : void
+            + addAllergyAttachment(data:array) : boolean
+            + checkAllergyAttachmentExists(allergyName:string) : boolean
+            + updateAllergyAttachment(data:array) : void
+            + getAllergyAttachment(allergyAttachmentName:string) : array
+        }
     }
 }
 
@@ -117,7 +154,12 @@ Allergens_Dietary_Ictoria_Product_Settings -l-> Allergens_Dietary_Ictoria_Functi
 
 
 ' forms relations
-FormType  <.. Allergens_Dietary_Ictoria_Allergens_Form 
-Allergens_Dietary_Ictoria_Allergens_Form o-r-> I_Allergens_Dietary_Ictoria_Form
+FormType  <.. Allergens_Dietary_Ictoria_Form 
+Allergens_Dietary_Ictoria_Form o-r-> I_Allergens_Dietary_Ictoria_Form
 Allergens_Dietary_Ictoria_License_Form ..|> I_Allergens_Dietary_Ictoria_Form
+Allergens_Dietary_Ictoria_Allergens_Form ..|> I_Allergens_Dietary_Ictoria_Form
+Allergens_Dietary_Ictoria_Allergens_Form .d.> Allergens_Dietary_Ictoria_Allergen_Queries : uses
+Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Attachment_Queries : uses
+Allergens_Dietary_Ictoria_Allergens_Form .d.> Allergens_Dietary_Ictoria_Allergy_Attachment_Queries : uses
+
 @enduml

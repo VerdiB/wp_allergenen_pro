@@ -219,7 +219,7 @@ msgstr ""
 
 #: php/functions.php:310
 msgid "add allergen"
-msgstr "Allergeen toevoegen"
+msgstr "allergeen toevoegen"
 
 #: php/product_settings.php:26
 msgid "Allergens"
