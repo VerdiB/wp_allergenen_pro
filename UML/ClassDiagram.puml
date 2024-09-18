@@ -100,7 +100,6 @@ package "php"{
             - check_license_key(key:string) : boolean
         }
 
-
     package "DB" {
         class Allergens_Dietary_Ictoria_Allergen_Queries{
             -{static} _instance : Allergens_Dietary_Ictoria_Allergen_Queries
