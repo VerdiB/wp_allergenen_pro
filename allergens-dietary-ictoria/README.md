@@ -2,6 +2,11 @@
 
 ## Fixes and changes
 - First release
+- function fixes
+- searching allergens
+- updating allergens
+- uninstall
+- allergens on product page
 
 ### Performance
 
