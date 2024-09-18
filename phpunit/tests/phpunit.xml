@@ -12,6 +12,7 @@
    
     <php>
         <const name="ABSPATH" value="null"/>
+        <const name="ALLERGENS_DIETARY_ICTORIA_DIRNAME" value="/var/www/html/wp-content/plugins/allergens-dietary-ictoria"/>
     </php>
    
     <testsuites>
