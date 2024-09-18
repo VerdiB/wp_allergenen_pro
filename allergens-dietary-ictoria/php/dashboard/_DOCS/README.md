@@ -15,8 +15,10 @@
 ## To-do list
 
 - [ ] REST API: <br>- Expand on functions in `iam-database-connect.php`, currently only changes things in `wp_allergens_dietary_ictoria_allergy` table.
-- [ ] Split CSS: <br>- Move the CSS for sections to separate files and import them in the main page CSS file. This prevents clutter and keeps the mind set of keeping things together.
-- [ ] Split JS: <br>- Same as Split CSS above.
+- [ ] Database Connect: <br>- Expand the database utilities, database connect and rest routes need to be split. The dashboard should be able to accomodate multiple plugins, thus every plugin would need its own file/directory that registers and manages everything related to those connections.
+
+- [x] Split CSS: <br>- Move the CSS for sections to separate files and import them in the main page CSS file. This prevents clutter and keeps the mind set of keeping things together.
+- [x] Split JS: <br>- Same as Split CSS above. (Maybe not necessary)
 
 ## References
 

@@ -10,6 +10,7 @@ class Ictoria_Admin_Menu
     private static $_instance = null;
     private static $directories = [
         IAM_DIR . '/utilities/',
+        IAM_DIR . '/utilities/database/',
         IAM_DIR . '/utilities/base_classes/',
         IAM_DIR . '/page_ictoria-dashboard/',
         IAM_DIR . '/page_allergens-dietary/',
