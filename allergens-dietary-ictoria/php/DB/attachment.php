@@ -45,13 +45,13 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 			$attachmentName
 		);
 
-		$result = $wpdb->get_results( $sql );
+		$result = $wpdb->get_row( $sql, ARRAY_A );
 
 		return ( ! empty( $result ) ) ? true : false;
 	}
 
 
-	public function updateAttachment( array $data ) {
+	public function updateAttachment( array $data, string $oldName ) {
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
@@ -63,7 +63,7 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 				'attachment_path' => self::PATH . $data['name'],
 			),
 			array(
-				'attachment_name' => $data['name'],
+				'attachment_name' => $oldName,
 			)
 		);
 

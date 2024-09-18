@@ -1,9 +1,10 @@
 debug/
 mysql/
-allergens-diatary-ictoria/assets/icons/custom
+allergens-dietary-ictoria/assets/icons/custom
 .vscode/
 wordpress/
 phpunit/tests/*.bak
+phpunit/tests/*.log
 phpunit/tests/testdox.*
 phpunit/tests/*.cache
 *.code-workspace

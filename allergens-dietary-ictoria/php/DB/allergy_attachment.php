@@ -45,7 +45,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 			$allergy_name
 		);
 
-		return $wpdb->get_row( $sql , ARRAY_A );
+		return $wpdb->get_row( $sql, ARRAY_A );
 	}
 
 	public function updateallergyAttachment( array $data ) {

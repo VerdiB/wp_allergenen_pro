@@ -109,7 +109,7 @@ package "php"{
             - __construct() : void
             + addAllergens(data:array) : boolean
             + checkAllergenExists(allergenName:string) : boolean
-            + updateAllergen(data:array) : void
+            + updateAllergen(data:array, oldName:string) : void
             + getAllergen(allergenName:string) : array
         }
 
@@ -119,7 +119,7 @@ package "php"{
             - __construct() : void
             + addAttachment(data:array) : boolean
             + checkAttachmentExists(attachmentName:string) : boolean
-            + updateAttachment(data:array) : void
+            + updateAttachment(data:array, oldName:string) : void
             + getAttachment(attachmentName:string) : array
         }
 
