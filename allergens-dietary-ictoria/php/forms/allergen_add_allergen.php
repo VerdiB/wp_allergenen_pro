@@ -32,7 +32,6 @@ if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) 
 
 	if ( ! class_exists( 'Allergens_Dietary_Ictoria_Tabs' ) ) {
 		require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
-		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 	}
 
 	/********************************************************************/
@@ -62,6 +61,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 * @date 11-9-2024
 	 */
 	public function showForm( ?string $allergenName = null ) {
+		
+		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
+
 		if ( ! is_null( $allergenName ) ) {
 			// TODO: Implement showForm() method. when the allergen name is not null
 			if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) {
