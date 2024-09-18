@@ -22,9 +22,7 @@ if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) 
 }
 
 	/**
-	 * @param string|null $allergenName
 	 * @brief This shows the tabs on add/update allergens .
-	 * @return void
 	 * @author T.K.
 	 * @since 1.0.0
 	 * @date 18-9-2024
@@ -32,7 +30,6 @@ if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) 
 
 	if ( ! class_exists( 'Allergens_Dietary_Ictoria_Tabs' ) ) {
 		require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
-		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 	}
 
 	/********************************************************************/
@@ -41,7 +38,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 	private ?array $_allergen = null;
 	private static ?self $_instance = null;
-	private const MIME_TYPES  = array( 'image/png', 'image/jpeg', 'image/jpg' );
+	private const MIME_TYPES = array( 'image/png', 'image/jpeg', 'image/jpg' );
 
 	public function __construct() {
 	}
@@ -62,6 +59,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 * @date 11-9-2024
 	 */
 	public function showForm( ?string $allergenName = null ) {
+
+		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
+
 		if ( ! is_null( $allergenName ) ) {
 			// TODO: Implement showForm() method. when the allergen name is not null
 			if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) {
