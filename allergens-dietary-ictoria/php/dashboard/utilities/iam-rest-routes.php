@@ -28,6 +28,7 @@ abstract class IAM_Rest_Routes
                         'validate_callback' => function ($param) {
                             return is_string($param);
                         },
+                        'permission_callback' => '__return_true',
                     ],
                 ],
             )
@@ -38,6 +39,7 @@ abstract class IAM_Rest_Routes
             array(
                 'methods' => 'GET',
                 'callback' => array('IAM_Database_Connect', 'get_allergens_with_attachments'),
+                'permission_callback' => '__return_true',
             )
         );
         register_rest_route(
