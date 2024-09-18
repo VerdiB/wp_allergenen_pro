@@ -26,18 +26,6 @@ Adds Allergens and Dietary options that can be used with WooCommerce products
 * Mogelijkheid om allergenen en dieetrestricties weer te geven.
 * Admin-interface voor eenvoudig beheer van allergeneninformatie.
 
-= 1.1.0 =
-* Update van de Allergens and Dietary Plugin.
-* Admin-interface voor Changelog.
-
-= 1.1.1 =
-* Update van de Allergens and Dietary Plugin.
-* Admin-interface voor Changelog..
-
-= 1.1.1 =
-* Update van de Allergens and Dietary Plugin.
-* Admin-interface voor Changelog..
-
 == Upgrade Notice ==
-= 1.1.0 =
+= 1.0.0 =
 Dit is de eerste versie van de plugin. Voeg allergenen en dieetrestricties eenvoudig toe via de instellingen.

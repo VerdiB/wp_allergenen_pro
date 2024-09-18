@@ -8,7 +8,7 @@ if(!defined('ABSPATH')){
 Plugin Name: Allergens and Dietary
 Plugin URI:  
 Description: Adds Allergens and Dietary options that can be used with WooCommerce products
-Version:     1.1.0
+Version:     1.0.0
 Requires at least: 6.3.1
 Requires PHP: 7.4
 Author:      Ictoria.nl
@@ -17,21 +17,21 @@ License:     GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: allergens-dietary-ictoria
 Domain Path: /languages/
-WC tested up to: 8.1.1
-
-"Allergens and Dietary" is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-any later version.
-
-"Allergens and Dietary" is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with "Allergens and Dietary". If not, see https://www.gnu.org/licenses/licenses/gpl-3.0.html
+WC Tested Up To: 8.1.1
 */
+
+// "Allergens and Dietary" is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// any later version.
+//
+// "Allergens and Dietary" is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with "Allergens and Dietary". If not, see https://www.gnu.org/licenses/gpl-3.0.html
 
 //Set constant values that are used to retain file location references
 define('ALLERGENS_DIETARY_ICTORIA_NAME', 'allergens-dietary-ictoria');
@@ -49,11 +49,6 @@ if(in_array( 'woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 include_once(ALLERGENS_DIETARY_ICTORIA_DIRNAME.'/php/functions.php');
 add_action('plugins_loaded', array('Allergens_Dietary_Ictoria_Functions', 'load_textdomain'));
 
-/*
-Plugin Name: Allergens and Dietary
-Text Domain: allergens-dietary-icotoria
-Domain Path: /languages/
-*/
 class load_language{
 	public function __construct(){
 		add_action('plugins_loaded', array( $this, 'translation_init') );
@@ -122,7 +117,7 @@ if(ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE){
 					Allergens_Dietary_Ictoria_Functions::error_notice($level, $message);
 				}
 			}
-			
+
 			public function add_integration($integrations){
 				$integrations[] = 'Allergens_Dietary_Ictoria_Wc_Integration_Settings';
 				return $integrations;
@@ -149,6 +144,76 @@ if(ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE){
 	$level = 'notice-error';
 	$message = sprintf(__('%1$sWooCommerce is inactive or not installed. Please install & activate WooCommerce%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
 	Allergens_Dietary_Ictoria_Functions::error_notice($level, $message);
+}
+
+// Add a filter to modify the HTML for the auto-update setting link
+add_filter('plugin_auto_update_setting_html', 'my_plugin_auto_update_link_html', 10, 3);
+
+// get auto-update links
+function my_plugin_auto_update_link_html($html, $plugin_file, $plugin_data) {
+    if ($plugin_file === 'allergens-dietary-ictoria/allergens-dietary-ictoria.php') {
+        $auto_updates_enabled = get_site_option('auto_update_plugins', array());
+
+        // Check if the current plugin is in the list of auto-updated plugins
+        if (in_array($plugin_file, $auto_updates_enabled)) {
+            $html = '<a href="#" class="my-plugin-toggle-auto-update" data-plugin="' . esc_attr($plugin_file) . '" data-action="disable">Auto-updates uitschakelen</a>';
+        } else {
+            $html = '<a href="#" class="my-plugin-toggle-auto-update" data-plugin="' . esc_attr($plugin_file) . '" data-action="enable">Auto-updates inschakelen</a>';
+        }
+    }
+    return $html;
+}
+
+// Enqueue the JavaScript file for handling auto-update toggles
+add_action('admin_enqueue_scripts', 'my_plugin_enqueue_admin_script');
+function my_plugin_enqueue_admin_script() {
+    wp_enqueue_script('my-plugin-admin-js', plugins_url('admin.js', __FILE__), array('jquery'), null, true);
+    wp_localize_script('my-plugin-admin-js', 'myPluginAjax', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('my_plugin_auto_update_nonce')
+    ));
+}
+
+// Handle the Ajax request to toggle auto-updates
+add_action('wp_ajax_my_plugin_toggle_auto_update', 'my_plugin_toggle_auto_update');
+function my_plugin_toggle_auto_update() {
+    check_ajax_referer('my_plugin_auto_update_nonce', 'security');
+
+    // Check if the plugin and action parameters are set
+    if (isset($_POST['plugin']) && isset($_POST['toggle_action'])) {
+        $plugin = sanitize_text_field($_POST['plugin']);
+        $action = sanitize_text_field($_POST['toggle_action']);
+
+        $auto_updates = get_site_option('auto_update_plugins', array());
+
+        // Enable auto-updates if requested
+        if ($action === 'enable') {
+            if (!in_array($plugin, $auto_updates)) {
+                $auto_updates[] = $plugin;
+                update_site_option('auto_update_plugins', $auto_updates);
+            }
+        // Disable auto-updates if requested
+        } elseif ($action === 'disable') {
+            if (in_array($plugin, $auto_updates)) {
+                $auto_updates = array_diff($auto_updates, array($plugin)); 
+                update_site_option('auto_update_plugins', $auto_updates);
+            }
+        }
+
+        wp_send_json_success();
+    } else {
+        wp_send_json_error();
+    }
+}
+
+// Filter to control auto-update settings for the plugin
+add_filter('auto_update_plugin', 'my_plugin_auto_update_control', 10, 2);
+function my_plugin_auto_update_control($update, $item) {
+    if ($item->plugin === 'allergens-dietary-ictoria/allergens-dietary-ictoria.php') {
+        return get_site_option('auto_update_plugins', array()) ? true : false;
+    }
+    
+    return $update;
 }
 
 // Enqueue Thickbox scripts and styles
