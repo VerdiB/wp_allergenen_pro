@@ -25,23 +25,3 @@ jQuery(document).ready(function($) {
         });
     });
 });
-
-// Example of a separate Ajax request (if needed)
-$.ajax({
-    url: myPluginAjax.ajax_url,
-    type: 'POST',
-    data: {
-        action: 'my_plugin_toggle_auto_update',
-        security: myPluginAjax.nonce,
-        plugin: plugin,
-        toggle_action: action
-    },
-    success: function(response) {
-        if (response.success) {
-            // Reload page on success
-            location.reload(); 
-        } else {
-            alert('Something went wrong. Please try again.'); 
-        }
-    }
-});
