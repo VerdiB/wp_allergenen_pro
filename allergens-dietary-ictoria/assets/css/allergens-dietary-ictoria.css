@@ -27,6 +27,11 @@
 	background-color: white;
 }
 
+.filter-ictoria{
+	margin-top: 12px;
+	margin-right: 12px;
+}
+
 .allergen-field>input{
 	float: left;
 }
@@ -67,4 +72,15 @@
 	color: black;
 	margin-bottom: -10px;
 	padding-left: 0;
+}
+
+#dropdown-ictoria
+{
+	width: 100px;
+	height: 35px;
+	display: flex;
+	position: relative;
+	text-align: center;
+	font-weight: bolder;
+	font-size: 20px;
 }
