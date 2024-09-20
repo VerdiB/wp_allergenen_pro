@@ -7,6 +7,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! interface_exists( 'I_Allergens_Dietary_Ictoria_Form' ) ) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/Iallergen_form.php';
 }
+
+if ( ! interface_exists( 'Allergens_Dietary_Ictoria_Functions' ) ) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/functions.php';
+}
+
 /**
  * @class Allergens_Dietary_Ictoria_License_Form
  * @brief Class that creates the form for the license key where
@@ -47,6 +52,8 @@ class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Icto
 		if ( ! empty( $data ) ) {
 			$post_data = $this->sanitize( $data );
 			// TODO: save the license key in the external database
+			Allergens_Dietary_Ictoria_Functions::getInstance()->default_options();
+			Allergens_Dietary_Ictoria_Functions::getInstance()->includeItems();
 		} else {
 			return;
 		}

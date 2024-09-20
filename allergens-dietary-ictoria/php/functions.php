@@ -1,5 +1,8 @@
 <?php
 // exit if user can access this file directly
+
+use LDAP\Result;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -14,6 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 class Allergens_Dietary_Ictoria_Functions {
+
+	private static ?self $_instance = null;
 
 	// function to get a translation of all text contained within __() functions throughout the plugin IF the .mo and .po files for the local/server language are available
 	public static function load_textdomain() {
@@ -108,6 +113,12 @@ class Allergens_Dietary_Ictoria_Functions {
 		}
 	}
 
+	public static function getInstance() {
+		if ( self::$_instance === null ) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+	}
 
 	// return an array containing all allergens and dietary options that this plugin adds
 	public static function default_options() {
@@ -313,4 +324,86 @@ class Allergens_Dietary_Ictoria_Functions {
 
         return $options;
     }
+
+	public function includeItems(){
+		/*load data*/
+		  $result = $this->default_options();
+		
+		/*test activation*/
+			echo "<script>console.log('activated')</script>";
+
+		/*test contains*/
+			//echo $result;
+
+		/*test further contains*/ 
+			echo $result['nuts']['category'];
+
+		/*inserts*/
+
+		global $wpdb;
+
+		$table_allergens = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+		$table_allergens_icons = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+		$table_product = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';
+		$table_product_icons = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
+
+		$totalcount = count($result);
+
+		$counter = 0;
+
+		foreach($result as $key => $value){
+			echo "Key:" . $key . ", Value: " . $value['category'];
+
+			$counter++;
+
+		//insert product
+		$wpdb->insert(
+			$table_product,
+			array(
+				$key => $value['icon'],
+				$key => $value['icon'],
+				$key => $value['icon'],
+				$key => $value['icon'],
+			)
+		); 
+
+			//insert product icons
+			$wpdb->insert(
+				$table_product_icons,
+				array(
+					$key => $value['icon'],
+					$key => $value['icon'],
+					$key => $value['icon'],
+					$key => $value['icon'],
+				)
+			); 
+
+		//insert attachment
+		$wpdb->insert(
+			$table_allergens_icons,
+			array(
+				'allergy_name' => $value['title'],
+				'attachment_name' => $value['icon'],
+			)
+		); 
+
+		//insert allergies
+		$wpdb->insert(
+			$table_allergens,
+			array(
+				'allergy_name'    => $value['title'],
+				'allergy_description'    => $value['status'],
+			)
+		); 
+
+
+		if ($counter >= $totalcount || $counter >= 50){
+			break; //exit loop
+		}
+
+	}
+	}
 }
+
+
+//Allergens_Dietary_Ictoria_Functions::default_options();
