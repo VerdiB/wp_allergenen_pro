@@ -78,10 +78,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	public function submit( array $data ) {
 		$data = $this->sanitize( $data );
 		
-		echo '<pre> form data:';
-		var_dump($data);
-		echo '</pre>';
-
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 		}
