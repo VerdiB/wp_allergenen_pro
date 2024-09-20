@@ -45,9 +45,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
 			}
 			$this->_allergen = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllergyAttachment( $allergenName );
-			echo '<pre>';
-			var_dump( $this->_allergen );
-			echo '</pre>';
 		}
 
 		$html  = '<fieldset>';
