@@ -24,11 +24,10 @@ class Allergens_Dietary_Ictoria_Functions {
 	public static function get_settings() {
 		return get_option( __( 'allergens_dietary_ictoria_settings', 'allergens-dietary-ictoria' ) );
 	}
-
-	// Get all allergens and dietary options added by this plugin from the WP options table
-	public static function get_options() {
-		return get_option( __( 'allergens_dietary_ictoria_options', 'allergens-dietary-ictoria' ) );
-
+	
+	//Get all allergens and dietary options added by this plugin from the WP options table
+	public static function get_options(){
+		return get_option('allergens_dietary_ictoria_options');
 	}
 
 	// //adds the external css file(s) to the current WP execution
