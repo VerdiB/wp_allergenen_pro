@@ -7,5 +7,3 @@ phpunit/tests/testdox.*
 phpunit/tests/*.log
 phpunit/tests/*.cache
 *.code-workspace
-vendor/
-composer.*
