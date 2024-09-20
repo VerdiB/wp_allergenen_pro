@@ -4,8 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// class that contains functions that are used by multiple classes/files or do not belong in another class
-
 /**
  * @author V.B.
  * @covers Allergens_Dietary_Ictoria_Functions
@@ -26,10 +24,10 @@ class Allergens_Dietary_Ictoria_Functions {
 	public static function get_settings() {
 		return get_option( __( 'allergens_dietary_ictoria_settings', 'allergens-dietary-ictoria' ) );
 	}
-
-	// Get all allergens and dietary options added by this plugin from the WP options table
-	public static function get_options() {
-		return get_option( __( 'allergens_dietary_ictoria_options', 'allergens-dietary-ictoria' ) );
+	
+	//Get all allergens and dietary options added by this plugin from the WP options table
+	public static function get_options(){
+		return get_option('allergens_dietary_ictoria_options');
 	}
 
 	// //adds the external css file(s) to the current WP execution
@@ -290,29 +288,29 @@ class Allergens_Dietary_Ictoria_Functions {
 			),
 		);
 
-		$attributes_allergen =
-		add_query_arg(
-			array(
-				'key' => array(
-					'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
-					'title'         => __( 'key', 'allergens-dietary-ictoria' ),
-					'status'        => __( 'active', 'allergens-dietary-ictoria' ),
-					'filter-action' => __( 'exclude', 'allegens-dietary-ictoria' ),
-					'filter-extra'  => $no,
-					'icon'          => __( 'url1', 'allegens-dietary-ictoria' ), // icon upload option in WP-dashboard
-					ALLERGENS_DIETARY_ICTORIA_DIRNAME,
-				),
-			)
-		);
+        $attributes_allergen =
+            add_query_arg(
+            array(
+                'key' => array(
+                    'category' => __('allergen', 'allergens-dietary-ictoria'),
+                    'title' => __('key', 'allergens-dietary-ictoria'),
+                    'status' => __('active', 'allergens-dietary-ictoria'),
+                    'filter-action' => __('exclude', 'allegens-dietary-ictoria'),
+                    'filter-extra' => $no,
+                    'icon' => __('url1', 'allegens-dietary-ictoria'), // icon upload option in WP-dashboard
+                    ALLERGENS_DIETARY_ICTORIA_DIRNAME,
+                ),
+            )
+        );
 
-		// add allergen button in WordPress
-		submit_button(
-			__( 'add allergen', 'allergens-dietary-ictoria' ),
-			'primary', // CSS class for the button
-			true,  // Wrap the button in a <p> tag
-			$attributes_allergen // Additional attributes like 'id'
-		);
+        // add allergen button in WordPress
+        submit_button(
+            __('add allergen', 'allergens-dietary-ictoria'),
+            'primary', // CSS class for the button
+            true, // Wrap the button in a <p> tag
+            $attributes_allergen // Additional attributes like 'id'
+        );
 
-				return $options;
-	}
+        return $options;
+    }
 }
