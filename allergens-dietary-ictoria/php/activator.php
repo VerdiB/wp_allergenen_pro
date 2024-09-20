@@ -42,9 +42,9 @@ class Allergens_Dietary_Ictoria_Activator {
         attachment_name VARCHAR(255) NOT NULL,
         PRIMARY KEY (allergy_name, attachment_name),
         CONSTRAINT FK_AllergyAttch_Allergy
-        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name),
+        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name) ON UPDATE CASCADE ,
         CONSTRAINT FK_AllergyAttch_Attch
-        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name))
+        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name) ON UPDATE CASCADE) 
         "
 		);
 
@@ -56,7 +56,7 @@ class Allergens_Dietary_Ictoria_Activator {
         CONSTRAINT FK_AllergyProduct_WCproduct
         FOREIGN KEY (product_id) REFERENCES {$wpdb->prefix}wc_product_meta_lookup(product_id),
         CONSTRAINT FK_AllergyProduct_Allergy
-        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name))"
+        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name) ON UPDATE CASCADE )"
 		);
 		dbDelta( $sql_attachments );
 		dbDelta( $sql_allergy );

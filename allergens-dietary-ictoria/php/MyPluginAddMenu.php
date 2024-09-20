@@ -68,6 +68,17 @@ class MyPluginAddMenu {
 				'addallergens',
 			)
 		);
+		add_submenu_page(
+			'allergens-dietary-options',
+			__( 'Update allergen', 'allergens-dietary-ictoria' ),
+			__( 'Update allergen', 'allergens-dietary-ictoria' ),
+			'manage_options',
+			'allergens-dietary-update-allergen',
+			array(
+				$this,
+				'updateallergens',
+			)
+		);
 	}
 
 	public function myAdminPage() {
@@ -88,6 +99,14 @@ class MyPluginAddMenu {
 		}
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
+	}
+
+	public function updateallergens() {
+		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
+		}
+		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
+		Allergens_Dietary_Ictoria_Form::getInstance()->showForm( 'test' );
 	}
 }
 
