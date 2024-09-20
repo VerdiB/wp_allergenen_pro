@@ -1,8 +1,10 @@
 <?php
+namespace Plugin\Php;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 
 
 class Allergens_Dietary_Ictoria_Activator {
