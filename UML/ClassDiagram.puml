@@ -91,6 +91,7 @@ package "php"{
             + showForm(allergenName:String) : void
             + submit(data:array) : void
             + sanitize(data:array) : array
+            - do_dropdown() : string
         }
 
         class Allergens_Dietary_Ictoria_License_Form{
@@ -109,7 +110,7 @@ package "php"{
             - __construct() : void
             + addAllergens(data:array) : boolean
             + checkAllergenExists(allergenName:string) : boolean
-            + updateAllergen(data:array, oldName:string) : void
+            + updateAllergens(data:array) : void
             + getAllergen(allergenName:string) : array
         }
 
@@ -121,6 +122,7 @@ package "php"{
             + checkAttachmentExists(attachmentName:string) : boolean
             + updateAttachment(data:array, oldName:string) : void
             + getAttachment(attachmentName:string) : array
+            - placeAttachment(data:array) : void
         }
 
         class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries{
@@ -157,9 +159,9 @@ Allergens_Dietary_Ictoria_Product_Settings -l-> Allergens_Dietary_Ictoria_Functi
 FormType  <.. Allergens_Dietary_Ictoria_Form 
 Allergens_Dietary_Ictoria_Form o-r-> I_Allergens_Dietary_Ictoria_Form
 Allergens_Dietary_Ictoria_License_Form ..|> I_Allergens_Dietary_Ictoria_Form
-Allergens_Dietary_Ictoria_Allergens_Form ..|> I_Allergens_Dietary_Ictoria_Form
-Allergens_Dietary_Ictoria_Allergens_Form .d.> Allergens_Dietary_Ictoria_Allergen_Queries : uses
-Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Attachment_Queries : uses
-Allergens_Dietary_Ictoria_Allergens_Form .d.> Allergens_Dietary_Ictoria_Allergy_Attachment_Queries : uses
+Allergens_Dietary_Ictoria_Allergens_Form .u.|> I_Allergens_Dietary_Ictoria_Form
+Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Allergen_Queries : uses
+Allergens_Dietary_Ictoria_Allergens_Form .r.> Allergens_Dietary_Ictoria_Attachment_Queries : uses
+Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Allergy_Attachment_Queries : uses
 
 @enduml
