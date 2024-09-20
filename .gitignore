@@ -1,5 +1,6 @@
 debug/
 mysql/
+allergens-diatary-ictoria/assets/icons/custom
 .vscode/
 wordpress/
 phpunit/tests/*.bak
