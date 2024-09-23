@@ -91,7 +91,7 @@ class Allergens_Dietary_Ictoria_Startup {
 	public static function on_activation() {
 		$settings = Allergens_Dietary_Ictoria_Functions::get_settings();
 		// show popup asking for certain setting options if this is the first activation after installing the plugin.
-		if ( ! isset( $settings[ __( 'initial_setup_done' ) ] ) ) {
+		if ( ! isset( $settings[ 'initial_setup_done' ] ) ) {
 			// show popup asking wether or not the user wants to automatically export all relevant product data on uninstall
 			// tell user (within popup) that above setting can be set at all times from the plugin settings menu
 			// save chosen settings in the allergens_dietary_ictoria_settings(WP options table)
@@ -102,7 +102,7 @@ class Allergens_Dietary_Ictoria_Startup {
 		// set the default options in the WooCommerce options table if they do not exist
 		if ( empty( $options ) ) {
 			$options = Allergens_Dietary_Ictoria_Functions::default_options();
-			update_option( __( 'allergens_dietary_ictoria_options', 'allergens-dietary-ictoria' ), $options, true );
+			update_option( 'allergens_dietary_ictoria_options', $options, true );
 		}
 
 		// temporary admin menu panel for testing the license form
