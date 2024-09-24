@@ -159,19 +159,31 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		); 
 
 		*/
+		$isallergy = 0;
+
+			if ($value['category'] == "allergen"){
+				$isallergy = 1;
+			}else{
+				$isallergy = 0;
+			}
 
 		//insert allergies
 		$wpdb->insert(
-
 			$table_allergens,
 			array(
 				'allergy_name'    => $value['title'],
 				'allergy_description'    => $value['description'],
+				'is_allergy' => 		$isallergy,
 			)
 		); 
 
-		
-
+		//insert image paths
+		$wpdb->insert(
+			$table_product_icons,
+			array(
+				'attachment_path'  => 'allergens-dietary-ictoria/assets/icons/allergens_peanuts.png',
+			)
+		); 
 
 		if ($counter >= $totalcount || $counter >= 50){
 			break; //exit loop
