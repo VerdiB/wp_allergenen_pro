@@ -149,7 +149,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 					$key => $value['icon'],
 				)
 			); */
-
+/*
 		//insert attachment
 		$wpdb->insert(
 			$table_allergens_icons,
@@ -157,17 +157,20 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				'attachment_name' 		=> $value['title'],
 			)
 		); 
-/*
+
+		*/
+
 		//insert allergies
 		$wpdb->insert(
+
 			$table_allergens,
 			array(
 				'allergy_name'    => $value['title'],
-				'allergy_description'    => $value['status'],
+				'allergy_description'    => $value['description'],
 			)
 		); 
 
-		*/
+		
 
 
 		if ($counter >= $totalcount || $counter >= 50){

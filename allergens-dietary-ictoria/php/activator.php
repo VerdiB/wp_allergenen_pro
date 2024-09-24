@@ -62,5 +62,20 @@ class Allergens_Dietary_Ictoria_Activator {
 		dbDelta( $sql_allergy );
 		dbDelta( $sql_allergy_attachment );
 		dbDelta( $sql_allergy_product );
+
+		if ( ! interface_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
+
+			//DB includes
+			global $wpdb;
+			$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+			$record_count = $wpdb->get_var( "SELECT COUNT(*) FROM $table_name" );
+			if ( $record_count > 0 ) {
+				echo "Record exists!";
+			} else {
+				echo "Record does not exist.";
+				Allergens_Dietary_Ictoria_Allergen_Queries::includeItems();
+			}
+		}
 	}
 }
