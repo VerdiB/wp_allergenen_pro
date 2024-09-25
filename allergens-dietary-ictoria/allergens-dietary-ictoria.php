@@ -289,4 +289,9 @@ function get_plugin_changelog() {
 //     echo '</div>';
 //     echo '</div>';
 // }
+
+require_once plugin_dir_path( __FILE__ ) . 'php/DB/class-allergen-icon-manager.php';
+
+$MyPluginAddMenu = MyPluginAddMenu::instance();
+
 ?>
