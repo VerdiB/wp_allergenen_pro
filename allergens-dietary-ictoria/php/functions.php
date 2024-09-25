@@ -124,7 +124,8 @@ class Allergens_Dietary_Ictoria_Functions {
 				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
 				'description'	=> 'Peanut allergy is one of the most common and dangerous food allergies, frequently leading to severe reactions, including anaphylaxis, which requires immediate medical attention.',
 				'filter-extra'  => $no,
-				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_peanuts.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'icon'          => 'allergens-dietary-ictoria/assets/icons/allergens_peanuts.png',
+				'name'          => 'allergens_peanuts.png',
 			),
 			'nuts'        => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -134,6 +135,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Tree nuts, such as almonds, walnuts, and cashews, are among the most serious food allergens, often causing severe reactions, including anaphylaxis.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_nuts.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_nuts.png',
 			),
 			'sesame'      => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -143,6 +145,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Peanut allergy is one of the most common and dangerous food allergies, frequently leading to severe reactions, including anaphylaxis, which requires immediate medical attention.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_sesame.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_sesame.png',
 			),
 			'lupin'       => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -152,6 +155,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Lupin is a legume that is sometimes used in flour or baked goods. People with lupin allergies may experience symptoms ranging from mild digestive discomfort to severe anaphylactic reactions.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_lupin.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_lupin.png',
 			),
 			'soya'        => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -161,6 +165,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Soy allergy is common in children and can cause reactions such as digestive issues, skin reactions, or, in severe cases, anaphylaxis. Soy is found in many processed foods.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_soya.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_soya.png',
 			),
 			'mustard'     => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -170,6 +175,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Mustard allergy is common in Europe and can cause reactions such as skin irritation, respiratory symptoms, or anaphylaxis. Mustard is often found in sauces, dressings, and spices.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_mustard.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_mustard.png',
 			),
 			'eggs'        => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -179,6 +185,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Eggs are a frequent allergen, particularly in young children. Symptoms of egg allergies can include skin reactions, respiratory issues, or gastrointestinal problems.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_eggs.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_eggs.png',
 			),
 			'dairy'       => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -188,6 +195,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Dairy allergies are common, especially in children, and can cause reactions like skin rashes, digestive issues, or anaphylaxis. It involves a reaction to proteins found in cow’s milk.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_dairy.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_dairy.png',
 			),
 			'fish'        => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -197,6 +205,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Fish allergy can cause severe reactions such as hives, swelling, or anaphylaxis. Unlike shellfish, fish allergies often include species like salmon, tuna, and cod.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_fish.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_fish.png',
 			),
 			'crustaceans' => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -206,6 +215,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Crustaceans such as shrimp, lobster, and crab are among the most common food allergens. This allergy can be life-threatening and often leads to reactions like swelling, breathing difficulties, or anaphylaxis.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_crustaceans.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_crustaceans.png',
 			),
 			'molluscs'    => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -215,6 +225,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Molluscs include clams, mussels, oysters, and squid. Mollusc allergies can lead to reactions similar to crustacean allergies, such as hives, swelling, or difficulty breathing.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_molluscs.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_molluscs.png',
 			),
 			'gluten'      => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -224,6 +235,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Gluten is a protein found in wheat, barley, and rye. For people with celiac disease or gluten sensitivity, consuming gluten can lead to digestive issues, skin problems, or other serious health complications.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_gluten.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_gluten.png',
 			),
 			'corn'        => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -233,6 +245,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Corn and corn-based products, such as corn starch and corn oil, can trigger allergic reactions. While less common, corn allergies can cause symptoms like digestive issues or respiratory problems.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_corn.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_corn.png',
 			),
 			'wheat'       => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -242,6 +255,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Wheat allergy is common in children and causes reactions such as hives, gastrointestinal distress, or anaphylaxis. It is different from gluten sensitivity, which specifically involves the gluten protein found in wheat.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_wheat.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_wheat',
 			),
 			'celery'      => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -251,6 +265,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Celery is commonly used in soups, broths, and spice mixes. People with a celery allergy may experience severe reactions, ranging from skin rashes to breathing difficulties.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_celery.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_celery.png',
 			),
 			'sulfite'     => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -260,6 +275,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Sulfites are preservatives used in foods and beverages like wine, dried fruits, and pickled products. Sulfite sensitivity can cause asthma-like symptoms and, in rare cases, severe allergic reactions.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_sulfite.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_sulfite.png',
 			),
 			'alcohol'     => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -269,6 +285,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Een alcoholallergie is een zeldzame reactie van het immuunsysteem op alcohol of bepaalde bestanddelen in alcoholische dranken, zoals gist of sulfieten. Symptomen kunnen variëren van huiduitslag en zwelling tot ademhalingsproblemen. Het verschilt van alcoholintolerantie, waarbij het lichaam moeite heeft alcohol te verwerken. Bij een ernstige allergische reactie is medische hulp nodig.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_alcohol.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_alcohol.png',
 			),
 			'vegetarian'  => array(
 				'category'      => __( 'dietary', 'allergens-dietary-ictoria' ),
@@ -278,6 +295,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Een dieet dat vlees en vis uitsluit, maar vaak wel zuivelproducten en eieren toelaat, afhankelijk van het type vegetariër.',
 				'filter-extra'  => '',
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/dietary_vegetarian.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'dietary_vegetarian.png',
 			),
 			'vegan'       => array(
 				'category'      => __( 'dietary', 'allergens-dietary-ictoria' ),
@@ -287,6 +305,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Een dieet waarbij alle dierlijke producten worden vermeden, inclusief vlees, zuivel, eieren, honing en alle producten van dierlijke oorsprong.',
 				'filter-extra'  => '',
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/dietary_vegan.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'dietary_vegan.png',
 			),
 			'halal'       => array(
 				'category'      => __( 'dietary', 'allergens-dietary-ictoria' ),
@@ -296,6 +315,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Voedsel dat volgens islamitische voorschriften is bereid, waarbij bijvoorbeeld varkensvlees en alcohol verboden zijn, en dieren ritueel worden geslacht.',
 				'filter-extra'  => '',
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/dietary_halal.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'dietary_halal.png',
 			),
 			'pregnant'    => array(
 				'category'      => __( 'dietary', 'allergens-dietary-ictoria' ),
@@ -306,6 +326,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'filter-extra'  => '',
 				'',
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/dietary_pregnant.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
+				'name'          => 'allergens_peanuts.png',
 			),
 		);
 

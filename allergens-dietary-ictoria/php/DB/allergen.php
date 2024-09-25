@@ -177,6 +177,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 			)
 		); 
 
+		/*
+
 		//insert image paths
 		$wpdb->insert(
 			$table_product_icons,
@@ -184,6 +186,15 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				'attachment_path'  => 'allergens-dietary-ictoria/assets/icons/allergens_peanuts.png',
 			)
 		); 
+
+		$wpdb->insert(
+			$table_allergens_icons,
+			array(
+				'allergy_name'  => $value['title'],
+			)
+		); 
+
+		*/
 
 		if ($counter >= $totalcount || $counter >= 50){
 			break; //exit loop
