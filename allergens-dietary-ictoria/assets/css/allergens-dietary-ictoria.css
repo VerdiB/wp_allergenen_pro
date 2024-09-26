@@ -32,6 +32,25 @@
 	line-height: 1;
 }
 
+#info_grid
+{
+	display: grid;
+	grid-template-columns: 50% 50%;
+}
+
+.premium
+{
+	color: rgba(0, 164, 170, 0.387);
+	text-shadow: 2px 2px rgb(21, 1, 101);
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.free
+{
+	color: green;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
 #tabs_flexbox > .tabs
 {
 	color: black;
@@ -88,6 +107,13 @@
 	border-bottom: 2px solid gray;
 	justify-content: left;
 	flex-direction: row;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.contains{
+	font-size: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	padding-top: 10px;
 }
 
 .allergen-field>input{
