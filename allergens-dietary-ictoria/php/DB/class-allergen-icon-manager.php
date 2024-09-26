@@ -42,64 +42,92 @@ class Allergen_Icon_Manager {
 
     public static function update_allergen_icons() {
         $updated_icons = false;
+    
         if (isset($_FILES['allergen_icon'])) {
             foreach ($_FILES['allergen_icon']['name'] as $allergy_name => $file_name) {
                 if ($_FILES['allergen_icon']['error'][$allergy_name] === UPLOAD_ERR_OK) {
                     $tmp_name = $_FILES['allergen_icon']['tmp_name'][$allergy_name];
                     $upload_dir = wp_upload_dir();
                     $attachment_path = $upload_dir['path'] . '/' . basename($file_name);
-
+                    $attachment_name = basename($file_name);
+    
                     if (move_uploaded_file($tmp_name, $attachment_path)) {
                         global $wpdb;
-                        $attachment_name = basename($file_name);
+                        $wpdb->query('START TRANSACTION');
+    
                         $table_name_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
-
-                        $existing_attachment = $wpdb->get_var($wpdb->prepare("SELECT attachment_name FROM $table_name_attachment WHERE attachment_name = %s", $attachment_name));
-
-                        if (is_null($existing_attachment)) {
+                        $table_name_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+    
+                        // Controleer of de attachment_name al bestaat
+                        $existing_attachment = $wpdb->get_var($wpdb->prepare(
+                            "SELECT attachment_name FROM $table_name_attachment WHERE attachment_name = %s",
+                            sanitize_file_name($attachment_name)
+                        ));
+    
+                        if (!$existing_attachment) {
+                            // Voeg de nieuwe bijlage toe aan de `attachments`-tabel
                             $wpdb->insert(
                                 $table_name_attachment,
-                                array('attachment_name' => sanitize_file_name($attachment_name), 'attachment_path' => sanitize_text_field($attachment_path)),
+                                array(
+                                    'attachment_name' => sanitize_file_name($attachment_name),
+                                    'attachment_path' => sanitize_text_field($attachment_path)
+                                ),
                                 array('%s', '%s')
                             );
+    
+                            // Verwijder de oude bijlage uit de `allergy_attachment`-tabel
+                            $old_attachment_name = $wpdb->get_var($wpdb->prepare("SELECT attachment_name FROM $table_name_allergy_attachment WHERE allergy_name = %s", sanitize_text_field($allergy_name)));
+    
+                            if ($old_attachment_name) {
+                                $wpdb->delete(
+                                    $table_name_allergy_attachment,
+                                    array('attachment_name' => sanitize_file_name($old_attachment_name)),
+                                    array('%s')
+                                );
+    
+                                $wpdb->delete(
+                                    $table_name_attachment,
+                                    array('attachment_name' => sanitize_file_name($old_attachment_name)),
+                                    array('%s')
+                                );
+                            }
+    
+                            // Update de `allergy_attachment`-tabel met de nieuwe bijlage
+                            $existing_allergy = $wpdb->get_var($wpdb->prepare("SELECT attachment_name FROM $table_name_allergy_attachment WHERE allergy_name = %s", sanitize_text_field($allergy_name)));
+    
+                            if ($existing_allergy) {
+                                $wpdb->update(
+                                    $table_name_allergy_attachment,
+                                    array('attachment_name' => sanitize_file_name($attachment_name)),
+                                    array('allergy_name' => sanitize_text_field($allergy_name)),
+                                    array('%s'),
+                                    array('%s')
+                                );
+                            } else {
+                                $wpdb->insert($table_name_allergy_attachment,
+                                    array(
+                                        'allergy_name' => sanitize_text_field($allergy_name),
+                                        'attachment_name' => sanitize_file_name($attachment_name)
+                                    ),
+                                    array('%s', '%s')
+                                );
+                            }
+    
+                            $wpdb->query('COMMIT');
+                            $updated_icons = true;
                         } else {
-                            $wpdb->update(
-                                $table_name_attachment,
-                                array('attachment_path' => sanitize_text_field($attachment_path)),
-                                array('attachment_name' => sanitize_file_name($attachment_name)),
-                                array('%s'),
-                                array('%s')
-                            );
+                            echo '<p>The attachment name "' . esc_html($attachment_name) . '" already exists. Please choose a different file.</p>';
                         }
-
-                        $table_name_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-                        $existing_allergy = $wpdb->get_var($wpdb->prepare("SELECT allergy_name FROM $table_name_allergy_attachment WHERE allergy_name = %s", sanitize_text_field($allergy_name)));
-
-                        if (is_null($existing_allergy)) {
-                            $wpdb->insert($table_name_allergy_attachment,
-                                array('allergy_name' => sanitize_text_field($allergy_name), 'attachment_name' => sanitize_file_name($attachment_name)),
-                                array('%s', '%s')
-                            );
-                        } else {
-                            $wpdb->update($table_name_allergy_attachment,
-                                array('attachment_name' => sanitize_file_name($attachment_name)),
-                                array('allergy_name' => sanitize_text_field($allergy_name)),
-                                array('%s'),
-                                array('%s')
-                            );
-                        }
-
-                        $updated_icons = true;
                     } else {
                         echo '<p>Failed to upload file for ' . esc_html($allergy_name) . '.</p>';
                     }
                 }
             }
+    
             if ($updated_icons) {
                 echo '<script type="text/javascript">location.reload();</script>';
                 echo '<p>Icons updated successfully. Reloading page...</p>';
             }
         }
-    }
+    }    
 }
-
