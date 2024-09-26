@@ -21,16 +21,17 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
 
     private static ?self $_instance = null;
 
-    function get_columns() {
+    public function get_columns() {
         $columns = array(
-            'cb'      => '<input type="checkbox" />', // Checkbox kolom
-            'name'    => 'Naam',
-            'email'   => 'E-mail',
-            'phone'   => 'Telefoonnummer',
+            'cb'      => '<input type="checkbox" />', // Checkbox column for bulk actions
+            'name'    => 'Name',
+            'email'   => 'Email',
+            'role'    => 'Role'
         );
         return $columns;
     }
-    
+
+
     public function show_Allergens_form() {
         global $wpdb;
 
@@ -44,7 +45,15 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
         $table_name2 = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
         $table_name3 = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
 
-        $results = $wpdb->get_results( $wpdb->prepare("SELECT * FROM $table_name"));
+        $sql = $wpdb->prepare(
+            "SELECT * FROM $table_name"
+        );
+        $results = $wpdb->get_results( $sql , ARRAY_A );
+        echo '<pre>';
+        print_r($results);
+        // var_dump($results);
+        echo '</pre>';
+
        /* $results = $wpdb->get_results( $wpdb->prepare(
             "SELECT 
                 t1.allergy_name, 
@@ -60,64 +69,45 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
         ) ); */
 
         //allergens
-
-        $html = '<table id="showallergens_flexbox" class="nav-tab-wrapper">
-        <th>De allergenen: </th>';
+   
+        $html = '<table class="wp-list-table widefat fixed striped table-view-list pages">
+        <thead> 
+        <td>
+        <input id="cb-select-all-1" type="checkbox">
+        <label>
+            <span class="screen-reader-text">Alles selecteren</span>
+        </label>
+        </td>
+        <th scope="col" id="name" class="manage-column column-name column-primary"> Allergenen en dieten: </th>
+        <th scope="col" id="name" class="manage-column column-name column-primary"></th>
+        <th scope="col" id="name" class="manage-column column-name column-primary"> Allergeen of dieet: </th></thead>';
 
         try {
-            print_r("hello2");
             if(!empty($results)){
             foreach ($results as $row){
-                print_r("hello3");
-                var_dump($row);
-                if ($row->is_allergy == 1){
-                    print_r("hello4");
-                $html .= '<tr scope="row">
-                <td class="allergen-dietary_item label">' . esc_html( $row->allergy_name ) . ':</td>
-                <td class="allergen-dietary_item">' . esc_html( $row->allergy_description ) . '</td>
-                </tr>';
+                $allergenOrDieet = "";
+                if ($row['is_allergy'] == 1){
+                    $allergenOrDieet = "Allergeen";
+                }else{
+                    $allergenOrDieet = "Dieet";
                 }
+                $html .= '<tr scope="row" id="post-1" class="iedit author-self level-0 post-8 type-page status-publish hentry">
+                <td class="allergen-dietary_item label">' . esc_html( $row['allergy_name'] ) . ':</td>
+                <td class="title column-title has-row-actions column-primary page-title">' . esc_html( $row['allergy_description'] ) . '</td>
+                <td class="title column-title has-row-actions column-primary page-title"></td>
+                <td class="allergen-dietary_item label">' . $allergenOrDieet . '</td>
+                </tr>';
             }
             }else{
-                print_r("is empty");
+                _e("is empty");
             }
         } catch (Exception $e) {
             echo "<script>console.log(Error: " . $e->getMessage() . ") </script>";
             print_r($e->getMessage());
         }
-
-        
-
         $html .= '</table>';
         echo $html;
-
-        print_r("hello");
-
-        //Dietary
-
-        $html2 = '<table id="showallergens_flexbox" class="nav-tab-wrapper">
-        <tr><th>De dieten: </th></tr>';
-
-        
-        try {
-        foreach ($results as $row){
-            if ($row->is_allergy == 0){
-            $html2 .= '<tr scope="row">
-            <td class="allergen-dietary_item label">' . esc_html( $row->allergy_name ) . ':</td>
-            <td class="allergen-dietary_item label">' . esc_html( $row->allergy_description ) . '</td>
-            <td class="allergen-dietary_item label"><img>' . esc_html( $row->attachment_path ) . '</img></td>
-            </tr>';
-            }
-        }
-    }catch (Exception $e){
-        echo "Error: " . $e->getMessage(); 
     }
-        
-        
-
-        $html2 .= '</table>';
-        echo $html2;
-    }    
 
     public static function getInstance() {
 		if ( self::$_instance === null ) {
@@ -130,4 +120,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
         wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/css/allergens-dietary-ictoria.css'));
         wp_enqueue_style('allergens-dietary-ictoria-admin-css', plugins_url( 'assets/css/allergens-dietary-ictoria.css', ALLERGENS_DIETARY_ICTORIA_FILE ));
     }
+
+    //Bulk/quick actions zijn voor volgende sprint.
 }

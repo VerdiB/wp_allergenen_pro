@@ -31,11 +31,6 @@
 	float: left;
 }
 
-.allergen-dietary_item{
-	background-color: rgb(251, 251, 251);
-	border: 1px solid black;
-}
-
 #showallergens_flexbox{
 	max-width: 800px;
 	margin-top: 70px;

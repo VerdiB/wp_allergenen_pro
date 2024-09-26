@@ -110,7 +110,7 @@ class Allergens_Dietary_Ictoria_Functions {
 
 
 	// return an array containing all allergens and dietary options that this plugin adds
-	public static function default_options() {
+	/*public static function default_options() {
 		// Every option has a category, title, status, filter-action, filter-extra and icon
 		// status is used to enable/disable an option globally
 		// filter-action is used to tell the filter if products with the selected option should be included or excluded
@@ -124,7 +124,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'filter-action' => __( 'exclude', 'allergens-dietary-ictoria' ),
 				'description'	=> 'Peanut allergy is one of the most common and dangerous food allergies, frequently leading to severe reactions, including anaphylaxis, which requires immediate medical attention.',
 				'filter-extra'  => $no,
-				'icon'          => 'allergens-dietary-ictoria/assets/icons/allergens_peanuts.png',
+				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_peanuts.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
 				'name'          => 'allergens_peanuts.png',
 			),
 			'nuts'        => array(
@@ -255,7 +255,7 @@ class Allergens_Dietary_Ictoria_Functions {
 				'description'	=> 'Wheat allergy is common in children and causes reactions such as hives, gastrointestinal distress, or anaphylaxis. It is different from gluten sensitivity, which specifically involves the gluten protein found in wheat.',
 				'filter-extra'  => $no,
 				'icon'          => plugins_url( 'allergens-dietary-ictoria/assets/icons/allergens_wheat.png', ALLERGENS_DIETARY_ICTORIA_DIRNAME ),
-				'name'          => 'allergens_wheat',
+				'name'          => 'allergens_wheat.png',
 			),
 			'celery'      => array(
 				'category'      => __( 'allergen', 'allergens-dietary-ictoria' ),
@@ -354,5 +354,5 @@ class Allergens_Dietary_Ictoria_Functions {
         );
 
         return $options;
-    }
+    }*/
 }

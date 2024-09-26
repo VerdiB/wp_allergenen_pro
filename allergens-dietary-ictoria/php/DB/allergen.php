@@ -110,16 +110,14 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 
 	public static function includeItems(){
 		/*load data*/
-		  $result = Allergens_Dietary_Ictoria_Functions::default_options();
+		  $result = Allergens_Dietary_Ictoria_Activator::default_allergens();
 		
 		/*test activation*/
-			echo "<script>console.log('activated')</script>";
 
 		/*test contains*/
 			//echo $result;
 
 		/*test further contains*/ 
-			echo $result['nuts']['category'];
 
 		/*inserts*/
 
@@ -135,7 +133,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		$counter = 0;
 
 		foreach($result as $key => $value){
-			echo "Key:" . $key . ", Value: " . $value['category'];
 
 			$counter++;
 
@@ -159,6 +156,15 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		); 
 
 		*/
+
+		$sql = $wpdb->prepare(
+			"SELECT * FROM $table_allergens WHERE allergy_name = '" . $value['title'] . "'"
+		);
+
+		$exists = $wpdb->get_var( $sql );
+
+		if ($exists == 0){
+
 		$isallergy = 0;
 
 			if ($value['category'] == "allergen"){
@@ -167,39 +173,39 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				$isallergy = 0;
 			}
 
-		//insert allergies
+					//insert allergies
+
+					$wpdb->insert(
+						$table_product_icons,
+						array(
+							'attachment_path'  => $value['path'],
+							'attachment_name'   => $value['name'],
+						)
+					); 
+
 		$wpdb->insert(
 			$table_allergens,
 			array(
-				'allergy_name'    => $value['title'],
+				'allergy_name'  => $value['title'],
 				'allergy_description'    => $value['description'],
-				'is_allergy' => 		$isallergy,
+				'is_allergy' => 	$isallergy,
 			)
 		); 
 
-		/*
-
-		//insert image paths
-		$wpdb->insert(
-			$table_product_icons,
-			array(
-				'attachment_path'  => 'allergens-dietary-ictoria/assets/icons/allergens_peanuts.png',
-			)
-		); 
 
 		$wpdb->insert(
 			$table_allergens_icons,
 			array(
 				'allergy_name'  => $value['title'],
+				'attachment_name'   => $value['name'],
 			)
 		); 
-
-		*/
-
+		
 		if ($counter >= $totalcount || $counter >= 50){
 			break; //exit loop
 		}
 
+	}
 	}
 }
 }

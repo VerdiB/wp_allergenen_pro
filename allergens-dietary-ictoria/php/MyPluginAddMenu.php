@@ -117,7 +117,7 @@ class MyPluginAddMenu {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
 		}
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
-		Allergens_Dietary_Ictoria_Form::getInstance()->showForm( 'test' );
+		Allergens_Dietary_Ictoria_Form::getInstance()->showForm( 'tst' );
 	}
 
 	public function showallergens() {
