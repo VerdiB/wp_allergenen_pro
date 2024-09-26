@@ -65,6 +65,7 @@ class Allergens_Dietary_Ictoria_Filter {
 
 
 	public function filter_query( $query ) {
+		$filterActionTrans = __('exclusief');
 		if ( $query->is_main_query() && is_shop() && isset( $_POST['allergen_filter'] ) ) {
 			$selected_options = isset( $_POST['allergen_filter_options'] ) ? $_POST['allergen_filter_options'] : array();
 			$filter_actions   = isset( $_POST['allergen_filter_action'] ) ? $_POST['allergen_filter_action'] : array();
@@ -81,7 +82,7 @@ class Allergens_Dietary_Ictoria_Filter {
 					}
 	
 					$action  = $filter_actions[$key];
-					$compare = ($action === 'exclusief') ? 'NOT LIKE' : 'LIKE';
+					$compare = ($action === $filterActionTrans) ? 'NOT LIKE' : 'LIKE';
 	
 					$meta_query[] = array(
 						'key'     => 'allergens_dietary_ictoria', // Key of the custom field
