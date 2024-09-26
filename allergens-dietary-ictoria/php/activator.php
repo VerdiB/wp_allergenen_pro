@@ -63,4 +63,11 @@ class Allergens_Dietary_Ictoria_Activator {
 		dbDelta( $sql_allergy_attachment );
 		dbDelta( $sql_allergy_product );
 	}
+
+	public static function tabsonpage(){
+		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
+			Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
+		}
+	}
 }

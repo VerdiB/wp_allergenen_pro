@@ -37,17 +37,9 @@ if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) 
 class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ictoria_Form {
 
 	private ?array $_allergen = null;
-	private static ?self $_instance = null;
 	private const MIME_TYPES = array( 'image/png', 'image/jpeg', 'image/jpg' );
 
 	public function __construct() {
-	}
-
-	public static function getInstance() {
-		if ( self::$_instance === null ) {
-			self::$_instance = new self();
-		}
-		return self::$_instance;
 	}
 
 	/**
@@ -59,8 +51,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 * @date 11-9-2024
 	 */
 	public function showForm( ?string $allergenName = null ) {
-
-		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 
 		if ( ! is_null( $allergenName ) ) {
 			// TODO: Implement showForm() method. when the allergen name is not null

@@ -99,6 +99,7 @@ class MyPluginAddMenu {
 		}
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
+		Allergens_Dietary_Ictoria_Activator::tabsonpage();
 	}
 
 	public function updateallergens() {
@@ -107,6 +108,7 @@ class MyPluginAddMenu {
 		}
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm( 'test' );
+		Allergens_Dietary_Ictoria_Activator::tabsonpage();
 	}
 }
 
