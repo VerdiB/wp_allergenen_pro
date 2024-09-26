@@ -15,10 +15,14 @@ if ( ! class_exists( 'Allergens_Dietary_Ictoria_License_Form' ) ) {
 if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Form' ) ) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_add_allergen.php';
 }
+if ( ! class_exists( 'Allergens_Dietary_Ictoria_Remove_Allergen' ) ) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_delete_allergenen.php';
+}
 
 enum FormType {
 	case ALLERGENS;
 	case LICENSE;
+	case DELETE;
 
 	public function match( FormType $formType ): bool {
 		return $this === $formType;
@@ -46,6 +50,9 @@ class Allergens_Dietary_Ictoria_Form {
 		}
 		if ( FormType::LICENSE === self::$_formType ) {
 			self::$_formObject = new Allergens_Dietary_Ictoria_License_Form();
+		}
+		if ( FormType::DELETE === self::$_formType ) {
+			self::$_formObject = new Allergens_Dietary_Ictoria_Remove_Allergen();
 		}
 		if ( ! isset( self::$_formType ) || false === self::$_formType->match( self::$_formType ) ) {
 			throw new Exception( 'FormType not yet supported/implemented' );

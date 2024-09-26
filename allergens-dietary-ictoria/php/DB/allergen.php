@@ -1,6 +1,6 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
@@ -12,7 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @date 11-9-2024
  * @since 1.0.0
  */
-class Allergens_Dietary_Ictoria_Allergen_Queries {
+class Allergens_Dietary_Ictoria_Allergen_Queries
+{
 	private static ?self $_instance = null;
 
 	/**
@@ -22,14 +23,17 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 	 * @since 1.0.0
 	 * @date 11-9-2024
 	 */
-	public static function getInstance() {
-		if ( self::$_instance === null ) {
+	public static function getInstance()
+	{
+		if (self::$_instance === null) {
 			self::$_instance = new self();
 		}
 		return self::$_instance;
 	}
 
-	private function __construct() {}
+	private function __construct()
+	{
+	}
 
 	/**
 	 * @brief This method adds an allergen to the DB.
@@ -39,7 +43,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 	 * @date 11-9-2024
 	 * @author V.B.
 	 */
-	public function addAllergens( array $data ) {
+	public function addAllergens(array $data)
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -47,9 +52,9 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		$wpdb->insert(
 			$table_name,
 			array(
-				'allergy_name'        => $data['allergen_name'],
+				'allergy_name' => $data['allergen_name'],
 				'allergy_description' => $data['allergen_description'],
-				'is_allergy'          => $data['type'],
+				'is_allergy' => $data['type'],
 			),
 			array(
 				'%s',
@@ -57,10 +62,11 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				'%d',
 			)
 		);
-		return ( isset( $wpdb->insert_id ) ) ? true : false;
+		return (isset($wpdb->insert_id)) ? true : false;
 	}
 
-	public function checkAllergenExists( string $allergenName ) {
+	public function checkAllergenExists(string $allergenName)
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -70,12 +76,13 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 			$allergenName
 		);
 
-		$result = $wpdb->get_results( $sql );
+		$result = $wpdb->get_results($sql);
 
-		return ( count( $result ) > 0 ) ? true : false;
+		return (count($result) > 0) ? true : false;
 	}
 
-	public function updateAllergens( array $data ) {
+	public function updateAllergens(array $data)
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -83,17 +90,49 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		$wpdb->update(
 			$table_name,
 			array(
-				'allergy_name'        => $data['allergen_name'],
+				'allergy_name' => $data['allergen_name'],
 				'allergy_description' => $data['allergen_description'],
-				'is_allergy'          => $data['type'],
+				'is_allergy' => $data['type'],
 			),
 			array(
 				'allergy_name' => $data['allergen_name_hidden'],
 			)
 		);
 	}
+	public function deleteAllergen(string $allergy_name)
+{
+    global $wpdb;
 
-	public function getAllergen( string $allergenName ) {
+    if (!$allergy_name) {
+        return;
+    }
+
+    $table_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+    $table_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+
+    // Correcting the DELETE syntax with JOIN
+    $sql = $wpdb->prepare(
+        "DELETE aa 
+        FROM $table_allergy_attachment AS aa
+        INNER JOIN $table_allergy AS a 
+        ON a.allergy_name = aa.allergy_name
+        WHERE aa.allergy_name = %s  
+        AND a.is_default_option != TRUE",
+        $allergy_name
+    );
+
+    // Execute the query and add error logging
+    $result = $wpdb->query($sql);
+
+    if ($result === false) {
+        error_log('Error deleting allergen: ' . $wpdb->last_error);
+    }
+}
+
+
+
+	public function getAllergen(string $allergenName)
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -103,7 +142,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 			$allergenName
 		);
 
-		$result = $wpdb->get_results( $sql );
+		$result = $wpdb->get_results($sql);
 
 		return $result;
 	}
