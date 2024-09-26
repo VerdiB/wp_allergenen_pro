@@ -239,12 +239,6 @@ class Allergens_Dietary_Ictoria_Activator {
 			);
 
 			$exists = $wpdb->get_var( $sql );
-
-			if ( isset( $wpdb ) && $wpdb instanceof wpdb ) {
-				echo 'Database is loaded and ready' . $exists . '';
-			} else {
-				echo 'Database is not loaded.';
-			}
 	
 			if ( $exists > 0 ) {
 				// Record exists!

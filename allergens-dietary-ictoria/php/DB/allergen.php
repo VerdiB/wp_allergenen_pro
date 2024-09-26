@@ -136,27 +136,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 
 			$counter++;
 
-			/*insert product icons
-			$wpdb->insert(
-				$table_product_icons,
-				array(
-					$key => $value['icon'],
-					$key => $value['icon'],
-					$key => $value['icon'],
-					$key => $value['icon'],
-				)
-			); */
-/*
-		//insert attachment
-		$wpdb->insert(
-			$table_allergens_icons,
-			array(
-				'attachment_name' 		=> $value['title'],
-			)
-		); 
-
-		*/
-
 		$sql = $wpdb->prepare(
 			"SELECT * FROM $table_allergens WHERE allergy_name = '" . $value['title'] . "'"
 		);

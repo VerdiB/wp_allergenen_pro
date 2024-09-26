@@ -49,26 +49,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
             "SELECT * FROM $table_name"
         );
         $results = $wpdb->get_results( $sql , ARRAY_A );
-        echo '<pre>';
-        print_r($results);
-        // var_dump($results);
-        echo '</pre>';
-
-       /* $results = $wpdb->get_results( $wpdb->prepare(
-            "SELECT 
-                t1.allergy_name, 
-                t1.allergy_description, 
-                t2.attachment_name, 
-                t3.attachment_path
-            FROM 
-                {$table_name} AS t1
-            INNER JOIN 
-                {$table_name2} AS t2 ON t1.allergy_name = t2.allergy_name
-            INNER JOIN 
-                {$table_name3} AS t3 ON t2.attachment_name = t3.attachment_name"
-        ) ); */
-
-        //allergens
    
         $html = '<table class="wp-list-table widefat fixed striped table-view-list pages">
         <thead> 
