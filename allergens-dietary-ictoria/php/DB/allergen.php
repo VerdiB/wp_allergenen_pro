@@ -111,13 +111,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 	public static function includeItems(){
 		/*load data*/
 		$result = Allergens_Dietary_Ictoria_Activator::default_allergens();
-		
-		/*test activation*/
-
-		/*test contains*/
-			//echo $result;
-
-		/*test further contains*/ 
 
 		/*inserts*/
 
@@ -135,27 +128,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		foreach($result as $key => $value){
 
 			$counter++;
-
-			/*insert product icons
-			$wpdb->insert(
-				$table_product_icons,
-				array(
-					$key => $value['icon'],
-					$key => $value['icon'],
-					$key => $value['icon'],
-					$key => $value['icon'],
-				)
-			); */
-/*
-		//insert attachment
-		$wpdb->insert(
-			$table_allergens_icons,
-			array(
-				'attachment_name' 		=> $value['title'],
-			)
-		); 
-
-		*/
 
 		$sql = $wpdb->prepare(
 			"SELECT * FROM $table_allergens WHERE allergy_name = '" . $value['title'] . "'"
@@ -175,13 +147,13 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 
 					//insert allergies
 
-					$wpdb->insert(
-						$table_product_icons,
-						array(
-							'attachment_path'  => $value['path'],
-							'attachment_name'   => $value['name'],
-						)
-					); 
+			$wpdb->insert(
+				$table_product_icons,
+				array(
+					'attachment_path'  => $value['path'],
+					'attachment_name'   => $value['name'],
+				)
+			); 
 
 		$wpdb->insert(
 			$table_allergens,
