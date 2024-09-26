@@ -65,7 +65,8 @@ class Allergens_Dietary_Ictoria_Filter {
 
 
 	public function filter_query( $query ) {
-		$filterActionTrans = __('exclusief');
+		$filterActionTrans = __('exclude','allergens-dietary-ictoria');
+		error_log($filterActionTrans);
 		if ( $query->is_main_query() && is_shop() && isset( $_POST['allergen_filter'] ) ) {
 			$selected_options = isset( $_POST['allergen_filter_options'] ) ? $_POST['allergen_filter_options'] : array();
 			$filter_actions   = isset( $_POST['allergen_filter_action'] ) ? $_POST['allergen_filter_action'] : array();
