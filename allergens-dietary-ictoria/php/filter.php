@@ -76,9 +76,13 @@ class Allergens_Dietary_Ictoria_Filter {
 				// Loop through each selected option and build the meta query
 				foreach ( $selected_options as $key => $value ) {
 					// A check for the filter-action property
-					$action  = isset( $filter_actions[ $key ] ) ? $filter_actions[ $key ] : 'exclude';
-					$compare = ( $action === 'exclude' ) ? 'NOT LIKE' : 'LIKE';
-
+					if (!isset($filter_actions[$key])) {
+						continue;
+					}
+	
+					$action  = $filter_actions[$key];
+					$compare = ($action === 'exclusief') ? 'NOT LIKE' : 'LIKE';
+	
 					$meta_query[] = array(
 						'key'     => 'allergens_dietary_ictoria', // Key of the custom field
 						'value'   => '"' . $key . '"', // The value to compare (key is the option name)
@@ -87,12 +91,10 @@ class Allergens_Dietary_Ictoria_Filter {
 				}
 
 				// If there are multiple conditions, set the relationship to AND
-				if ( count( $meta_query ) > 1 ) {
+				if ( ! empty( $meta_query ) ) {
 					$meta_query['relation'] = 'AND';
+					$query->set( 'meta_query', $meta_query );
 				}
-
-				// Append the meta query to the main query
-				$query->set( 'meta_query', $meta_query );
 			}
 		}
 	}
