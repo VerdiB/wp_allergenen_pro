@@ -52,14 +52,13 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
    
         $html = '<table class="wp-list-table widefat fixed striped table-view-list pages">
         <thead> 
-        <td>
-        <input id="cb-select-all-1" type="checkbox">
-        <label>
+        <th scope="col" id="name" class="manage-column column-name column-primary"> <input id="cb-select-all-1" name="lijst" type="checkbox">  Allergenen en dieten: <td>
+        <label for="lijst">
             <span class="screen-reader-text">Alles selecteren</span>
         </label>
-        </td>
-        <th scope="col" id="name" class="manage-column column-name column-primary"> Allergenen en dieten: </th>
-        <th scope="col" id="name" class="manage-column column-name column-primary"></th>
+        Beschrijving:
+        </td></th>
+        <th scope="col" id="name" class="manage-column column-name column-primary"> </th>
         <th scope="col" id="name" class="manage-column column-name column-primary"> Allergeen of dieet: </th></thead>';
 
         try {
@@ -72,7 +71,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
                     $allergenOrDieet = "Dieet";
                 }
                 $html .= '<tr scope="row" id="post-1" class="iedit author-self level-0 post-8 type-page status-publish hentry">
-                <td class="allergen-dietary_item label">' . esc_html( $row['allergy_name'] ) . ':</td>
+                <td class="allergen-dietary_item label"><input id="cb-select-all-1" name="lijst" type="checkbox">' . esc_html( $row['allergy_name'] ) . ':</td>
                 <td class="title column-title has-row-actions column-primary page-title">' . esc_html( $row['allergy_description'] ) . '</td>
                 <td class="title column-title has-row-actions column-primary page-title"></td>
                 <td class="allergen-dietary_item label">' . $allergenOrDieet . '</td>
