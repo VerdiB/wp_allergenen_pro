@@ -134,15 +134,11 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		if ($exists == 0){
 
 	foreach($result1 as $key => $value){
-
 			$counter++;
-
 		$sql = $wpdb->prepare(
 			"SELECT * FROM $table_allergens WHERE allergy_name = '" . $value['title'] . "'"
 		);
-
 		$exists = $wpdb->get_var( $sql );
-
 		if ($exists == 0){
 			$isallergy = 0;
 
@@ -152,8 +148,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				$isallergy = 0;
 			}
 				//insert allergies
-	
-
 		$wpdb->insert(
 			$table_allergens,
 			array(
@@ -162,18 +156,13 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				'is_allergy' => 	$isallergy,
 			)
 			); 
-
-
 		if ($counter >= $totalcount || $counter >= 50){
 			break; //exit loop
 		}
-	
-			
 			}
 	}
 	foreach($result2 as $key => $value2){
 		$counter++;
-
 		$wpdb->insert(
 			$table_product_icons,
 			array(
@@ -181,19 +170,22 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				'attachment_name'   => $value2['name'],
 			)
 		); 
-	
+		if ($counter >= $totalcount || $counter >= 50){
+			break; //exit loop
+		}
 	}
 	foreach($result3 as $key => $value3){
 		$counter++;
-
 		$wpdb->insert(
 		$table_allergens_icons,
 		array(
 			'attachment_name'   => $value3['name'],
 			'allergy_name'  => $value3['title'],
 			)
-			); 
-		
+			);
+			if ($counter >= $totalcount || $counter >= 50){
+				break; //exit loop
+			}
 	}
 }
 }
