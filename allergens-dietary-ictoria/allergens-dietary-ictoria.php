@@ -133,7 +133,7 @@ if ( ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE ) {
 		}
 		$Allergens_Dietary_Ictoria_Wc_Integration_Startup = new Allergens_Dietary_Ictoria_Wc_Integration_Startup( __FILE__ );
 		// load and run the plugin admin files
-		include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/product_settings.php';
+		include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/woocommerce/product_settings.php';
 		Allergens_Dietary_Ictoria_Product_Settings::instance();
 
 		include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/activator.php';
@@ -141,7 +141,7 @@ if ( ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE ) {
 
 	}
 	// load generic files used by the plugin when active
-	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/products.php';
+	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/woocommerce/products.php';
 	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/filter.php';
 
 	Allergens_Dietary_Ictoria_Products::instance();

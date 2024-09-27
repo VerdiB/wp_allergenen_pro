@@ -4,6 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( "Allergens_Dietary_Ictoria_Allergy_Attachment_Queries" ) ) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
+}
+
 // this class contains functions used to add/remove allergens and dietary options to/from a WooCommerce product
 class Allergens_Dietary_Ictoria_Product_Settings {
 	private static $_instance = null;
@@ -33,7 +37,17 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 	public function data_fields() {
 		global $post;
 
-		$options = Allergens_Dietary_Ictoria_Functions::get_options();
+		$options = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
+		$allergens = $options->getAllAllergyAttachmments();
+		$dietary = $options->getAllAllergyAttachmments(0);
+
+		echo '<pre>';
+		print_r($dietary);
+		echo '</pre>';
+
+
+
+		
 		$list    = get_post_meta( $post->ID, __( 'allergens_dietary_ictoria' ), true );
 		if ( empty( $list ) ) {
 			$list = array();
@@ -81,6 +95,7 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 		$html .= '</div>';
 
 		echo $html;
+		
 	}
 
 	// function that stores all selected options in the productdata of the currently selected product
