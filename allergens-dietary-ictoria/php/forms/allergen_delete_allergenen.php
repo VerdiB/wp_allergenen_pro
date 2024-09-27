@@ -1,5 +1,8 @@
 <?php
 
+// ================ TIJDELIJK BESTAND =================== //
+
+
 // exit if user can access this file directly
 if (!defined('ABSPATH')) {
 	exit;

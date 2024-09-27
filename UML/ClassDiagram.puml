@@ -65,6 +65,7 @@ package "php"{
         enum FormType{
             ALLERGENS
             LICENSE
+            DELETE
 
             + match(formType:FormType) : boolean
         }
@@ -111,6 +112,7 @@ package "php"{
             + addAllergens(data:array) : boolean
             + checkAllergenExists(allergenName:string) : boolean
             + updateAllergens(data:array) : void
+            + deleteAllergen(allergens:array) : void
             + getAllergen(allergenName:string) : array
         }
 
@@ -132,6 +134,7 @@ package "php"{
             + addAllergyAttachment(data:array) : boolean
             + checkAllergyAttachmentExists(allergyName:string) : boolean
             + updateAllergyAttachment(data:array) : void
+            + getAll_allergensAndAttachments() : array
             + getAllergyAttachment(allergyAttachmentName:string) : array
         }
     }
