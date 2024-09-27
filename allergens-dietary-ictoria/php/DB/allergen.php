@@ -136,7 +136,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		$exists = $wpdb->get_var( $sql );
 
 		if ($exists == 0){
-
 		$isallergy = 0;
 
 			if ($value['category'] == "allergen"){
@@ -144,9 +143,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 			}else{
 				$isallergy = 0;
 			}
-
-					//insert allergies
-
+				//insert allergies
 			$wpdb->insert(
 				$table_product_icons,
 				array(
@@ -154,7 +151,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 					'attachment_name'   => $value['name'],
 				)
 			); 
-
 		$wpdb->insert(
 			$table_allergens,
 			array(
@@ -163,8 +159,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				'is_allergy' => 	$isallergy,
 			)
 		); 
-
-
 		$wpdb->insert(
 			$table_allergens_icons,
 			array(
@@ -172,11 +166,9 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				'attachment_name'   => $value['name'],
 			)
 		); 
-		
 		if ($counter >= $totalcount || $counter >= 50){
 			break; //exit loop
 		}
-
 	}
 	}
 }
