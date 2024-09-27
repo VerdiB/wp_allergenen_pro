@@ -59,38 +59,51 @@ class Allergens_Dietary_Ictoria_Remove_Allergen implements I_Allergens_Dietary_I
 				$html .= '<div>Is Default Option: ' . ($allergy->is_default_option ? 'Yes' : 'No') . '</div>';
 				$html .= '<div>Attachment Name: ' . esc_html($allergy->attachment_name) . '</div>';
 				$html .= '<div>Attachment Path: ' . esc_html($allergy->attachment_path) . '</div>';
+
+				if ($allergy->is_default_option) {
+					$html .= __("Can't Delete Allergen", 'allergens-dietary-ictoria');
+				} else {
+					$html .= '<input type="submit" name="submit" class="button button-primary" value="' . __('Delete Allergen', 'allergens-dietary-ictoria') . '" />';
+				}
 				$html .= '<hr>';
 				$html .= '</fieldset>';
+
 			}
-			$html .= '<input type="submit" name="submit" class="button button-primary" value="' . __('Delete Allergen', 'allergens-dietary-ictoria') . '" />';
+
 
 		}
 		echo $html;
 	}
 
-	public function submit(array $allergens)
+	public function submit($allergens)
 	{
-		print_r($allergens);
 		$allergens = $this->sanitize($allergens);
 
 		if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 		}
-
-		if (empty($data['allergen_name'])) {
+		if (empty($allergens['allergen_name'])) {
 			return;
 		}
 
 		Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->deleteAllergen($allergens);
 	}
 
-	public function sanitize(array $allergens)
+	public function sanitize($allergens)
 	{
-		foreach ($allergens as $allergen => $value) {
-			$allergen[$value['allergen_name']] = sanitize_text_field(wp_unslash($value['allergen_name']));
+		if (empty($allergens)) {
+			throw new Exception(__("Can't delete empty allergy name"));
+		}
+		foreach ($allergens as $key => $allergen) {
+			if (is_array($allergen) && isset($allergen['allergen_name'])) {
+				$allergens[$key]['allergen_name'] = sanitize_text_field($allergen['allergen_name']);
+			} elseif (is_string($allergen)) {
+				$allergens[$key] = sanitize_text_field($allergen);
+			}
 		}
 		return $allergens;
 	}
+
 
 }
 

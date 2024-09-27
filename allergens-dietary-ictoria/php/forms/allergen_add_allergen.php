@@ -62,6 +62,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		$html .= '<input type="text" name="allergen_description" id="allergen_description" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '"/>';
 		$html .= '<label for="allergen_icon">' . __('Allergen icon', 'allergens-dietary-ictoria') . '</label>';
 		$html .= '<input type="file" name="allergen_icon" id="allergen_icon" />';
+		$html .= '<input type="hidden" name="allergen_default_hidden" id="allergen_default_hidden" value="0" style="visibility: hidden;"/>';
 		$html .= '<input type="submit" name="submit" class="button button-primary" value="' . __('Add allergen', 'allergens-dietary-ictoria') . '" />';
 		$html .= '</fieldset>';
 

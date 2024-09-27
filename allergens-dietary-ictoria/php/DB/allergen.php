@@ -55,6 +55,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 				'allergy_name' => $data['allergen_name'],
 				'allergy_description' => $data['allergen_description'],
 				'is_allergy' => $data['type'],
+				'is_default_option' => $data['allergen_default_hidden'],
 			),
 			array(
 				'%s',
@@ -99,37 +100,47 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			)
 		);
 	}
-	public function deleteAllergen(array $allergens)
+	public function deleteAllergen($allergens)
 	{
 		global $wpdb;
 
-		if (!$allergens) {
-			error_log('ALLERGY NAME IS NOT SET!');
+		if (empty($allergens)) {
 			return;
 		}
 
 		$table_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 		$table_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+		$table_name_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
 
 		error_log('GOT TO ALLERGEN DELETE');
 
-		foreach ($allergens as $allergy) {
-			$sql = $wpdb->prepare(
-				"DELETE FROM $table_allergy_attachment AS aa
-			INNER JOIN $table_allergy AS a 
-			ON a.allergy_name = aa.allergy_name
-			WHERE aa.allergy_name = %s  
-			AND a.is_default_option != TRUE",
-				$allergy
-			);
-			error_log('looping!');
-			$result = $wpdb->query($sql);
-		}
+		foreach ($allergens as $key => $allergen_name) {
+			if ($key === 'submit') {
+				continue;
+			}
+			if (is_string($allergen_name) && !empty($allergen_name)) {
+				$sql = $wpdb->prepare(
+					"DELETE aa, a, am FROM $table_allergy_attachment AS aa
+                INNER JOIN $table_allergy AS a 
+                ON a.allergy_name = aa.allergy_name
+				JOIN $table_name_attachment as am
+				ON am.attachment_name = aa.attachment_name
+                WHERE aa.allergy_name = %s  
+                AND a.is_default_option != TRUE",
+					$allergen_name
+				);
 
-		if ($result === false) {
-			error_log('Error deleting allergen: ' . $wpdb->last_error);
+				$result = $wpdb->query($sql);
+
+				if ($result === false) {
+					throw new Exception(__('Error deleting allergen!'));
+				} else {
+					echo "<h3>__('Succesfully deleted allergen!')</h3>";
+				}
+			}
 		}
 	}
+
 
 
 
