@@ -111,13 +111,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 	public static function includeItems(){
 		/*load data*/
 		  $result = Allergens_Dietary_Ictoria_Activator::default_allergens();
-		
-		/*test activation*/
-
-		/*test contains*/
-			//echo $result;
-
-		/*test further contains*/ 
 
 		/*inserts*/
 

@@ -1,4 +1,4 @@
-@startuml classDiagram
+@startuml
 skinparam Linetype ortho
 skinparam groupInheritance 2
 
@@ -31,13 +31,14 @@ package "php"{
         +{static} load_style() : void
         +{static} load_admin_js() : void
         +{static} error_notice(level:string, message:string) : void
-        +{static} default_options() : array
     }
 
     class Allergens_Dietary_Ictoria_Activator{
         -{static} counter : int
         +{static} activate() : void
         -{static} create_tables() : void
+        +{static} default_allergenen() : array
+        -{static} insert_standard_data() : void
     }
 
     class Allergens_Dietary_Ictoria_Product_Settings{
@@ -101,6 +102,11 @@ package "php"{
             - check_license_key(key:string) : boolean
         }
 
+        class Allergens_Dietary_Ictoria_Show_Allergens{
+            + get_columns() : array
+            + show_Allergens_form() : void
+            + {static} getInstance() : Allergens_Dietary_Ictoria_Show_Allergens
+        }
     }
 
     package "DB" {
@@ -112,6 +118,7 @@ package "php"{
             + checkAllergenExists(allergenName:string) : boolean
             + updateAllergens(data:array) : void
             + getAllergen(allergenName:string) : array
+            + {static} includeItems() : void
         }
 
         class Allergens_Dietary_Ictoria_Attachment_Queries{
@@ -163,5 +170,4 @@ Allergens_Dietary_Ictoria_Allergens_Form .u.|> I_Allergens_Dietary_Ictoria_Form
 Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Allergen_Queries : uses
 Allergens_Dietary_Ictoria_Allergens_Form .r.> Allergens_Dietary_Ictoria_Attachment_Queries : uses
 Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Allergy_Attachment_Queries : uses
-
 @enduml
