@@ -25,8 +25,6 @@ class Allergens_Dietary_Ictoria_Remove_Allergen implements I_Allergens_Dietary_I
 {
 
 	private ?array $_allergen = null;
-	private const MIME_TYPES = array('image/png', 'image/jpeg', 'image/jpg');
-
 	public function __construct()
 	{
 	}
@@ -53,44 +51,45 @@ class Allergens_Dietary_Ictoria_Remove_Allergen implements I_Allergens_Dietary_I
 			$html .= '<p>No allergens found.</p>';
 		} else {
 			foreach ($this->_allergen as $allergy) {
+				$html .= '<input type="checkbox" name="allergen_name" value="' . esc_html(!empty($allergy->allergy_name) ? $allergy->allergy_name : '') . '" />';
+				$html .= '<br>';
 				$html .= '<fieldset>';
 				$html .= '<h1>Allergy: ' . esc_html($allergy->allergy_name) . '</h1>';
 				$html .= '<div>Description: ' . esc_html($allergy->allergy_description) . '</div>';
 				$html .= '<div>Is Default Option: ' . ($allergy->is_default_option ? 'Yes' : 'No') . '</div>';
 				$html .= '<div>Attachment Name: ' . esc_html($allergy->attachment_name) . '</div>';
 				$html .= '<div>Attachment Path: ' . esc_html($allergy->attachment_path) . '</div>';
-				$html .= '<input type="hidden" name="allergen_name_hidden" value="' . esc_html(!empty($allergy->allergy_name) ? $allergy->allergy_name : '') . '" />';
-				$html .= '<input type="submit" name="submit" class="button button-primary" value="' . __('Delete Allergen', 'allergens-dietary-ictoria') . '" />';
 				$html .= '<hr>';
 				$html .= '</fieldset>';
 			}
+			$html .= '<input type="submit" name="submit" class="button button-primary" value="' . __('Delete Allergen', 'allergens-dietary-ictoria') . '" />';
+
 		}
 		echo $html;
 	}
 
-	public function submit(array $data)
+	public function submit(array $allergens)
 	{
-		error_log('KAAAAAA');
-		$data = $this->sanitize($data);
+		print_r($allergens);
+		$allergens = $this->sanitize($allergens);
 
 		if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 		}
 
-		if (empty($data['allergen_name_hidden'])) {
+		if (empty($data['allergen_name'])) {
 			return;
 		}
 
-		// Call delete only if a valid allergen name is set
-		// if (isset($data['allergen_name_hidden'])) {
-			Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->deleteAllergen($data['allergen_name_hidden']);
-		// }
+		Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->deleteAllergen($allergens);
 	}
 
-	public function sanitize(array $data)
+	public function sanitize(array $allergens)
 	{
-		$data['allergen_name_hidden'] = sanitize_text_field(wp_unslash($data['allergen_name_hidden']));
-		return $data;
+		foreach ($allergens as $allergen => $value) {
+			$allergen[$value['allergen_name']] = sanitize_text_field(wp_unslash($value['allergen_name']));
+		}
+		return $allergens;
 	}
 
 }

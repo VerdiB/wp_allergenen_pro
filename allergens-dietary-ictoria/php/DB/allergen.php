@@ -99,35 +99,37 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			)
 		);
 	}
-	public function deleteAllergen(string $allergy_name)
-{
-    global $wpdb;
+	public function deleteAllergen(array $allergens)
+	{
+		global $wpdb;
 
-    if (!$allergy_name) {
-        return;
-    }
+		if (!$allergens) {
+			error_log('ALLERGY NAME IS NOT SET!');
+			return;
+		}
 
-    $table_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-    $table_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+		$table_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+		$table_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
-    // Correcting the DELETE syntax with JOIN
-    $sql = $wpdb->prepare(
-        "DELETE aa 
-        FROM $table_allergy_attachment AS aa
-        INNER JOIN $table_allergy AS a 
-        ON a.allergy_name = aa.allergy_name
-        WHERE aa.allergy_name = %s  
-        AND a.is_default_option != TRUE",
-        $allergy_name
-    );
+		error_log('GOT TO ALLERGEN DELETE');
 
-    // Execute the query and add error logging
-    $result = $wpdb->query($sql);
+		foreach ($allergens as $allergy) {
+			$sql = $wpdb->prepare(
+				"DELETE FROM $table_allergy_attachment AS aa
+			INNER JOIN $table_allergy AS a 
+			ON a.allergy_name = aa.allergy_name
+			WHERE aa.allergy_name = %s  
+			AND a.is_default_option != TRUE",
+				$allergy
+			);
+			error_log('looping!');
+			$result = $wpdb->query($sql);
+		}
 
-    if ($result === false) {
-        error_log('Error deleting allergen: ' . $wpdb->last_error);
-    }
-}
+		if ($result === false) {
+			error_log('Error deleting allergen: ' . $wpdb->last_error);
+		}
+	}
 
 
 
