@@ -24,38 +24,38 @@ class Allergens_Dietary_Ictoria_Info {
         <div><h1 class="premium">PREMIUM  [Requires licence]</h1>
         <ol>
             <li class="contains">
-                Updating allergies [PREMIUM]
+                Updating allergies
             </li>
             <li class="contains">
-                Changing allergy themes [PREMIUM]
+                Changing allergy themes
             </li>
             <li class="contains">
-                Deleting allergies [PREMIUM]
+                Deleting allergies
             </li>
              <li class="contains">
-                Adding allergies [PREMIUM]
+                Adding allergies
             </li>
             <li class="contains">
-                Custom look on product [PREMIUM]
+                Custom look on product
             </li>
             <li class="contains">
-                Custom look in store [PREMIUM]
+                Custom look in store
             </li>
         </ol>
         </div>
         <div><h1 class="free">FREE VERSION  [Standard]</h1>
         <ol>
             <li class="contains">
-                Connecting allergies to products [FREE]
+                Connecting allergies to products
             </li>
             <li class="contains">
-                Wordpress theme fiendly styles [FREE]
+                Wordpress theme fiendly styles
             </li>
             <li class="contains">
-                An allergen overview [FREE]
+                An allergen overview
             </li>
             <li class="contains">
-                Turning the the use of allergies on/off [FREE]
+                Turning the the use of allergies on/off
             </li>
             </ol>
         </div>
