@@ -82,7 +82,7 @@ class Allergens_Dietary_Ictoria_Activator {
 			'sesame'      => array(
 				'category'      =>  'allergen',
 				'title'         =>  'Sesame',
-				'description'	=> 'A sesame allergy is an immune reaction to pro',
+				'description'	=> 	'A sesame allergy is an immune reaction to sesame seeds or oil, causing symptoms like hives, swelling, or severe breathing issues. It can range from mild to life-threatening.',
 			),
 			'lupin'       => array(
 				'category'      =>  'allergen',
@@ -389,8 +389,4 @@ class Allergens_Dietary_Ictoria_Activator {
 			}
 
 	}
-
-		
-
 	}
-		
