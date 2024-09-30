@@ -48,7 +48,7 @@ class Allergens_Dietary_Ictoria_Products {
 	public function render_html( array $data ): string {
 		$html = array();
 
-		foreach ( $data as $key => $value ) {
+		 foreach ( $data as $key => $value ) {
 			// check if the option is globally enabled by the admin
 			if ( $value['status'] === 'active' ) {
 				$icon_url = esc_url( $value['icon'] );

@@ -44,6 +44,7 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 		$active     = array();
 
 		$html = '<div id="allergens_dietary_ictoria_product_data" class="panel woocommerce_options_panel">';
+		
 		// create the html for all options, seperating them by category
 		foreach ( $options as $key => $value ) {
 			// create array entries if they do not exist for the relevant category
