@@ -7,6 +7,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Allergens_Dietary_Ictoria_Activator {
 	private static $counter = 0;
+	private static $_url;
+
+	private static $_ALLERGENS_OPTIONS = [];
+    private static $_ALLERGY_ICON_OPTIONS = [];
+    private static $_ICON_OPTIONS = [];
 
 	public static function activate() {
 		if ( self::$counter === 0 ) {
@@ -20,55 +25,11 @@ class Allergens_Dietary_Ictoria_Activator {
 		}
 	}
 
-	private static function create_tables() {
-		global $wpdb;
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+	public function __construct()
+	{ 		
+		self::$_url = get_home_url() . '/allergens-dietary-ictoria/assets/icons/';
 
-		$sql_attachments = $wpdb->query(
-			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_attachments(
-        attachment_name VARCHAR(255) NOT NULL PRIMARY KEY,
-        attachment_path VARCHAR(255))"
-		);
-
-		$sql_allergy = $wpdb->query(
-			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_allergy(
-        allergy_name VARCHAR(50) NOT NULL PRIMARY KEY,
-        allergy_description VARCHAR(255),
-        is_allergy BOOLEAN NOT NULL DEFAULT 1)"
-		);
-
-		$sql_allergy_attachment = $wpdb->query(
-			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment(
-        allergy_name VARCHAR(50) NOT NULL,
-        attachment_name VARCHAR(255) NOT NULL,
-        PRIMARY KEY (allergy_name, attachment_name),
-        CONSTRAINT FK_AllergyAttch_Allergy
-        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name) ON UPDATE CASCADE ,
-        CONSTRAINT FK_AllergyAttch_Attch
-        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name) ON UPDATE CASCADE) 
-        "
-		);
-
-		$sql_allergy_product = $wpdb->query(
-			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_allergy_product(
-        product_id BIGINT NOT NULL,
-        allergy_name VARCHAR(50) NOT NULL,
-        PRIMARY KEY (product_id, allergy_name),
-        CONSTRAINT FK_AllergyProduct_WCproduct
-        FOREIGN KEY (product_id) REFERENCES {$wpdb->prefix}wc_product_meta_lookup(product_id),
-        CONSTRAINT FK_AllergyProduct_Allergy
-        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name) ON UPDATE CASCADE )"
-		);
-		dbDelta( $sql_attachments );
-		dbDelta( $sql_allergy );
-		dbDelta( $sql_allergy_attachment );
-		dbDelta( $sql_allergy_product );
-
-	}
-
-	
-
-	private const OPTIONS1 = array(
+		self::$_ALLERGENS_OPTIONS = array(
 			'peanuts'     => array(
 				'category'      =>  'allergen',
 				'title'         =>  'Peanuts',
@@ -173,198 +134,244 @@ class Allergens_Dietary_Ictoria_Activator {
 				'category'      =>  'dietary',
 				'title'         =>  'Risk for pregnant women',
 				'description'	=> 'Bepaalde voedingsmiddelen, zoals rauw vlees, vis, ongepasteuriseerde zuivel, en cafeïne, kunnen schadelijk zijn voor de gezondheid van zwangere vrouwen en hun baby.',
-			),);
+	),);
 
-		private const OPTIONS2 = array(
-			'peanuts'     => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_peanuts.png',
-				'name'          => 'allergens_peanuts.png'
-			),
-			'nuts'        => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_nuts.png',
-				'name'          => 'allergens_nuts.png'
-			),
-			'sesame'      => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_sesame.png',
-				'name'          => 'allergens_sesame.png'
-			),
-			'lupin'       => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_lupin.png',
-				'name'          => 'allergens_lupin.png'
-			),
-			'soya'        => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_soya.png',
-				'name'          => 'allergens_soya.png'
-			),
-			'mustard'     => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_mustard.png',
-				'name'          => 'allergens_mustard.png'
-			),
-			'eggs'        => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_eggs.png',
-				'name'          => 'allergens_eggs.png'
-			),
-			'dairy'       => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_dairy.png',
-				'name'          => 'allergens_dairy.png'
-			),
-			'fish'        => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_fish.png',
-				'name'          => 'allergens_fish.png'
-			),
-			'crustaceans' => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_crustaceans.png',
-				'name'          => 'allergens_crustaceans.png'
-			),
-			'molluscs'    => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_molluscs.png',
-				'name'          => 'allergens_molluscs.png'
-			),
-			'gluten'      => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_gluten.png',
-				'name'          => 'allergens_gluten.png'
-			),
-			'corn'        => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_corn.png',
-				'name'          => 'allergens_corn.png'
-			),
-			'wheat'       => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_wheat.png',
-				'name'          => 'allergens_wheat.png'
-			),
-			'celery'      => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_celery.png',
-				'name'          => 'allergens_celery.png'
-			),
-			'sulfite'     => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_sulfite.png',
-				'name'          => 'allergens_sulfite.png'
-			),
-			'alcohol'     => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/allergens_alcohol.png',
-				'name'          => 'allergens_alcohol.png'
-			),
-			'vegetarian'  => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/dietary_vegetarian.png',
-				'name'          => 'dietary_vegetarian.png'
-			),
-			'vegan'       => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/dietary_vegan.png',
-				'name'          => 'dietary_vegan.png'
-			),
-			'halal'       => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/dietary_halal.png',
-				'name'          => 'dietary_halal.png'
-			),
-			'pregnant'    => array(
-				'path'          => 'allergens-dietary-ictoria/assets/icons/dietary_pregnant.png',
-				'name'          => 'dietary_pregnant.png'
-			),);
+	self::$_ALLERGY_ICON_OPTIONS = array(
+		'peanuts'     => array(
+			'path'          => self::$_url . 'allergens_peanuts.png',
+			'name'          => 'allergens_peanuts.png'
+		),
+		'nuts'        => array(
+			'path'          => self::$_url . 'allergens_nuts.png',
+			'name'          => 'allergens_nuts.png'
+		),
+		'sesame'      => array(
+			'path'          => self::$_url . 'allergens_sesame.png',
+			'name'          => 'allergens_sesame.png'
+		),
+		'lupin'       => array(
+			'path'          => self::$_url . 'allergens_lupin.png',
+			'name'          => 'allergens_lupin.png'
+		),
+		'soya'        => array(
+			'path'          => self::$_url . 'allergens_soya.png',
+			'name'          => 'allergens_soya.png'
+		),
+		'mustard'     => array(
+			'path'          => self::$_url . 'allergens_mustard.png',
+			'name'          => 'allergens_mustard.png'
+		),
+		'eggs'        => array(
+			'path'          => self::$_url . 'allergens_eggs.png',
+			'name'          => 'allergens_eggs.png'
+		),
+		'dairy'       => array(
+			'path'          => self::$_url . 'allergens_dairy.png',
+			'name'          => 'allergens_dairy.png'
+		),
+		'fish'        => array(
+			'path'          => self::$_url . 'allergens_fish.png',
+			'name'          => 'allergens_fish.png'
+		),
+		'crustaceans' => array(
+			'path'          => self::$_url . 'allergens_crustaceans.png',
+			'name'          => 'allergens_crustaceans.png'
+		),
+		'molluscs'    => array(
+			'path'          => self::$_url . 'allergens_molluscs.png',
+			'name'          => 'allergens_molluscs.png'
+		),
+		'gluten'      => array(
+			'path'          => self::$_url . 'allergens_gluten.png',
+			'name'          => 'allergens_gluten.png'
+		),
+		'corn'        => array(
+			'path'          => self::$_url . 'allergens_corn.png',
+			'name'          => 'allergens_corn.png'
+		),
+		'wheat'       => array(
+			'path'          => self::$_url . 'allergens_wheat.png',
+			'name'          => 'allergens_wheat.png'
+		),
+		'celery'      => array(
+			'path'          => self::$_url . 'allergens_celery.png',
+			'name'          => 'allergens_celery.png'
+		),
+		'sulfite'     => array(
+			'path'          => self::$_url . 'allergens_sulfite.png',
+			'name'          => 'allergens_sulfite.png'
+		),
+		'alcohol'     => array(
+			'path'          => self::$_url . 'allergens_alcohol.png',
+			'name'          => 'allergens_alcohol.png'
+		),
+		'vegetarian'  => array(
+			'path'          => self::$_url . 'dietary_vegetarian.png',
+			'name'          => 'dietary_vegetarian.png'
+		),
+		'vegan'       => array(
+			'path'          => self::$_url . 'dietary_vegan.png',
+			'name'          => 'dietary_vegan.png'
+		),
+		'halal'       => array(
+			'path'          => self::$_url . 'dietary_halal.png',
+			'name'          => 'dietary_halal.png'
+		),
+		'pregnant'    => array(
+			'path'          => self::$_url . 'dietary_pregnant.png',
+			'name'          => 'dietary_pregnant.png'
+),);
+self::$_ICON_OPTIONS = array(
+	'peanuts'     => array(
+		'name'  => 'allergens_peanuts.png',
+		'title' => 'Peanuts',
+	),
+	'nuts'        => array(
+		'name'  => 'allergens_nuts.png',
+		'title' => 'Nuts',
+	),
+	'sesame'      => array(
+		'name'  => 'allergens_sesame.png',
+		'title' => 'Sesame',
+	),
+	'lupin'       => array(
+		'name'  => 'allergens_lupin.png',
+		'title' => 'Lupin',
+	),
+	'soya'        => array(
+		'name'  => 'allergens_soya.png',
+		'title' => 'Soya',
+	),
+	'mustard'     => array(
+		'name'  => 'allergens_mustard.png',
+		'title' => 'Mustard',
+	),
+	'eggs'        => array(
+		'name'  => 'allergens_eggs.png',
+		'title' => 'Eggs',
+	),
+	'dairy'       => array(
+		'name'  => 'allergens_dairy.png',
+		'title' => 'Dairy',
+	),
+	'fish'        => array(
+		'name'  => 'allergens_fish.png',
+		'title' => 'Fish',
+	),
+	'crustaceans' => array(
+		'name'  => 'allergens_crustaceans.png',
+		'title' => 'Crustaceans',
+	),
+	'molluscs'    => array(
+		'name'  => 'allergens_molluscs.png',
+		'title' => 'Molluscs',
+	),
+	'gluten'      => array(
+		'name'  => 'allergens_gluten.png',
+		'title' => 'Gluten',
+	),
+	'corn'        => array(
+		'name'  => 'allergens_corn.png',
+		'title' => 'Corn',
+	),
+	'wheat'       => array(
+		'name'  => 'allergens_wheat.png',
+		'title' => 'Wheat',
+	),
+	'celery'      => array(
+		'name'  => 'allergens_celery.png',
+		'title' => 'Celery',
+	),
+	'sulfite'     => array(
+		'name'  => 'allergens_sulfite.png',
+		'title' => 'Sulfite',
+	),
+	'alcohol'     => array(
+		'name'  => 'allergens_alcohol.png',
+		'title' => 'Alcohol',
+	),
+	'vegetarian'  => array(
+		'name'  => 'dietary_vegetarian.png',
+		'title' => 'Vegetarian',
+	),
+	'vegan'       => array(
+		'name'  => 'dietary_vegan.png',
+		'title' => 'Vegan',
+	),
+	'halal'       => array(
+		'name'  => 'dietary_halal.png',
+		'title' => 'Halal',
+	),
+	'pregnant'    => array(
+		'name'  => 'dietary_pregnant.png',
+		'title' => 'Risk for pregnant women',
+	)
+);
+	}
 
-			
+	private static function create_tables() {
+		global $wpdb;
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
-		    private const OPTIONS3 = array(
-				'peanuts'     => array(
-					'name'  => 'allergens_peanuts.png',
-					'title' => 'Peanuts',
-				),
-				'nuts'        => array(
-					'name'  => 'allergens_nuts.png',
-					'title' => 'Nuts',
-				),
-				'sesame'      => array(
-					'name'  => 'allergens_sesame.png',
-					'title' => 'Sesame',
-				),
-				'lupin'       => array(
-					'name'  => 'allergens_lupin.png',
-					'title' => 'Lupin',
-				),
-				'soya'        => array(
-					'name'  => 'allergens_soya.png',
-					'title' => 'Soya',
-				),
-				'mustard'     => array(
-					'name'  => 'allergens_mustard.png',
-					'title' => 'Mustard',
-				),
-				'eggs'        => array(
-					'name'  => 'allergens_eggs.png',
-					'title' => 'Eggs',
-				),
-				'dairy'       => array(
-					'name'  => 'allergens_dairy.png',
-					'title' => 'Dairy',
-				),
-				'fish'        => array(
-					'name'  => 'allergens_fish.png',
-					'title' => 'Fish',
-				),
-				'crustaceans' => array(
-					'name'  => 'allergens_crustaceans.png',
-					'title' => 'Crustaceans',
-				),
-				'molluscs'    => array(
-					'name'  => 'allergens_molluscs.png',
-					'title' => 'Molluscs',
-				),
-				'gluten'      => array(
-					'name'  => 'allergens_gluten.png',
-					'title' => 'Gluten',
-				),
-				'corn'        => array(
-					'name'  => 'allergens_corn.png',
-					'title' => 'Corn',
-				),
-				'wheat'       => array(
-					'name'  => 'allergens_wheat.png',
-					'title' => 'Wheat',
-				),
-				'celery'      => array(
-					'name'  => 'allergens_celery.png',
-					'title' => 'Celery',
-				),
-				'sulfite'     => array(
-					'name'  => 'allergens_sulfite.png',
-					'title' => 'Sulfite',
-				),
-				'alcohol'     => array(
-					'name'  => 'allergens_alcohol.png',
-					'title' => 'Alcohol',
-				),
-				'vegetarian'  => array(
-					'name'  => 'dietary_vegetarian.png',
-					'title' => 'Vegetarian',
-				),
-				'vegan'       => array(
-					'name'  => 'dietary_vegan.png',
-					'title' => 'Vegan',
-				),
-				'halal'       => array(
-					'name'  => 'dietary_halal.png',
-					'title' => 'Halal',
-				),
-				'pregnant'    => array(
-					'name'  => 'dietary_pregnant.png',
-					'title' => 'Risk for pregnant women',
-				)
-			);
+		$sql_attachments = $wpdb->query(
+			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_attachments(
+        attachment_name VARCHAR(255) NOT NULL PRIMARY KEY,
+        attachment_path VARCHAR(255))"
+		);
 
-			
+		$sql_allergy = $wpdb->query(
+			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_allergy(
+        allergy_name VARCHAR(50) NOT NULL PRIMARY KEY,
+        allergy_description VARCHAR(255),
+        is_allergy BOOLEAN NOT NULL DEFAULT 1)"
+		);
 
-			public static function getOptions1() {
-				return self::OPTIONS1;
-			}
-		
-			public static function getOptions2() {
-				return self::OPTIONS2;
-			}
-		
-			public static function getOptions3() {
-				return self::OPTIONS3;
-			}
-			
+		$sql_allergy_attachment = $wpdb->query(
+			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment(
+        allergy_name VARCHAR(50) NOT NULL,
+        attachment_name VARCHAR(255) NOT NULL,
+        PRIMARY KEY (allergy_name, attachment_name),
+        CONSTRAINT FK_AllergyAttch_Allergy
+        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name) ON UPDATE CASCADE ,
+        CONSTRAINT FK_AllergyAttch_Attch
+        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name) ON UPDATE CASCADE) 
+        "
+		);
 
+		$sql_allergy_product = $wpdb->query(
+			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_allergy_product(
+        product_id BIGINT NOT NULL,
+        allergy_name VARCHAR(50) NOT NULL,
+        PRIMARY KEY (product_id, allergy_name),
+        CONSTRAINT FK_AllergyProduct_WCproduct
+        FOREIGN KEY (product_id) REFERENCES {$wpdb->prefix}wc_product_meta_lookup(product_id),
+        CONSTRAINT FK_AllergyProduct_Allergy
+        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name) ON UPDATE CASCADE )"
+		);
+		dbDelta( $sql_attachments );
+		dbDelta( $sql_allergy );
+		dbDelta( $sql_allergy_attachment );
+		dbDelta( $sql_allergy_product );
+
+	}
+
+
+    public static function initialize() {
+        new self();
+    }
+
+    public static function allergens_options() {
+        return self::$_ALLERGENS_OPTIONS;
+    }
+
+    public static function allergy_icon_options() {
+        return self::$_ALLERGY_ICON_OPTIONS;
+    }
+
+    public static function icon_options() {
+        return self::$_ICON_OPTIONS;
+    }
+	
 	public static function insert_standard_data(){
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';

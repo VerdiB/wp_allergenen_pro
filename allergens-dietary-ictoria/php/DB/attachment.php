@@ -92,4 +92,21 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 			move_uploaded_file( $data['tmp_name'], $full_path );
 		}
 	}
+
+	public static function attachment_insert( array $result ){
+		global $wpdb;
+
+		$table_icons = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
+
+		foreach($result as $key => $value){
+			$wpdb->insert(
+				$table_icons,
+				array(
+					'attachment_path'  => $value['path'],
+					'attachment_name'   => $value['name'],
+				)
+			); 
+		}
+	}
 }
+
