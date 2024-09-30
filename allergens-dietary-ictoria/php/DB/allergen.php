@@ -109,10 +109,9 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 	}
 
 	public static function includeItems(){
-		/*load data*/
-		  $result = Allergens_Dietary_Ictoria_Activator::default_allergens();
-
-		/*inserts*/
+		$result1 = Allergens_Dietary_Ictoria_Activator::getOptions1();
+		$result2 = Allergens_Dietary_Ictoria_Activator::getOptions2();
+		$result3 = Allergens_Dietary_Ictoria_Activator::getOptions3();
 
 		global $wpdb;
 
@@ -121,23 +120,26 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		$table_product = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';
 		$table_product_icons = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
 
-		$totalcount = count($result);
+		$totalcount = count($result1);
 
 		$counter = 0;
-
-		foreach($result as $key => $value){
-
-			$counter++;
-
+				
 		$sql = $wpdb->prepare(
-			"SELECT * FROM $table_allergens WHERE allergy_name = '" . $value['title'] . "'"
+			"SELECT * FROM $table_allergens WHERE allergy_name = 'alcohol'"
 		);
 
 		$exists = $wpdb->get_var( $sql );
 
 		if ($exists == 0){
 
-		$isallergy = 0;
+	foreach($result1 as $key => $value){
+			$counter++;
+		$sql = $wpdb->prepare(
+			"SELECT * FROM $table_allergens WHERE allergy_name = '" . $value['title'] . "'"
+		);
+		$exists = $wpdb->get_var( $sql );
+		if ($exists == 0){
+			$isallergy = 0;
 
 			if ($value['category'] == "allergen"){
 				$isallergy = 1;
@@ -145,16 +147,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				$isallergy = 0;
 			}
 
-					//insert allergies
-
-					$wpdb->insert(
-						$table_product_icons,
-						array(
-							'attachment_path'  => $value['path'],
-							'attachment_name'   => $value['name'],
-						)
-					); 
-
+			//insert allergies
 		$wpdb->insert(
 			$table_allergens,
 			array(
@@ -162,22 +155,40 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				'allergy_description'    => $value['description'],
 				'is_allergy' => 	$isallergy,
 			)
-		); 
-
-
-		$wpdb->insert(
-			$table_allergens_icons,
-			array(
-				'allergy_name'  => $value['title'],
-				'attachment_name'   => $value['name'],
-			)
-		); 
-		
+			); 
 		if ($counter >= $totalcount || $counter >= 50){
 			break; //exit loop
 		}
+			}
+	}
 
+	foreach($result2 as $key => $value2){
+		$counter++;
+		$wpdb->insert(
+			$table_product_icons,
+			array(
+				'attachment_path'  => $value2['path'],
+				'attachment_name'   => $value2['name'],
+			)
+		); 
+		if ($counter >= $totalcount || $counter >= 50){
+			break; //exit loop
+		}
 	}
+
+	foreach($result3 as $key => $value3){
+		$counter++;
+		$wpdb->insert(
+		$table_allergens_icons,
+		array(
+			'attachment_name'   => $value3['name'],
+			'allergy_name'  => $value3['title'],
+			)
+			);
+			if ($counter >= $totalcount || $counter >= 50){
+				break; //exit loop
+			}
 	}
+}
 }
 }
