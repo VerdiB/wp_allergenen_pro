@@ -1,5 +1,7 @@
 <?php
 
+namespace Plugin\Php\Forms;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

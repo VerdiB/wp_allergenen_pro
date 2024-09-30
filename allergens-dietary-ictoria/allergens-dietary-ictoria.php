@@ -1,4 +1,10 @@
 <?php
+
+require_once __DIR__ . '/php/functions.php';
+
+use Plugin\Php\Allergens_Dietary_Ictoria_Functions as Ictoria_Functions;
+
+
 // exit if user can access this file directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -81,15 +87,17 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 }
 
 // load file with generic static methods
-require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/functions.php';
-add_action( 'plugins_loaded', array( 'Allergens_Dietary_Ictoria_Functions', 'load_textdomain' ) );
+// require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/functions.php';
+$test =  new Plugin\Php\Allergens_Dietary_Ictoria_Functions();
+
+add_action( 'plugins_loaded', array( 'Plugin\Php\Allergens_Dietary_Ictoria_Functions', 'load_textdomain' ) );
 
 
 // class that contains the functions that are used by the activation/deactivation/uninstall hooks
 class Allergens_Dietary_Ictoria_Startup {
 	// function that runs when the activation hook is called
 	public static function on_activation() {
-		$settings = Plugin\Php\Allergens_Dietary_Ictoria_Functions::get_settings();
+		$settings = Ictoria_Functions::get_settings();
 		// show popup asking for certain setting options if this is the first activation after installing the plugin.
 		if ( ! isset( $settings[ __( 'initial_setup_done' ) ] ) ) {
 			// show popup asking wether or not the user wants to automatically export all relevant product data on uninstall
@@ -98,10 +106,10 @@ class Allergens_Dietary_Ictoria_Startup {
 			// add the initial_setup_done option to allergens_dietary_ictoria_settings (value: true) to prevent this popup from showing on every activation after the first
 		}
 
-		$options = Plugin\Php\Allergens_Dietary_Ictoria_Functions::get_options();
+		$options = Ictoria_Functions::get_options();
 		// set the default options in the WooCommerce options table if they do not exist
 		if ( empty( $options ) ) {
-			$options = Plugin\Php\Allergens_Dietary_Ictoria_Functions::default_options();
+			$options = Ictoria_Functions::default_options();
 			update_option( __( 'allergens_dietary_ictoria_options', 'allergens-dietary-ictoria' ), $options, true );
 		}
 
