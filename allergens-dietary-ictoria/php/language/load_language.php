@@ -1,4 +1,7 @@
 <?php
+
+namespace Plugin\Php\Language;
+
 // exit if user can access this file directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -20,7 +23,8 @@ class load_language {
 }
 // load languages on startup!
 $nl_NL = new load_language();
-
+$en_US = new load_language();
+$en_GB = new load_language();
 
 
 ?>

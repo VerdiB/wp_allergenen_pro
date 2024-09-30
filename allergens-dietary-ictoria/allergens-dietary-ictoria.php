@@ -39,21 +39,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 
-/*
-Plugin Name: Allergens and Dietary
-Plugin URI:
-Description: Adds Allergens and Dietary options that can be used with WooCommerce products
-Version:     1.0.0
-Requires at least: 6.3.1
-Requires PHP: 7.4
-Author:      Ictoria.nl
-Author URI:  http://ictoria.nl
-License:     GPLv3 or later
-License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Text Domain: allergens-dietary-ictoria
-Domain Path: /languages/
-WC Tested Up To: 8.1.1
-*/
+//
+// Plugin Name: Allergens and Dietary
+// Plugin URI:
+// Description: Adds Allergens and Dietary options that can be used with WooCommerce products.
+// @Version:     1.0.0.0 
+// Requires at least: 6.3.1
+// Requires PHP: 7.4
+// Author:      Ictoria.nl
+// Author URI:  http://ictoria.nl
+// License:     GPLv3 or later
+// License URI: https://www.gnu.org/licenses/gpl-3.0.html
+// Text Domain: allergens-dietary-ictoria
+// Domain Path: /languages/
+// WC Tested Up To: 8.1.1
+//
 
 // "Allergens and Dietary" is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -89,20 +89,20 @@ add_action( 'plugins_loaded', array( 'Allergens_Dietary_Ictoria_Functions', 'loa
 class Allergens_Dietary_Ictoria_Startup {
 	// function that runs when the activation hook is called
 	public static function on_activation() {
-		$settings = Allergens_Dietary_Ictoria_Functions::get_settings();
+		$settings = Plugin\Php\Allergens_Dietary_Ictoria_Functions::get_settings();
 		// show popup asking for certain setting options if this is the first activation after installing the plugin.
-		if ( ! isset( $settings[ 'initial_setup_done' ] ) ) {
+		if ( ! isset( $settings[ __( 'initial_setup_done' ) ] ) ) {
 			// show popup asking wether or not the user wants to automatically export all relevant product data on uninstall
 			// tell user (within popup) that above setting can be set at all times from the plugin settings menu
 			// save chosen settings in the allergens_dietary_ictoria_settings(WP options table)
 			// add the initial_setup_done option to allergens_dietary_ictoria_settings (value: true) to prevent this popup from showing on every activation after the first
 		}
 
-		$options = Allergens_Dietary_Ictoria_Functions::get_options();
+		$options = Plugin\Php\Allergens_Dietary_Ictoria_Functions::get_options();
 		// set the default options in the WooCommerce options table if they do not exist
 		if ( empty( $options ) ) {
-			$options = Allergens_Dietary_Ictoria_Functions::default_options();
-			update_option( 'allergens_dietary_ictoria_options', $options, true );
+			$options = Plugin\Php\Allergens_Dietary_Ictoria_Functions::default_options();
+			update_option( __( 'allergens_dietary_ictoria_options', 'allergens-dietary-ictoria' ), $options, true );
 		}
 
 		// temporary admin menu panel for testing the license form

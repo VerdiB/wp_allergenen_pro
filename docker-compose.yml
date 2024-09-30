@@ -96,6 +96,7 @@ services:
       - ./allergens-dietary-ictoria:/var/www/html/wp-content/plugins/allergens-dietary-ictoria
       - ./phpunit/tests:/var/www/html/wordpress-tests/
       - ./wordpress:/var/www/html/
+      - ./composer.json:/composer.json
     depends_on:
       - wordpresslatest
     networks:

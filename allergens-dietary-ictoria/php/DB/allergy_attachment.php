@@ -1,5 +1,7 @@
 <?php
 
+namespace Plugin\Php\Db;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -36,7 +38,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		global $wpdb;
 
 		$sql = $wpdb->prepare(
-			"SELECT a.allergy_name, a.allergy_description, a.is_allergy, aa.attachment_name
+			"SELECT a.allergy_name, a. attachment_name
             FROM  {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment as aa
             JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy as a
             ON aa.allergy_name = a.allergy_name
@@ -45,7 +47,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 			$allergy_name
 		);
 
-		return $wpdb->get_row( $sql, ARRAY_A );
+		return (array) $wpdb->get_results( $sql );
 	}
 
 	public function updateallergyAttachment( array $data ) {

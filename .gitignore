@@ -11,3 +11,6 @@ phpunit/tests/*.cache
 *.code-workspace
 vendor/
 composer.*
+dconfig.*
+Doxyfile.*
+allergens-dietary-ictoria/doxygen/

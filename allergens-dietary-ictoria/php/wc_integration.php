@@ -1,4 +1,11 @@
 <?php
+namespace Plugin\Php;
+// require_once ALLERGENS_DIETARY_ICTORIA_BASE . '../woocommerce/includes/abstracts/abstract-wc-integration.php';
+
+use Plugin\WC_Integration;
+// use WooCommerce\Abstracts;
+
+
 // exit if user can access this file directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -119,3 +126,5 @@ class Allergens_Dietary_Ictoria_Wc_Integration_Settings extends WC_Integration {
 		return $links;
 	}
 }
+
+?>

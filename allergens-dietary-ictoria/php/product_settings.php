@@ -1,4 +1,7 @@
 <?php
+
+namespace Plugin\Php;
+
 // exit if user can access this file directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -65,7 +68,7 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 				$categories[ $value['category'] ] .= '<div class="allergen-field">
 					<input type="checkbox" class="checkbox ' . $value['category'] . '" name="' . $key . '_allergens_dietary_ictoria_option" id="' . $key . '_allergens_dietary_ictoria_option" value="1" ' . $checked . '/>
 					<span class="description">
-						<img alt="' . $value['title'] .'" src="' . $value['icon'] . '"/>&nbsp;' . $value['title'] . '
+						<img src="' . $value['icon'] . '"/>&nbsp;' . $value['title'] . '
 					</span>
 				</div>';
 			}

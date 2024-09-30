@@ -1,4 +1,6 @@
 <?php
+namespace Plugin\Php;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
