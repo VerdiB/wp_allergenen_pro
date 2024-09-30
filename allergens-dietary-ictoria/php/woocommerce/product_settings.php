@@ -26,6 +26,7 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 
 	// function that sets the name of the menu tab for this plugin
 	public function data_tab( $product_data_tabs ) {
+		echo 'data_tab';
 		$product_data_tabs['allergens-tab'] = array(
 			'label'  => __( 'Allergens', 'allergens-dietary-ictoria' ),
 			'target' => __( 'allergens_dietary_ictoria_product_data' ),
@@ -33,7 +34,14 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 		return $product_data_tabs;
 	}
 
-	// function that shows all available options when the menu tab of this plugin is selected
+	/**
+	 * @param none
+	 * @brief This method shows the form to add/update allergens .\
+	 * function that shows all available options when the menu tab of this plugin is selected
+	 * @return void
+	 * @since 1.0.0
+	 * @date 30-9-2024
+	 */
 	public function data_fields() {
 		global $post;
 
@@ -48,50 +56,33 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 
 
 		
-		$list    = get_post_meta( $post->ID, __( 'allergens_dietary_ictoria' ), true );
+		// $list    = get_post_meta( $post->ID, __( 'allergens_dietary_ictoria' ), true );
 		if ( empty( $list ) ) {
 			$list = array();
 		}
 
-		// create variables that are used in the loops of this function
-		$categories = array();
-		$active     = array();
-
 		$html = '<div id="allergens_dietary_ictoria_product_data" class="panel woocommerce_options_panel">';
 		// create the html for all options, seperating them by category
-		foreach ( $options as $key => $value ) {
-			// create array entries if they do not exist for the relevant category
-			if ( ! in_array( $value['category'], array_keys( $categories ) ) ) {
-				$categories[ $value['category'] ] = '';
-				$active[ $value['category'] ]     = 0;
-			}
+		foreach ( $allergens as $allergen ) {
 			// check if option is globally enabled
-			if ( $value['status'] == 'active' ) {
-				++$active[ $value['category'] ];
-
-				$checked = '';
-				// check if the option on this product is active
-				// always return false. Options do not seem to get saved in the meta
-				if ( in_array( $key, $list ) ) {
-					$checked = 'checked="checked"';
-				}
+			//TODO: replace with actual check in use with new db structure
 				// add the html to the relevant array entry
-				$categories[ $value['category'] ] .= '<div class="allergen-field">
-					<input type="checkbox" class="checkbox ' . $value['category'] . '" name="' . $key . '_allergens_dietary_ictoria_option" id="' . $key . '_allergens_dietary_ictoria_option" value="1" ' . $checked . '/>
+				$html .= '<div class="allergen-field">
+					<input type="checkbox" value="1" />
 					<span class="description">
-						<img alt="' . $value['title'] .'" src="' . $value['icon'] . '"/>&nbsp;' . $value['title'] . '
+						<img alt="' . $allergen['allergy_name'] .'" src="' . $allergen['attachment_path'] .'"/>&nbsp;' . $allergen['allergy_name'] . '
 					</span>
 				</div>';
-			}
+			
 		}
 
 		// create the full options html. Does not show the category if all options of the given category are globally disabled
-		foreach ( $categories as $key => $value ) {
-			$checked = '';
-			if ( $active[ $key ] > 0 ) {
-				$html .= '<div class="allergen-div"><p>' . __( ucfirst( $key ), 'allergens-dietary-ictoria' ) . ':</p>' . $value . '</div>';
-			}
-		}
+		// foreach ( $categories as $key => $value ) {
+		// 	$checked = '';
+		// 	if ( $active[ $key ] > 0 ) {
+		// 		$html .= '<div class="allergen-div"><p>' . __( ucfirst( $key ), 'allergens-dietary-ictoria' ) . ':</p>' . $value . '</div>';
+		// 	}
+		// }
 		$html .= '</div>';
 
 		echo $html;
