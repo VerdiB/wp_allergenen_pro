@@ -1,4 +1,4 @@
-@startuml
+@startuml classdiagram
 skinparam Linetype ortho
 skinparam groupInheritance 2
 
@@ -101,18 +101,6 @@ package "php"{
             + sanitize(data:array) : array
             - check_license_key(key:string) : boolean
         }
-
-        class Allergens_Dietary_Ictoria_Show_Allergens{
-            + get_columns() : array
-            + show_Allergens_form() : void
-            + {static} getInstance() : Allergens_Dietary_Ictoria_Show_Allergens
-        }
-
-        class Allergens_Dietary_Ictoria_Info{
-            + showinfo() : void
-            + {static} getInstance() : Allergens_Dietary_Ictoria_Info
-            + {static} getStyles() : void
-        }
     }
 
     package "DB" {
@@ -146,6 +134,13 @@ package "php"{
             + checkAllergyAttachmentExists(allergyName:string) : boolean
             + updateAllergyAttachment(data:array) : void
             + getAllergyAttachment(allergyAttachmentName:string) : array
+        }
+    }
+    package "lists" {
+        class Allergens_Dietary_Ictoria_Info{
+            + showinfo() : void
+            + {static} getInstance() : Allergens_Dietary_Ictoria_Info
+            + {static} getStyles() : void
         }
     }
 }

@@ -38,19 +38,6 @@
 	grid-template-columns: 50% 50%;
 }
 
-.premium
-{
-	color: rgba(0, 164, 170, 0.387);
-	text-shadow: 2px 2px rgb(21, 1, 101);
-	font-family: Arial, Helvetica, sans-serif;
-}
-
-.free
-{
-	color: green;
-	font-family: Arial, Helvetica, sans-serif;
-}
-
 #tabs_flexbox > .tabs
 {
 	color: black;
