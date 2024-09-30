@@ -55,21 +55,21 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
         <td>
         <input id="cb-select-all-1" type="checkbox">
         <label>
-            <span class="screen-reader-text">Alles selecteren</span>
+            <span class="screen-reader-text">Select all</span>
         </label>
         </td>
-        <th scope="col" id="name" class="manage-column column-name column-primary"> Allergenen en dieten: </th>
+        <th scope="col" id="name" class="manage-column column-name column-primary"> Allergens and dietary: </th>
         <th scope="col" id="name" class="manage-column column-name column-primary"></th>
-        <th scope="col" id="name" class="manage-column column-name column-primary"> Allergeen of dieet: </th></thead>';
+        <th scope="col" id="name" class="manage-column column-name column-primary"> Allergen or dietary: </th></thead>';
 
         try {
             if(!empty($results)){
             foreach ($results as $row){
                 $allergenOrDieet = "";
                 if ($row['is_allergy'] == 1){
-                    $allergenOrDieet = "Allergeen";
+                    $allergenOrDieet = "Allergen";
                 }else{
-                    $allergenOrDieet = "Dieet";
+                    $allergenOrDieet = "Dietary";
                 }
                 $html .= '<tr scope="row" id="post-1" class="iedit author-self level-0 post-8 type-page status-publish hentry">
                 <td class="allergen-dietary_item label">' . esc_html( $row['allergy_name'] ) . ':</td>
