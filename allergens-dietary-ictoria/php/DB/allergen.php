@@ -113,6 +113,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		$result2 = Allergens_Dietary_Ictoria_Activator::getOptions2();
 		$result3 = Allergens_Dietary_Ictoria_Activator::getOptions3();
 
+
 		global $wpdb;
 
 		$table_allergens = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -146,8 +147,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 			}else{
 				$isallergy = 0;
 			}
-
-			//insert allergies
+				//insert allergies
 		$wpdb->insert(
 			$table_allergens,
 			array(
@@ -156,12 +156,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				'is_allergy' => 	$isallergy,
 			)
 			); 
-		if ($counter >= $totalcount || $counter >= 50){
-			break; //exit loop
-		}
 			}
 	}
-
 	foreach($result2 as $key => $value2){
 		$counter++;
 		$wpdb->insert(
@@ -171,11 +167,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				'attachment_name'   => $value2['name'],
 			)
 		); 
-		if ($counter >= $totalcount || $counter >= 50){
-			break; //exit loop
-		}
 	}
-
 	foreach($result3 as $key => $value3){
 		$counter++;
 		$wpdb->insert(
@@ -185,10 +177,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 			'allergy_name'  => $value3['title'],
 			)
 			);
-			if ($counter >= $totalcount || $counter >= 50){
-				break; //exit loop
-			}
 	}
 }
 }
+	
 }
