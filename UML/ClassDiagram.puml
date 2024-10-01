@@ -39,6 +39,7 @@ package "php"{
         -{static} create_tables() : void
         +{static} default_allergenen() : array
         -{static} insert_standard_data() : void
+        +{static} tabsonpage() : void
     }
 
     class Allergens_Dietary_Ictoria_Product_Settings{
@@ -171,4 +172,13 @@ Allergens_Dietary_Ictoria_Allergens_Form .u.|> I_Allergens_Dietary_Ictoria_Form
 Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Allergen_Queries : uses
 Allergens_Dietary_Ictoria_Allergens_Form .r.> Allergens_Dietary_Ictoria_Attachment_Queries : uses
 Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Allergy_Attachment_Queries : uses
+
+
+
+
+
+
+
+
+
 @enduml
