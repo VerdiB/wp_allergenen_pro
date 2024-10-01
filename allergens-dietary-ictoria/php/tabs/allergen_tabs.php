@@ -26,6 +26,7 @@ class Allergens_Dietary_Ictoria_Tabs {
         <a class="nav-tab" href="#">Change allergens</a>
         <a class="nav-tab" href="#">Create allergens</a>
         <a class="nav-tab" href="#">See allergens</a>
+        <a class="nav-tab" href="#">Info</a>
         </div>
         <section id="added"></section> <br> <br>';
         echo $html;

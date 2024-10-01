@@ -32,6 +32,12 @@
 	line-height: 1;
 }
 
+#info_grid
+{
+	display: grid;
+	grid-template-columns: 50% 50%;
+}
+
 #tabs_flexbox > .tabs
 {
 	color: black;
@@ -88,6 +94,13 @@
 	border-bottom: 2px solid gray;
 	justify-content: left;
 	flex-direction: row;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.contains{
+	font-size: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	padding-top: 10px;
 }
 
 .allergen-field>input{
