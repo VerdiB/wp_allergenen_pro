@@ -354,7 +354,7 @@ self::$_ICON_OPTIONS = array(
 		dbDelta( $sql_allergy_product );
 
 	}
-	
+
     public static function initialize() {
         new self();
     }
