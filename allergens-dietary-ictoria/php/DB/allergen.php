@@ -109,7 +109,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 	}
 
 	public static function includeItems(){
-		//get other inserters
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
 		}
@@ -126,8 +125,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 
 		global $wpdb;
 
+		//get database table
 		$table_allergens = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-		//$table_product = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';
 				
 		$sql = $wpdb->prepare(
 			"SELECT * FROM $table_allergens WHERE allergy_name = 'alcohol'"
@@ -135,6 +134,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 
 		$exists = $wpdb->get_var( $sql );
 
+		//checks if database record of the standard allergies already exists
 		if ($exists == 0){
 
 	foreach($allergens_result as $key => $value){

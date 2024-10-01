@@ -86,9 +86,13 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 	public static function allergy_connection( array $result ){
 		global $wpdb;
 
+		//get database table
 		$table_allergens_icons = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
-			foreach($result as $key => $value){
+			
+		foreach($result as $key => $value){
+			
+			//insert allergies
 				$wpdb->insert(
 				$table_allergens_icons,
 				array(
