@@ -1,13 +1,16 @@
 services:
-  wordpress:
+  wordpresslatest:
     image: "wordpress:latest"
     ports:
       - "8080:80"
     depends_on:
-      - mysql
-      - phpmyadmin
+      db:
+        condition: service_healthy
+        restart: true
+      phpmyadmin:
+        condition: service_started
     environment:
-      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: ""
       WORDPRESS_DB_NAME: wordpress
@@ -23,13 +26,51 @@ services:
       development:
         ipv4_address: "124.168.92.20"
 
-  mysql:
+  wordpressminus1:
+    image: "wordpress:6.6.1"
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: ""
+      WORDPRESS_DB_NAME: wordpress
+    networks:
+      development:
+        ipv4_address: "124.168.92.18"
+
+  wordpressminus2:
+    image: "wordpress:6.5.5"
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: ""
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ./allergens-dietary-ictoria:/var/www/html/wp-content/plugins/allergens-dietary-ictoria
+    networks:
+      development:
+        ipv4_address: "124.168.92.19"
+
+  db:
     image: "mysql:latest"
     environment:
       MYSQL_DATABASE: wordpress
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
       - ./mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
     networks:
       development:
         ipv4_address: "124.168.92.21"
@@ -39,10 +80,10 @@ services:
     ports:
       - "8181:80"
     depends_on:
-      - mysql
+      - db
     environment:
       PMA_PORT: 3306
-      PMA_HOST: mysql
+      PMA_HOST: db
     networks:
       development:
         ipv4_address: "124.168.92.22"
@@ -56,23 +97,10 @@ services:
       - ./phpunit/tests:/var/www/html/wordpress-tests/
       - ./wordpress:/var/www/html/
     depends_on:
-      - wordpress
-    
+      - wordpresslatest
     networks:
       development:
 
-  # mysql-unit:
-  #   image: "mysql:latest"
-  #   environment:
-  #     MYSQL_DATABASE: wordpress_test
-  #     MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-  #   volumes:
-  #     - ./mysql:/var/lib/mysql
-  #   networks:
-  #     development:
-
-volumes:
-  wp-plugins:
 
 networks:
   development:
@@ -80,3 +108,4 @@ networks:
       driver: default
       config:
         - subnet: "124.168.92.0/24"
+        

@@ -32,7 +32,8 @@ class Allergens_Dietary_Ictoria_Activator {
 		$sql_allergy = $wpdb->query(
 			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_allergy(
         allergy_name VARCHAR(50) NOT NULL PRIMARY KEY,
-        allergy_description VARCHAR(255))"
+        allergy_description VARCHAR(255),
+        is_allergy BOOLEAN NOT NULL DEFAULT 1)"
 		);
 
 		$sql_allergy_attachment = $wpdb->query(
@@ -41,9 +42,9 @@ class Allergens_Dietary_Ictoria_Activator {
         attachment_name VARCHAR(255) NOT NULL,
         PRIMARY KEY (allergy_name, attachment_name),
         CONSTRAINT FK_AllergyAttch_Allergy
-        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name),
+        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name) ON UPDATE CASCADE ,
         CONSTRAINT FK_AllergyAttch_Attch
-        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name))
+        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name) ON UPDATE CASCADE) 
         "
 		);
 
@@ -55,11 +56,18 @@ class Allergens_Dietary_Ictoria_Activator {
         CONSTRAINT FK_AllergyProduct_WCproduct
         FOREIGN KEY (product_id) REFERENCES {$wpdb->prefix}wc_product_meta_lookup(product_id),
         CONSTRAINT FK_AllergyProduct_Allergy
-        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name))"
+        FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name) ON UPDATE CASCADE )"
 		);
 		dbDelta( $sql_attachments );
 		dbDelta( $sql_allergy );
 		dbDelta( $sql_allergy_attachment );
 		dbDelta( $sql_allergy_product );
+	}
+
+	public static function tabsonpage(){
+		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
+			Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
+		}
 	}
 }
