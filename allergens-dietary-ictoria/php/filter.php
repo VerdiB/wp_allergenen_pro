@@ -22,7 +22,7 @@ class Allergens_Dietary_Ictoria_Filter {
 		$options = Allergens_Dietary_Ictoria_Functions::get_options();
 		// Create variable that is used in the loops
 		$categories = array();
-
+		
 		$html = '<form method="post">';
 		// Create the HTML for all filter options, separating them by category
 		foreach ( $options as $key => $value ) {
