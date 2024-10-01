@@ -7,6 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! interface_exists( 'I_Allergens_Dietary_Ictoria_Form' ) ) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/Iallergen_form.php';
 }
+
+if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
+}
+
+
 /**
  * @class Allergens_Dietary_Ictoria_License_Form
  * @brief Class that creates the form for the license key where
@@ -18,8 +24,6 @@ if ( ! interface_exists( 'I_Allergens_Dietary_Ictoria_Form' ) ) {
  * @since 1.0.0
  */
 class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Ictoria_Form {
-
-
 	/**
 	 * @brief Constructor for the Allergens_Dietary_Ictoria_License_Form class
 	 * for now it is empty and does nothing but it's common courtesy to have it

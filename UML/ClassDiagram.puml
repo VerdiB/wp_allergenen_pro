@@ -125,6 +125,7 @@ package "php"{
             + updateAttachment(data:array, oldName:string) : void
             + getAttachment(attachmentName:string) : array
             - placeAttachment(data:array) : void
+            + {static} attachment_insert(result:array) : array
         }
 
         class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries{
@@ -135,6 +136,7 @@ package "php"{
             + checkAllergyAttachmentExists(allergyName:string) : boolean
             + updateAllergyAttachment(data:array) : void
             + getAllergyAttachment(allergyAttachmentName:string) : array
+            + {static} allergy_connection(result:array) : array
         }
     }
     package "lists" {
@@ -172,13 +174,5 @@ Allergens_Dietary_Ictoria_Allergens_Form .u.|> I_Allergens_Dietary_Ictoria_Form
 Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Allergen_Queries : uses
 Allergens_Dietary_Ictoria_Allergens_Form .r.> Allergens_Dietary_Ictoria_Attachment_Queries : uses
 Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Allergy_Attachment_Queries : uses
-
-
-
-
-
-
-
-
 
 @enduml
