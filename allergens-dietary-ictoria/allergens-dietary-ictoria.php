@@ -10,6 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+spl_autoload_register(function($class) {
+	require_once($class . '.php');
+});
+
+// https://www.youtube.com/watch?v=20nFAHJT2Qg
+
 // spl_autoload_register( function($classname) {
     
 // 	$class      = str_replace( '\\', DIRECTORY_SEPARATOR, str_replace( '_', '-', strtolower($classname) ) );
@@ -88,8 +94,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 // load file with generic static methods
 // require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/functions.php';
-$test =  new Plugin\Php\Allergens_Dietary_Ictoria_Functions();
-
 add_action( 'plugins_loaded', array( 'Plugin\Php\Allergens_Dietary_Ictoria_Functions', 'load_textdomain' ) );
 
 
