@@ -14,6 +14,7 @@ class MyPluginAddMenu {
 	 * @staticvar   array   $instance
 	 * @return      The one true instance
 	 */
+	
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new MyPluginAddMenu();
@@ -62,6 +63,18 @@ class MyPluginAddMenu {
 
 		add_submenu_page(
 			'allergens-dietary-options',
+			__( 'Info', 'allergens-dietary-ictoria' ),
+			__( 'Info', 'allergens-dietary-ictoria' ),
+			'manage_options',
+			'allergens-dietary-Info',
+			array(
+				$this,
+				'Info',
+			)
+		);
+		
+		add_submenu_page(
+			'allergens-dietary-options',
 			__( 'Update allergen', 'allergens-dietary-ictoria' ),
 			__( 'Update allergen', 'allergens-dietary-ictoria' ),
 			'manage_options',
@@ -81,53 +94,31 @@ class MyPluginAddMenu {
 	public function licenseForm() {
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
+		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::LICENSE );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
 	}
 
 	public function addallergens() {
-		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
+		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) && ! class_exists( 'Allergens_Dietary_Ictoria_Tabs' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
+		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
 	}
 
 	public function updateallergens() {
-		global $wpdb;
-		$table_name_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-		$table_name_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-	
-		$allergens = $wpdb->get_results("SELECT a.allergy_name, a.allergy_description, at.attachment_name
-										  FROM $table_name_allergy AS a
-										  LEFT JOIN $table_name_attachment AS at ON a.allergy_name = at.allergy_name");
-		?>
-		<h1><?php _e('Update Allergen Icons', 'allergens-dietary-ictoria'); ?></h1>
-		<form method="POST" enctype="multipart/form-data">
-			<?php foreach ($allergens as $allergen) : ?>
-				<div>
-					<h2><?php echo esc_html($allergen->allergy_name); ?></h2>
-					<p><?php echo esc_html($allergen->allergy_description); ?></p>
-					<label for="allergen_icon_<?php echo esc_attr($allergen->allergy_name); ?>">
-						<?php _e('Choose an icon for', 'allergens-dietary-ictoria'); ?> <?php echo esc_html($allergen->allergy_name); ?>:
-					</label>
-					<input type="file" name="allergen_icon[<?php echo esc_attr($allergen->allergy_name); ?>]" id="allergen_icon_<?php echo esc_attr($allergen->allergy_name); ?>">
-					<span>
-						<?php echo $allergen->attachment_name ? esc_html($allergen->attachment_name) : 'No file chosen'; ?>
-					</span>
-				</div>
-			<?php endforeach; ?>
-			<input type="submit" value="<?php _e('Update Icons', 'allergens-dietary-ictoria'); ?>">
-		</form>
-		<?php
-	
-		// Verwerk de POST-aanroep
-		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-			Allergen_Icon_Manager::update_allergen_icons();
+		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
 		}
+		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
+		Allergens_Dietary_Ictoria_Form::getInstance()->showForm( 'test' );
 	}
-}	
+}
 
 // call the class and add the menus automatically
 // $MyPluginAddMenu = MyPluginAddMenu::instance();
