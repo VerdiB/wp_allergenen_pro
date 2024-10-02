@@ -48,18 +48,20 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		return $wpdb->get_row( $sql, ARRAY_A );
 	}
 
-	public function getAllAllergyAttachmments(int $is_allergy = 1) {
+	public function getAllAllergyAttachmments() {
 		global $wpdb;
-
+		$table = "{$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment";
+		
 		$sql = $wpdb->prepare(
 			"SELECT al.allergy_name, al.allergy_description, al.is_allergy, att.attachment_name, att.attachment_path
-            FROM  {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment as aa
+            FROM %i as aa
             JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy as al
             ON aa.allergy_name = al.allergy_name
 			JOIN {$wpdb->prefix}allergens_dietary_ictoria_attachments as att
 			ON aa.attachment_name = att.attachment_name
-			WHERE al.is_allergy = %d",
-			$is_allergy
+			ORDER BY  al.is_allergy DESC, al.allergy_name ASC
+			",$table
+
 		);
 
 		return $wpdb->get_results( $sql, ARRAY_A );

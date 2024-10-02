@@ -26,7 +26,6 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 
 	// function that sets the name of the menu tab for this plugin
 	public function data_tab( $product_data_tabs ) {
-		echo 'data_tab';
 		$product_data_tabs['allergens-tab'] = array(
 			'label'  => __( 'Allergens', 'allergens-dietary-ictoria' ),
 			'target' => __( 'allergens_dietary_ictoria_product_data' ),
@@ -47,13 +46,6 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 
 		$options = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
 		$allergens = $options->getAllAllergyAttachmments();
-		$dietary = $options->getAllAllergyAttachmments(0);
-
-		echo '<pre>';
-		print_r($dietary);
-		echo '</pre>';
-
-
 
 		
 		// $list    = get_post_meta( $post->ID, __( 'allergens_dietary_ictoria' ), true );
@@ -61,7 +53,8 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 			$list = array();
 		}
 
-		$html = '<div id="allergens_dietary_ictoria_product_data" class="panel woocommerce_options_panel">';
+		$html = '<div id="allergens_dietary_ictoria_product_data" class="panel woocommerce_options_panel">
+			<h2>' . __( 'Allergens', 'allergens-dietary-ictoria' ) . '</h2> <br/>';
 		// create the html for all options, seperating them by category
 		foreach ( $allergens as $allergen ) {
 			// check if option is globally enabled
@@ -70,19 +63,12 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 				$html .= '<div class="allergen-field">
 					<input type="checkbox" value="1" />
 					<span class="description">
-						<img alt="' . $allergen['allergy_name'] .'" src="' . $allergen['attachment_path'] .'"/>&nbsp;' . $allergen['allergy_name'] . '
+						<img width="70" height="70" alt="' . $allergen['allergy_name'] .'" src="' . $allergen['attachment_path'] .'"/>&nbsp;' . $allergen['allergy_name'] . '
 					</span>
 				</div>';
 			
 		}
 
-		// create the full options html. Does not show the category if all options of the given category are globally disabled
-		// foreach ( $categories as $key => $value ) {
-		// 	$checked = '';
-		// 	if ( $active[ $key ] > 0 ) {
-		// 		$html .= '<div class="allergen-div"><p>' . __( ucfirst( $key ), 'allergens-dietary-ictoria' ) . ':</p>' . $value . '</div>';
-		// 	}
-		// }
 		$html .= '</div>';
 
 		echo $html;
@@ -91,14 +77,20 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 
 	// function that stores all selected options in the productdata of the currently selected product
 	public function save_product_options( $post_id ) {
-		$options = Allergens_Dietary_Ictoria_Functions::get_options();
+		// $options = Allergens_Dietary_Ictoria_Functions::get_options();
 
-		$list = array();
-		foreach ( $options as $key => $value ) {
-			if ( isset( $_POST[ $key . __( '_allergens_dietary_ictoria_option' ) ] ) ) {
-				$list[] = $key;
-			}
+		if (isset ($_POST['save'])){
+			echo '<pre>';
+			print_r($_POST);
+			echo '</pre>';
 		}
-		update_post_meta( $post_id, __( 'allergens_dietary_ictoria' ), $list );
+
+		// $list = array();
+		// foreach ( $options as $key => $value ) {
+		// 	if ( isset( $_POST[ $key . __( '_allergens_dietary_ictoria_option' ) ] ) ) {
+		// 		$list[] = $key;
+		// 	}
+		// }
+		// update_post_meta( $post_id, __( 'allergens_dietary_ictoria' ), $list );
 	}
 }

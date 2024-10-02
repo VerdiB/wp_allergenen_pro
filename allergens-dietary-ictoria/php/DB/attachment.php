@@ -17,7 +17,7 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 	}
 
 	private function __construct() {
-		$this->_url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/custom/';
+		$this->_url = get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/custom/';
 	}
 
 	public function addAttachment( array $data ) {
