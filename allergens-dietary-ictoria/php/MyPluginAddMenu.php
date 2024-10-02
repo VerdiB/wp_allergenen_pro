@@ -14,6 +14,7 @@ class MyPluginAddMenu {
 	 * @staticvar   array   $instance
 	 * @return      The one true instance
 	 */
+	
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new MyPluginAddMenu();
@@ -68,6 +69,19 @@ class MyPluginAddMenu {
 				'addallergens',
 			)
 		);
+
+		add_submenu_page(
+			'allergens-dietary-options',
+			__( 'Info', 'allergens-dietary-ictoria' ),
+			__( 'Info', 'allergens-dietary-ictoria' ),
+			'manage_options',
+			'allergens-dietary-Info',
+			array(
+				$this,
+				'Info',
+			)
+		);
+		
 		add_submenu_page(
 			'allergens-dietary-options',
 			__( 'Update allergen', 'allergens-dietary-ictoria' ),
@@ -88,7 +102,9 @@ class MyPluginAddMenu {
 	public function licenseForm() {
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
+		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::LICENSE );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
 	}
@@ -106,9 +122,20 @@ class MyPluginAddMenu {
 	public function updateallergens() {
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
+		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm( 'test' );
+	}
+
+	public function info() {
+		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Info' ) ) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/lists/allergen_info.php';
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
+		}
+		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
+		Allergens_Dietary_Ictoria_Info::getInstance()->showInfo();
 	}
 }
 
