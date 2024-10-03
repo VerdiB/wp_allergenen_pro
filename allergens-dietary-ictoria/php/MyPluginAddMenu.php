@@ -83,14 +83,6 @@ class MyPluginAddMenu {
 		);
 	}
 	
-
-	public function myAdminPage() {
-		Allergen_Icon_Manager::display_allergen_icon_form();
-		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-			Allergen_Icon_Manager::update_allergen_icons();
-		}
-	}
-
 	public function licenseForm() {
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
@@ -153,11 +145,6 @@ public function updateallergens() {
 	// Verwerk de POST-aanroep
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		Allergen_Icon_Manager::update_allergen_icons();
-		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
-			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
-		}
-		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
-		Allergens_Dietary_Ictoria_Form::getInstance()->showForm( 'test' );
 	}
 }
 

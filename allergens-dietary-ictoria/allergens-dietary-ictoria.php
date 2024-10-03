@@ -82,10 +82,14 @@ class Allergens_Dietary_Ictoria_Startup {
 
 		$options = Allergens_Dietary_Ictoria_Functions::get_options();
 		// set the default options in the WooCommerce options table if they do not exist
-		if ( empty( $options ) ) {
-			$options = Allergens_Dietary_Ictoria_Functions::default_options();
-			update_option( 'allergens_dietary_ictoria_options', $options, true );
-		}
+
+		// Default options bestaat niet meer dus je krijgt een error als je de plugin activeert. in allergens-dietary-ictoria.php op line 86
+
+		// if ( empty( $options ) ) {
+		// 	$options = Allergens_Dietary_Ictoria_Functions::default_options();
+		// 	update_option( 'allergens_dietary_ictoria_options', $options, true );
+		// }
+
 
 		// temporary admin menu panel for testing the license form
 		add_menu_page( 'Allergens and Dietary', 'Allergens and Dietary', 'manage_options', 'allergens-dietary-ictoria', array( 'Allergens_Dietary_Ictoria_Functions', 'admin_page' ), 'dashicons-carrot', 6 );

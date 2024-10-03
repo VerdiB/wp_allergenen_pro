@@ -5,50 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Allergen_Icon_Manager {
 
-    public static function get_allergens_with_icons() {
-        global $wpdb;
-        $table_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-        $table_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
-        $table_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-
-        // First select allergies and attachments
-        $allergy_query = "SELECT allergy_name FROM $table_allergy";
-        $attachment_query = "SELECT attachment_name, attachment_path FROM $table_attachment";
-
-        // Get allergies and attachments
-        $allergies = $wpdb->get_results($allergy_query);
-        $attachments = $wpdb->get_results($attachment_query);
-
-        // link allergens with their attachments
-        $query = "
-            SELECT allergy.allergy_name, attachments.attachment_name, attachments.attachment_path
-            FROM $table_allergy AS allergy
-            LEFT JOIN $table_allergy_attachment AS attachment_rel ON allergy.allergy_name = attachment_rel.allergy_name
-            LEFT JOIN $table_attachment AS attachments ON attachment_rel.attachment_name = attachments.attachment_name";
-        
-        return $wpdb->get_results($query);
-    }
-
-    public static function display_allergen_icon_form() {
-        $allergens = self::get_allergens_with_icons();
-        ?>
-        <form method="post" enctype="multipart/form-data">
-            <?php foreach ($allergens as $allergen): ?>
-                <div>
-                    <label for="allergen_<?php echo esc_attr($allergen->allergy_name); ?>">
-                        <?php echo esc_html($allergen->allergy_name); ?>:
-                    </label>
-                    <?php if ($allergen->attachment_path): ?>
-                        <img src="<?php echo esc_url($allergen->attachment_path . '?v=' . time()); ?>" alt="icon" width="50" height="50">
-                    <?php endif; ?>
-                    <input type="file" name="allergen_icon[<?php echo esc_attr($allergen->allergy_name); ?>]" />
-                </div>
-            <?php endforeach; ?>
-            <input type="submit" name="submit_icons" value="<?php esc_attr_e('Update Icons', 'allergens-dietary-ictoria'); ?>">
-        </form>
-        <?php
-    }
-
     public static function update_allergen_icons() {
         $updated_icons = false;
     
@@ -116,8 +72,8 @@ class Allergen_Icon_Manager {
                             $wpdb->insert(
                                 $table_name_allergy_attachment,
                                 array(
-                                    'allergy_name' => sanitize_text_field($allergy_name),
-                                    'attachment_name' => sanitize_file_name($attachment_name)
+                                    'attachment_name' => sanitize_file_name($attachment_name),
+                                    'allergy_name' => sanitize_text_field($allergy_name)
                                 ),
                                 array('%s', '%s')
                             );
@@ -128,7 +84,7 @@ class Allergen_Icon_Manager {
             }
     
             if ($updated_icons) {
-                echo '<script type="text/javascript">location.reload();</script>';
+                // echo '<script type="text/javascript">location.reload();</script>';
                 echo '<p>' . __('Icons updated successfully. Reloading page...', 'allergens-dietary-ictoria') . '</p>';
             } else {
                 echo '<p>' . __('No icons were updated.', 'allergens-dietary-ictoria') . '</p>';
