@@ -14,6 +14,7 @@ class MyPluginAddMenu {
 	 * @staticvar   array   $instance
 	 * @return      The one true instance
 	 */
+
 	
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
@@ -102,7 +103,7 @@ class MyPluginAddMenu {
 			array(
 				$this,
 				'showallergens',
-			)
+			), 
 		);
 	}
 
@@ -145,7 +146,7 @@ class MyPluginAddMenu {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}	
 			Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
-			Allergens_Dietary_Ictoria_Show_Allergens::getInstance()->show_Allergens_form();
+			Allergens_Dietary_Ictoria_Show_Allergens::getInstance()->table_page();
 	}
 
 	public function info() {

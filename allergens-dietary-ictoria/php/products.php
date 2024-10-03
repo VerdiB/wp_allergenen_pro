@@ -1,6 +1,4 @@
 <?php
-
-
 // exit if user can access this file directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -27,39 +25,18 @@ class Allergens_Dietary_Ictoria_Products {
 	public function show_product_options(): void {
 		global $post;
 		$html    = '';
-
-		global $wpdb;
-
-		$table_allergens_icons = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-		$query = $wpdb->prepare(
-			"SELECT * FROM $table_allergens_icons"
-		);
-		
-		$options = $wpdb->get_results($query, ARRAY_A);
-		
-		$list = get_post_meta( $post->ID, 'allergens_dietary_ictoria', true );
+		$options = Allergens_Dietary_Ictoria_Functions::get_options();
+		$list    = get_post_meta( $post->ID, 'allergens_dietary_ictoria', true );
 
 		if ( ! empty( $list ) ) {
 			$current = array();
-		
-			foreach ( $options as $key => $value ) {
 
-				// Match 'id' in $value with $list
-				if ( in_array( $key['allergy_name'], $list ) ) {
-					$current[ $key ] = $value['attachment_name'];  // Add the matching allergen to $current
-				}else{
-					echo "<pre>";
-					var_dump($list);
-					var_dump(" and " . $value['allergy_name']);
-					echo "</pre>";
+			foreach ( $options as $key => $value ) {
+				if ( in_array( $key, $list ) ) {
+					$current[ $key ] = $value;
 				}
 			}
-
-			echo "<pre>";
-			var_dump($list);
-			echo "</pre>";
-
-			// Set the WP filter that will call the hook used to render the plugin options of this product
+			// set the WP filter that will call the hook used to render the plugin options of this product
 			$html = apply_filters( 'allergens_dietary_ictoria_render_html', $current );
 		}
 		if ( ! empty( $html ) ) {
@@ -71,20 +48,13 @@ class Allergens_Dietary_Ictoria_Products {
 	public function render_html( array $data ): string {
 		$html = array();
 
-		var_dump($data);
-
 		foreach ( $data as $key => $value ) {
-
-			echo "<pre>";
-				var_dump($value);
-				var_dump($value);
-				var_dump($value);
-				var_dump($value);
-			echo "</pre>";
 			// check if the option is globally enabled by the admin
-				$icon_url = esc_url( $value['attachment_name'] );
-				$title    = esc_attr( $value['allergy_name'] );
+			if ( $value['status'] === 'active' ) {
+				$icon_url = esc_url( $value['icon'] );
+				$title    = esc_attr( $value['title'] );
 				$html[]   = "<img class='allergen-icon' src='{$icon_url}' alt='{$title}' title='{$title}' data-id='" . esc_attr( $key ) . "' />";
+			}
 		}
 		return implode( '', $html );
 	}
