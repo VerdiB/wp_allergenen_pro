@@ -95,6 +95,11 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 		}
 
+		if ( empty( $data['allergen_icon']['name'] ) ) {
+			$data['allergen_icon']['name'] = 'No_Icon_Selected.png';
+			$data['allergen_icon']['tmp_name'] = ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/assets/icons/No_Icon_Selected.png';
+		}
+
 		if ( empty( $data['allergen_name_hidden'] ) ) {
 			try{
 				Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->addAllergens( $data );
