@@ -8,10 +8,15 @@ if ( ! class_exists( "Allergens_Dietary_Ictoria_Allergy_Attachment_Queries" ) ) 
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
 }
 
+if ( ! class_exists( "Allergens_Dietary_Ictoria_Allergy_Product_Queries" ) ) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen_product.php';
+}
+
 // this class contains functions used to add/remove allergens and dietary options to/from a WooCommerce product
 class Allergens_Dietary_Ictoria_Product_Settings {
 	private static $_instance = null;
 	private int $_post_id;
+	private array $_allergens;
 
 	public static function instance() {
 		if ( is_null( self::$_instance ) ) {
@@ -22,7 +27,10 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 	public function __construct() {
 		add_filter( 'woocommerce_product_data_tabs', array( $this, 'data_tab' ) );
 		add_action( 'woocommerce_product_data_panels', array( $this, 'data_fields' ) );
-		add_action( 'woocommerce_process_product_meta_(product_type)','save_product_options' );
+		// add_action( 'woocommerce_process_product_meta_(product_type)','save_product_options' );
+		// add_action( 'woocommerce_process_product_meta',array($this, 'save_product_options'), 10, 1 );
+		add_action('save_post', array($this, 'save_product_options'));
+		
 	}
 
 	// function that sets the name of the menu tab for this plugin
@@ -50,9 +58,6 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 		$allergens = $options->getAllAllergyAttachmments();
 
 		
-		$list    = get_post_meta( $post->ID, __( 'allergens_dietary_ictoria' ), true );
-		// if ( empty( $list ) ) {
-		// 	$list = array();
 		// }
 
 		$html = '<div id="allergens_dietary_ictoria_product_data" class="panel woocommerce_options_panel">
@@ -69,47 +74,42 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 						<img style="max-height:50px; max-width:50px;" alt="' . $allergen['allergy_name'] .'" src="' . $allergen['attachment_path'] .'"/>&nbsp;' . $allergen['allergy_name'] . '
 					</span>
 				</div>';
+
+				$this->_allergens[] = $allergen['allergy_name'];
 			
 		}
 
 		$html .= '</div><br/>';
 
-		echo'<br/> post_id: <br/>';
-		print_r($post);
-		echo '</pre>';
-
+		
 		echo $html;
 		
 	}
 
 	// function that stores all selected options in the productdata of the currently selected product
 	public function save_product_options( $post_id ) {
-		// $options = Allergens_Dietary_Ictoria_Functions::get_options();
-		echo 'reee';
-		echo '<script>
-function myFunction() {
-  alert("Hello! I am an alert box!");
-}
-</script>';
+		$allergensInsert = array();
 
-		// if (isset ($_POST['save'])){
-		// 	echo '<pre>';
-		// 	print_r($_POST);
-		// 	echo '</pre>';
-		// }
+		foreach ( $this->_allergens as $allergen ) {
+			if ( isset( $_POST[ ($allergen['allergy_name'] . '_allergens_dietary_ictoria') ] ) ) {
+				$allergensInsert[] = $allergen['allergy_name'];
+			}
+		};
 
-		// echo '<pre>: post';
-		// print_r($_POST);
-		// echo'<br/> post_id: <br/>';
-		// print_r($post_id);
-		// echo '</pre>';
+		$dbInstance = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance();
+		$insertCheck = null;
 
-		// $list = array();
-		// foreach ( $options as $key => $value ) {
-		// 	if ( isset( $_POST[ $key . __( '_allergens_dietary_ictoria' ) ] ) ) {
-		// 		$list[] = $key;
-		// 	}
-		// }
-		// update_post_meta( $post_id, __( 'allergens_dietary_ictoria' ), $list );
+
+		foreach($allergensInsert as $allergen){
+			$insertCheck = $dbInstance->addallergyProduct( $post_id, $allergen);
+			if (false === $insertCheck){
+				unset($dbInstance);
+				throw new Exception(__('Error: could not attach allergen into product', 'allergens-dietary-ictoria'));
+				return;
+			}
+		}
+
+		unset($dbInstance);
+
 	}
 }

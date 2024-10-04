@@ -9,7 +9,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 
 	public static function getInstance() {
 		if ( self::$_instance === null ) {
-			self::$_instance = new self();
+			self::$_instance = new static();
 		}
 		return self::$_instance;
 	}
@@ -53,7 +53,8 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		$table = "{$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment";
 		
 		$sql = $wpdb->prepare(
-			"SELECT al.allergy_name, al.allergy_description, al.is_allergy, att.attachment_name, att.attachment_path
+			"SELECT al.allergy_name, al.allergy_description, al.is_allergy,
+			att.attachment_name, att.attachment_path
             FROM %i as aa
             JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy as al
             ON aa.allergy_name = al.allergy_name
