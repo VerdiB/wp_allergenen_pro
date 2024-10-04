@@ -8,6 +8,10 @@ if ( ! class_exists( 'WP_List_Table' )){
     require_once( ABSPATH . '/wp-admin/includes/class-wp-list-table.php' );
 }
 
+if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
+}
+
 /**
  * @class Allergens_Dietary_Ictoria_Show_Allergens
  * @brief Class that shows the allergens
@@ -51,58 +55,12 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
                 $allergy_names[] = $row['allergy_name'];
             }
 
-            
-
-            //print_r($allergy_names);
-
-            /*$data = $wpdb->get_results("SELECT * FROM $table_name", ARRAY_A);
-
-            $data_names = [];
-
-            if (!empty($data)) {
-                foreach ($data as $row) {
-                    foreach ($row as $column_name => $value) {
-                        print_r($value);
-                        $data_names[] = $value;
-                    }
-                }
-            }
-            $data = $wpdb->get_results("SELECT * FROM $table_name", ARRAY_A);
-
-            $data_names = [];
-
-            if (!empty($data)) {
-                foreach ($data as $row) {
-                    foreach ($row as $column_name => $value) {
-                        print_r($value);
-                        $data_names[] = $value;
-                    }
-                }
-            }
-
-            $data = $wpdb->get_results("SELECT * FROM $table_name", ARRAY_A);
-
-            $data_names = [];
-
-            if (!empty($data)) {
-                foreach ($data as $row) {
-                    foreach ($row as $column_name => $value) {
-                        print_r($value);
-                        $data_names[] = $value;
-                    }
-                }
-            }*/
-
-          //print_r($column_names);
-
             return [
                 'columns' => $column_names,
                 'data' => $allergy_names
             ];
             
         }
-
-        
 
         public function column_default( $item, $column_name ) {
             $translationOfAllergenNumbers = "Diet";
@@ -133,69 +91,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
         public function column_cb($item){
             return sprintf('<input type="checkbox" name="post[]" value="%s"/>', $item['allergy_name']);
         }
-
-        /*public function display() {
-            $result = $this->get_table_columns_and_data();
-            $columns = $this->get_columns();
-            $counter = 0;
-
-            foreach ($columns as $item => $items) {
-                $this->single_row($items);
-            }
-
-            //var_dump($result['data']);
-
-            echo '<tr scope="row" id="post-1" class="iedit author-self level-0 post-8 type-page status-publish hentry">';
-
-            foreach ($result['data'] as $item => $items2) {
-                $counter++;
-                if ($counter == 4){
-                    echo '</tr>';
-                    echo '<tr scope="row" id="post-1" class="iedit author-self level-0 post-8 type-page status-publish hentry">';
-                        $this->single_row($items2);
-                        $counter = 0;
-                }else{
-                    $this->single_row($items2);
-                }
-            } 
-            echo '</tr>';
-        }*/
-
-       
-function register_my_bulk_actions( $bulk_actions ){
-	$bulk_actions['my_action'] = 'My Action';
-
-	return $bulk_actions;
-}
-
-function my_bulk_action_handler( $redirect_to, $doaction, $post_ids ){
-
-	// do nothing if it's not our action
-	if( $doaction !== 'my_action' ){
-		return $redirect_to;
-	}
-
-	foreach( $post_ids as $post_id ){
-		// action for each post
-	}
-
-	$redirect_to = add_query_arg( 'my_bulk_action_done', count( $post_ids ), $redirect_to );
-
-	return $redirect_to;
-}
-
-function my_bulk_action_admin_notice(){
-
-	if( empty( $_GET['my_bulk_action_done'] ) ){
-		return;
-	}
-
-	$data = $_GET['my_bulk_action_done'];
-
-	$msg = sprintf( 'My action processed records: %d.', intval($data) );
-
-	echo '<div id="message" class="updated"><p>'. $msg .'</p></div>';
-}
 
         public function single_row( $item ) {
             echo '<tr>';
@@ -274,73 +169,35 @@ function my_bulk_action_admin_notice(){
             $this->_column_headers = [$result['columns'], [], []];
 
             $data = $wpdb->get_results("SELECT * FROM $table_name", ARRAY_A); // Alle gegevens ophalen
-            error_log(print_r($data, true)); // Log de data om te zien wat er wordt opgehaald
     
             $this->_column_headers = [$this->get_columns(), [], []];
     
             $this->items = $data;
         }
 
-        protected function bulk_actions( $which = '' ) {
-            if ( is_null( $this->_actions ) ) {
-                $this->_actions = $this->get_bulk_actions();
-    
-                /**
-                 * Filters the items in the bulk actions menu of the list table.
-                 *
-                 * The dynamic portion of the hook name, `$this->screen->id`, refers
-                 * to the ID of the current screen.
-                 *
-                 * @since 3.1.0
-                 * @since 5.6.0 A bulk action can now contain an array of options in order to create an optgroup.
-                 *
-                 * @param array $actions An array of the available bulk actions.
-                 */
-                $this->_actions = apply_filters( "bulk_actions-{$this->screen->id}", $this->_actions ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
-            /*
-                $two = '';
-            } else {
-                $two = '2';
-            }
-    
-            if ( empty( $this->_actions ) ) {
-                return;
-            }
-                */
-
-            echo '<label for="bulk-action-selector-' . esc_attr( $which ) . '" class="screen-reader-text">' .
-                __( 'Select bulk action' ) .
-            '</label>';
-            echo '<select name="action" id="bulk-action-selector-' . esc_attr( $which ) . "\">\n";
-            echo '<option value="-1">' . __( 'Bulk actions' ) . "</option>\n";
+        public function process_bulk_action($data) {  
+            global $wpdb;
             
-    
-            foreach ( $this->_actions as $key => $value ) {
-                if ( is_array( $value ) ) {
-                    echo "\t" . '<optgroup label="' . esc_attr( $key ) . '">' . "\n";
-    
-                    foreach ( $value as $name => $title ) {
-                        $class = ( 'edit' === $name ) ? ' class="hide-if-no-js"' : '';
-    
-                        echo "\t\t" . '<option value="' . esc_attr( $name ) . '"' . $class . '>' . $title . "</option>\n";
-                    }
-                    echo "\t" . "</optgroup>\n";
-                } else {
-                    $class = ( 'edit' === $key ) ? ' class="hide-if-no-js"' : '';
-    
-                    echo "\t" . '<option value="' . esc_attr( $key ) . '"' . $class . '>' . $value . "</option>\n";
-                }
-            }
-    /*
-            echo "</select>\n"; */
-            }
-    
-            submit_button( __( 'Apply' ), 'action', 'submit', false, array( 'id' => "doaction" ) );
-            echo "\n";
-        }
+            // If the delete bulk action is triggered
+            if ( ( isset( $_POST['action'] ) && $_POST['action'] == 'on/off' )
+            || ( isset( $_POST['action2'] ) && $_POST['action2'] == 'on/off' )
+            ) {
+                if ($data[0] == "on/off"){
+                    foreach ($data[1] as $key => $value){
+                        $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+                        $sql = $wpdb->get_results(
+                            "SELECT * FROM $table_name WHERE is_active = '$value'"
+                        );
 
-        protected function months_dropdown( $post_type ) {
-            //nothing
+                        if ($sql > 0){
+                            Allergens_Dietary_Ictoria_Allergen_Queries::activationUpdate($data[1]);
+                            break;
+                        }
+                    }
+                }
+            }else{
+                error_log("It doesn't work.");
+            }
             }
 
         public static function getInstance() {
@@ -354,7 +211,7 @@ function my_bulk_action_admin_notice(){
             $table = new Allergens_Dietary_Ictoria_Show_Allergens();
             $table->prepare_items();
             $self = htmlspecialchars($_SERVER["PHP_SELF"]);
-            echo '<form action=/wp-admin/admin.php>';
+            echo '<form action="#" method="POST"';
             echo "<table class='wp-list-table widefat fixed striped table-view-list pages'>";
                 $table->display();
             echo "</table>";
@@ -362,18 +219,24 @@ function my_bulk_action_admin_notice(){
         }
     
 }
-/*
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $table = new Allergens_Dietary_Ictoria_Show_Allergens();
     if (isset( $_POST['action'] ) && $_POST['action'] == 'on/off'){
-    //$activator = new Allergens_Dietary_Ictoria_Show_Allergens();
-    //$array = [];
-    //foreach ($_POST as $row){
-     //   array_push($array, $row);
-   //}
-    print_r($_POST['action']);
-    //$activator->activation($_POST);
+
+        $counter = 0;
+        $process_data = [];
+    
+        foreach ($_POST as $key => $value){
+            if ($counter > 1){
+                $process_data[] = $value;
+            }
+            $counter++;
+        }
+
+        $table->process_bulk_action($process_data);
     }
-}*/
+}
 
 
     /*public function get_columns() {

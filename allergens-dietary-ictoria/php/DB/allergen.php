@@ -42,6 +42,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 	public function addAllergens( array $data ) {
 		global $wpdb;
 
+		print_r($data);
+
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
 		$wpdb->insert(
@@ -166,5 +168,51 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 	//activate other inserters
 	Allergens_Dietary_Ictoria_Attachment_Queries::attachment_insert( $icon_allergy_result );
 	Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::allergy_connection( $icon_result );
+}
+
+public static function activationUpdate( array $data ) {
+	global $wpdb;
+
+	foreach ($data as $key => $value){
+
+		$updatenumber = 0;
+
+		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+
+		$sql = $wpdb->prepare(
+			"SELECT * FROM $table_name WHERE allergy_name = '%s'",
+			$value
+		);
+
+		$result = $wpdb->get_row( $sql );
+
+		if (!empty($result)){
+
+		if ($result->is_active == 0){
+			$updatenumber = 1;
+		}else{
+			$updatenumber = 0;
+		}
+	}
+
+
+
+	$data = array(
+		'is_active' => $updatenumber,
+	);
+	
+	$where = array(
+		'allergy_name' => $value
+	);
+	
+	$format = array('%s', '%s');
+
+	$wpdb->update(
+		$table_name,
+		$data,
+		$where,
+		$format
+	);
+}
 }
 }
