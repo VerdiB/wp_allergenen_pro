@@ -1,9 +1,14 @@
 <?php
+
 namespace Plugin\Php;
 // require_once ALLERGENS_DIETARY_ICTORIA_BASE . '../woocommerce/includes/abstracts/abstract-wc-integration.php';
 
-use Plugin\WC_Integration;
+// use \Var\Www\Html\ Wp-content\Plugins\WooCommerce\Includes\Abstracts\class-abstract-wc-integration as WC_Integration;
 // use WooCommerce\Abstracts;
+// use \WooCommerce\Includes\Abstracts\Abstract-wc-Integration;
+
+// use \Woocommerce\Includes\Abstracts\Abstract_WC_Integration as WC_Integration;
+include_once get_home_path('\Woocommerce\Includes\Abstracts\Abstract-WC-Integration.php');
 
 
 // exit if user can access this file directly.

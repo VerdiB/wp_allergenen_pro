@@ -3,6 +3,9 @@
 namespace Plugin\Php\Forms;
 
 use Plugin\Php\Db\Allergens_Dietary_Ictoria_Allergen_Queries;
+use Plugin\Php\Db\Allergens_Dietary_Ictoria_Allergy_Attachment_Queries;
+use Plugin\Php\Db\Allergens_Dietary_Ictoria_Attachment_Queries;
+use Exception;
 
 // exit if user can access this file directly
 if ( ! defined( 'ABSPATH' ) ) {
