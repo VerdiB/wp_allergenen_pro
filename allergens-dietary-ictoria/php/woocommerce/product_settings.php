@@ -9,13 +9,16 @@ if ( ! class_exists( "Allergens_Dietary_Ictoria_Allergy_Attachment_Queries" ) ) 
 }
 
 if ( ! class_exists( "Allergens_Dietary_Ictoria_Allergy_Product_Queries" ) ) {
-	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen_product.php';
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_product.php';
+}
+
+if ( ! class_exists( "Allergens_Dietary_Ictoria_Allergen_Queries" ) ) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 }
 
 // this class contains functions used to add/remove allergens and dietary options to/from a WooCommerce product
 class Allergens_Dietary_Ictoria_Product_Settings {
 	private static $_instance = null;
-	private int $_post_id;
 	private array $_allergens;
 
 	public static function instance() {
@@ -25,6 +28,8 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 	}
 
 	public function __construct() {
+		$this->_allergens = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->getAllAllergens();
+
 		add_filter( 'woocommerce_product_data_tabs', array( $this, 'data_tab' ) );
 		add_action( 'woocommerce_product_data_panels', array( $this, 'data_fields' ) );
 		// add_action( 'woocommerce_process_product_meta_(product_type)','save_product_options' );
@@ -52,8 +57,6 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 	 */
 	public function data_fields() {
 		global $post;
-		$this->_post_id = $post->ID;
-
 		$options = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
 		$allergens = $options->getAllAllergyAttachmments();
 
@@ -74,9 +77,6 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 						<img style="max-height:50px; max-width:50px;" alt="' . $allergen['allergy_name'] .'" src="' . $allergen['attachment_path'] .'"/>&nbsp;' . $allergen['allergy_name'] . '
 					</span>
 				</div>';
-
-				$this->_allergens[] = $allergen['allergy_name'];
-			
 		}
 
 		$html .= '</div><br/>';
@@ -95,6 +95,10 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 				$allergensInsert[] = $allergen['allergy_name'];
 			}
 		};
+
+		if ( empty( $allergensInsert ) ) {
+			return;
+		}
 
 		$dbInstance = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance();
 		$insertCheck = null;

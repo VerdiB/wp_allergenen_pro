@@ -27,7 +27,7 @@ class Allergens_Dietary_Ictoria_Allergy_Product_Queries {
         
     }
 
-    public function addAllergyProduct( string $allergen, int $product_id ) {
+    public function addAllergyProduct( int $product_id, string $allergen ) {
         global $wpdb;
 
         $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';
