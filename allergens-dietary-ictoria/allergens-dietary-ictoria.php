@@ -135,6 +135,7 @@ if ( ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE ) {
 		// load and run the plugin admin files
 		include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/woocommerce/product_settings.php';
 		Allergens_Dietary_Ictoria_Product_Settings::instance();
+		// echo 'looking in the main file';
 
 		include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/activator.php';
 		Allergens_Dietary_Ictoria_Activator::activate();

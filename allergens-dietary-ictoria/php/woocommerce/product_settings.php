@@ -11,6 +11,7 @@ if ( ! class_exists( "Allergens_Dietary_Ictoria_Allergy_Attachment_Queries" ) ) 
 // this class contains functions used to add/remove allergens and dietary options to/from a WooCommerce product
 class Allergens_Dietary_Ictoria_Product_Settings {
 	private static $_instance = null;
+	private int $_post_id;
 
 	public static function instance() {
 		if ( is_null( self::$_instance ) ) {
@@ -21,14 +22,14 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 	public function __construct() {
 		add_filter( 'woocommerce_product_data_tabs', array( $this, 'data_tab' ) );
 		add_action( 'woocommerce_product_data_panels', array( $this, 'data_fields' ) );
-		add_action( 'woocommerce_process_product_meta', array( $this, 'save_product_options' ) );
+		add_action( 'woocommerce_process_product_meta_(product_type)','save_product_options' );
 	}
 
 	// function that sets the name of the menu tab for this plugin
 	public function data_tab( $product_data_tabs ) {
 		$product_data_tabs['allergens-tab'] = array(
 			'label'  => __( 'Allergens', 'allergens-dietary-ictoria' ),
-			'target' => __( 'allergens_dietary_ictoria_product_data' ),
+			'target' => 'allergens_dietary_ictoria_product_data',
 		);
 		return $product_data_tabs;
 	}
@@ -43,33 +44,39 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 	 */
 	public function data_fields() {
 		global $post;
+		$this->_post_id = $post->ID;
 
 		$options = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
 		$allergens = $options->getAllAllergyAttachmments();
 
 		
-		// $list    = get_post_meta( $post->ID, __( 'allergens_dietary_ictoria' ), true );
-		if ( empty( $list ) ) {
-			$list = array();
-		}
+		$list    = get_post_meta( $post->ID, __( 'allergens_dietary_ictoria' ), true );
+		// if ( empty( $list ) ) {
+		// 	$list = array();
+		// }
 
 		$html = '<div id="allergens_dietary_ictoria_product_data" class="panel woocommerce_options_panel">
-			<h2>' . __( 'Allergens', 'allergens-dietary-ictoria' ) . '</h2> <br/>';
+			<h2>' . __( 'Select allergen(\'s) and/or dietary restrictions:', 'allergens-dietary-ictoria' ) . '</h2>';
 		// create the html for all options, seperating them by category
 		foreach ( $allergens as $allergen ) {
 			// check if option is globally enabled
 			//TODO: replace with actual check in use with new db structure
 				// add the html to the relevant array entry
-				$html .= '<div class="allergen-field">
-					<input type="checkbox" value="1" />
+				$html .= '
+				<div class="allergen-field">
+					<input type="checkbox" class="checkbox" value="1" name="'.$allergen['allergy_name'].'_allergens_dietary_ictoria" />
 					<span class="description">
-						<img width="70" height="70" alt="' . $allergen['allergy_name'] .'" src="' . $allergen['attachment_path'] .'"/>&nbsp;' . $allergen['allergy_name'] . '
+						<img style="max-height:50px; max-width:50px;" alt="' . $allergen['allergy_name'] .'" src="' . $allergen['attachment_path'] .'"/>&nbsp;' . $allergen['allergy_name'] . '
 					</span>
 				</div>';
 			
 		}
 
-		$html .= '</div>';
+		$html .= '</div><br/>';
+
+		echo'<br/> post_id: <br/>';
+		print_r($post);
+		echo '</pre>';
 
 		echo $html;
 		
@@ -78,16 +85,28 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 	// function that stores all selected options in the productdata of the currently selected product
 	public function save_product_options( $post_id ) {
 		// $options = Allergens_Dietary_Ictoria_Functions::get_options();
+		echo 'reee';
+		echo '<script>
+function myFunction() {
+  alert("Hello! I am an alert box!");
+}
+</script>';
 
-		if (isset ($_POST['save'])){
-			echo '<pre>';
-			print_r($_POST);
-			echo '</pre>';
-		}
+		// if (isset ($_POST['save'])){
+		// 	echo '<pre>';
+		// 	print_r($_POST);
+		// 	echo '</pre>';
+		// }
+
+		// echo '<pre>: post';
+		// print_r($_POST);
+		// echo'<br/> post_id: <br/>';
+		// print_r($post_id);
+		// echo '</pre>';
 
 		// $list = array();
 		// foreach ( $options as $key => $value ) {
-		// 	if ( isset( $_POST[ $key . __( '_allergens_dietary_ictoria_option' ) ] ) ) {
+		// 	if ( isset( $_POST[ $key . __( '_allergens_dietary_ictoria' ) ] ) ) {
 		// 		$list[] = $key;
 		// 	}
 		// }
