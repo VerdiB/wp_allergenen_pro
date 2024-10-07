@@ -25,8 +25,8 @@ entity "allergy_attachement"{
 } 
 
 entity "allergy_product"{
-   product_id: int <<FK>>
-   allergy_name: varchar(50) <<FK>>
+   product_id: int <<FK>> <<PK>>
+   allergy_name: varchar(50) <<FK>> <<PK>>
 }
 
 entity "product_meta_lookup"{
