@@ -42,4 +42,18 @@ class Allergens_Dietary_Ictoria_Allergy_Product_Queries {
 
         return ( isset( $wpdb->insert_id ) ) ? true : false;
     }
+
+    public function getAllergyProduct( int $product_id ) {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';
+
+        $sql = $wpdb->prepare(
+            "SELECT allergy_name
+            FROM %i
+            WHERE product_id = %d"
+        , array($table_name, $product_id));
+
+        return $wpdb->get_results( $sql, ARRAY_A );
+    }
 }

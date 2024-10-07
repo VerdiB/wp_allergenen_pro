@@ -32,18 +32,32 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		return ( isset( $wpdb->insert_id ) ) ? true : false;
 	}
 
-	public function getallergyAttachment( string $allergy_name ) {
+	public function getallergyAttachment( string $allergy_name, bool $isForm=true ) {
 		global $wpdb;
 
-		$sql = $wpdb->prepare(
-			"SELECT a.allergy_name, a.allergy_description, a.is_allergy, aa.attachment_name
-            FROM  {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment as aa
-            JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy as a
-            ON aa.allergy_name = a.allergy_name
+		$sql = "";
 
-            WHERE aa.allergy_name = %s",
+		if ( $isForm ) {
+			$sql = $wpdb->prepare(
+				"SELECT a.allergy_name, a.allergy_description, a.is_allergy, aa.attachment_name
+				FROM  {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment as aa
+				JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy as a
+				ON aa.allergy_name = a.allergy_name
+				WHERE aa.allergy_name = %s",
+				$allergy_name
+			);
+		} else{
+			$sql = $wpdb->prepare(
+			"SELECT a.allergy_name, a.allergy_description, att.attachment_path
+			FROM  {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment as aa
+			JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy as a
+			ON aa.allergy_name = a.allergy_name
+			JOIN {$wpdb->prefix}allergens_dietary_ictoria_attachments as att
+			ON aa.attachment_name = att.attachment_name
+			WHERE aa.allergy_name = %s",
 			$allergy_name
 		);
+		}
 
 		return $wpdb->get_row( $sql, ARRAY_A );
 	}

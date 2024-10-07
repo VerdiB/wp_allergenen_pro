@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Allergens_Dietary_Ictoria_Activator {
 	private static $counter = 0;
-	private static $_url;
+	private static string $_url;
 
 	private static $_ALLERGENS_OPTIONS = [];
     private static $_ALLERGY_ICON_OPTIONS = [];

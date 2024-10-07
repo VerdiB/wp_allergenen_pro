@@ -66,7 +66,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
 		$sql = $wpdb->prepare(
-			"SELECT * FROM $table_name WHERE allergy_name = %s",
+			"SELECT allergy_name FROM $table_name WHERE allergy_name = %s",
 			$allergenName
 		);
 
@@ -98,7 +98,9 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
-		$sql = "SELECT allergy_name FROM $table_name";
+		$sql = "SELECT allergy_name, is_allergy 
+		FROM $table_name
+		ORDER BY  is_allergy DESC, allergy_name ASC";
 
 		$result = $wpdb->get_results( $sql , ARRAY_A);
 
@@ -176,7 +178,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 	}
 
 	//activate other inserters
-	Allergens_Dietary_Ictoria_Attachment_Queries::attachment_insert( $icon_allergy_result );
-	Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::allergy_connection( $icon_result );
+	// Allergens_Dietary_Ictoria_Attachment_Queries::attachment_insert( $icon_allergy_result );
+	// Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::allergy_connection( $icon_result );
 }
 }
