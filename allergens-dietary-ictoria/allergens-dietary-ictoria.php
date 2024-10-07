@@ -114,8 +114,8 @@ if ( ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE ) {
 			public function init_integration() {
 				// Check if the WC_Integration class exists
 				if ( class_exists( 'WC_Integration' ) ) {
-					include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/wc_integration.php';
-					add_filter( 'woocommerce_integrations', array( $this, 'add_integration' ) );
+					// include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/wc_integration.php';
+					// add_filter( 'woocommerce_integrations', array( $this, 'add_integration' ) );
 					// load the plugin admin js files
 					Allergens_Dietary_Ictoria_Functions::load_admin_js();
 				} else {
@@ -126,10 +126,10 @@ if ( ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE ) {
 				}
 			}
 
-			public function add_integration( $integrations ) {
-				$integrations[] = 'Allergens_Dietary_Ictoria_Wc_Integration_Settings';
-				return $integrations;
-			}
+			// public function add_integration( $integrations ) {
+			// 	$integrations[] = 'Allergens_Dietary_Ictoria_Wc_Integration_Settings';
+			// 	return $integrations;
+			// }
 		}
 		$Allergens_Dietary_Ictoria_Wc_Integration_Startup = new Allergens_Dietary_Ictoria_Wc_Integration_Startup( __FILE__ );
 		// load and run the plugin admin files
