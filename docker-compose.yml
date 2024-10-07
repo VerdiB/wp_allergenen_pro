@@ -7,15 +7,17 @@ services:
       db:
         condition: service_healthy
         restart: true
+        required: true
       phpmyadmin:
         condition: service_started
+        required: true
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: ""
       WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_DEBUG: 1
-      WORDPRESS_DEBUG_LOG: 1
+      WORDPRESS_DEBUG: true
+      WORDPRESS_DEBUG_LOG: true
     volumes:
       - ./allergens-dietary-ictoria:/var/www/html/wp-content/plugins/allergens-dietary-ictoria
       - ./debug:/var/www/html/wp-content/logs
