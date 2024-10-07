@@ -334,7 +334,8 @@ class Allergens_Dietary_Ictoria_Activator {
         CONSTRAINT FK_AllergyAttch_Allergy
         FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name) ON UPDATE CASCADE ,
         CONSTRAINT FK_AllergyAttch_Attch
-        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name) ON UPDATE CASCADE) 
+        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name) ON UPDATE CASCADE,
+		CONSTRAINT U_AllergyAttach_Allergy UNIQUE (allergy_name)) 
         "
 		);
 
