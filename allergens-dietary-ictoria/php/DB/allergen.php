@@ -253,6 +253,12 @@ public static function singleActivationUpdate(){
 		$where,
 		$format
 	);
+
+	if (!empty($_GET)) {
+		$url = strtok($_SERVER["REQUEST_URI"], '?');
+
+		header("Location: $url" . "?page=allergens-dietary-show-allergens");
+	}
 }
 }
 }

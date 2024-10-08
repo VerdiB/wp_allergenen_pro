@@ -103,7 +103,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
 
             $actions = array();
 
-            $actions['on/off'] = '<a href="#">'.__( 'Change status', 'allergens-dietary-ictoria' ).'</a>' . wp_nonce_field('mgmt_bulk_archive_location', 'bulk_archive_nonce');
+            $actions['on/off'] = '<a href="#">'.__( 'Change status', 'allergens-dietary-ictoria' ).'</a>' . wp_nonce_field('allergens_bulk_change_status', 'bulk_change_status_nonce');
 
             return $actions;
         }
@@ -123,7 +123,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
     protected function edit_row_action($id)
 	{
 		$html = '';
-		$html .= '<a href="?panel=Edit&id='. $id .'" id="single-edit-button-' . $id . '" class="single-edit-button" >' . __('Edit', 'asset-mgmt-ictoria') . '</a>';
+		$html .= '<a href="?panel=Edit&id='. $id .'" id="single-edit-button-' . $id . '" class="single-edit-button" >' . __('Edit', 'allergens-dietary-ictoria') . '</a>';
 		return $html;
 	}
 
@@ -145,15 +145,12 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
             if($primary !== $column_name){
                 return "";
             }
-            $active_status = "active";
-            if($item["is_active"] == 0){
-                $active_status = "inactive";
-            }
+
             $change_status_nonce = wp_create_nonce('allergens_change_status');
             
             $actions = array(
                 'change_status' => sprintf(
-                    '<a name="amgmt_quick_edit_location_address" value="%s" href="?page=%s&item=%s&action=%s&_wpnonce=%s">Change Status</a>',
+                    '<a name="allergens_quick_edit_location_address" value="%s" href="?page=%s&item=%s&action=%s&_wpnonce=%s">Change Status</a>',
                     $item['allergy_name'],
                     $_REQUEST['page'],
                     $item['allergy_name'],
@@ -236,31 +233,39 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
         }
 
         public function process_quick_action(){
-
+            //$nonce = sanitize_text_field(wp_unslash($_GET['allergens_change_status']));
             if (isset($_GET['item'])){
                 $value = array(
                     $_GET['item']
                 );
 
+                //if (!wp_verify_nonce($nonce, 'allergens_bulk_change_status')) {
+                //    die('nonce not verified33, action bulk change statu');
+               // } else {
                 Allergens_Dietary_Ictoria_Allergen_Queries::singleActivationUpdate();
+                //}
             }
         }
 
         public function process_bulk_action($data) {  
-            global $wpdb;
+            $nonce = sanitize_text_field(wp_unslash($_POST['bulk_change_status_nonce']));
+            if (!wp_verify_nonce($nonce, 'allergens_bulk_change_status')) {
+                die('nonce not verified22, action bulk change status');
+            } else {
+                global $wpdb;
 
-            if('change_status' === $this->current_action()){
-                //id waarop status zit
-                Allergens_Dietary_Ictoria_Allergen_Queries::activationUpdate($data[2]);
-            }
+                if('change_status' === $this->current_action()){
+                    //id waarop status zit
+                    Allergens_Dietary_Ictoria_Allergen_Queries::activationUpdate($data[2]);
+                }
 
-            if ( ( isset( $_POST['action'] ) && $_POST['action'] == 'on/off' )
-            || ( isset( $_POST['action2'] ) && $_POST['action2'] == 'on/off' )
-            ) {
-                if ($data[1] == "on/off"){
-                    foreach ($data[2] as $key => $value){
-                        $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-                        $sql = $wpdb->get_results(
+                if ( ( isset( $_POST['action'] ) && $_POST['action'] == 'on/off' )
+                || ( isset( $_POST['action2'] ) && $_POST['action2'] == 'on/off' )
+                ) {
+                    if ($data[1] == "on/off"){
+                        foreach ($data[2] as $key => $value){
+                            $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+                            $sql = $wpdb->get_results(
                             "SELECT * FROM $table_name WHERE is_active = '$value'"
                         );
 
@@ -273,7 +278,8 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
             }else{
                 error_log("It doesn't work.");
             }
-            }
+    }
+}
 
         public function change_status(){
             
