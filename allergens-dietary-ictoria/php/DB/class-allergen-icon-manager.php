@@ -37,26 +37,17 @@ class Allergen_Icon_Manager
 
                                 $existing_attachment = $wpdb->get_var($wpdb->prepare(
                                     "SELECT attachment_name FROM $table_name_attachment WHERE attachment_name = %s",
-                                    $sanitized_prev_attachment_name
+                                    $attachment_name
                                 ));
 
-                                if ($existing_attachment) {
-                                    $wpdb->query($wpdb->prepare(
-                                        "UPDATE $table_name_attachment
-                                        SET attachment_name = %s, 
-                                            attachment_path = %s
-                                        WHERE attachment_name = %s",
-                                        $attachment_name,
-                                        $sanitized_attachment_path,
-                                        $sanitized_prev_attachment_name 
-                                    ));
-                                } else {
+                                if (!$existing_attachment) {
                                     $wpdb->query($wpdb->prepare(
                                         "INSERT INTO $table_name_attachment (attachment_name, attachment_path)
                                         VALUES (%s, %s)",
                                         $attachment_name,
                                         $sanitized_attachment_path
                                     ));
+                                }
 
                                     $wpdb->query($wpdb->prepare(
                                         "UPDATE $table_name_allergy_attachment
@@ -65,7 +56,6 @@ class Allergen_Icon_Manager
                                         $attachment_name,
                                         $sanitized_allergy_name
                                     ));
-                                }
 
                                 $wpdb->query('COMMIT');
                                 $updated_icons = true;
