@@ -142,7 +142,7 @@ class MyPluginAddMenu {
 
 	public function showallergens() {
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Show_Allergens' ) ) {
-			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_show_allergen.php';
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tables/allergen_show_allergen.php';
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}	
 			Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();

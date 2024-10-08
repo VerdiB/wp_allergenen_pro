@@ -1,4 +1,4 @@
-@startuml classdiagram
+@startuml
 skinparam Linetype ortho
 skinparam groupInheritance 2
 
@@ -62,6 +62,27 @@ package "php"{
         +generate_allergensdietary_htnl() : void
         +{static} plugin_action_links(links:array) : array
     }
+    package "tables"{
+         class Allergens_Dietary_Ictoria_Show_Allergens{
+            + __construct() : void
+            + get_table_columns_and_data() : array
+            + column_default(item:string, column_name:string) : void
+            + column_cb(item:string) : void
+            + single_row(item:string) : void
+            + get_bulk_actions() : array
+            + column_show_id(item:string) : void
+            # edit_row_action(id:string) : string
+            + handle_row_actions($item:string, $column_name:string, $primary:string) : array
+            + column_change_status($item:string, $column_name:string, $primary:string) : array
+            # single_row_columns(item:string) : void
+            + get_columns() : array
+            + prepare_items() : void
+            + process_quick_action() : void
+            + process_bulk_action(data:array) : void
+            + {static} getInstance() : Allergens_Dietary_Ictoria_Show_Allergens
+        }
+    
+}
     package "forms"{
 
         enum FormType{
@@ -75,19 +96,6 @@ package "php"{
             + showForm(allergenName:String) : void
             + submit(data:array) : void
             + sanitize(data:array) : array
-        }
-
-         class Allergens_Dietary_Ictoria_Show_Allergens{
-            + get_table_columns_and_data() : array
-            + column_default(item:string, column_name:string) : void
-            + column_cb(item:string) : void
-            + single_row(item:string) : void
-            + get_bulk_actions() : array
-            # single_row_columns(item:string) : void
-            + get_columns() : array
-            + prepare_items() : void
-            + process_bulk_action(data:array) : void
-            + {static} getInstance() : Allergens_Dietary_Ictoria_Show_Allergens
         }
 
         class Allergens_Dietary_Ictoria_Form{
@@ -114,12 +122,6 @@ package "php"{
             + submit(data:array) : void
             + sanitize(data:array) : array
             - check_license_key(key:string) : boolean
-        }
-
-        class Allergens_Dietary_Ictoria_Show_Allergens{
-            + get_columns() : array
-            + show_Allergens_form() : void
-            + {static} getInstance() : Allergens_Dietary_Ictoria_Show_Allergens
         }
     }
 
@@ -192,13 +194,4 @@ Allergens_Dietary_Ictoria_Allergens_Form .u.|> I_Allergens_Dietary_Ictoria_Form
 Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Allergen_Queries : uses
 Allergens_Dietary_Ictoria_Allergens_Form .r.> Allergens_Dietary_Ictoria_Attachment_Queries : uses
 Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Allergy_Attachment_Queries : uses
-
-
-
-
-
-
-
-
-
 @enduml
