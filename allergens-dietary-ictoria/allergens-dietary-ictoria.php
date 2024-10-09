@@ -137,7 +137,20 @@ if ( ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE ) {
 		Allergens_Dietary_Ictoria_Product_Settings::instance();
 
 		include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/activator.php';
-		Allergens_Dietary_Ictoria_Activator::activate();
+
+		$map = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
+		$bestand = '/cache.php';
+
+		$completepath = $map . $bestand;
+
+		if (!file_exists($completepath)) {
+			Allergens_Dietary_Ictoria_Activator::activate();
+		}
+
+		$inhoud = "<?php\n";
+		$inhoud .= "// this is an automaticly generated PHP-file\n";
+
+		$resultaat = file_put_contents($completepath, $inhoud);
 
 	}
 	// load generic files used by the plugin when active

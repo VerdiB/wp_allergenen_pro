@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 class Allergens_Dietary_Ictoria_Activator {
+	
 	private static $counter = 0;
 	private static $_url;
 
@@ -15,10 +16,9 @@ class Allergens_Dietary_Ictoria_Activator {
 
 	public static function activate() {
 		if ( self::$counter === 0 ) {
+			++self::$counter;
 			self::create_tables();
 			self::insert_standard_data();
-			// self::add_fk_tables();
-			++self::$counter;
 		}
 		if ( self::$counter > 0 ) {
 			return;
@@ -387,11 +387,12 @@ self::$_ICON_OPTIONS = array(
 
 			$exists = $wpdb->get_var( $sql );
 	
-			if ( $exists > 0 ) {
-				// Record exists!
-			} else {
-				// Record does not exist
+			if ( $exists == 0 ) {
+				// Record does not exist!
 				Allergens_Dietary_Ictoria_Allergen_Queries::includeItems();
+			} else {
+				// Record does exist
+				return;
 			}
 
 	}

@@ -129,7 +129,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		$table_allergens = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 				
 		$sql = $wpdb->prepare(
-			"SELECT * FROM $table_allergens WHERE allergy_name = 'alcohol'"
+			"SELECT * FROM $table_allergens WHERE allergy_name = '&s'",
+			"nuts"
 		);
 
 		$exists = $wpdb->get_var( $sql );
