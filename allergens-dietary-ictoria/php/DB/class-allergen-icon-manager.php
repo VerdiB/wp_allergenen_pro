@@ -5,6 +5,7 @@ if (!defined('ABSPATH')) {
 
 class Allergen_Icon_Manager
 {
+    private const MIME_TYPES = array('image/png', 'image/jpeg', 'image/jpg');
 
     public static function update_allergen_icons()
     {
@@ -16,16 +17,21 @@ class Allergen_Icon_Manager
 
                 foreach ($_FILES['allergen_icon']['name'] as $allergy_name => $file_name) {
                     if (array_key_exists($allergy_name, $allergen_icon_hidden)) {
-                        $allergen_prev_attachment_name = $allergen_icon_hidden[$allergy_name];
 
                         if ($_FILES['allergen_icon']['error'][$allergy_name] === UPLOAD_ERR_OK) {
+                            
+                            $file_type = wp_check_filetype($_FILES['allergen_icon']['name'][$allergy_name]);
+
+                            if (!in_array($file_type['type'], self::MIME_TYPES)) {
+                                echo '<p>' . __('The file is not a valid image.', 'allergens-dietary-ictoria') . '</p>';
+                                continue;
+                            }
 
                             $tmp_name = $_FILES['allergen_icon']['tmp_name'][$allergy_name];
                             $upload_dir = wp_upload_dir();
                             $attachment_path = $upload_dir['path'] . '/' . basename($file_name);
                             $attachment_name = basename($file_name);
                             $sanitized_allergy_name = sanitize_text_field($allergy_name);
-                            $sanitized_prev_attachment_name = sanitize_file_name($allergen_prev_attachment_name);
                             $sanitized_attachment_path = esc_url($attachment_path);
 
                             if (move_uploaded_file($tmp_name, $sanitized_attachment_path)) {

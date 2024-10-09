@@ -146,6 +146,32 @@ package "php"{
             + {static} getStyles() : void
         }
     }
+    class Allergen_Icon_Manager {
+        -{static} MIME_TYPES : array
+        +{static} update_allergen_icons(allergen_id : int, new_icon_path : string) : void
+        +{static} validate_mime_type(file : string) : boolean
+    }
+
+    class MyPluginAddMenu {
+        + updateallergens() : void
+        + add_allergen_menu() : void
+    }
+
+    class DBConnection {
+        + update_allergen_icon(allergen_id : int, new_icon_path : string) : boolean
+        + get_allergen_by_id(allergen_id : int) : Allergen
+    }
+
+    class Allergen {
+        + allergen_id : int
+        + name : string
+        + icon_path : string
+        + description : string
+    }
+
+    MyPluginAddMenu <.. Allergen_Icon_Manager : calls
+    MyPluginAddMenu <.. DBConnection : calls
+    DBConnection  --  Allergen : retrieves
 }
 
 package Allergens_Dietary_Ictoria{
