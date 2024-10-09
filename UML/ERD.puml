@@ -11,6 +11,7 @@ end note
 entity "allergy"{
    allergy_name: varchar(50) <<PK>>
    allergy_description: varchar(255)
+   is_allergy: boolean   
 }
 
 entity "attachments"{
@@ -19,13 +20,13 @@ entity "attachments"{
 }
 
 entity "allergy_attachement"{
-    attachment_name: varchar(255) <<FK>> <<PK>>
+    attachment_name: varchar(255) <<FK>> <<PK>> <<U>>
     allergy_name: varchar(50) <<FK>> <<PK>>
 } 
 
 entity "allergy_product"{
-   product_id: int <<FK>>
-   allergy_name: varchar(50) <<FK>>
+   product_id: int <<FK>> <<PK>>
+   allergy_name: varchar(50) <<FK>> <<PK>>
 }
 
 entity "product_meta_lookup"{
@@ -46,7 +47,7 @@ entity "product_meta_lookup"{
 }
 
 allergy ||--o{ allergy_product
-allergy ||--|{ allergy_attachement
+allergy ||--|| allergy_attachement
 attachments ||--|{ allergy_attachement
 product_meta_lookup ||--o{ allergy_product
 

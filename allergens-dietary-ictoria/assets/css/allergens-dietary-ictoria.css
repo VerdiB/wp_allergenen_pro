@@ -32,6 +32,81 @@
 	margin-right: 12px;
 }
 
+.nav-tab
+{
+	line-height: 1;
+}
+
+#info_grid
+{
+	display: grid;
+	grid-template-columns: 50% 50%;
+}
+
+#tabs_flexbox > .tabs
+{
+	color: black;
+	background-color: darkgray;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	margin-left: 20px;
+	border-top-left-radius: 20%;
+	border-top-right-radius: 20%;
+	border-left: 2px solid gray;
+	border-right: 2px solid gray;
+	border-bottom: 2px solid gray;
+	width: auto;
+	font-family: Arial, Helvetica, sans-serif;
+	align-content: center;
+	font-weight: 900;
+	font-size: 9px;
+	text-decoration: none;
+	height: auto;
+}
+
+#tabs_flexbox > .tabs:hover
+{
+	color: black;
+	background-color: #f0f0f1;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	margin-left: 20px;
+	border-top-left-radius: 20%;
+	border-top-right-radius: 20%;
+	border-left: 2px solid gray;
+	border-right: 2px solid gray;
+	border-top: 2px solid gray;
+	border-bottom: 0px solid gray;
+	width: auto;
+	font-family: Arial, Helvetica, sans-serif;
+	align-content: center;
+	font-weight: 900;
+	font-size: 9px;
+	text-decoration: none;
+	height: auto;
+}
+
+#tabs_flexbox
+{
+	display: flex;
+	height: 31px;
+	background-color: transparent;
+	align-items: left;
+	border-bottom: 2px solid gray;
+	justify-content: left;
+	flex-direction: row;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.contains{
+	font-size: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	padding-top: 10px;
+}
 
 .allergen-field>input{
 	float: left;

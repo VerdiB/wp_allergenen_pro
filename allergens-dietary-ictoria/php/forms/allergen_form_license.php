@@ -8,9 +8,10 @@ if ( ! interface_exists( 'I_Allergens_Dietary_Ictoria_Form' ) ) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/Iallergen_form.php';
 }
 
-if ( ! interface_exists( 'Allergens_Dietary_Ictoria_Functions' ) ) {
-	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/functions.php';
+if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 }
+
 
 /**
  * @class Allergens_Dietary_Ictoria_License_Form
@@ -23,8 +24,6 @@ if ( ! interface_exists( 'Allergens_Dietary_Ictoria_Functions' ) ) {
  * @since 1.0.0
  */
 class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Ictoria_Form {
-
-
 	/**
 	 * @brief Constructor for the Allergens_Dietary_Ictoria_License_Form class
 	 * for now it is empty and does nothing but it's common courtesy to have it
@@ -40,8 +39,8 @@ class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Icto
 
 		// TODO: Getting license key that is in use by site if it exists
 		$html  = '<fieldset>
-		<label for="license_key">' . __( 'License key', 'allergens-dietary-ictoria' ) . '</label>
-		<input type="text" name="license_key" id="license_key" value="">
+		<label for="license_key">' . __( 'License key', 'allergens-dietary-ictoria' ) . '</label><br>
+		<input type="text" name="license_key" id="license_key" value=""><br><br>
 		<input type="submit" class="button button-primary" id="submitButton" name="submit" value="' . __( 'Verify license key', 'allergens-dietary-ictoria' ) . '">';
 		$html .= '</fieldset>';
 

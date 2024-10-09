@@ -45,13 +45,13 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 			$attachmentName
 		);
 
-		$result = $wpdb->get_results( $sql );
+		$result = $wpdb->get_row( $sql, ARRAY_A );
 
 		return ( ! empty( $result ) ) ? true : false;
 	}
 
 
-	public function updateAttachment( array $data ) {
+	public function updateAttachment( array $data, string $oldName ) {
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
@@ -63,9 +63,11 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 				'attachment_path' => self::PATH . $data['name'],
 			),
 			array(
-				'attachment_name' => $data['name'],
+				'attachment_name' => $oldName,
 			)
 		);
+
+		$this->placeAttachment( $data );
 	}
 
 	/**
@@ -80,14 +82,35 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 		$upload_dir = wp_upload_dir();
 		$upload_dir = $upload_dir['basedir'] . '/allergens-dietary-ictoria/icons/custom/';
 
-		if ( ! file_exists( $upload_dir ) ) {
-			mkdir( $upload_dir, 0777, true );
+		if ( false === file_exists( self::PATH ) ) {
+			mkdir( self::PATH, 0777, true );
 		}
 
-		$full_path = $upload_dir . $data['full_path'];
+		$full_path = self::PATH . $data['full_path'];
 
-		if ( ! file_exists( $full_path ) ) {
-			move_uploaded_file( $data['name'], $full_path );
+		if ( false === file_exists( $full_path ) ) {
+			move_uploaded_file( $data['tmp_name'], $full_path );
+		}
+	}
+
+	public static function attachment_insert( array $result ){
+		global $wpdb;
+
+		//get database table
+		$table_icons = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
+
+		
+		foreach($result as $key => $value){
+
+		//insert allergies
+			$wpdb->insert(
+				$table_icons,
+				array(
+					'attachment_path'  => $value['path'],
+					'attachment_name'   => $value['name'],
+				)
+			); 
 		}
 	}
 }
+
