@@ -144,10 +144,8 @@ if ( ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE ) {
 		
 			mkdir("/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache");
 
-		}else{
-			error_log("does exist");
 		}
-
+		
 		$map = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
 		$file = '/cache.php';
 
