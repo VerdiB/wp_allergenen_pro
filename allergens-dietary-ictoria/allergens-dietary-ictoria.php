@@ -138,8 +138,7 @@ if ( ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE ) {
 
 		include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/activator.php';
 
-		Allergens_Dietary_Ictoria_Activator::activate();
-
+			Allergens_Dietary_Ictoria_Activator::activate();
 	}
 	// load generic files used by the plugin when active
 	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/products.php';

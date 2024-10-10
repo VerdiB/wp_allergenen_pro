@@ -34,7 +34,7 @@ class Allergens_Dietary_Ictoria_Activator {
 				// exists
 			} else {
 				if (file_exists($folderName)) {
-					if (unlink($folderName . $file)) {
+					if (unlink($completepath)) {
 						// file deleted
 						if (rmdir($folderName)) {
 							// deleted folder
