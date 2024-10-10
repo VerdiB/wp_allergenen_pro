@@ -80,15 +80,15 @@ class Allergens_Dietary_Ictoria_Startup {
 			// add the initial_setup_done option to allergens_dietary_ictoria_settings (value: true) to prevent this popup from showing on every activation after the first
 		}
 
-		$options = Allergens_Dietary_Ictoria_Functions::get_options();
+		//$options = Allergens_Dietary_Ictoria_Functions::get_options();
 		// set the default options in the WooCommerce options table if they do not exist
-		if ( empty( $options ) ) {
-			$options = Allergens_Dietary_Ictoria_Functions::default_options();
-			update_option( 'allergens_dietary_ictoria_options', $options, true );
-		}
+		//if ( empty( $options ) ) {
+		//	$options = Allergens_Dietary_Ictoria_Functions::default_options();
+		//	update_option( 'allergens_dietary_ictoria_options', $options, true );
+		//}
 
 		// temporary admin menu panel for testing the license form
-		add_menu_page( 'Allergens and Dietary', 'Allergens and Dietary', 'manage_options', 'allergens-dietary-ictoria', array( 'Allergens_Dietary_Ictoria_Functions', 'admin_page' ), 'dashicons-carrot', 6 );
+		//add_menu_page( 'Allergens and Dietary', 'Allergens and Dietary', 'manage_options', 'allergens-dietary-ictoria', array( 'Allergens_Dietary_Ictoria_Functions', 'admin_page' ), 'dashicons-carrot', 6 );
 	}
 
 	// function that runs when the deactivation hook is called

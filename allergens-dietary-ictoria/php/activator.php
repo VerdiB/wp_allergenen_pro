@@ -30,8 +30,6 @@ class Allergens_Dietary_Ictoria_Activator {
 				$counter++;
 			}
 
-			error_log($counter);
-
 			if ($counter > 0) {
 				// exists
 			} else {
@@ -59,8 +57,6 @@ class Allergens_Dietary_Ictoria_Activator {
 	
 				file_put_contents($completepath, $inhoud);
 			}
-
-			self::create_tables();
 		}
 		if ( self::$counter > 0 ) {
 			return;
