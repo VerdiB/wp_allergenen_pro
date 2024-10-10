@@ -48,12 +48,12 @@ class Allergen_Icon_Manager
             $table_name_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
             $table_name_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
-            $existing_attachment = $wpdb->get_var($wpdb->prepare(
-                "SELECT attachment_name FROM $table_name_attachment WHERE attachment_name = %s",
+            $attachment_count = $wpdb->get_var($wpdb->prepare(
+                "SELECT COUNT(*) FROM $table_name_allergy_attachment WHERE attachment_name = %s",
                 $sanitized_prev_attachment_name
             ));
 
-            if ($existing_attachment) {
+            if ($attachment_count == 1) {
                 $wpdb->query($wpdb->prepare(
                     "UPDATE $table_name_attachment
                     SET attachment_name = %s, 
