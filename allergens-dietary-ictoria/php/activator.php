@@ -17,8 +17,29 @@ class Allergens_Dietary_Ictoria_Activator {
 	public static function activate() {
 		if ( self::$counter === 0 ) {
 			++self::$counter;
+			$folderName = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
+
+			if (!file_exists($folderName)) {
+	
+				mkdir("/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache");
+	
+			}
+	
+			$map = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
+			$file = '/cache.php';
+	
+			$completepath = $map . $file;
+	
+			if (!file_exists($completepath)) {
+				self::insert_standard_data();
+			}
+	
+			$inhoud = "<?php\n";
+			$inhoud .= "// this is an automaticly generated PHP-file\n";
+	
+			file_put_contents($completepath, $inhoud);
+
 			self::create_tables();
-			self::insert_standard_data();
 		}
 		if ( self::$counter > 0 ) {
 			return;
