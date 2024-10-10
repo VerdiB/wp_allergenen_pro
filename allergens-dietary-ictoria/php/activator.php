@@ -40,6 +40,8 @@ class Allergens_Dietary_Ictoria_Activator {
 						// file deleted
 						if (rmdir($folderName)) {
 							// deleted folder
+							self::create_tables();
+							self::insert_standard_data();
 						} else {
 							// folder is not empty
 						}
@@ -56,9 +58,6 @@ class Allergens_Dietary_Ictoria_Activator {
 				$inhoud .= "// this is an automaticly generated PHP-file\n";
 	
 				file_put_contents($completepath, $inhoud);
-				
-				self::create_tables();
-				self::insert_standard_data();
 			}
 
 			self::create_tables();
