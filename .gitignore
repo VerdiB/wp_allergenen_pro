@@ -11,3 +11,4 @@ phpunit/tests/*.cache
 *.code-workspace
 vendor/
 composer.*
+cache/
