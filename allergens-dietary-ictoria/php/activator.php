@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 class Allergens_Dietary_Ictoria_Activator {
+	
 	private static $counter = 0;
 	private static $_url;
 
@@ -15,10 +16,45 @@ class Allergens_Dietary_Ictoria_Activator {
 
 	public static function activate() {
 		if ( self::$counter === 0 ) {
-			self::create_tables();
-			self::insert_standard_data();
-			// self::add_fk_tables();
+			global $wpdb;
 			++self::$counter;
+			$folderName = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
+			$file = '/cache.php';
+			$completepath = $folderName . $file;
+			$tableName = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+			$sql = $wpdb->prepare("SHOW TABLES LIKE %s", $tableName);
+			$result = $wpdb->get_results($sql, ARRAY_N);
+			$counter = 0;
+
+			foreach ($result as $key){
+				$counter++;
+			}
+
+			if ($counter > 0) {
+				// exists
+			} else {
+				if (file_exists($folderName)) {
+					if (unlink($completepath)) {
+						// file deleted
+						if (rmdir($folderName)) {
+							// deleted folder
+							self::create_tables();
+							self::insert_standard_data();
+						}
+					}
+				}
+			}
+
+			if (!file_exists($completepath)) {
+
+				if (!file_exists($folderName)) {
+					mkdir("/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache");
+				}
+				$inhoud = "<?php\n";
+				$inhoud .= "// this is an automaticly generated PHP-file\n";
+	
+				file_put_contents($completepath, $inhoud);
+			}
 		}
 		if ( self::$counter > 0 ) {
 			return;
@@ -376,24 +412,6 @@ self::$_ICON_OPTIONS = array(
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 		}
-			//DB includes
-			global $wpdb;
-			$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-			$allergy_name = 'Nuts';  // Ensure this is correctly defined
-
-			$sql = $wpdb->prepare(
-    			"SELECT COUNT(*) FROM $table_name WHERE allergy_name = %s",
-    			$allergy_name
-			);
-
-			$exists = $wpdb->get_var( $sql );
-	
-			if ( $exists > 0 ) {
-				// Record exists!
-			} else {
-				// Record does not exist
-				Allergens_Dietary_Ictoria_Allergen_Queries::includeItems();
-			}
-
+			Allergens_Dietary_Ictoria_Allergen_Queries::includeItems();
 	}
 	}
