@@ -11,5 +11,3 @@ phpunit/tests/*.cache
 *.code-workspace
 vendor/
 composer.*
-git rm --cached cache/cache.php
-cache/
