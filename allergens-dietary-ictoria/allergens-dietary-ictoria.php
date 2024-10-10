@@ -138,7 +138,7 @@ if ( ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE ) {
 
 		include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/activator.php';
 
-		$folderName = 'test'; // Geef het juiste pad naar de map op
+		$folderName = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
 
 		if (!file_exists($folderName)) {
 		
