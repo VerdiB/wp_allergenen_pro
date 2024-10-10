@@ -40,8 +40,6 @@ class Allergens_Dietary_Ictoria_Activator {
 							// deleted folder
 							self::create_tables();
 							self::insert_standard_data();
-						} else {
-							// folder is not empty
 						}
 					}
 				}
