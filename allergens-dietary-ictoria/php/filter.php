@@ -23,7 +23,10 @@ class Allergens_Dietary_Ictoria_Filter {
 		// Create variable that is used in the loops
 		$categories = array();
 
-		$html = '<form method="post">';
+		$html = '<form id="allergens-ictoria" method="post">';
+
+		echo '<button type="button" id="dropdown-ictoria">filters</button>';
+
 		// Create the HTML for all filter options, separating them by category
 		foreach ( $options as $key => $value ) {
 			// Create array entries if they do not exist for the relevant category
@@ -54,7 +57,7 @@ class Allergens_Dietary_Ictoria_Filter {
                 </div>' . $value;
 			}
 		}
-		$html .= '<input type="submit" name="allergen_filter" value="Filter">';
+		$html .= '<input type="submit" class="filter-ictoria" name="allergen_filter" value="Filter">';
 		// Added clear filter link
 		$html .= '<a href="' . get_permalink( wc_get_page_id( 'shop' ) ) . '" class="button clear-filters">Clear Filters</a>';
 		$html .= '</form>';
@@ -65,6 +68,7 @@ class Allergens_Dietary_Ictoria_Filter {
 
 
 	public function filter_query( $query ) {
+		$filterActionTrans = __('exclude','allergens-dietary-ictoria');
 		if ( $query->is_main_query() && is_shop() && isset( $_POST['allergen_filter'] ) ) {
 			$selected_options = isset( $_POST['allergen_filter_options'] ) ? $_POST['allergen_filter_options'] : array();
 			$filter_actions   = isset( $_POST['allergen_filter_action'] ) ? $_POST['allergen_filter_action'] : array();
@@ -76,9 +80,13 @@ class Allergens_Dietary_Ictoria_Filter {
 				// Loop through each selected option and build the meta query
 				foreach ( $selected_options as $key => $value ) {
 					// A check for the filter-action property
-					$action  = isset( $filter_actions[ $key ] ) ? $filter_actions[ $key ] : 'exclude';
-					$compare = ( $action === 'exclude' ) ? 'NOT LIKE' : 'LIKE';
-
+					if (!isset($filter_actions[$key])) {
+						continue;
+					}
+	
+					$action  = $filter_actions[$key];
+					$compare = ($action === $filterActionTrans) ? 'NOT LIKE' : 'LIKE';
+	
 					$meta_query[] = array(
 						'key'     => 'allergens_dietary_ictoria', // Key of the custom field
 						'value'   => '"' . $key . '"', // The value to compare (key is the option name)
@@ -87,12 +95,10 @@ class Allergens_Dietary_Ictoria_Filter {
 				}
 
 				// If there are multiple conditions, set the relationship to AND
-				if ( count( $meta_query ) > 1 ) {
+				if ( ! empty( $meta_query ) ) {
 					$meta_query['relation'] = 'AND';
+					$query->set( 'meta_query', $meta_query );
 				}
-
-				// Append the meta query to the main query
-				$query->set( 'meta_query', $meta_query );
 			}
 		}
 	}

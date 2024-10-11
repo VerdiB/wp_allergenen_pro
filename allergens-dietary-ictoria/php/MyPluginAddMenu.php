@@ -79,17 +79,6 @@ class MyPluginAddMenu {
 				'updateallergens',
 			)
 		);
-		add_submenu_page(
-			'allergens-dietary-options',
-			__( 'Update TEST', 'allergens-dietary-ictoria' ),
-			__( 'Update TEST', 'allergens-dietary-ictoria' ),
-			'manage_options',
-			'allergens-dietary-remove-allergen',
-			array(
-				$this,
-				'deleteAllergens',
-			)
-		);
 	}
 
 	public function myAdminPage() {
@@ -126,6 +115,15 @@ class MyPluginAddMenu {
 		}
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::DELETE );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
+	}
+
+	public function info() {
+		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Info' ) ) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/lists/allergen_info.php';
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
+		}
+		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
+		Allergens_Dietary_Ictoria_Info::getInstance()->showInfo();
 	}
 }
 
