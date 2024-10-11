@@ -79,6 +79,17 @@ class MyPluginAddMenu {
 				'updateallergens',
 			)
 		);
+		add_submenu_page(
+			'allergens-dietary-options',
+			__( 'Delete allergen', 'allergens-dietary-ictoria' ),
+			__( 'Delete allergen', 'allergens-dietary-ictoria' ),
+			'manage_options',
+			'allergens-dietary-delete-allergen',
+			array(
+				$this,
+				'deleteAllergens',
+			)
+		);
 	}
 
 	public function myAdminPage() {
