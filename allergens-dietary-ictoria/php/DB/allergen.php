@@ -55,7 +55,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 				'allergy_name' => $data['allergen_name'],
 				'allergy_description' => $data['allergen_description'],
 				'is_allergy' => $data['type'],
-				'is_default_option' => $data['allergen_default_hidden'],
+				// 'is_default_option' => $data['allergen_default_hidden'],
 			),
 			array(
 				'%s',
@@ -100,43 +100,59 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			)
 		);
 	}
-	public function deleteAllergen($allergens)
+	public function deleteAllergen(array $allergens): void
 	{
 		global $wpdb;
 
-		if (empty($allergens)) {
-			return;
-		}
-
 		$table_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 		$table_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-		$table_name_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
+		$table_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
 
-		error_log('GOT TO ALLERGEN DELETE');
+		foreach ($allergens['allergen_name'] as $allergy_name) {
+			$allergy_name = sanitize_text_field($allergy_name);
 
-		foreach ($allergens as $key => $allergen_name) {
-			if ($key === 'submit') {
+			if (empty($allergy_name)) {
 				continue;
 			}
-			if (is_string($allergen_name) && !empty($allergen_name)) {
+
+			$existing_attachment = $wpdb->query(
+				"SELECT attachment_name 
+				 FROM $table_allergy_attachment 
+				 GROUP BY attachment_name 
+				 HAVING COUNT(attachment_name) > 1
+				 LIMIT 1"
+			);
+
+			if ($existing_attachment) {
 				$sql = $wpdb->prepare(
-					"DELETE aa, a, am FROM $table_allergy_attachment AS aa
-                INNER JOIN $table_allergy AS a 
-                ON a.allergy_name = aa.allergy_name
-				JOIN $table_name_attachment as am
-				ON am.attachment_name = aa.attachment_name
-                WHERE aa.allergy_name = %s  
-                AND a.is_default_option != TRUE",
-					$allergen_name
+					"DELETE aa, a 
+                 FROM $table_allergy_attachment AS aa
+                 JOIN $table_allergy AS a 
+                 ON a.allergy_name = aa.allergy_name
+                 WHERE aa.allergy_name = %s  
+                 AND a.is_default_option != TRUE",
+					$allergy_name
 				);
+			} else {
+				$sql = $wpdb->prepare(
+					"DELETE aa, a, am 
+					FROM $table_allergy_attachment AS aa
+					JOIN $table_allergy AS a 
+					ON a.allergy_name = aa.allergy_name
+					JOIN $table_attachment as am
+					ON am.attachment_name = aa.attachment_name
+					WHERE aa.allergy_name = %s  
+					AND a.is_default_option != TRUE",
+					   $allergy_name
+				);
+			}
 
-				$result = $wpdb->query($sql);
+			$result = $wpdb->query($sql);
 
-				if ($result === false) {
-					throw new Exception(__('Error deleting allergen!'));
-				} else {
-					echo "<h3>__('Succesfully deleted allergen!')</h3>";
-				}
+			if ($result === false) {
+				throw new Exception(__('Error deleting allergen!'));
+			} else {
+				echo "<h3>" . __('Successfully deleted allergen: ') . esc_html($allergy_name) . "</h3>";
 			}
 		}
 	}
@@ -160,11 +176,12 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		return $result;
 	}
 
-	public static function includeItems(){
-		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) {
+	public static function includeItems()
+	{
+		if (!class_exists('Allergens_Dietary_Ictoria_Allergy_Attachment_Queries')) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
 		}
-		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Attachment_Queries' ) ) {
+		if (!class_exists('Allergens_Dietary_Ictoria_Attachment_Queries')) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/attachment.php';
 		}
 
@@ -179,44 +196,44 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 		//get database table
 		$table_allergens = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-				
+
 		$sql = $wpdb->prepare(
 			"SELECT * FROM $table_allergens WHERE allergy_name = 'alcohol'"
 		);
 
-		$exists = $wpdb->get_var( $sql );
+		$exists = $wpdb->get_var($sql);
 
 		//checks if database record of the standard allergies already exists
-		if ($exists == 0){
+		if ($exists == 0) {
 
-	foreach($allergens_result as $key => $value){
-		$sql = $wpdb->prepare(
-			"SELECT * FROM $table_allergens WHERE allergy_name = '" . $value['title'] . "'"
-		);
-			$exists = $wpdb->get_var( $sql );
-		if ($exists == 0){
-			$isallergy = 0;
+			foreach ($allergens_result as $key => $value) {
+				$sql = $wpdb->prepare(
+					"SELECT * FROM $table_allergens WHERE allergy_name = '" . $value['title'] . "'"
+				);
+				$exists = $wpdb->get_var($sql);
+				if ($exists == 0) {
+					$isallergy = 0;
 
-		if ($value['category'] == "allergen"){
-				$isallergy = 1;
-			}else{
-				$isallergy = 0;
-		}
-		//insert allergies
-		$wpdb->insert(
-			$table_allergens,
-			array(
-				'allergy_name'  => $value['title'],
-				'allergy_description'    => $value['description'],
-				'is_allergy' => 	$isallergy,
-			)
-			); 
+					if ($value['category'] == "allergen") {
+						$isallergy = 1;
+					} else {
+						$isallergy = 0;
+					}
+					//insert allergies
+					$wpdb->insert(
+						$table_allergens,
+						array(
+							'allergy_name' => $value['title'],
+							'allergy_description' => $value['description'],
+							'is_allergy' => $isallergy,
+						)
+					);
+				}
 			}
 		}
-	}
 
-	//activate other inserters
-	Allergens_Dietary_Ictoria_Attachment_Queries::attachment_insert( $icon_allergy_result );
-	Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::allergy_connection( $icon_result );
-}
+		//activate other inserters
+		Allergens_Dietary_Ictoria_Attachment_Queries::attachment_insert($icon_allergy_result);
+		Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::allergy_connection($icon_result);
+	}
 }
