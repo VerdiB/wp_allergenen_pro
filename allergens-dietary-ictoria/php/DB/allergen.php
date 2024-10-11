@@ -178,7 +178,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 	}
 
 	//activate other inserters
-	// Allergens_Dietary_Ictoria_Attachment_Queries::attachment_insert( $icon_allergy_result );
-	// Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::allergy_connection( $icon_result );
+	Allergens_Dietary_Ictoria_Attachment_Queries::attachment_insert( $icon_allergy_result );
+	Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::allergy_connection( $icon_result );
 }
 }
