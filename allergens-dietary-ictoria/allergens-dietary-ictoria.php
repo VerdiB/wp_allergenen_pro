@@ -296,6 +296,7 @@ function get_plugin_changelog() {
 
 require_once plugin_dir_path( __FILE__ ) . 'php/DB/class-allergen-icon-manager.php';
 
-$MyPluginAddMenu = MyPluginAddMenu::instance();
+// causes fatal error when restarting docker
+// $MyPluginAddMenu = MyPluginAddMenu::instance();
 
 ?>
