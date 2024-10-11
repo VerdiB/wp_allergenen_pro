@@ -336,3 +336,7 @@ msgstr ""
 #: php/wc_integration.php:116
 msgid "Settings"
 msgstr ""
+
+#: php/forms/allergen_form_license.php:46
+msgid "test"
+msgstr ""

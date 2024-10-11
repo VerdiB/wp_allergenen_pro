@@ -35,7 +35,7 @@ msgstr ""
 
 #: allergens-dietary-ictoria.php:76
 msgid "initial_setup_done"
-msgstr "initiële_setup_voltooid"
+msgstr "eerste_opstelling_voltooid"
 
 #: allergens-dietary-ictoria.php:87 php/functions.php:32
 #: php/wc_integration.php:111

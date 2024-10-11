@@ -8,7 +8,7 @@ if ( ! interface_exists( 'I_Allergens_Dietary_Ictoria_Form' ) ) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/Iallergen_form.php';
 }
 
-if ( ! interface_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
+if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 }
 
@@ -24,9 +24,6 @@ if ( ! interface_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
  * @since 1.0.0
  */
 class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Ictoria_Form {
-	private static ?self $_instance = null;
-
-
 	/**
 	 * @brief Constructor for the Allergens_Dietary_Ictoria_License_Form class
 	 * for now it is empty and does nothing but it's common courtesy to have it
