@@ -1,8 +1,5 @@
 <?php
-namespace Plugin\Php;
 
-use Plugin\Php\wc_get_page_id;
-use Plugin\Php\is_shop;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {

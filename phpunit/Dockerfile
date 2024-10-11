@@ -31,11 +31,11 @@ RUN composer global require --dev phpunit/phpunit ^11 \
 #  voeg config aan wordpress root toe
 # COPY ../phpunit/unit/wp-tests-config.php /root/.composer/vendor/bin/wp-tests-config.php
 
-RUN composer dump-autoload --working-dir=/var/www/html/wp-content/plugins/allergens-dietary-ictoria -o 
+# RUN composer dump-autoload --working-dir=/var/www/html/wp-content/plugins/allergens-dietary-ictoria -o 
 
-# WORKDIR /var/www/html/wordpress-tests
+WORKDIR /var/www/html/wordpress-tests
 
-# CMD phpunit --configuration phpunit.xml 2>&1 | tee phpunit.log
+CMD phpunit --configuration phpunit.xml 2>&1 | tee phpunit.log
 
 # ENTRYPOINT [ "phpunit", "--configuration", "phpunit.xml" ]
 

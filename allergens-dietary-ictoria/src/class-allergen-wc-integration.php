@@ -1,6 +1,5 @@
 <?php
 
-namespace Plugin\Php;
 // require_once ALLERGENS_DIETARY_ICTORIA_BASE . '../woocommerce/includes/abstracts/abstract-wc-integration.php';
 
 // use \Var\Www\Html\ Wp-content\Plugins\WooCommerce\Includes\Abstracts\class-abstract-wc-integration as WC_Integration;
@@ -8,8 +7,8 @@ namespace Plugin\Php;
 // use \WooCommerce\Includes\Abstracts\Abstract-wc-Integration;
 
 // use \Woocommerce\Includes\Abstracts\Abstract_WC_Integration as WC_Integration;
-include_once get_home_path('\Woocommerce\Includes\Abstracts\Abstract-WC-Integration.php');
-
+// include_once get_home_path('\Woocommerce\Includes\Abstracts\Abstract-WC-Integration.php');
+// use \WooCommerce\Abstracts\WC_Integration;
 
 // exit if user can access this file directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -43,19 +42,6 @@ class Allergens_Dietary_Ictoria_Wc_Integration_Settings extends WC_Integration {
 				'desc_tip' => false,
 			),
 		);
-		// replace above code with the code below once the generate_pluginsettings_html function exists
-		// also rename the current generate_allergensdietary_html function to generate_pluginoptions_html
-		/*
-		$this->form_fields = array(
-			'plugin_settings' => array(
-				'type'          => 'pluginsettings',
-				'desc_tip'      => false
-			),
-			'plugin_options' => array(
-				'type'          => 'pluginoptions',
-				'desc_tip'      => false
-			)
-		);*/
 	}
 
 	// generate a block of html with all allergens and dietary options that the admin can change and put it into a variable for each category

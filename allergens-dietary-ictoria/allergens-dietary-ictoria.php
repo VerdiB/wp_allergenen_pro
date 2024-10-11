@@ -1,8 +1,10 @@
 <?php
 
-require_once __DIR__ . '/php/functions.php';
+require_once __DIR__ . '/src/class-allergen-functions.php';
+require_once __DIR__ . '/src/Admin/class-allergen-admin-startup.php';
 
-use Plugin\Php\Allergens_Dietary_Ictoria_Functions as Ictoria_Functions;
+// use Allergens_Dietary_Ictoria_Functions;
+
 
 
 // exit if user can access this file directly
@@ -10,47 +12,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-spl_autoload_register(function($class) {
-	require_once($class . '.php');
-});
+spl_autoload_register( 'allergen_autoloader');
 
-// https://www.youtube.com/watch?v=20nFAHJT2Qg
+function allergen_autoloader($class_name) {
+	error_log('class_name: ' . $class_name);
+	if ( false !== strpos($class_name, 'Allergen' ) ) {
+		$classes_dir = realpath( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR;
+    	$class_file = strtolower($class_name);
 
-// spl_autoload_register( function($classname) {
-    
-// 	$class      = str_replace( '\\', DIRECTORY_SEPARATOR, str_replace( '_', '-', strtolower($classname) ) );
-// 	$classes    = dirname(__FILE__) .  DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR . $class . '.php'; 
-	
-// 	$vendor		= str_replace( 'allergens-dietary-ictoria', DIRECTORY_SEPORATOR, '', $class);
-// 	$vendor		= 'allergens-dietary-ictoria' . DIRECTORY_SEPORATOR . preg_replace('/\//', '/php/', $vendor, 1);
-// 	$vendors	= dirname(__FILE__) .  DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . $vendor . '.php';
+		$class_file = str_replace( '_', '-', $class_name );
+		$namespace_arr = explode( '\\', $class_name );
+		$namespace_arr[ array_key_last( $namespace_arr ) ] = 'class-' . $namespace_arr[ array_key_last( $namespace_arr ) ];
+		$class_file = implode( '\\', $namespace_arr ) . '.php';
+		
+		error_log($classes_dir . $class_file);
 
-// 	if( file_exists($classes) ) {
-// 		require_once( $classes );
-// 	} elseif ( file_exists($vendors) ) {
-// 		require_once( $vendors );
-// 	}
-// } );
-
-// $index = new Allergens_dietary_ictoria.php;
-// $admin = new Php\Admin\Admin_startup.php;
-// $form_license = new Php\Froms\allergen_form_license.php;
-// $form_allergen = new Php\Forms\allergen_form.php;
-// $form_one_allergen = new Php\Forms\Iallergen_form.php;
-// $language = new Php\Language\Load_language.php;
-// $activator = new Php\Activator.php;
-// $filter = new Php\Filter.php;
-// $functions = new Php\Functions.php;
-// $MyPluginAddMenu = new Php\MyPluginAddMenu.php;
-// $product_settings = new Php\Product_settings.php;
-// $products = new Php\Products.php;
-// $wc_integration = new Php\Wc_integration.php;
-
-
-
-
-
-
+		if( file_exists( $classes_dir . $class_file ) ) {
+			error_log($classes_dir . $class_file);
+    		require_once $classes_dir . $class_file;
+		}
+  	}
+}
 //
 // Plugin Name: Allergens and Dietary
 // Plugin URI:
@@ -94,46 +76,143 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 // load file with generic static methods
 // require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/functions.php';
-add_action( 'plugins_loaded', array( 'Plugin\Php\Allergens_Dietary_Ictoria_Functions', 'load_textdomain' ) );
+add_action( 'plugins_loaded', array( 'Allergens_Dietary_Ictoria_Functions', 'load_textdomain' ) );
 
 
 // class that contains the functions that are used by the activation/deactivation/uninstall hooks
-class Allergens_Dietary_Ictoria_Startup {
-	// function that runs when the activation hook is called
-	public static function on_activation() {
-		$settings = Ictoria_Functions::get_settings();
-		// show popup asking for certain setting options if this is the first activation after installing the plugin.
-		if ( ! isset( $settings[ __( 'initial_setup_done' ) ] ) ) {
-			// show popup asking wether or not the user wants to automatically export all relevant product data on uninstall
-			// tell user (within popup) that above setting can be set at all times from the plugin settings menu
-			// save chosen settings in the allergens_dietary_ictoria_settings(WP options table)
-			// add the initial_setup_done option to allergens_dietary_ictoria_settings (value: true) to prevent this popup from showing on every activation after the first
-		}
-
-		$options = Ictoria_Functions::get_options();
-		// set the default options in the WooCommerce options table if they do not exist
-		if ( empty( $options ) ) {
-			$options = Ictoria_Functions::default_options();
-			update_option( __( 'allergens_dietary_ictoria_options', 'allergens-dietary-ictoria' ), $options, true );
-		}
-
-		// temporary admin menu panel for testing the license form
-		add_menu_page( 'Allergens and Dietary', 'Allergens and Dietary', 'manage_options', 'allergens-dietary-ictoria', array( 'Allergens_Dietary_Ictoria_Functions', 'admin_page' ), 'dashicons-carrot', 6 );
-	}
-
-	// function that runs when the deactivation hook is called
-	public static function on_deactivation() {
-		// cookies might be needed if the filter needs to store previous search settings, and will have to be removed if this function is called
-
-		// temporary delete_option for testing without having to uninstall/reinstall. This code is also found in the uninstall.php file of this plugin
-		// delete_option('allergens_dietary_ictoria_settings');
-		// delete_option('allergens_dietary_ictoria_options');
-	}
-}
 
 register_activation_hook( ALLERGENS_DIETARY_ICTORIA_BASE, array( 'Allergens_Dietary_Ictoria_Startup', 'on_activation' ) );
 register_deactivation_hook( ALLERGENS_DIETARY_ICTORIA_BASE, array( 'Allergens_Dietary_Ictoria_Startup', 'on_deactivation' ) );
 
+if ( ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE ) {
+	if ( is_admin() ) {
+		$integration_startup = new Admin\Allergens_Dietary_Ictoria_Wc_Integration_Startup(__FILE__);
+	}
+} else {
+	$level   = 'notice-error';
+	$message = sprintf( __( '%1$sWooCommerce is inactive or not installed. Please install & activate WooCommerce%2$s', 'allergens-dietary-ictoria' ), '<p>', '</p>' );
+	Allergens_Dietary_Ictoria_Functions::error_notice( $level, $message );
+}
 
+add_filter('plugin_auto_update_setting_html', 'my_plugin_auto_update_link_html', 10, 3);
 
+// get auto-update links
+function my_plugin_auto_update_link_html($html, $plugin_file, $plugin_data) {
+    if ($plugin_file === 'allergens-dietary-ictoria/allergens-dietary-ictoria.php') {
+        $auto_updates_enabled = get_site_option('auto_update_plugins', array());
 
+        // Check if the current plugin is in the list of auto-updated plugins
+        if (in_array($plugin_file, $auto_updates_enabled)) {
+            $html = '<a href="#" class="my-plugin-toggle-auto-update" data-plugin="' . esc_attr($plugin_file) . '" data-action="disable">Auto-updates uitschakelen</a>';
+        } else {
+            $html = '<a href="#" class="my-plugin-toggle-auto-update" data-plugin="' . esc_attr($plugin_file) . '" data-action="enable">Auto-updates inschakelen</a>';
+        }
+    }
+    return $html;
+}
+
+// Enqueue the JavaScript file for handling auto-update toggles
+add_action('admin_enqueue_scripts', 'my_plugin_enqueue_admin_script');
+function my_plugin_enqueue_admin_script() {
+    wp_enqueue_script('my-plugin-admin-js', plugins_url('admin.js', __FILE__), array('jquery'), null, true);
+    wp_localize_script('my-plugin-admin-js', 'myPluginAjax', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('my_plugin_auto_update_nonce')
+    ));
+}
+
+// Handle the Ajax request to toggle auto-updates
+add_action('wp_ajax_my_plugin_toggle_auto_update', 'my_plugin_toggle_auto_update');
+function my_plugin_toggle_auto_update() {
+    check_ajax_referer('my_plugin_auto_update_nonce', 'security');
+
+    // Check if the plugin and action parameters are set
+    if (isset($_POST['plugin']) && isset($_POST['toggle_action'])) {
+        $plugin = sanitize_text_field($_POST['plugin']);
+        $action = sanitize_text_field($_POST['toggle_action']);
+
+        $auto_updates = get_site_option('auto_update_plugins', array());
+
+        // Enable auto-updates if requested
+        if ($action === 'enable') {
+            if (!in_array($plugin, $auto_updates)) {
+                $auto_updates[] = $plugin;
+                update_site_option('auto_update_plugins', $auto_updates);
+            }
+        // Disable auto-updates if requested
+        } elseif ($action === 'disable') {
+            if (in_array($plugin, $auto_updates)) {
+                $auto_updates = array_diff($auto_updates, array($plugin)); 
+                update_site_option('auto_update_plugins', $auto_updates);
+            }
+        }
+
+        wp_send_json_success();
+    } else {
+        wp_send_json_error();
+    }
+}
+
+// Filter to control auto-update settings for the plugin
+add_filter('auto_update_plugin', 'my_plugin_auto_update_control', 10, 2);
+function my_plugin_auto_update_control($update, $item) {
+    if ($item->plugin === 'allergens-dietary-ictoria/allergens-dietary-ictoria.php') {
+        return get_site_option('auto_update_plugins', array()) ? true : false;
+    }
+    
+    return $update;
+}
+
+// Enqueue Thickbox scripts and styles
+add_action('admin_enqueue_scripts', 'load_thickbox');
+function load_thickbox() {
+    wp_enqueue_script('thickbox');
+    wp_enqueue_style('thickbox');
+}
+
+// Add a "View Details" link for the changelog
+add_filter('plugin_row_meta', 'add_changelog_view_link', 10, 2);
+function add_changelog_view_link($plugin_meta, $plugin_file) {
+    if ($plugin_file == 'allergens-dietary-ictoria/allergens-dietary-ictoria.php') {
+        $plugin_meta[] = '<a href="' . esc_url(admin_url('admin-ajax.php?action=view_changelog&TB_iframe=true&width=600&height=550')) . '" class="thickbox">Details bekijken</a>';
+    }
+    return $plugin_meta;
+}
+
+// Ajax handler for displaying changelog in Thickbox
+add_action('wp_ajax_view_changelog', 'display_changelog_in_thickbox');
+function display_changelog_in_thickbox() {
+    echo '<div class="wrap">';
+    echo '<h1>Changelog</h1>';
+    echo '<div>';
+    echo wpautop(get_plugin_changelog()); 
+    echo '</div>';
+    echo '</div>';
+    exit;
+}
+
+// // Changelog voor admin menu
+// add_action('admin_menu', 'allergens_dietary_changelog_menu');
+// function allergens_dietary_changelog_menu() {
+//     add_menu_page('Changelog', 'Changelog', 'manage_options', 'allergens-dietary-changelog', 'allergens_dietary_changelog_pagina');
+// }
+
+function get_plugin_changelog() {
+    $readme_file = plugin_dir_path(__FILE__) . 'readme.txt';
+
+    if (file_exists($readme_file)) {
+        $content = file_get_contents($readme_file);
+        $changelog = '';
+        
+        $changelog_start = strpos($content, '== Changelog ==');
+        if ($changelog_start !== false) {
+            $changelog_start += strlen('== Changelog ==');
+            $changelog_end = strpos($content, '==', $changelog_start);
+            $changelog = substr($content, $changelog_start, $changelog_end - $changelog_start);
+        }
+        
+        return trim($changelog);
+    }
+
+    return 'Changelog not found.';
+}

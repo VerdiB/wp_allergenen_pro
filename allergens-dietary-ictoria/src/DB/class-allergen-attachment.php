@@ -1,6 +1,6 @@
 <?php
 
-namespace Plugin\Php\Db;
+namespace Allergen\Db;
 
 
 if ( ! defined( 'ABSPATH' ) ) {

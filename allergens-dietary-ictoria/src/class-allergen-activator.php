@@ -1,5 +1,4 @@
 <?php
-namespace Plugin\Php;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

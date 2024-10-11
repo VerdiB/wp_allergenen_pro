@@ -1,8 +1,7 @@
 <?php
 
-namespace Plugin\Php;
 
-use Plugin\Php\ALLERGENS_DIETARY_ICTORIA;
+// use Allergen\ALLERGENS_DIETARY_ICTORIA;
 
 // exit if user can access this file directly
 if ( ! defined( 'ABSPATH' ) ) {

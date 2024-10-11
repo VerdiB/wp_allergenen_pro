@@ -1,9 +1,7 @@
 <?php
 
-namespace Plugin\Php;
-
-use Plugin\Php\Forms\Allergens_Dietary_Ictoria_Form;
-use Plugin\Php\Forms\FormType;
+use Allergen\Forms\Allergens_Dietary_Ictoria_Form;
+use Allergen\Forms\FormType;
 
 // exit if user can access this file directly
 if ( ! defined( 'ABSPATH' ) ) {

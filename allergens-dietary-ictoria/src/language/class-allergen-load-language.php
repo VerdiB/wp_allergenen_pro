@@ -1,6 +1,6 @@
 <?php
 
-namespace Plugin\Php\Language;
+namespace Allergen\Language;
 
 // exit if user can access this file directly
 if ( ! defined( 'ABSPATH' ) ) {
