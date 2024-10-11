@@ -26,7 +26,10 @@ class Allergens_Dietary_Ictoria_Filter {
 		$allergens = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->getAllAllergens();
 		// Create variable that is used in the loops
 
-		$html = '<form method="post">';
+		$html = '<form id="allergens-ictoria" method="post">';
+
+		echo '<button type="button" id="dropdown-ictoria">filters</button>';
+
 		// Create the HTML for all filter options, separating them by category
 		foreach ( $allergens as $allergen ) {
 			// Check if the option is active or not

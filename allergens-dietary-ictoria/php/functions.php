@@ -1,5 +1,8 @@
 <?php
 // exit if user can access this file directly
+
+use LDAP\Result;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -14,6 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 class Allergens_Dietary_Ictoria_Functions {
+
+	private static ?self $_instance = null;
 
 	// function to get a translation of all text contained within __() functions throughout the plugin IF the .mo and .po files for the local/server language are available
 	public static function load_textdomain() {
@@ -108,3 +113,6 @@ class Allergens_Dietary_Ictoria_Functions {
 		}
 	}
 }
+
+
+//Allergens_Dietary_Ictoria_Functions::default_options();
