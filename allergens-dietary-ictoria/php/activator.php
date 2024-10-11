@@ -34,7 +34,7 @@ class Allergens_Dietary_Ictoria_Activator {
 		self::$_ALLERGENS_OPTIONS = array(
 			'peanuts'     => array(
 				'category'      =>  'allergen',
-				'title'         =>  'Peanuts',
+				'title'         =>  __('Peanuts', 'allergens-dietary_ictoria'),
 				'description'	=> 'Peanut allergy is one of the most common and dangerous food allergies, frequently leading to severe reactions, including anaphylaxis, which requires immediate medical attention.',
 			),
 			'nuts'        => array(
