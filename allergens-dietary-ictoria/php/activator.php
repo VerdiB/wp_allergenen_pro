@@ -16,50 +16,16 @@ class Allergens_Dietary_Ictoria_Activator {
 
 	public static function activate() {
 		if ( self::$counter === 0 ) {
-			global $wpdb;
 			++self::$counter;
-			$folderName = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
-			$file = '/cache.php';
-			$completepath = $folderName . $file;
-			$tableName = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-			$sql = $wpdb->prepare("SHOW TABLES LIKE %s", $tableName);
-			$result = $wpdb->get_results($sql, ARRAY_N);
-			$counter = 0;
+			
+				self::create_tables();
+				self::insert_standard_data();
 
-			foreach ($result as $key){
-				$counter++;
-			}
-
-			if ($counter > 0) {
-				// exists
-			} else {
-				if (file_exists($folderName)) {
-					if (unlink($completepath)) {
-						// file deleted
-						if (rmdir($folderName)) {
-							// deleted folder
-							self::create_tables();
-							self::insert_standard_data();
-						}
-					}
-				}
-			}
-
-			if (!file_exists($completepath)) {
-
-				if (!file_exists($folderName)) {
-					mkdir("/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache");
-				}
-				$inhoud = "<?php\n";
-				$inhoud .= "// this is an automaticly generated PHP-file\n";
-	
-				file_put_contents($completepath, $inhoud);
-			}
-		}
 		if ( self::$counter > 0 ) {
 			return;
 		}
 	}
+}
 
 	public function __construct()
 	{ 		
