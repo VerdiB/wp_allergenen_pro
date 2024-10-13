@@ -382,7 +382,7 @@ self::$_ICON_OPTIONS = array(
 			$allergy_name = 'Nuts';  // Ensure this is correctly defined
 
 			$sql = $wpdb->prepare(
-    			"SELECT COUNT(*) FROM $table_name WHERE allergy_name = %s",
+    			"SELECT allergy_name FROM $table_name WHERE allergy_name = %s",
     			$allergy_name
 			);
 
