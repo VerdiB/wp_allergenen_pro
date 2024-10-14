@@ -15,15 +15,16 @@ class Allergens_Dietary_Ictoria_Activator {
 
 	public static function activate() {
 		if ( self::$counter === 0 ) {
-			self::create_tables();
-			self::insert_standard_data();
-			// self::add_fk_tables();
 			++self::$counter;
-		}
+			
+				self::create_tables();
+				self::insert_standard_data();
+
 		if ( self::$counter > 0 ) {
 			return;
 		}
 	}
+}
 
 	public function __construct()
 	{ 		

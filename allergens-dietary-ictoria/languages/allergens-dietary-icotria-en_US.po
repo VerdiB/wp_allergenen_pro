@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Allergens-Dietary-Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2024-08-26 10:41+0200\n"
+"POT-Creation-Date: 2024-10-11 11:01+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
 "_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: php\n"
 "X-Poedit-SearchPathExcluded-0: _old code\n"
@@ -89,7 +89,7 @@ msgstr "allergen"
 
 #: php/functions.php:93
 msgid "Peanuts"
-msgstr "Peanuts"
+msgstr "Pinda's"
 
 #: php/functions.php:94 php/functions.php:102 php/functions.php:110
 #: php/functions.php:118 php/functions.php:126 php/functions.php:134
