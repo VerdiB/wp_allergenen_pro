@@ -152,7 +152,9 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			if ($result === false) {
 				throw new Exception(__('Error deleting allergen!'));
 			} else {
-				echo "<h3>" . __('Successfully deleted allergen: ') . esc_html($allergy_name) . "</h3>";
+				echo "<h3>" . __('Successfully deleted allergen: ');
+				echo implode(', ', $allergens['allergen_name']);
+				echo ".</h3>";
 			}
 		}
 	}
