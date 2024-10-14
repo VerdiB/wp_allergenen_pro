@@ -32,107 +32,107 @@ class Allergens_Dietary_Ictoria_Activator {
 		self::$_ALLERGENS_OPTIONS = array(
 			'peanuts'     => array(
 				'category'      =>  'allergen',
-				'title'         =>  'peanuts',
+				'title'         =>  'Peanuts',
 				'description'	=> 'Peanut allergy is one of the most common and dangerous food allergies, frequently leading to severe reactions, including anaphylaxis, which requires immediate medical attention.',
 			),
 			'nuts'        => array(
 				'category'      =>  'allergen',
-				'title'         =>  'nuts',
+				'title'         =>  'Nuts',
 				'description'	=> 'Tree nuts, such as almonds, walnuts, and cashews, are among the most serious food allergens, often causing severe reactions, including anaphylaxis.',
 			),
 			'sesame'      => array(
 				'category'      =>  'allergen',
-				'title'         =>  'sesame',
+				'title'         =>  'Sesame',
 				'description'	=> 	'A sesame allergy is an immune reaction to sesame seeds or oil, causing symptoms like hives, swelling, or severe breathing issues. It can range from mild to life-threatening.',
 			),
 			'lupin'       => array(
 				'category'      =>  'allergen',
-				'title'         =>  'lupin',
+				'title'         =>  'Lupin',
 				'description'	=> 'Lupin is a legume that is sometimes used in flour or baked goods. People with lupin allergies may experience symptoms ranging from mild digestive discomfort to severe anaphylactic reactions.',
 			),
 			'soya'        => array(
 				'category'      =>  'allergen',
-				'title'         =>  'soya',
+				'title'         =>  'Soya',
 				'description'	=> 'Soy allergy is common in children and can cause reactions such as digestive issues, skin reactions, or, in severe cases, anaphylaxis. Soy is found in many processed foods.',
 			),
 			'mustard'     => array(
 				'category'      =>  'allergen',
-				'title'         =>  'mustard',
+				'title'         =>  'Mustard',
 				'description'	=> 'Mustard allergy is common in Europe and can cause reactions such as skin irritation, respiratory symptoms, or anaphylaxis. Mustard is often found in sauces, dressings, and spices.',
 			),
 			'eggs'        => array(
 				'category'      =>  'allergen',
-				'title'         =>  'eggs',
+				'title'         =>  'Eggs',
 				'description'	=> 'Eggs are a frequent allergen, particularly in young children. Symptoms of egg allergies can include skin reactions, respiratory issues, or gastrointestinal problems.',
 			),
 			'dairy'       => array(
 				'category'      =>  'allergen',
-				'title'         =>  'dairy',
+				'title'         =>  'Dairy',
 				'description'	=> 'Dairy allergies are common, especially in children, and can cause reactions like skin rashes, digestive issues, or anaphylaxis. It involves a reaction to proteins found in cow’s milk.',
 			),
 			'fish'        => array(
 				'category'      =>  'allergen',
-				'title'         =>  'fish',
+				'title'         =>  'Fish',
 				'description'	=> 'Fish allergy can cause severe reactions such as hives, swelling, or anaphylaxis. Unlike shellfish, fish allergies often include species like salmon, tuna, and cod.',
 			),
 			'crustaceans' => array(
 				'category'      =>  'allergen',
-				'title'         =>  'crustaceans',
+				'title'         =>  'Crustaceans',
 				'description'	=> 'Crustaceans such as shrimp, lobster, and crab are among the most common food allergens. This allergy can be life-threatening and often leads to reactions like swelling, breathing difficulties, or anaphylaxis.',
 			),
 			'molluscs'    => array(
 				'category'      =>  'allergen',
-				'title'         =>  'molluscs',
+				'title'         =>  'Molluscs',
 				'description'	=> 'Molluscs include clams, mussels, oysters, and squid. Mollusc allergies can lead to reactions similar to crustacean allergies, such as hives, swelling, or difficulty breathing.',
 			),
 			'gluten'      => array(
 				'category'      =>  'allergen',
-				'title'         =>  'gluten',
+				'title'         =>  'Gluten',
 				'description'	=> 'Gluten is a protein found in wheat, barley, and rye. For people with celiac disease or gluten sensitivity, consuming gluten can lead to digestive issues, skin problems, or other serious health complications.',
 			),
 			'corn'        => array(
 				'category'      =>  'allergen',
-				'title'         =>  'corn',
+				'title'         =>  'Corn',
 				'description'	=> 'Corn and corn-based products, such as corn starch and corn oil, can trigger allergic reactions. While less common, corn allergies can cause symptoms like digestive issues or respiratory problems.',
 			),
 			'wheat'       => array(
 				'category'      =>  'allergen',
-				'title'         =>  'wheat',
+				'title'         =>  'Wheat',
 				'description'	=> 'Wheat allergy is common in children and causes reactions such as hives, gastrointestinal distress, or anaphylaxis. It is different from gluten sensitivity, which specifically involves the gluten protein found in wheat.',
 			),
 			'celery'      => array(
 				'category'      =>  'allergen',
-				'title'         =>  'celery',
+				'title'         =>  'Celery',
 				'description'	=> 'Celery is commonly used in soups, broths, and spice mixes. People with a celery allergy may experience severe reactions, ranging from skin rashes to breathing difficulties.',
 			),
 			'sulfite'     => array(
 				'category'      =>  'allergen',
-				'title'         =>  'sulfite',
+				'title'         =>  'Sulfite',
 				'description'	=> 'Sulfites are preservatives used in foods and beverages like wine, dried fruits, and pickled products. Sulfite sensitivity can cause asthma-like symptoms and, in rare cases, severe allergic reactions.',
 			),
 			'alcohol'     => array(
 				'category'      =>  'allergen',
-				'title'         =>  'alcohol',
+				'title'         =>  'Alcohol',
 				'description'	=> 'Lupin is a legume that is sometimes used in flour or baked goods. People with lupin allergies may experience symptoms ranging from mild digestive discomfort to severe anaphylactic reactions.',
 			),
 			'vegetarian'  => array(
 				'category'      =>  'dietary',
-				'title'         =>  'vegetarian',
+				'title'         =>  'Vegetarian',
 				'description'	=> 'Een dieet dat vlees en vis uitsluit, maar vaak wel zuivelproducten en eieren toelaat, afhankelijk van het type vegetariër.',
 			),
 			'vegan'       => array(
 				'category'      =>  'dietary',
-				'title'         =>  'vegan',
+				'title'         =>  'Vegan',
 				'description'	=> 'Een dieet waarbij alle dierlijke producten worden vermeden, inclusief vlees, zuivel, eieren, honing en alle producten van dierlijke oorsprong.',
 			),
 			'halal'       => array(
 				'category'      =>  'dietary',
-				'title'         =>  'halal',
+				'title'         =>  'Halal',
 				'description'	=> 'Voedsel dat volgens islamitische voorschriften is bereid, waarbij bijvoorbeeld varkensvlees en alcohol verboden zijn, en dieren ritueel worden geslacht.',
 			),
 			'pregnant'    => array(
 				'category'      =>  'dietary',
-				'title'         =>  'risk for pregnant women',
+				'title'         =>  'Risk for pregnant women',
 				'description'	=> 'Bepaalde voedingsmiddelen, zoals rauw vlees, vis, ongepasteuriseerde zuivel, en cafeïne, kunnen schadelijk zijn voor de gezondheid van zwangere vrouwen en hun baby.',
 	),);
 
