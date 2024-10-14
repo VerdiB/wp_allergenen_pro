@@ -224,87 +224,87 @@ class Allergens_Dietary_Ictoria_Activator {
 self::$_ICON_OPTIONS = array(
 	'peanuts'     => array(
 		'name'  => 'allergens_peanuts.png',
-		'title' => 'peanuts',
+		'title' => 'Peanuts',
 	),
 	'nuts'        => array(
 		'name'  => 'allergens_nuts.png',
-		'title' => 'nuts',
+		'title' => 'Nuts',
 	),
 	'sesame'      => array(
 		'name'  => 'allergens_sesame.png',
-		'title' => 'sesame',
+		'title' => 'Sesame',
 	),
 	'lupin'       => array(
 		'name'  => 'allergens_lupin.png',
-		'title' => 'lupin',
+		'title' => 'Lupin',
 	),
 	'soya'        => array(
 		'name'  => 'allergens_soya.png',
-		'title' => 'soya',
+		'title' => 'Soya',
 	),
 	'mustard'     => array(
 		'name'  => 'allergens_mustard.png',
-		'title' => 'mustard',
+		'title' => 'Mustard',
 	),
 	'eggs'        => array(
 		'name'  => 'allergens_eggs.png',
-		'title' => 'eggs',
+		'title' => 'Eggs',
 	),
 	'dairy'       => array(
 		'name'  => 'allergens_dairy.png',
-		'title' => 'dairy',
+		'title' => 'Dairy',
 	),
 	'fish'        => array(
 		'name'  => 'allergens_fish.png',
-		'title' => 'fish',
+		'title' => 'Fish',
 	),
 	'crustaceans' => array(
 		'name'  => 'allergens_crustaceans.png',
-		'title' => 'crustaceans',
+		'title' => 'Crustaceans',
 	),
 	'molluscs'    => array(
 		'name'  => 'allergens_molluscs.png',
-		'title' => 'molluscs',
+		'title' => 'Molluscs',
 	),
 	'gluten'      => array(
 		'name'  => 'allergens_gluten.png',
-		'title' => 'gluten',
+		'title' => 'Gluten',
 	),
 	'corn'        => array(
 		'name'  => 'allergens_corn.png',
-		'title' => 'corn',
+		'title' => 'Corn',
 	),
 	'wheat'       => array(
 		'name'  => 'allergens_wheat.png',
-		'title' => 'wheat',
+		'title' => 'Wheat',
 	),
 	'celery'      => array(
 		'name'  => 'allergens_celery.png',
-		'title' => 'celery',
+		'title' => 'Celery',
 	),
 	'sulfite'     => array(
 		'name'  => 'allergens_sulfite.png',
-		'title' => 'sulfite',
+		'title' => 'Sulfite',
 	),
 	'alcohol'     => array(
 		'name'  => 'allergens_alcohol.png',
-		'title' => 'alcohol',
+		'title' => 'Alcohol',
 	),
 	'vegetarian'  => array(
 		'name'  => 'dietary_vegetarian.png',
-		'title' => 'vegetarian',
+		'title' => 'Vegetarian',
 	),
 	'vegan'       => array(
 		'name'  => 'dietary_vegan.png',
-		'title' => 'vegan',
+		'title' => 'Vegan',
 	),
 	'halal'       => array(
 		'name'  => 'dietary_halal.png',
-		'title' => 'halal',
+		'title' => 'Halal',
 	),
 	'pregnant'    => array(
 		'name'  => 'dietary_pregnant.png',
-		'title' => 'risk for pregnant women',
+		'title' => 'Risk for pregnant women',
 	)
 );
 	}
@@ -335,7 +335,8 @@ self::$_ICON_OPTIONS = array(
         CONSTRAINT FK_AllergyAttch_Allergy
         FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name) ON UPDATE CASCADE ,
         CONSTRAINT FK_AllergyAttch_Attch
-        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name) ON UPDATE CASCADE) 
+        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name) ON UPDATE CASCADE,
+		CONSTRAINT U_AllergyAttach_Allergy UNIQUE (allergy_name)) 
         "
 		);
 

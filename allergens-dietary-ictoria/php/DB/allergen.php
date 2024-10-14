@@ -138,7 +138,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		if ($exists == 0){
 
 	foreach($allergens_result as $key => $value){
-
 		$sql = $wpdb->prepare(
 			"SELECT * FROM $table_allergens WHERE allergy_name = '" . $value['title'] . "'"
 		);

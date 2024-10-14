@@ -114,7 +114,9 @@ class MyPluginAddMenu {
 	public function licenseForm() {
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
+		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::LICENSE );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
 	}
@@ -124,7 +126,6 @@ class MyPluginAddMenu {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
-
 		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
