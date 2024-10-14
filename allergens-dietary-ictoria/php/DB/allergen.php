@@ -176,7 +176,7 @@ public static function activationUpdate( array $data ) {
 
 	$updatenumber = 0;
 
-	foreach ($data as $key => $value){
+	foreach ($data['item'] as $key => $value){
 
 		$sql = $wpdb->prepare(
 			"SELECT * FROM $table_name WHERE allergy_name = '%s'",
@@ -193,8 +193,6 @@ public static function activationUpdate( array $data ) {
 			$updatenumber = 0;
 		}
 	}
-
-
 
 	$data = array(
 		'is_active' => $updatenumber,
@@ -225,7 +223,7 @@ public static function singleActivationUpdate(){
 
 	if (isset($_GET['item'])){
 	$sql = $wpdb->prepare(
-		"SELECT allergy_name FROM $table_name WHERE allergy_name = '%s'",
+		"SELECT allergy_name, is_active FROM $table_name WHERE allergy_name = '%s'",
 		$_GET['item']
 	);
 

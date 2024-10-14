@@ -64,6 +64,7 @@ package "php"{
     }
     package "tables"{
          class Allergens_Dietary_Ictoria_Show_Allergens{
+            - __construct() : void
             + get_table_columns_and_data() : array
             + column_default(item:array, column_name:string) : void
             + column_cb(item:array) : void
