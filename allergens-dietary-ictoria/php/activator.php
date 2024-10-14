@@ -6,7 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 class Allergens_Dietary_Ictoria_Activator {
-	
 	private static $counter = 0;
 	private static $_url;
 
@@ -336,7 +335,8 @@ self::$_ICON_OPTIONS = array(
         CONSTRAINT FK_AllergyAttch_Allergy
         FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name) ON UPDATE CASCADE ,
         CONSTRAINT FK_AllergyAttch_Attch
-        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name) ON UPDATE CASCADE) 
+        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name) ON UPDATE CASCADE,
+		CONSTRAINT U_AllergyAttach_Allergy UNIQUE (allergy_name)) 
         "
 		);
 
@@ -377,6 +377,24 @@ self::$_ICON_OPTIONS = array(
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 		}
-			Allergens_Dietary_Ictoria_Allergen_Queries::includeItems();
+			//DB includes
+			global $wpdb;
+			$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+			$allergy_name = 'Nuts';  // Ensure this is correctly defined
+
+			$sql = $wpdb->prepare(
+    			"SELECT COUNT(*) FROM $table_name WHERE allergy_name = %s",
+    			$allergy_name
+			);
+
+			$exists = $wpdb->get_var( $sql );
+	
+			if ( $exists > 0 ) {
+				// Record exists!
+			} else {
+				// Record does not exist
+				Allergens_Dietary_Ictoria_Allergen_Queries::includeItems();
+			}
+
 	}
 	}
