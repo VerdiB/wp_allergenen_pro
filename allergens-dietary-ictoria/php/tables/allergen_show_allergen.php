@@ -25,7 +25,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
 
     private static ?self $_instance = null;
 
-    public function __construct() {
+    protected function __construct() {
             parent::__construct([
                 'singular' => 'item', 
                 'plural'   => 'items', 
@@ -160,33 +160,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
             );
 
             return $this->row_actions($actions);
-        }
-
-        public function submit( array $data ) {
-            $data = $this->sanitize( $data );
-    
-            if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
-                require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
-            }
-    
-            if ( empty( $data['allergen_name_hidden'] ) ) {
-                try{
-                    Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->addAllergens( $data );
-                } catch ( Exception $e ) {
-                    _e('Allergen already exists', 'allergens-dietary-ictoria');
-                }
-            } else {
-                Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->updateAllergens( $data );
-            }
-    
-            if ( ! isset( $data['allergen_name_hidden'] ) || $data['allergen_name_hidden'] === '' && false === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'] ) ) {
-                Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->addAllergyAttachment( $data );
-            } elseif ( ! empty( $data['allergen_name_hidden'] ) && $data['allergen_name_hidden'] !== $data['allergen_name'] && true === Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] ) ) {
-                Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->updateAllergyAttachment( $data, $data['allergen_name_hidden'] );
-            }
-    
-            // $this->_allergen = null;
-        }    
+        }  
 
         protected function single_row_columns( $item ) {
 

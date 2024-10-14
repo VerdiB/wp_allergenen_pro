@@ -225,7 +225,7 @@ public static function singleActivationUpdate(){
 
 	if (isset($_GET['item'])){
 	$sql = $wpdb->prepare(
-		"SELECT * FROM $table_name WHERE allergy_name = '%s'",
+		"SELECT allergy_name FROM $table_name WHERE allergy_name = '%s'",
 		$_GET['item']
 	);
 
