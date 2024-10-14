@@ -240,12 +240,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
                 $value = array(
                     $_GET['item']
                 );
-
-                //if (!wp_verify_nonce($nonce, 'allergens_bulk_change_status')) {
-                //    die('nonce not verified33, action bulk change statu');
-               // } else {
                 Allergens_Dietary_Ictoria_Allergen_Queries::singleActivationUpdate();
-                //}
             }
             }
             }
@@ -259,8 +254,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
                 global $wpdb;
 
                 if('change_status' === $this->current_action()){
-                    //id waarop status zit
-
+                    
                     Allergens_Dietary_Ictoria_Allergen_Queries::activationUpdate($data);
                 }
 
