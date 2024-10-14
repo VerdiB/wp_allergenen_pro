@@ -138,7 +138,7 @@ class MyPluginAddMenu {
 		}
 		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
-		Allergens_Dietary_Ictoria_Form::getInstance()->showForm( 'tst' );
+		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
 	}
 
 	public function showallergens() {
