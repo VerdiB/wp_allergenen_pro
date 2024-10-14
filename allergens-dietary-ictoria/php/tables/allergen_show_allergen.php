@@ -254,7 +254,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
                 global $wpdb;
 
                 if('change_status' === $this->current_action()){
-                    
+
                     Allergens_Dietary_Ictoria_Allergen_Queries::activationUpdate($data);
                 }
 
@@ -313,12 +313,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $process_action = "";
         $process_data = [];
 
-        $process_action = $_POST['action'];
+        $process_action = sanitize_text_field( $_POST['action'] );
 
         unset($_POST['action']);
 
         foreach ($_POST['post'] as $key => $value){
-                $process_item[] = $value;
+                $process_item[] = sanitize_text_field( $value );
         }
 
         $process_data = [
