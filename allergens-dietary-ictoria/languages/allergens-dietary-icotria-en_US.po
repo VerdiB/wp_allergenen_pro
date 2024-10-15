@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Allergens-Dietary-Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2024-10-11 11:01+0200\n"
+"POT-Creation-Date: 2024-10-15 09:31+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -34,170 +34,178 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-7: tests\n"
 "X-Poedit-SearchPathExcluded-8: UML\n"
 
-#: allergens-dietary-ictoria.php:86
-msgid "initial_setup_done"
-msgstr "initial_setup_done"
+#: allergens-dietary-ictoria.php:151
+#, php-format
+msgid ""
+"%1$sThe WooCommerce Integration class was not found. Please make sure "
+"WooCommerce is installed correctly%2$s"
+msgstr ""
+"%1$sThe WooCommerce Integration class was not found. Please make sure "
+"WooCommerce is installed correctly%2$s"
 
-#: allergens-dietary-ictoria.php:97 php/functions.php:22
-#: php/wc_integration.php:111
-msgid "allergens_dietary_ictoria_options"
+#: allergens-dietary-ictoria.php:181
+#, php-format
+msgid ""
+"%1$sWooCommerce is inactive or not installed. Please install & activate "
+"WooCommerce%2$s"
+msgstr ""
+"%1$sWooCommerce is inactive or not installed. Please install & activate "
+"WooCommerce%2$s"
+
+#: php/MyPluginAddMenu.php:39
+#, fuzzy
+#| msgid "allergensdietary"
+msgid "Allergens and Dietary"
+msgstr "allergensdietary"
+
+#: php/MyPluginAddMenu.php:51 php/MyPluginAddMenu.php:52
+#: php/forms/allergen_form_license.php:42
+#: php/forms/allergen_form_license.php:43
+msgid "License key"
+msgstr ""
+
+#: php/MyPluginAddMenu.php:63 php/MyPluginAddMenu.php:64
+#: php/forms/allergen_add_allergen.php:75
+#, fuzzy
+#| msgid "allergen"
+msgid "Add allergen"
+msgstr "allergen"
+
+#: php/MyPluginAddMenu.php:75 php/MyPluginAddMenu.php:76
+#: php/tabs/allergen_tabs.php:31
+msgid "Info"
+msgstr ""
+
+#: php/MyPluginAddMenu.php:87 php/MyPluginAddMenu.php:88
+#, fuzzy
+#| msgid "allergen"
+msgid "Update allergen"
+msgstr "allergen"
+
+#: php/filter.php:71
+msgid "exclude"
+msgstr "exclude"
+
+#: php/forms/allergen_add_allergen.php:65
+#, fuzzy
+#| msgid "Allergens"
+msgid "Allergen name"
+msgstr "Allergens"
+
+#: php/forms/allergen_add_allergen.php:67
+msgid "Type"
+msgstr ""
+
+#: php/forms/allergen_add_allergen.php:71
+#, fuzzy
+#| msgid "allergens_dietary_ictoria_options"
+msgid "Allergen description"
 msgstr "allergens_dietary_ictoria_options"
 
-#: allergens-dietary-ictoria.php:131
-#, php-format
-msgid ""
-"%1$sThe WooCommerce Integration class was not found. Please make sure "
-"WooCommerce is installed correctly%2$s"
-msgstr ""
-"%1$sThe WooCommerce Integration class was not found. Please make sure "
-"WooCommerce is installed correctly%2$s"
+#: php/forms/allergen_add_allergen.php:73
+#, fuzzy
+#| msgid "Allergens"
+msgid "Allergen icon"
+msgstr "Allergens"
 
-#: allergens-dietary-ictoria.php:160
-#, php-format
-msgid ""
-"%1$sWooCommerce is inactive or not installed. Please install & activate "
-"WooCommerce%2$s"
+#: php/forms/allergen_add_allergen.php:102
+msgid "Allergen already exists"
 msgstr ""
-"%1$sWooCommerce is inactive or not installed. Please install & activate "
-"WooCommerce%2$s"
 
-#: php/functions.php:12
+#: php/forms/allergen_add_allergen.php:109
+msgid "The file is not a valid image"
+msgstr ""
+
+#: php/forms/allergen_add_allergen.php:116
+msgid "Attachment already exists"
+msgstr ""
+
+#: php/forms/allergen_add_allergen.php:152
+#: php/forms/allergen_add_allergen.php:158
+#: php/forms/allergen_add_allergen.php:161
+#, fuzzy
+#| msgid "Allergens"
+msgid "Allergy"
+msgstr "Allergens"
+
+#: php/forms/allergen_add_allergen.php:153
+#: php/forms/allergen_add_allergen.php:159
+#: php/forms/allergen_add_allergen.php:162
+msgid "Dietary restriction"
+msgstr ""
+
+#: php/forms/allergen_form_license.php:44
+msgid "Verify license key"
+msgstr ""
+
+#: php/functions.php:25
 msgid "allergens-dietary-ictoria"
 msgstr "allergens-dietary-ictoria"
 
-#: php/functions.php:17
+#: php/functions.php:30
 msgid "allergens_dietary_ictoria_settings"
 msgstr "allergens_dietary_ictoria_settings"
 
-#: php/functions.php:71
+#: php/functions.php:35 php/wc_integration.php:111
+msgid "allergens_dietary_ictoria_options"
+msgstr "allergens_dietary_ictoria_options"
+
+#: php/functions.php:84
 #, php-format
 msgid "%1$sAllergens and Dietary is inactive:%2$s"
 msgstr "%1$sAllergens and Dietary is inactive:%2$s"
 
-#: php/functions.php:89
-msgid "no "
-msgstr "no "
+#: php/lists/allergen_info.php:26
+msgid "PREMIUM  [Requires licence]"
+msgstr ""
 
-#: php/functions.php:92 php/functions.php:100 php/functions.php:108
-#: php/functions.php:116 php/functions.php:124 php/functions.php:132
-#: php/functions.php:140 php/functions.php:148 php/functions.php:156
-#: php/functions.php:164 php/functions.php:172 php/functions.php:180
-#: php/functions.php:188 php/functions.php:196 php/functions.php:204
-#: php/functions.php:212 php/functions.php:220
-msgid "allergen"
+#: php/lists/allergen_info.php:28
+#, fuzzy
+#| msgid "allergen"
+msgid "Updating allergy"
 msgstr "allergen"
 
-#: php/functions.php:93
-msgid "Peanuts"
-msgstr "Pinda's"
+#: php/lists/allergen_info.php:29
+msgid "Changing allergy themes"
+msgstr ""
 
-#: php/functions.php:94 php/functions.php:102 php/functions.php:110
-#: php/functions.php:118 php/functions.php:126 php/functions.php:134
-#: php/functions.php:142 php/functions.php:150 php/functions.php:158
-#: php/functions.php:166 php/functions.php:174 php/functions.php:182
-#: php/functions.php:190 php/functions.php:198 php/functions.php:206
-#: php/functions.php:214 php/functions.php:222 php/functions.php:230
-#: php/functions.php:238 php/functions.php:246 php/functions.php:254
-msgid "active"
-msgstr "active"
+#: php/lists/allergen_info.php:30
+msgid "Deleting allergies"
+msgstr ""
 
-#: php/functions.php:95 php/functions.php:103 php/functions.php:111
-#: php/functions.php:119 php/functions.php:127 php/functions.php:135
-#: php/functions.php:143 php/functions.php:151 php/functions.php:159
-#: php/functions.php:167 php/functions.php:175 php/functions.php:183
-#: php/functions.php:191 php/functions.php:199 php/functions.php:207
-#: php/functions.php:215 php/functions.php:223 php/functions.php:255
-msgid "exclude"
-msgstr "exclude"
+#: php/lists/allergen_info.php:31
+#, fuzzy
+#| msgid "Allergens"
+msgid "Adding allergies"
+msgstr "Allergens"
 
-#: php/functions.php:101
-msgid "Nuts"
-msgstr "Nuts"
+#: php/lists/allergen_info.php:32
+msgid "Custom look on product"
+msgstr ""
 
-#: php/functions.php:109
-msgid "Sesame"
-msgstr "Sesame"
+#: php/lists/allergen_info.php:33
+msgid "Custom look in store"
+msgstr ""
 
-#: php/functions.php:117
-msgid "Lupin"
-msgstr "Lupin"
+#: php/lists/allergen_info.php:36
+msgid "FREE VERSION  [Standard]"
+msgstr ""
 
-#: php/functions.php:125
-msgid "Soya"
-msgstr "Soya"
+#: php/lists/allergen_info.php:38
+msgid "Connecting allergies to products"
+msgstr ""
 
-#: php/functions.php:133
-msgid "Mustard"
-msgstr "Mustard"
+#: php/lists/allergen_info.php:39
+msgid "Wordpress theme fiendly styles"
+msgstr ""
 
-#: php/functions.php:141
-msgid "Eggs"
-msgstr "Eggs"
+#: php/lists/allergen_info.php:40
+msgid "An allergen overview"
+msgstr ""
 
-#: php/functions.php:149
-msgid "Dairy"
-msgstr "Dairy"
-
-#: php/functions.php:157
-msgid "Fish"
-msgstr "Fish"
-
-#: php/functions.php:165
-msgid "Crustaceans"
-msgstr "Crustaceans"
-
-#: php/functions.php:173
-msgid "Molluscs"
-msgstr "Molluscs"
-
-#: php/functions.php:181
-msgid "Gluten"
-msgstr "Gluten"
-
-#: php/functions.php:189
-msgid "Corn"
-msgstr "Corn"
-
-#: php/functions.php:197
-msgid "Wheat"
-msgstr "Wheat"
-
-#: php/functions.php:205
-msgid "Celery"
-msgstr "Celery"
-
-#: php/functions.php:213
-msgid "Sulfite"
-msgstr "Sulfite"
-
-#: php/functions.php:221
-msgid "Alcohol"
-msgstr "Alcohol"
-
-#: php/functions.php:228 php/functions.php:236 php/functions.php:244
-#: php/functions.php:252
-msgid "dietary"
-msgstr "dietary"
-
-#: php/functions.php:229
-msgid "Vegetarian"
-msgstr "Vegetarian"
-
-#: php/functions.php:231 php/functions.php:239 php/functions.php:247
-msgid "include"
-msgstr "include"
-
-#: php/functions.php:237
-msgid "Vegan"
-msgstr "Vegan"
-
-#: php/functions.php:245
-msgid "Halal"
-msgstr "Halal"
-
-#: php/functions.php:253
-msgid "Risk for pregnant women"
-msgstr "Risk for pregnant women"
+#: php/lists/allergen_info.php:41
+msgid "Turning the the use of allergies on/off"
+msgstr ""
 
 #: php/product_settings.php:26
 msgid "Allergens"
@@ -207,14 +215,32 @@ msgstr "Allergens"
 msgid "allergens_dietary_ictoria_product_data"
 msgstr "allergens_dietary_ictoria_product_data"
 
-#: php/product_settings.php:37 php/product_settings.php:97
+#: php/product_settings.php:37 php/product_settings.php:96
 #: php/wc_integration.php:12
 msgid "allergens_dietary_ictoria"
 msgstr "allergens_dietary_ictoria"
 
-#: php/product_settings.php:93
+#: php/product_settings.php:92
 msgid "_allergens_dietary_ictoria_option"
 msgstr "_allergens_dietary_ictoria_option"
+
+#: php/tabs/allergen_tabs.php:28
+#, fuzzy
+#| msgid "allergen"
+msgid "Change allergens"
+msgstr "allergen"
+
+#: php/tabs/allergen_tabs.php:29
+#, fuzzy
+#| msgid "allergen"
+msgid "Create allergens"
+msgstr "allergen"
+
+#: php/tabs/allergen_tabs.php:30
+#, fuzzy
+#| msgid "allergen"
+msgid "See allergens"
+msgstr "allergen"
 
 #: php/wc_integration.php:13
 msgid "Allergens and Dietary Ictoria plugin settings"
@@ -224,7 +250,7 @@ msgstr "Allergens and Dietary Ictoria plugin settings"
 msgid "allergensdietary"
 msgstr "allergensdietary"
 
-#: php/wc_integration.php:57
+#: php/wc_integration.php:58
 msgid ""
 "Enable and disable allergens and dietary options on the whole website. This "
 "only changes the availability of the options and does not add or remove them "
@@ -237,3 +263,81 @@ msgstr ""
 #: php/wc_integration.php:116
 msgid "Settings"
 msgstr "Settings"
+
+#~ msgid "initial_setup_done"
+#~ msgstr "initial_setup_done"
+
+#~ msgid "no "
+#~ msgstr "no "
+
+#~ msgid "Peanuts"
+#~ msgstr "Pinda's"
+
+#~ msgid "active"
+#~ msgstr "active"
+
+#~ msgid "Nuts"
+#~ msgstr "Nuts"
+
+#~ msgid "Sesame"
+#~ msgstr "Sesame"
+
+#~ msgid "Lupin"
+#~ msgstr "Lupin"
+
+#~ msgid "Soya"
+#~ msgstr "Soya"
+
+#~ msgid "Mustard"
+#~ msgstr "Mustard"
+
+#~ msgid "Eggs"
+#~ msgstr "Eggs"
+
+#~ msgid "Dairy"
+#~ msgstr "Dairy"
+
+#~ msgid "Fish"
+#~ msgstr "Fish"
+
+#~ msgid "Crustaceans"
+#~ msgstr "Crustaceans"
+
+#~ msgid "Molluscs"
+#~ msgstr "Molluscs"
+
+#~ msgid "Gluten"
+#~ msgstr "Gluten"
+
+#~ msgid "Corn"
+#~ msgstr "Corn"
+
+#~ msgid "Wheat"
+#~ msgstr "Wheat"
+
+#~ msgid "Celery"
+#~ msgstr "Celery"
+
+#~ msgid "Sulfite"
+#~ msgstr "Sulfite"
+
+#~ msgid "Alcohol"
+#~ msgstr "Alcohol"
+
+#~ msgid "dietary"
+#~ msgstr "dietary"
+
+#~ msgid "Vegetarian"
+#~ msgstr "Vegetarian"
+
+#~ msgid "include"
+#~ msgstr "include"
+
+#~ msgid "Vegan"
+#~ msgstr "Vegan"
+
+#~ msgid "Halal"
+#~ msgstr "Halal"
+
+#~ msgid "Risk for pregnant women"
+#~ msgstr "Risk for pregnant women"
