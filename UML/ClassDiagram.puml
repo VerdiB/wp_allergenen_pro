@@ -79,22 +79,24 @@ package "php"{
     }
     package "tables"{
          class Allergens_Dietary_Ictoria_Show_Allergens{
+            - {static} _instance : array
             - __construct() : void
+            - table_action_options : array
             + get_table_columns_and_data() : array
-            + column_default(item:array, column_name:string) : void
-            + column_cb(item:array) : void
+            + column_default(item:array, column_name:string) : string
+            + column_cb(item:array) : string
             + single_row(item:array) : void
             + get_bulk_actions() : array
-            + column_show_id(item:array) : void
             # edit_row_action(id:string) : string
-            + handle_row_actions($item:array, $column_name:string, $primary:string) : array
-            + column_change_status($item:string, $column_name:string, $primary:string) : array
-            # single_row_columns(item:string) : void
+            + handle_row_actions(item:array, column_name:string, primary:string) : array
+            - build_action_url(action:string, item:object) : string
+            # single_row_columns(item:object) : void
             + get_columns() : array
             + prepare_items() : void
             + process_quick_action() : void
-            + process_bulk_action(data:array) : void
+            + process_bulk_action(data:object) : void
             + {static} getInstance() : Allergens_Dietary_Ictoria_Show_Allergens
+            + table_page() : void
         }
     
 }

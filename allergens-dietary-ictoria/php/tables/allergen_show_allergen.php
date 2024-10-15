@@ -25,7 +25,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 {
 
     private static $_instance = [];
-
     private function __construct()
     {
         parent::__construct([
@@ -34,6 +33,9 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             'ajax' => false,
         ]);
     }
+
+    private $table_action_options = ['change_status', 'delete'];
+
 
     public function get_table_columns_and_data()
     {
@@ -60,7 +62,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
         return [
             'columns' => $column_names,
-            'data' => $allergy_names
+            'data' => $allergy_names,
         ];
 
     }
@@ -105,8 +107,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         echo '</tr>';
     }
 
-
-
     // public function column_show_id($item)
     // {
     //     $title = '<strong>' . $item['allergy_name'] . '</strong>';
@@ -129,19 +129,29 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         if ($primary !== $column_name) {
             return '';
         }
+        $valid_actions = $this->table_action_options;
 
-        $action_links = array(
-            'change_status' => sprintf(
-                '<a href="?page=%s&item=%s&action=%s&_wpnonce=%s">Change Status</a>',
-                esc_attr($_REQUEST['page']),
-                esc_attr($item['allergy_name']),
-                'change_status',
-                wp_create_nonce('allergens_change_status')
-            ),
-            
-        );
+        $action_links = array();
+        foreach ($valid_actions as $action) {
+            $action_links[$action] = $this->build_action_url($action, $item);
+        }
+
         return $this->row_actions($action_links);
     }
+
+    private function build_action_url($action, $item)
+    {
+        return sprintf(
+            '<a href="?page=%s&item=%s&action=%s&_wpnonce=%s">%s</a>',
+            esc_attr($_REQUEST['page']),
+            esc_attr($item['allergy_name']),
+            esc_attr($action),
+            wp_create_nonce('allergens_' . $action),
+            ucfirst(str_replace('_', ' ', $action)),
+
+        );
+    }
+
 
     public function get_bulk_actions()
     {
@@ -151,37 +161,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         return $actions;
     }
 
-    // public function column_change_status($item, $column_name, $primary)
-    // {
-
-    //     if ($primary !== $column_name) {
-    //         return "";
-    //     }
-
-    //     $change_status_nonce = wp_create_nonce('allergens_change_status');
-    //     $delete_nonce = wp_create_nonce('allergens_delete');
-
-    //     $actions = array(
-    //         'change_status' => sprintf(
-    //             '<a name="allergens_quick_edit_location_address" value="%s" href="?page=%s&item=%s&action=%s&_wpnonce=%s">Change Status</a>',
-    //             $item['allergy_name'],
-    //             $_REQUEST['page'],
-    //             $item['allergy_name'],
-    //             'change_status',
-    //             $change_status_nonce,
-    //         ),
-    //         'delete' => sprintf(
-    //             '<a name="allergens_quick_edit_location_address" value="%s" href="?page=%s&item=%s&action=%s&_wpnonce=%s">Delete</a>',
-    //             $item['allergy_name'],
-    //             $_REQUEST['page'],
-    //             $item['allergy_name'],
-    //             'delete',
-    //             $delete_nonce,
-    //         ),
-    //     );
-
-    //     return $this->row_actions($actions);
-    // }
 
     protected function single_row_columns($item)
     {
@@ -289,9 +268,12 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         if (isset($_GET['_wpnonce']) && !empty($_GET['_wpnonce'])) {
             $nonce = filter_input(INPUT_GET, '_wpnonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $action = $this->current_action();
-            $nonce_action = $action;
-            // $nonce_action = $action === 'change_status' ? 'allergens_bulk_change_status' : 'allergens_bulk_delete';
-
+            foreach ($this->table_action_options as $bulk_action) {
+                if ($action === $bulk_action) {
+                    $nonce_action = 'bulk_' . $bulk_action;
+                    break;
+                }
+            }
             // Verify the nonce with the correct action
             if (!wp_verify_nonce($nonce, $nonce_action)) {
                 wp_die('Invalid token.');
@@ -304,7 +286,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
         $action = $this->current_action();
         switch ($action) {
-
             case 'change_status':
                 Allergens_Dietary_Ictoria_Allergen_Queries::activationUpdate($data);
                 break;
@@ -332,7 +313,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         return self::$_instance[$cls];
     }
 
-    function table_page()
+    public function table_page()
     {
         $table = new Allergens_Dietary_Ictoria_Show_Allergens();
         $table->prepare_items();
@@ -345,14 +326,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
     }
 
 }
-
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//     $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
-//     $table->process_bulk_action();
-// } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-//     $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
-//     $table->process_quick_action();
-// }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();

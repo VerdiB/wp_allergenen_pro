@@ -153,6 +153,11 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 				$exists = $wpdb->get_var($sql);
 				if ($exists == 0) {
 					$isallergy = 0;
+					$isdefault = 0;
+
+					if ($value['default']) {
+						$isdefault = 1;
+					}
 
 					if ($value['category'] == "allergen") {
 						$isallergy = 1;
@@ -166,6 +171,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 							'allergy_name' => $value['title'],
 							'allergy_description' => $value['description'],
 							'is_allergy' => $isallergy,
+							'is_default_option' => $isdefault,
 						)
 					);
 				}
@@ -226,6 +232,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		if ($result === false) {
 			throw new Exception(__('Error deleting allergen!'));
 		}
+
 	}
 
 	public static function activationUpdate(array $data)
