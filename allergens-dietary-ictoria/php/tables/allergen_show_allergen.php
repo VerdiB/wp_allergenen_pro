@@ -258,7 +258,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table {
                     Allergens_Dietary_Ictoria_Allergen_Queries::activationUpdate($data);
                 }
 
-                if ( ( isset( $data['item'] ) && $data['action'] == 'on/off' )
+                if ( ( isset( $data['item'] ) )
                 ) {
                     if ($data['action'] == "on/off" && !is_string($data['item'])){
                         foreach ($data['item'] as $key => $value){
