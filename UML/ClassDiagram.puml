@@ -79,6 +79,7 @@ package "php"{
     }
     package "tables"{
          class Allergens_Dietary_Ictoria_Show_Allergens{
+            - {static} _instance : singleton
             - __construct() : void
             + get_table_columns_and_data() : array
             + column_default(item:array, column_name:string) : void
@@ -94,7 +95,7 @@ package "php"{
             + prepare_items() : void
             + process_quick_action() : void
             + process_bulk_action(data:array) : void
-            + {static} getInstance() : Allergens_Dietary_Ictoria_Show_Allergens
+            + {static} getInstance() : singleton
         }
     
 }
