@@ -14,6 +14,7 @@ class MyPluginAddMenu {
 	 * @staticvar   array   $instance
 	 * @return      The one true instance
 	 */
+
 	
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
@@ -93,6 +94,17 @@ class MyPluginAddMenu {
 				'updateallergens',
 			)
 		);
+		add_submenu_page(
+			'allergens-dietary-options',
+			__( 'Show allergens', 'allergens-dietary-ictoria' ),
+			__( 'Show allergens', 'allergens-dietary-ictoria' ),
+			'manage_options',
+			'allergens-dietary-show-allergens',
+			array(
+				$this,
+				'showallergens',
+			), 
+		);
 	}
 
 	public function myAdminPage() {
@@ -126,7 +138,17 @@ class MyPluginAddMenu {
 		}
 		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
-		Allergens_Dietary_Ictoria_Form::getInstance()->showForm( 'test' );
+		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
+	}
+
+	public function showallergens() {
+		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Show_Allergens' ) ) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tables/allergen_show_allergen.php';
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
+		}	
+		$singleton = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
+			Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
+			$singleton->table_page();
 	}
 
 	public function info() {
