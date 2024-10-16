@@ -221,10 +221,12 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			}
 
 			$is_default = self::is_default_allergen($allergy_name);
-			$error_displayed = false;
+			static $error_displayed = false;
 
 			if ($is_default) {
-				return;
+				if (!$error_displayed) {
+					throw new Exception(__("Can't delete a default allergen option!"));
+				}
 			}
 
 			$existing_attachment = $wpdb->query(
@@ -265,9 +267,11 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 				}
 			}
 		} catch (Exception $e) {
-			echo 'Error: ' . $e->getMessage();
+			if (!$error_displayed) {
+				echo 'Error: ' . $e->getMessage();
+				$error_displayed = true;
+			}
 		}
-
 
 	}
 
