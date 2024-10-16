@@ -44,7 +44,7 @@ class Allergens_Dietary_Ictoria_Filter {
 				$categories[ $value['category'] ] .= '<div>
 					<input type="checkbox" class="checkbox ' . $value['category'] . '" name="allergen_filter_options[' . $key . ']" value="1" ' . $checked . '/>
 					<input type="hidden" name="allergen_filter_action[' . $key . ']" value="' . esc_attr( $value['filter-action'] ) . '"/>
-					<span>' . $value['filter-extra'] . $value['title'] . '</span>
+					<span>' . __($value['filter-extra'], 'allergens-dietary-ictoria') . __($value['title'], 'allergens-dietary-ictoria') . '</span>
 				</div>';
 			}
 		}
@@ -91,6 +91,7 @@ class Allergens_Dietary_Ictoria_Filter {
 						'key'     => 'allergens_dietary_ictoria', // Key of the custom field
 						'value'   => '"' . $key . '"', // The value to compare (key is the option name)
 						'compare' => $compare,
+						
 					);
 				}
 
