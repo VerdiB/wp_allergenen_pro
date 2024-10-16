@@ -203,8 +203,12 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		));
 
 		return $is_default;
+	}
 
-
+	public static function send_header(string $page = null)
+	{
+		$url = strtok($_SERVER["REQUEST_URI"], '?');
+		return header("Location: $url" . "?page=" . ($page ? $page : "allergens-dietary-show-allergens"));
 	}
 
 	public static function delete_allergen_by_name(string $allergy_name)
@@ -225,7 +229,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 			if ($is_default) {
 				if (!$error_displayed) {
-					throw new Exception(__("Can't delete a default allergen option!"));
+					throw new Exception(__("Can't delete a default allergen option: '" . $allergy_name . "'"));
 				}
 			}
 
@@ -263,14 +267,18 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			$result = $wpdb->query($sql);
 			if ($result === false) {
 				if (!$error_displayed) {
-					throw new Exception(__('Error deleting allergen!'));
+					throw new Exception(__("Error deleting allergen: '" . $allergy_name . "'"));
 				}
 			}
+			self::send_header();
+
 		} catch (Exception $e) {
-			if (!$error_displayed) {
-				echo 'Error: ' . $e->getMessage();
-				$error_displayed = true;
+			if (!$error_displayed)
+			{
+				echo "Error: " . $e->getMessage();
 			}
+			self::send_header();
+
 		}
 
 	}
