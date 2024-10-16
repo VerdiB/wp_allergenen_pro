@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Allergens-Dietary-Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2024-10-15 15:46+0200\n"
+"POT-Creation-Date: 2024-10-16 08:47+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -33,14 +33,15 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-7: tests\n"
 "X-Poedit-SearchPathExcluded-8: UML\n"
 
-#: allergens-dietary-ictoria.php:24
+#: allergens-dietary-ictoria.php:25
 msgid ""
-"Adds Allergens and Dietary options that can be used with WooCommerce products"
+"Adds Allergens and Dietary options that can be used with WooCommerce "
+"products."
 msgstr ""
 "Voegt Allergenen en Dieetopties toe die kunnen worden gebruikt met "
-"WooCommerce producten"
+"WooCommerce producten."
 
-#: allergens-dietary-ictoria.php:129
+#: allergens-dietary-ictoria.php:130
 #, php-format
 msgid ""
 "%1$sThe WooCommerce Integration class was not found. Please make sure "
@@ -49,7 +50,7 @@ msgstr ""
 "%1$sDe WooCommerce-integratieklasse is niet gevonden. Controleer of "
 "WooCommerce correct is geïnstalleerd%2$s"
 
-#: allergens-dietary-ictoria.php:161
+#: allergens-dietary-ictoria.php:162
 #, php-format
 msgid ""
 "%1$sWooCommerce is inactive or not installed. Please install & activate "

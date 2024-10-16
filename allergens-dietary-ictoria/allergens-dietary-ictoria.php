@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 Plugin Name: Allergens and Dietary
 Plugin URI:
 Version:     1.0.0
-Description: Adds Allergens and Dietary options that can be used with WooCommerce products
+Description: Adds Allergens and Dietary options that can be used with WooCommerce products.
 Requires at least: 6.3.1
 Requires PHP: 7.4
 Author:      Ictoria.nl
@@ -19,9 +19,10 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: allergens-dietary-ictoria
 Domain Path: /languages/
 WC Tested Up To: 8.1.1
-*/';
+*/
+';
 
-__('Adds Allergens and Dietary options that can be used with WooCommerce products', 'allergens-dietary-ictoria');
+__('Adds Allergens and Dietary options that can be used with WooCommerce products.', 'allergens-dietary-ictoria');
 
 
 
