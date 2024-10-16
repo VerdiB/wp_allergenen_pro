@@ -1,4 +1,5 @@
 <?php
+namespace Allergen;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

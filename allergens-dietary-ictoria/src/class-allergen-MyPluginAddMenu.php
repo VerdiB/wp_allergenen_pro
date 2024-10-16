@@ -1,7 +1,8 @@
 <?php
 
+namespace Allergen;
+
 use Allergen\Forms\Allergens_Dietary_Ictoria_Form;
-use Allergen\Forms\FormType;
 
 // exit if user can access this file directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,7 +21,7 @@ class MyPluginAddMenu {
 	 */
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
-			self::$instance = new MyPluginAddMenu();
+			self::$instance = new self();
 		}
 		return self::$instance;
 	}
@@ -82,7 +83,7 @@ class MyPluginAddMenu {
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
 		}
-		Allergens_Dietary_Ictoria_Form::setFormType( FormType::LICENSE );
+		Allergens_Dietary_Ictoria_Form::setFormType( Forms\FormType::LICENSE );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
 	}
 
@@ -90,7 +91,7 @@ class MyPluginAddMenu {
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
 		}
-		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
+		Allergens_Dietary_Ictoria_Form::setFormType( Forms\FormType::ALLERGENS );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
 	}
 }

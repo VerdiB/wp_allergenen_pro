@@ -1,9 +1,11 @@
 <?php
-namespace Admin;
-use Allergens_Dietary_Ictoria_Functions;
-use Allergens_Dietary_Ictoria_Wc_Integration_Settings;
-
+namespace Allergen\Admin;
+use Allergen\Allergens_Dietary_Ictoria_Functions;
+// use WooCommerce\Abstracts\WC_Integration;
+// use Allergens_Dietary_Ictoria_Functions;
+// use Allergens_Dietary_Ictoria_Wc_Integration_Settings;
 class Allergens_Dietary_Ictoria_Wc_Integration_Startup {
+
     public function __construct() {
         add_action( 'plugins_loaded', array( $this, 'init_integration' ) );
     }
@@ -11,7 +13,9 @@ class Allergens_Dietary_Ictoria_Wc_Integration_Startup {
     public function init_integration() {
         // Check if the WC_Integration class exists
         if ( class_exists( 'WC_Integration' ) ) {
-            include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/src/admin/class-allergen-wc-integration-settings.php';
+            
+            include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/src/class-allergen-wc-integration.php';
+            
             add_filter( 'woocommerce_integrations', array( $this, 'add_integration' ) );
             // load the plugin admin js files
             Allergens_Dietary_Ictoria_Functions::load_admin_js();
@@ -24,7 +28,9 @@ class Allergens_Dietary_Ictoria_Wc_Integration_Startup {
     }
 
     public function add_integration( $integrations ) {
-        $integrations[] = 'Allergens_Dietary_Ictoria_Wc_Integration_Settings';
+        
+        // require_once $this->_path . 'class-allergen-wc-integration-settings.php';
+        $integrations[] = 'Allergen\\Allergens_Dietary_Ictoria_Wc_Integration_Settings';
         return $integrations;
     }
 }

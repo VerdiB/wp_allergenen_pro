@@ -1,27 +1,38 @@
 <?php
+namespace Allergen;
+use Allergen\Allergens_Dietary_Ictoria_Product_Settings;
+use Allergen\Allergens_Dietary_Ictoria_Activator;
+use Allergen\Allergens_Dietary_Ictoria_Products;
+use Allergen\Allergens_Dietary_Ictoria_Filter;
+use Allergen\Allergens_Dietary_Ictoria_Functions;
+use Allergen\MyPluginAddMenu;
 
 class Allergens_Dietary_Ictoria_Startup {
-    public static function on_activation() {
-		$settings = Allergens_Dietary_Ictoria_Functions::get_settings();
-		// show popup asking for certain setting options if this is the first activation after installing the plugin.
-		if ( ! isset( $settings[ __( 'initial_setup_done' ) ] ) ) {
-			// show popup asking wether or not the user wants to automatically export all relevant product data on uninstall
-			// tell user (within popup) that above setting can be set at all times from the plugin settings menu
-			// save chosen settings in the allergens_dietary_ictoria_settings(WP options table)
-			// add the initial_setup_done option to allergens_dietary_ictoria_settings (value: true) to prevent this popup from showing on every activation after the first
-		}
 
-		$options = Allergens_Dietary_Ictoria_Functions::get_options();
-		// set the default options in the WooCommerce options table if they do not exist
-		if ( empty( $options ) ) {
-			$options = Allergens_Dietary_Ictoria_Functions::default_options();
-			update_option( __( 'allergens_dietary_ictoria_options', 'allergens-dietary-ictoria' ), $options, true );
+	private static $_instance = null;
+
+	public static function get_instance(){
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
 		}
+		return self::$_instance;
+	}
+
+	private function __construct() {
+		error_log('construct');
+		Allergens_Dietary_Ictoria_Product_Settings::instance();
+		// Allergens_Dietary_Ictoria_Activator::activate();
+		Allergens_Dietary_Ictoria_Products::instance();
+		Allergens_Dietary_Ictoria_Filter::instance();
+		// Allergens_Dietary_Ictoria_Functions::load_style();
+		// MyPluginAddMenu::instance();
+	}
+
+    public static function on_activation() {
+		error_log('activation');
 
 		// temporary admin menu panel for testing the license form
-		add_menu_page( 'Allergens and Dietary', 'Allergens and Dietary', 'manage_options', 'allergens-dietary-ictoria', array( 'Allergens_Dietary_Allergen\Allergens_Dietary_Ictoria_Functions', 'admin_page' ), 'dashicons-carrot', 6 );
-
-        Allergens_Dietary_Ictoria_Product_Settings::instance();
+		Allergens_Dietary_Ictoria_Product_Settings::instance();
 		Allergens_Dietary_Ictoria_Activator::activate();
 		Allergens_Dietary_Ictoria_Products::instance();
 		Allergens_Dietary_Ictoria_Filter::instance();
@@ -36,5 +47,21 @@ class Allergens_Dietary_Ictoria_Startup {
 		// temporary delete_option for testing without having to uninstall/reinstall. This code is also found in the uninstall.php file of this plugin
 		// delete_option('allergens_dietary_ictoria_settings');
 		// delete_option('allergens_dietary_ictoria_options');
+	}
+
+	public static function error_notice( $level, $message ) {
+		$message_header = sprintf( __( '%1$sAllergens and Dietary is inactive:%2$s', 'allergens-dietary-ictoria' ), '<p><strong>', '</strong></p>' );
+		$message_full   = $message_header . $message;
+		add_action(
+			'admin_notices',
+			static function () use ( $level, $message_full ) {
+				echo '<div class="notice ' . esc_attr( $level ) . '" style="padding:12px 12px">
+					' . wp_kses_post( $message_full ) . '
+				</div>';
+			}
+		);
+	}
+	public static function load_textdomain(){
+		load_plugin_textdomain(' allergens-dietary-ictoria', false, basename(ALLERGENS_DIETARY_ICTORIA_FILE).'/l10n'); 
 	}
 }

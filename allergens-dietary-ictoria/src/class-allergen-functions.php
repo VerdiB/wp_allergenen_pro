@@ -1,7 +1,6 @@
 <?php
 
-
-// use Allergen\ALLERGENS_DIETARY_ICTORIA;
+namespace Allergen;
 
 // exit if user can access this file directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,7 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * does not include anything anymore from the functions.php file.
  * this is also part of the planning in the future.
  */
-
 class Allergens_Dietary_Ictoria_Functions {
 
 	//function to get a translation of all text contained within __() functions throughout the plugin IF the .mo and .po files for the local/server language are available
