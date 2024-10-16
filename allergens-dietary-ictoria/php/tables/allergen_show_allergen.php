@@ -107,23 +107,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         echo '</tr>';
     }
 
-    // public function column_show_id($item)
-    // {
-    //     $title = '<strong>' . $item['allergy_name'] . '</strong>';
-    //     $actions = array(
-    //         'Change status' => $this->edit_row_action($item['allergy_name']),
-    //     );
-
-    //     return sprintf($title . $this->row_actions($actions));
-    // }
-
-    // protected function edit_row_action($id)
-    // {
-    //     $html = '';
-    //     $html .= '<a href="?panel=Edit&id=' . $id . '" id="single-edit-button-' . $id . '" class="single-edit-button" >' . __('Edit', 'allergens-dietary-ictoria') . '</a>';
-    //     return $html;
-    // }
-
     public function handle_row_actions($item, $column_name, $primary)
     {
         if ($primary !== $column_name) {
@@ -141,8 +124,28 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
     private function build_action_url($action, $item)
     {
+        $color = "black";
+        $colorboolean = 0;
+
+        if (esc_attr($action) == "delete"){
+            $is_default = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
+            $colorboolean = $is_default::is_default_allergen($item['allergy_name']);
+        }else{
+            $colorboolean = 0;
+        }
+
+        if ($colorboolean == 1){
+            $color = "grey";
+        }else{
+            if (esc_attr($action) == "delete"){
+                $color = "red";
+            }else{
+                $color = "blue";
+            }
+        }
+        
         return sprintf(
-            '<a href="?page=%s&item=%s&action=%s&_wpnonce=%s">%s</a>',
+            '<a style="color: ' . $color . ';" href="?page=%s&item=%s&action=%s&_wpnonce=%s">%s</a>',
             esc_attr($_REQUEST['page']),
             esc_attr($item['allergy_name']),
             esc_attr($action),

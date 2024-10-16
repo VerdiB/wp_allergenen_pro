@@ -195,7 +195,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 		// $allegen_exists = $wpdb->get_var("SELECT allergy_name FROM $table_allergy WHERE ");
 
-		$is_default = $wpdb->query($wpdb->prepare(
+		$is_default = $wpdb->get_var($wpdb->prepare(
 			"SELECT is_default_option 
 				 FROM $table_allergy 
 				 WHERE allergy_name = %s",
@@ -225,6 +225,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			}
 
 			$is_default = self::is_default_allergen($allergy_name);
+
 			static $error_displayed = false;
 
 			if ($is_default) {
@@ -248,7 +249,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
                  JOIN $table_allergy AS a 
                  ON a.allergy_name = aa.allergy_name
                  WHERE aa.allergy_name = %s  
-                 AND a.is_default_option != TRUE",
+                 AND a.is_default_option != 1",
 					$allergy_name
 				);
 			} else {
@@ -260,7 +261,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 					JOIN $table_attachment as am
 					ON am.attachment_name = aa.attachment_name
 					WHERE aa.allergy_name = %s  
-					AND a.is_default_option != TRUE",
+					AND a.is_default_option != 1",
 					$allergy_name
 				);
 			}
