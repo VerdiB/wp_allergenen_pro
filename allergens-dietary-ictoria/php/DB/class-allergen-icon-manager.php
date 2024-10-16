@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 
 class Allergen_Icon_Manager
 {
-    private const MIME_TYPES = array('image/png', 'image/jpeg', 'image/jpg');
+    private const MIME_TYPES = array('image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml', 'image/webp');
 
     public static function update_allergen_icons()
     {
@@ -49,11 +49,11 @@ class Allergen_Icon_Manager
             $table_name_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
             $attachment_count = $wpdb->get_var($wpdb->prepare(
-                "SELECT COUNT(*) FROM $table_name_allergy_attachment WHERE attachment_name = %s",
+                "SELECT COUNT(attachment_name) FROM $table_name_allergy_attachment WHERE attachment_name = %s LIMIT 1",
                 $sanitized_prev_attachment_name
             ));
 
-            if ($attachment_count == 1) {
+            if ($attachment_count > 0) {
                 $wpdb->query($wpdb->prepare(
                     "UPDATE $table_name_attachment
                     SET attachment_name = %s, 

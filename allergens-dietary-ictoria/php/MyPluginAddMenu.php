@@ -155,6 +155,9 @@ class MyPluginAddMenu
 
 		// Verwerk de POST-aanroep
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			if (!class_exists('Allergen_Icon_Manager')) {
+				require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/class-allergen-icon-manager.php';
+			}
 			Allergen_Icon_Manager::update_allergen_icons();
 		}
 	}
