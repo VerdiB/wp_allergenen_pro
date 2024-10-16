@@ -11,5 +11,5 @@ phpunit/tests/*.cache
 *.code-workspace
 vendor/
 composer.*
+languages/*.mo
 cache/
-*.mo
