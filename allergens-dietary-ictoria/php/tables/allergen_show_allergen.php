@@ -39,12 +39,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
     public function get_table_columns_and_data()
     {
-
-        global $wpdb;
-
-        $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-
-        $columns = $wpdb->get_results("SHOW COLUMNS FROM $table_name", ARRAY_A);
+        $columns = Allergens_Dietary_Ictoria_Allergen_Queries::getColumns();
 
         $column_names = [];
 
@@ -52,7 +47,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             $column_names[$column["Field"]] = ucfirst(str_replace('_', ' ', $column['Field']));
         }
 
-        $data = $wpdb->get_results("SELECT allergy_name FROM $table_name", ARRAY_A);
+        $data = Allergens_Dietary_Ictoria_Allergen_Queries::getItems();
 
         $allergy_names = [];
 
@@ -90,7 +85,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             case 'is_active':
                 return $translationOfIsActiveNumbers;
             default:
-                return print_r($item, true);
+                return array($item, true);
         }
     }
 
@@ -225,14 +220,11 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
     public function prepare_items()
     {
-        global $wpdb;
-
-        $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
         $result = $this->get_table_columns_and_data();
 
         $this->_column_headers = [$result['columns'], [], []];
 
-        $data = $wpdb->get_results("SELECT * FROM $table_name", ARRAY_A);
+        $data = Allergens_Dietary_Ictoria_Allergen_Queries::getItems();
 
         $this->_column_headers = [$this->get_columns(), [], []];
 

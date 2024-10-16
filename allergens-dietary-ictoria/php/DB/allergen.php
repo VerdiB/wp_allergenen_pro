@@ -284,6 +284,22 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 	}
 
+	public static function getItems(){
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+		$data = $wpdb->get_results("SELECT allergy_name, allergy_description, is_allergy, is_active FROM $table_name", ARRAY_A);
+	
+		return $data;
+	}
+
+	public static function getColumns(){
+		global $wpdb;
+        $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+		$columns = $wpdb->get_results("SHOW COLUMNS FROM $table_name", ARRAY_A);
+	
+		return $columns;
+	}
+
 	public static function activationUpdate(array $data)
 	{
 		global $wpdb;
