@@ -209,43 +209,45 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 	public static function delete_allergen_by_name(string $allergy_name)
 	{
-		global $wpdb;
+		try {
+			global $wpdb;
 
-		$table_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-		$table_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-		$table_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
+			$table_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+			$table_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+			$table_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
 
-		if (empty($allergy_name)) {
-			return;
-		}
+			if (empty($allergy_name)) {
+				return;
+			}
 
-		$is_default = self::is_default_allergen($allergy_name);
+			$is_default = self::is_default_allergen($allergy_name);
+			$error_displayed = false;
 
-		if (!$is_default) {
-			throw new Exception("Can't delete a default allergen option!");
-		}
+			if ($is_default) {
+				return;
+			}
 
-		$existing_attachment = $wpdb->query(
-			"SELECT attachment_name 
+			$existing_attachment = $wpdb->query(
+				"SELECT attachment_name 
 				 FROM $table_allergy_attachment 
 				 GROUP BY attachment_name 
 				 HAVING COUNT(attachment_name) > 1
 				 LIMIT 1"
-		);
+			);
 
-		if ($existing_attachment) {
-			$sql = $wpdb->prepare(
-				"DELETE aa, a 
+			if ($existing_attachment) {
+				$sql = $wpdb->prepare(
+					"DELETE aa, a 
                  FROM $table_allergy_attachment AS aa
                  JOIN $table_allergy AS a 
                  ON a.allergy_name = aa.allergy_name
                  WHERE aa.allergy_name = %s  
                  AND a.is_default_option != TRUE",
-				$allergy_name
-			);
-		} else {
-			$sql = $wpdb->prepare(
-				"DELETE aa, a, am 
+					$allergy_name
+				);
+			} else {
+				$sql = $wpdb->prepare(
+					"DELETE aa, a, am 
 					FROM $table_allergy_attachment AS aa
 					JOIN $table_allergy AS a 
 					ON a.allergy_name = aa.allergy_name
@@ -253,13 +255,19 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 					ON am.attachment_name = aa.attachment_name
 					WHERE aa.allergy_name = %s  
 					AND a.is_default_option != TRUE",
-				$allergy_name
-			);
+					$allergy_name
+				);
+			}
+			$result = $wpdb->query($sql);
+			if ($result === false) {
+				if (!$error_displayed) {
+					throw new Exception(__('Error deleting allergen!'));
+				}
+			}
+		} catch (Exception $e) {
+			echo 'Error: ' . $e->getMessage();
 		}
-		$result = $wpdb->query($sql);
-		if ($result === false) {
-			throw new Exception(__('Error deleting allergen!'));
-		}
+
 
 	}
 
