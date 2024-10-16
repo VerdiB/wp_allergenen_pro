@@ -18,7 +18,7 @@ License:     GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: allergens-dietary-ictoria
 Domain Path: /languages/
-WC Tested Up To: 8.1.1
+WC Tested Up To: 9.3.3
 */
 ';
 
