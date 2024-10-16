@@ -1,6 +1,6 @@
 <?php
 
-namespace Allergen\Db;
+namespace Db;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

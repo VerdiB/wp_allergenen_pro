@@ -1,10 +1,10 @@
 <?php
 
-namespace Allergen\Forms;
+namespace Forms;
 
-use Allergen\Db\Allergens_Dietary_Ictoria_Allergen_Queries;
-use Allergen\Db\Allergens_Dietary_Ictoria_Allergy_Attachment_Queries;
-use Allergen\Db\Allergens_Dietary_Ictoria_Attachment_Queries;
+use Db\Allergens_Dietary_Ictoria_Allergen_Queries;
+use Db\Allergens_Dietary_Ictoria_Allergy_Attachment_Queries;
+use Db\Allergens_Dietary_Ictoria_Attachment_Queries;
 use Exception;
 
 // exit if user can access this file directly

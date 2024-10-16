@@ -1,5 +1,5 @@
 <?php
-namespace Allergen;
+
 
 // exit if user can access this file directly.
 if ( ! defined( 'ABSPATH' ) ) {

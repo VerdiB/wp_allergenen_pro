@@ -1,8 +1,9 @@
 <?php
 
-namespace Allergen;
 
-use Allergen\Forms\Allergens_Dietary_Ictoria_Form;
+
+use Forms;
+use Forms\Allergens_Dietary_Ictoria_Form;
 
 // exit if user can access this file directly
 if ( ! defined( 'ABSPATH' ) ) {

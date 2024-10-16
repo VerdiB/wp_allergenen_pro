@@ -1,11 +1,5 @@
 <?php
-namespace Allergen;
-use Allergen\Allergens_Dietary_Ictoria_Product_Settings;
-use Allergen\Allergens_Dietary_Ictoria_Activator;
-use Allergen\Allergens_Dietary_Ictoria_Products;
-use Allergen\Allergens_Dietary_Ictoria_Filter;
-use Allergen\Allergens_Dietary_Ictoria_Functions;
-use Allergen\MyPluginAddMenu;
+
 
 class Allergens_Dietary_Ictoria_Startup {
 
@@ -20,10 +14,10 @@ class Allergens_Dietary_Ictoria_Startup {
 
 	private function __construct() {
 		error_log('construct');
-		Allergens_Dietary_Ictoria_Product_Settings::instance();
+		// Allergens_Dietary_Ictoria_Product_Settings::instance();
 		// Allergens_Dietary_Ictoria_Activator::activate();
-		Allergens_Dietary_Ictoria_Products::instance();
-		Allergens_Dietary_Ictoria_Filter::instance();
+		// Allergens_Dietary_Ictoria_Products::instance();
+		// Allergens_Dietary_Ictoria_Filter::instance();
 		// Allergens_Dietary_Ictoria_Functions::load_style();
 		// MyPluginAddMenu::instance();
 	}

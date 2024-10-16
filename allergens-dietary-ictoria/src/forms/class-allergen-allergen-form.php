@@ -1,6 +1,6 @@
 <?php
 
-namespace Allergen\Forms;
+namespace Forms;
 
 Use Exception;
 

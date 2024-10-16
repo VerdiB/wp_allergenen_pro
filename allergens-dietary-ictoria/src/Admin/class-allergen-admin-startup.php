@@ -1,6 +1,6 @@
 <?php
-namespace Allergen\Admin;
-use Allergen\Allergens_Dietary_Ictoria_Functions;
+namespace Admin;
+use Allergens_Dietary_Ictoria_Functions;
 // use WooCommerce\Abstracts\WC_Integration;
 // use Allergens_Dietary_Ictoria_Functions;
 // use Allergens_Dietary_Ictoria_Wc_Integration_Settings;
@@ -30,7 +30,7 @@ class Allergens_Dietary_Ictoria_Wc_Integration_Startup {
     public function add_integration( $integrations ) {
         
         // require_once $this->_path . 'class-allergen-wc-integration-settings.php';
-        $integrations[] = 'Allergen\\Allergens_Dietary_Ictoria_Wc_Integration_Settings';
+        $integrations[] = '\Allergens_Dietary_Ictoria_Wc_Integration_Settings';
         return $integrations;
     }
 }

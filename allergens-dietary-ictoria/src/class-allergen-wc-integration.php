@@ -1,5 +1,5 @@
 <?php
-namespace Allergen;
+
 use WooCommerce\Abstracts\WC_Integration;
 // require_once ALLERGENS_DIETARY_ICTORIA_BASE . '../woocommerce/includes/abstracts/abstract-wc-integration.php';
 
