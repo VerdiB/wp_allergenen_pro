@@ -111,13 +111,29 @@ class MyPluginAddMenu
 
 	public function updateallergens()
 	{
+		if (!class_exists('Allergens_Dietary_Ictoria_Form')) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
+		}
+		if (!class_exists('Allergens_Dietary_Ictoria_Tabs')) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
+		}
+
+		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
+		Allergens_Dietary_Ictoria_Form::setFormType(FormType::UPDATE);
+		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
+	}
+
+	public function updateallergens2()
+	{
 		global $wpdb;
 		$table_name_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 		$table_name_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
-		$allergens = $wpdb->get_results("SELECT a.allergy_name, a.allergy_description, at.attachment_name
-									  FROM $table_name_allergy AS a
-									  LEFT JOIN $table_name_attachment AS at ON a.allergy_name = at.allergy_name");
+		$allergens = $wpdb->get_results(
+			"SELECT a.allergy_name, a.allergy_description, at.attachment_name
+					FROM $table_name_allergy AS a
+					LEFT JOIN $table_name_attachment AS at ON a.allergy_name = at.allergy_name"
+		);
 		?>
 		<h1><?php _e('Update Allergen Icons', 'allergens-dietary-ictoria'); ?></h1>
 		<form method="POST" enctype="multipart/form-data">

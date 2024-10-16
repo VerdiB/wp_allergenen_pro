@@ -37,7 +37,7 @@ if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) 
 class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ictoria_Form {
 
 	private ?array $_allergen = null;
-	private const MIME_TYPES = array( 'image/png', 'image/jpeg', 'image/jpg' );
+    private const MIME_TYPES = array('image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml', 'image/webp');
 
 	public function __construct() {
 	}
