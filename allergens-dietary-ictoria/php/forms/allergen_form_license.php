@@ -51,8 +51,6 @@ class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Icto
 		if ( ! empty( $data ) ) {
 			$post_data = $this->sanitize( $data );
 			// TODO: save the license key in the external database
-			Allergens_Dietary_Ictoria_Functions::getInstance()->default_options();
-			Allergens_Dietary_Ictoria_Functions::getInstance()->includeItems();
 		} else {
 			return;
 		}
