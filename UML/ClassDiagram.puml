@@ -152,6 +152,8 @@ package "php"{
             + checkAllergenExists(allergenName:string) : boolean
             + updateAllergens(data:array) : void
             + getAllergen(allergenName:string) : array
+            + {static} getItems() : array
+            + {static} getColumns() : array
             + {static} includeItems() : void
             + {static} activationUpdate(data:array) : void
         }
