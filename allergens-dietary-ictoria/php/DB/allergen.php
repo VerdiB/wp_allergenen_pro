@@ -183,6 +183,30 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::allergy_connection($icon_result);
 	}
 
+	public static function is_default_allergen(string $allergy_name): bool
+	{
+		global $wpdb;
+
+		$table_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+
+		if (empty($allergy_name)) {
+			throw new Exception('No correct allergy given.');
+		}
+
+		// $allegen_exists = $wpdb->get_var("SELECT allergy_name FROM $table_allergy WHERE ");
+
+		$is_default = $wpdb->query($wpdb->prepare(
+			"SELECT is_default_option 
+				 FROM $table_allergy 
+				 WHERE allergy_name = %s",
+			$allergy_name
+		));
+
+		return $is_default;
+
+
+	}
+
 	public static function delete_allergen_by_name(string $allergy_name)
 	{
 		global $wpdb;
@@ -193,6 +217,12 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 		if (empty($allergy_name)) {
 			return;
+		}
+
+		$is_default = self::is_default_allergen($allergy_name);
+
+		if (!$is_default) {
+			throw new Exception("Can't delete a default allergen option!");
 		}
 
 		$existing_attachment = $wpdb->query(
@@ -226,9 +256,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 				$allergy_name
 			);
 		}
-
 		$result = $wpdb->query($sql);
-
 		if ($result === false) {
 			throw new Exception(__('Error deleting allergen!'));
 		}
