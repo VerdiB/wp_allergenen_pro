@@ -1,7 +1,7 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if (!defined('ABSPATH')) {
+    exit;
 }
 
 /**
@@ -13,67 +13,51 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 
-class Allergens_Dietary_Ictoria_Info {
+class Allergens_Dietary_Ictoria_Info
+{
     private static ?self $_instance = null;
 
-    
 
-    public function showInfo() {
+
+    public function showInfo()
+    {
         //flexbox voor tabs
-        $html = '<div id="info_grid" class="nav-tab-wrapper">
-        <div><h1 class="premium">PREMIUM  [Requires licence]</h1>
-        <ol>
-            <li class="contains">
-                Updating allergies
-            </li>
-            <li class="contains">
-                Changing allergy themes
-            </li>
-            <li class="contains">
-                Deleting allergies
-            </li>
-             <li class="contains">
-                Adding allergies
-            </li>
-            <li class="contains">
-                Custom look on product
-            </li>
-            <li class="contains">
-                Custom look in store
-            </li>
-        </ol>
-        </div>
-        <div><h1 class="free">FREE VERSION  [Standard]</h1>
-        <ol>
-            <li class="contains">
-                Connecting allergies to products
-            </li>
-            <li class="contains">
-                Wordpress theme fiendly styles
-            </li>
-            <li class="contains">
-                An allergen overview
-            </li>
-            <li class="contains">
-                Turning the the use of allergies on/off
-            </li>
-            </ol>
-        </div>
-        </div>
-        <br> <br>';
+        $html = '<div id="info_grid" class="nav-tab-wrapper">';
+        $html .= '<div><h1 class="premium">' . __("PREMIUM  [Requires licence]", "allergens-dietary-ictoria") . '</h1>';
+        $html .= '<ol>';
+        $html .= '<li class="contains">' . __("Updating allergies", "allergens-dietary-ictoria") . '</li>';
+        $html .= '<li class="contains">' . __("Changing allergy themes", "allergens-dietary-ictoria") . '</li>';
+        $html .= '<li class="contains">' . __("Deleting allergies", "allergens-dietary-ictoria") . '</li>';
+        $html .= '<li class="contains">' . __("Adding allergies", "allergens-dietary-ictoria") . '</li>';
+        $html .= '<li class="contains">' . __("Custom look on product", "allergens-dietary-ictoria") . '</li>';
+        $html .= '<li class="contains">' . __("Custom look in store", "allergens-dietary-ictoria") . '</li>';
+        $html .= ' </ol>';
+        $html .= ' </div>';
+        $html .= '<div><h1 class="free">' . __("FREE VERSION  [Standard]", "allergens-dietary-ictoria") . '</h1>';
+        $html .= ' <ol>';
+        $html .= '<li class="contains">' . __("Connecting allergies to products", "allergens-dietary-ictoria") . '</li>';
+        $html .= '<li class="contains">' . __("Wordpress theme fiendly styles", "allergens-dietary-ictoria") . '</li>';
+        $html .= '<li class="contains">' . __("An allergen overview", "allergens-dietary-ictoria") . '</li>';
+        $html .= '<li class="contains">' . __("Turning the the use of allergies on/off", "allergens-dietary-ictoria") . '</li>';
+        $html .= '      </ol>';
+        $html .= '  </div>';
+        $html .= '  </div>';
+        $html .= ' <br> <br>';
         echo $html;
         //moet nog aangepast worden in css
     }
 
-    public static function getInstance() {
-		if ( self::$_instance === null ) {
-			self::$_instance = new self();
-		}
-		return self::$_instance;
-	}
+    public static function getInstance()
+    {
+        if (self::$_instance === null) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
 
-    public static function getStyles() {
-        wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/css/allergens-dietary-ictoria.css'));
-        wp_enqueue_style('allergens-dietary-ictoria-admin-css', plugins_url( 'assets/css/allergens-dietary-ictoria.css', ALLERGENS_DIETARY_ICTORIA_FILE ));
+    public static function getStyles()
+    {
+        wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME . '/assets/css/allergens-dietary-ictoria.css'));
+        wp_enqueue_style('allergens-dietary-ictoria-admin-css', plugins_url('assets/css/allergens-dietary-ictoria.css', ALLERGENS_DIETARY_ICTORIA_FILE));
     }
 }

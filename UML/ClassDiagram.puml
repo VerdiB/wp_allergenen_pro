@@ -29,22 +29,33 @@ package "php"{
         +{static} get_settings() : array
         +{static} get_options() : array
         +{static} load_style() : void
+        +{static} enqueue_styles() : void
+        +{static} enqueue_admin_styles() : void
         +{static} load_admin_js() : void
+        +{static} enqueue_admin_scripts() : void
         +{static} error_notice(level:string, message:string) : void
+        + upload_language_file() : void
     }
 
     class Allergens_Dietary_Ictoria_Activator{
-        -{static} counter : int
+        -{static} counter: int
+        -{static} url: string
+        -{static} allergens_options: array
+        -{static} allergy_icon_options: array
+        -{static} icon_options: array
         +{static} activate() : void
+        + __construct() : void
         -{static} create_tables() : void
-        +{static} default_allergenen() : array
-        -{static} insert_standard_data() : void
-        +{static} tabsonpage() : void
+        +{static} initialize() : void
+        +{static} allergens_options() : array
+        +{static} allergy_icon_options() : array
+        +{static} icon_options() : array
+        +{static} insert_standard_data() : void
     }
 
     class Allergens_Dietary_Ictoria_Product_Settings{
         -{static} _instance : Allergens_Dietary_Ictoria_Product_Settings
-        +{static} instance() : void
+        + __construct() : void
         + data_tab(product_data_tabs:array) : array
         + data_fields() : void
         + save_product_options(post_id:int) : void
@@ -52,14 +63,18 @@ package "php"{
 
     class Allergens_Dietary_Ictoria_Products{
         -{static} _instance : Allergens_Dietary_Ictoria_Products
+        +{static} instance() : Allergens_Dietary_Ictoria_Products
+        + __construct() : void
         + show_product_options() : void
         + render_html(data:array): string
 
     }
 
     class Allergens_Dietary_Ictoria_Wc_Integration_Settings{
+        + __construct() : void
         + init_form_fields() : void
-        +generate_allergensdietary_htnl() : void
+        + generate_allergensdietary_html() : void
+        + save_settings(post:array) : void
         +{static} plugin_action_links(links:array) : array
     }
     package "forms"{
@@ -90,6 +105,7 @@ package "php"{
 
         class Allergens_Dietary_Ictoria_Allergens_Form{
             - _allergen : array
+            + __construct(): void
             + showForm(allergenName:String) : void
             + submit(data:array) : void
             + sanitize(data:array) : array
@@ -97,10 +113,10 @@ package "php"{
         }
 
         class Allergens_Dietary_Ictoria_License_Form{
+            + __construct(): void
             + showForm(allergenName:String) : void
             + submit(data:array) : void
             + sanitize(data:array) : array
-            - check_license_key(key:string) : boolean
         }
     }
 
@@ -123,9 +139,8 @@ package "php"{
             + addAttachment(data:array) : boolean
             + checkAttachmentExists(attachmentName:string) : boolean
             + updateAttachment(data:array, oldName:string) : void
-            + getAttachment(attachmentName:string) : array
             - placeAttachment(data:array) : void
-            + {static} attachment_insert(result:array) : array
+            + {static} attachment_insert(result:array) : void
         }
 
         class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries{
@@ -138,6 +153,11 @@ package "php"{
             + getAllergyAttachment(allergyAttachmentName:string) : array
             + {static} allergy_connection(result:array) : array
         }
+
+        class Allergen_Icon_Manager {
+            -{static} MIME_TYPES : array
+            +{static} update_allergen_icons() : void
+        }
     }
     package "lists" {
         class Allergens_Dietary_Ictoria_Info{
@@ -146,35 +166,23 @@ package "php"{
             + {static} getStyles() : void
         }
     }
-    class Allergen_Icon_Manager {
-        -{static} MIME_TYPES : array
-        +{static} update_allergen_icons(allergen_id : int, new_icon_path : string) : void
-        +{static} validate_mime_type(file : string) : boolean
-    }
 
-    class MyPluginAddMenu {
-        + updateallergens() : void
-        + add_allergen_menu() : void
-    }
+    package "tabs" {
+        class Allergens_Dietary_Ictoria_Tabs{
+            + showtabs() : void
+            + showpages() : void
+            +{static} getInstance() : Allergens_Dietary_Ictoria_Tabs
+            +{static} getStyles() : void
 
-    class DBConnection {
-        + update_allergen_icon(allergen_id : int, new_icon_path : string) : boolean
-        + get_allergen_by_id(allergen_id : int) : Allergen
-    }
-
-    class Allergen {
-        + allergen_id : int
-        + name : string
-        + icon_path : string
-        + description : string
-    }
-
-    MyPluginAddMenu <.. Allergen_Icon_Manager : calls
-    MyPluginAddMenu <.. DBConnection : calls
-    DBConnection  --  Allergen : retrieves
+        }
+    }  
 }
 
 package Allergens_Dietary_Ictoria{
+    class load_language{
+        + __construct() : void
+        + translation_init() : void
+    }
     class Allergens_Dietary_Ictoria_Startup{
         +{static} on_activation : void
         +{static} on_deactivation : void
@@ -197,6 +205,7 @@ FormType  <.. Allergens_Dietary_Ictoria_Form
 Allergens_Dietary_Ictoria_Form o-r-> I_Allergens_Dietary_Ictoria_Form
 Allergens_Dietary_Ictoria_License_Form ..|> I_Allergens_Dietary_Ictoria_Form
 Allergens_Dietary_Ictoria_Allergens_Form .u.|> I_Allergens_Dietary_Ictoria_Form
+Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Tabs : uses
 Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Allergen_Queries : uses
 Allergens_Dietary_Ictoria_Allergens_Form .r.> Allergens_Dietary_Ictoria_Attachment_Queries : uses
 Allergens_Dietary_Ictoria_Allergens_Form ..> Allergens_Dietary_Ictoria_Allergy_Attachment_Queries : uses

@@ -15,15 +15,16 @@ class Allergens_Dietary_Ictoria_Activator {
 
 	public static function activate() {
 		if ( self::$counter === 0 ) {
-			self::create_tables();
-			self::insert_standard_data();
-			// self::add_fk_tables();
 			++self::$counter;
-		}
+			
+				self::create_tables();
+				self::insert_standard_data();
+
 		if ( self::$counter > 0 ) {
 			return;
 		}
 	}
+}
 
 	public function __construct()
 	{ 		
@@ -334,7 +335,8 @@ self::$_ICON_OPTIONS = array(
         CONSTRAINT FK_AllergyAttch_Allergy
         FOREIGN KEY (allergy_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_allergy(allergy_name) ON UPDATE CASCADE ,
         CONSTRAINT FK_AllergyAttch_Attch
-        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name) ON UPDATE CASCADE) 
+        FOREIGN KEY (attachment_name) REFERENCES {$wpdb->prefix}allergens_dietary_ictoria_attachments(attachment_name) ON UPDATE CASCADE,
+		CONSTRAINT U_AllergyAttach_Allergy UNIQUE (allergy_name)) 
         "
 		);
 

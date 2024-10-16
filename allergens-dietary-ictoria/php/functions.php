@@ -1,5 +1,8 @@
 <?php
 // exit if user can access this file directly
+
+use LDAP\Result;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -15,6 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Allergens_Dietary_Ictoria_Functions {
 
+	private static ?self $_instance = null;
+
 	// function to get a translation of all text contained within __() functions throughout the plugin IF the .mo and .po files for the local/server language are available
 	public static function load_textdomain() {
 		load_plugin_textdomain( __( 'allergens-dietary-ictoria', 'allergens-dietary-ictoria' ), false, basename( ALLERGENS_DIETARY_ICTORIA_FILE ) . '/l10n' );
@@ -27,7 +32,7 @@ class Allergens_Dietary_Ictoria_Functions {
 	
 	//Get all allergens and dietary options added by this plugin from the WP options table
 	public static function get_options(){
-		return get_option('allergens_dietary_ictoria_options');
+		return get_option( __( 'allergens_dietary_ictoria_options', 'allergens-dietary-ictoria' ));
 	}
 
 	// //adds the external css file(s) to the current WP execution
@@ -108,3 +113,6 @@ class Allergens_Dietary_Ictoria_Functions {
 		}
 	}
 }
+
+
+//Allergens_Dietary_Ictoria_Functions::default_options();

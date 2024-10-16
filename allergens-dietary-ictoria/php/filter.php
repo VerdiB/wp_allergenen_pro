@@ -23,7 +23,10 @@ class Allergens_Dietary_Ictoria_Filter {
 		// Create variable that is used in the loops
 		$categories = array();
 
-		$html = '<form method="post">';
+		$html = '<form id="allergens-ictoria" method="post">';
+
+		echo '<button type="button" id="dropdown-ictoria">filters</button>';
+
 		// Create the HTML for all filter options, separating them by category
 		foreach ( $options as $key => $value ) {
 			// Create array entries if they do not exist for the relevant category
@@ -41,7 +44,7 @@ class Allergens_Dietary_Ictoria_Filter {
 				$categories[ $value['category'] ] .= '<div>
 					<input type="checkbox" class="checkbox ' . $value['category'] . '" name="allergen_filter_options[' . $key . ']" value="1" ' . $checked . '/>
 					<input type="hidden" name="allergen_filter_action[' . $key . ']" value="' . esc_attr( $value['filter-action'] ) . '"/>
-					<span>' . $value['filter-extra'] . $value['title'] . '</span>
+					<span>' . __($value['filter-extra'], 'allergens-dietary-ictoria') . __($value['title'], 'allergens-dietary-ictoria') . '</span>
 				</div>';
 			}
 		}
@@ -54,7 +57,7 @@ class Allergens_Dietary_Ictoria_Filter {
                 </div>' . $value;
 			}
 		}
-		$html .= '<input type="submit" name="allergen_filter" value="Filter">';
+		$html .= '<input type="submit" class="filter-ictoria" name="allergen_filter" value="Filter">';
 		// Added clear filter link
 		$html .= '<a href="' . get_permalink( wc_get_page_id( 'shop' ) ) . '" class="button clear-filters">Clear Filters</a>';
 		$html .= '</form>';
@@ -88,6 +91,7 @@ class Allergens_Dietary_Ictoria_Filter {
 						'key'     => 'allergens_dietary_ictoria', // Key of the custom field
 						'value'   => '"' . $key . '"', // The value to compare (key is the option name)
 						'compare' => $compare,
+						
 					);
 				}
 
