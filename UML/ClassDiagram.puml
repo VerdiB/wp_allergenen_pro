@@ -89,7 +89,7 @@ package "php"{
             + get_bulk_actions() : array
             # edit_row_action(id:string) : string
             + handle_row_actions(item:array, column_name:string, primary:string) : array
-            - build_action_url(action:string, item:object) : string
+            - build_action_url(action:string, item:array) : string
             # single_row_columns(item:object) : void
             + get_columns() : array
             + prepare_items() : void
