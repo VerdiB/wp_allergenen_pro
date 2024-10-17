@@ -68,19 +68,30 @@ class Allergens_Dietary_Ictoria_Form {
 	}
 
 	public function showForm( string $allergenName = null ) {
+		error_log("triggerd");
 
 		if ( ! empty( $_POST ) ) {
 			$_data = $_POST;
 		}
+
+	if ($_GET['page'] !== "allergens-dietary-show-allergens"){
 		if ( ! empty( $_FILES ) ) {
 			$_data = array_merge( $_data, $_FILES );
 		}
+	}
+
 		if ( ! empty( $_POST['submit'] ) ) {
 			self::$_formObject->submit( $_data );
 		}
 
-		echo '<div class="allergens_form"><form action="" method="post" enctype="multipart/form-data" class="add_allergens_form">';
-		self::$_formObject->showForm( $allergenName );
-		echo '</form></div>';
+		if ($_GET['page'] == "allergens-dietary-show-allergens"){
+			echo '<div class="allergens_table_form" style="display: none;" id="' . $allergenName . '_form">';
+			self::$_formObject->showForm( $allergenName );
+			echo '</div>';
+		}else{
+			echo '<div class="allergens_form"><form action="" method="post" enctype="multipart/form-data" class="add_allergens_form">';
+			self::$_formObject->showForm( $allergenName );
+			echo '</form></div>';
+		}
 	}
 }

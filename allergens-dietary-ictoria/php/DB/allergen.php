@@ -4,7 +4,6 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-
 /**
  * @class Allergens_Dietary_Ictoria_Allergen_Queries
  * @brief This class is a singleton that handles all the queries for the allergens and dietary restrictions DB table.
@@ -343,6 +342,11 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 				$format
 			);
 		}
+	}
+
+	public static function quickEdit($item){
+		
+		Allergens_Dietary_Ictoria_Form::getInstance()->showForm($item);
 	}
 
 	public static function singleActivationUpdate()
