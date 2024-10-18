@@ -113,3 +113,4 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 		}
 	}
 }
+

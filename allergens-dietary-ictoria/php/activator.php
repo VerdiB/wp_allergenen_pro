@@ -324,8 +324,7 @@ self::$_ICON_OPTIONS = array(
 			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_allergy(
         allergy_name VARCHAR(50) NOT NULL PRIMARY KEY,
         allergy_description VARCHAR(255),
-        is_allergy BOOLEAN NOT NULL DEFAULT 1,
-		is_active BOOLEAN NOT NULL DEFAULT 1)"
+        is_allergy BOOLEAN NOT NULL DEFAULT 1)"
 		);
 
 		$sql_allergy_attachment = $wpdb->query(
@@ -384,7 +383,7 @@ self::$_ICON_OPTIONS = array(
 			$allergy_name = 'Nuts';  // Ensure this is correctly defined
 
 			$sql = $wpdb->prepare(
-    			"SELECT allergy_name FROM $table_name WHERE allergy_name = %s",
+    			"SELECT COUNT(*) FROM $table_name WHERE allergy_name = %s",
     			$allergy_name
 			);
 
