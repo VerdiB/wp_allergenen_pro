@@ -18,7 +18,10 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 	private function __construct() {}
 
 	public function addAttachment( array $data ) {
-		global $wpdb;
+
+		error_log("adding");
+
+		/*global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
 
@@ -30,13 +33,15 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 			)
 		);
 
-		$this->placeAttachment( $data );
+		$this->placeAttachment( $data );*/
 
 		return ( isset( $wpdb->insert_id ) ) ? true : false;
 	}
 
 	public function checkAttachmentExists( string $attachmentName ) {
 		global $wpdb;
+
+		var_dump($attachmentName . "hhcegcuyceeeee");
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
 
@@ -47,12 +52,16 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 
 		$result = $wpdb->get_row( $sql, ARRAY_A );
 
+		var_dump($result);
+
 		return ( ! empty( $result ) ) ? true : false;
 	}
 
 
 	public function updateAttachment( array $data, string $oldName ) {
 		global $wpdb;
+
+		error_log("updating");
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
 
@@ -79,6 +88,8 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 	 * @author V.B.
 	 */
 	private function placeAttachment( array $data ) {
+		error_log("place");
+
 		$upload_dir = wp_upload_dir();
 		$upload_dir = $upload_dir['basedir'] . '/allergens-dietary-ictoria/icons/custom/';
 
@@ -95,6 +106,8 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 
 	public static function attachment_insert( array $result ){
 		global $wpdb;
+
+		error_log("inserting");
 
 		//get database table
 		$table_icons = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';

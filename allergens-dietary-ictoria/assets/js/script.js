@@ -31,16 +31,16 @@ function dropdown_form(){
 function quick_edit(form){
     var field = form.querySelector('.update_form');
     var selectdropdown = field.querySelector('.type')
-    //var allselectdropdownoptions = selectdropdown.querySelectorAll('.option')
+    var allselectdropdownoptions = selectdropdown.querySelectorAll('.option')
     var allinputs = field.querySelectorAll('.update_')
 
     allinputs.forEach(input => {
         input.disabled = false;
     });
 
-   /* selectdropdown.forEach(option => {
+   allselectdropdownoptions.forEach(option => {
         option.disabled = false;
-    });*/
+    });
 
     form.style.display = 'block';
 }

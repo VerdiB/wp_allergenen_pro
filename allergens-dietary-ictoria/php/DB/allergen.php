@@ -46,6 +46,9 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 	{
 		global $wpdb;
 
+		
+		error_log(6);
+
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
 		$wpdb->insert(
@@ -68,6 +71,9 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 	{
 		global $wpdb;
 
+		
+		error_log(5);
+
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
 		$sql = $wpdb->prepare(
@@ -84,6 +90,10 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 	{
 		global $wpdb;
 
+		
+		error_log(4);
+		/*
+
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
 		$wpdb->update(
@@ -96,12 +106,15 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			array(
 				'allergy_name' => $data['allergen_name_hidden'],
 			)
-		);
+		);*/
 	}
 
 	public function getAllergen(string $allergenName)
 	{
 		global $wpdb;
+
+		
+		error_log(3);
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
@@ -117,6 +130,9 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 	public static function includeItems()
 	{
+
+		
+		error_log(2);
 		if (!class_exists('Allergens_Dietary_Ictoria_Allergy_Attachment_Queries')) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
 		}
@@ -184,6 +200,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 	public static function is_default_allergen(string $allergy_name): bool
 	{
+
+		error_log(1);
 		global $wpdb;
 
 		$table_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -212,6 +230,9 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 	public static function delete_allergen_by_name(string $allergy_name)
 	{
+
+		
+		error_log(7);
 		try {
 			global $wpdb;
 
@@ -284,6 +305,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 	}
 
 	public static function getItems(){
+		
+		error_log(8);
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 		$data = $wpdb->get_results("SELECT allergy_name, allergy_description, is_allergy, is_active FROM $table_name", ARRAY_A);
@@ -292,6 +315,9 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 	}
 
 	public static function getColumns(){
+
+		
+		error_log(9);
 		global $wpdb;
         $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 		$columns = $wpdb->get_results("SHOW COLUMNS FROM $table_name", ARRAY_A);
@@ -301,6 +327,9 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 	public static function activationUpdate(array $data)
 	{
+
+		
+		error_log("a");
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -351,6 +380,9 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 	public static function singleActivationUpdate()
 	{
+
+		
+		error_log("b");
 
 		global $wpdb;
 
