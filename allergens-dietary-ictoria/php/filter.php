@@ -80,6 +80,7 @@ class Allergens_Dietary_Ictoria_Filter {
 						'key'     => 'allergens_dietary_ictoria', // Key of the custom field
 						'value'   => $key, // The value to compare (key is the option name)
 						'compare' => $compare,
+						
 					);
 				}
 

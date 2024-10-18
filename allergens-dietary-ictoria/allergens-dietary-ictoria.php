@@ -85,8 +85,27 @@ class Allergens_Dietary_Ictoria_Startup
 			// add the initial_setup_done option to allergens_dietary_ictoria_settings (value: true) to prevent this popup from showing on every activation after the first
 		}
 
-		$options = Allergens_Dietary_Ictoria_Functions::get_options();
-		// set the default options in the WooCommerce options table if they do not exist
+		$folderName = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
+
+		if (!file_exists($folderName)) {
+		
+			mkdir("/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache");
+
+		}
+		
+		$map = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
+		$file = '/cache.php';
+
+		$completepath = $map . $file;
+
+		if (!file_exists($completepath)) {
+			Allergens_Dietary_Ictoria_Activator::activate();
+		}
+
+		$inhoud = "<?php\n";
+		$inhoud .= "// this is an automaticly generated PHP-file\n";
+
+		file_put_contents($completepath, $inhoud);
 		if (empty($options)) {
 			update_option('allergens_dietary_ictoria_options', $options, true);
 		}
@@ -149,7 +168,6 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 		// echo 'looking in the main file';
 
 		include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/activator.php';
-		Allergens_Dietary_Ictoria_Activator::activate();
 	}
 	// load generic files used by the plugin when active
 	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/woocommerce/products.php';

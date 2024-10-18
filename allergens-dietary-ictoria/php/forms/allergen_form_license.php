@@ -40,7 +40,7 @@ class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Icto
 		// TODO: Getting license key that is in use by site if it exists
 		$html  = '<fieldset>
 		<label for="license_key">' . __( 'License key', 'allergens-dietary-ictoria' ) . '</label><br>
-		<input type="text" name="license_key" id="license_key" value=""><br><br>
+		<input type="text" name="license_key" id="license_key" value="">' . _( 'License key', 'allergens-dietary-ictoria' ) . '<br><br>
 		<input type="submit" class="button button-primary" id="submitButton" name="submit" value="' . __( 'Verify license key', 'allergens-dietary-ictoria' ) . '">';
 		$html .= '</fieldset>';
 
@@ -51,8 +51,6 @@ class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Icto
 		if ( ! empty( $data ) ) {
 			$post_data = $this->sanitize( $data );
 			// TODO: save the license key in the external database
-			Allergens_Dietary_Ictoria_Functions::getInstance()->default_options();
-			Allergens_Dietary_Ictoria_Functions::getInstance()->includeItems();
 		} else {
 			return;
 		}
