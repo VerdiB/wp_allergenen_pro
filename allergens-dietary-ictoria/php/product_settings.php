@@ -32,15 +32,8 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 	// function that shows all available options when the menu tab of this plugin is selected
 	public function data_fields() {
 		global $post;
-		global $wpdb;
 
-		$table_allergens = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-		$query = $wpdb->prepare(
-			"SELECT * FROM $table_allergens"
-		);
-
-		$options = $wpdb->get_results($query, ARRAY_A);
-	
+		$options = Allergens_Dietary_Ictoria_Functions::get_options();
 		$list    = get_post_meta( $post->ID, __( 'allergens_dietary_ictoria' ), true );
 		if ( empty( $list ) ) {
 			$list = array();
@@ -51,16 +44,16 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 		$active     = array();
 
 		$html = '<div id="allergens_dietary_ictoria_product_data" class="panel woocommerce_options_panel">';
-		
 		// create the html for all options, seperating them by category
 		foreach ( $options as $key => $value ) {
-
 			// create array entries if they do not exist for the relevant category
-			if ( ! in_array( $value['is_allergy'], array_keys( $categories ) ) ) {
-				$categories[ $value['is_allergy'] ] = '';
-				$active[ $value['is_allergy'] ]     = 0;
+			if ( ! in_array( $value['category'], array_keys( $categories ) ) ) {
+				$categories[ $value['category'] ] = '';
+				$active[ $value['category'] ]     = 0;
 			}
-				++$active[ $value['is_allergy'] ];
+			// check if option is globally enabled
+			if ( $value['status'] == 'active' ) {
+				++$active[ $value['category'] ];
 
 				$checked = '';
 				// check if the option on this product is active
@@ -69,26 +62,22 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 					$checked = 'checked="checked"';
 				}
 				// add the html to the relevant array entry
-				$categories[ $value['is_allergy'] ] .= '<div class="allergen-field">
-					<input type="checkbox" class="checkbox ' . $value['is_allergy'] . '" name="' . $key . '_allergens_dietary_ictoria_option" id="' . $key . '_allergens_dietary_ictoria_option" value="1" ' . $checked . '/>
+				$categories[ $value['category'] ] .= '<div class="allergen-field">
+					<input type="checkbox" class="checkbox ' . $value['category'] . '" name="' . $key . '_allergens_dietary_ictoria_option" id="' . $key . '_allergens_dietary_ictoria_option" value="1" ' . $checked . '/>
 					<span class="description">
-						<img alt="' . $value['allergy_name'] .'" src="' . $value['attachment_path'] . '"/> 
+						<img alt="' . $value['title'] .'" src="' . $value['icon'] . '"/>&nbsp;' . $value['title'] . '
 					</span>
 				</div>';
-				
+			}
 		}
 
 		// create the full options html. Does not show the category if all options of the given category are globally disabled
 		foreach ( $categories as $key => $value ) {
 			$checked = '';
-
-			if ( $key == 1 ) {
-				$html .= '<div class="allergen-div"><p> Allergenen:</p>' . $value . '</div>';
-			}else{
-				$html .= '<div class="allergen-div"><p> Dieten:</p>' . $value . '</div>';
+			if ( $active[ $key ] > 0 ) {
+				$html .= '<div class="allergen-div"><p>' . __( ucfirst( $key ), 'allergens-dietary-ictoria' ) . ':</p>' . $value . '</div>';
 			}
 		}
-
 		$html .= '</div>';
 
 		echo $html;
@@ -96,14 +85,7 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 
 	// function that stores all selected options in the productdata of the currently selected product
 	public function save_product_options( $post_id ) {
-		global $wpdb;
-
-		$table_allergens = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-		$query = $wpdb->prepare(
-			"SELECT * FROM $table_allergens"
-		);
-
-		$options = $wpdb->get_results($query, ARRAY_A);
+		$options = Allergens_Dietary_Ictoria_Functions::get_options();
 
 		$list = array();
 		foreach ( $options as $key => $value ) {
