@@ -4,12 +4,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
+}
+
+/**
+ * @brief This class contains functions that are used for the global plugin settings within WooCommerce
+ * @since 1.0.0
+ * @important
+ * This class might be removed in the future if it is deemed not needed.
+ * This only if the plugin is incorporating it's own dashboard. 
+ */
+
 // this class extension contains functions that are used for the global plugin settings within WooCommerce
 class Allergens_Dietary_Ictoria_Wc_Integration_Settings extends WC_Integration {
 
 	public function __construct() {
 		global $woocommerce;
-		$this->id                 = __( 'allergens_dietary_ictoria' );
+		$this->id                 = 'allergens_dietary_ictoria';
 		$this->method_title       = __( 'Allergens and Dietary Ictoria plugin settings', 'allergens-dietary-ictoria' );
 		$this->method_description = '';
 
@@ -65,10 +77,10 @@ class Allergens_Dietary_Ictoria_Wc_Integration_Settings extends WC_Integration {
 			}
 			// check if the option is active or not
 			$checked = '';
-			if ( $value['status'] == 'active' ) {
-				$checked = 'checked="checked"';
-				++$active[ $value['category'] ];
-			}
+			// if ( $value['status'] == 'active' ) {
+			// 	$checked = 'checked="checked"';
+			// 	++$active[ $value['category'] ];
+			// }
 			// add the html to the relevant array entry
 			$categories[ $value['category'] ] .= '<div class="allergen-field">
 				<input type="checkbox" class="checkbox ' . $value['category'] . '" name="' . $key . '" id="' . $key . '_allergens_dietary_ictoria_option" value="1" ' . $checked . '/>
