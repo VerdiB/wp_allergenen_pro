@@ -55,9 +55,7 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 
 		$result = $wpdb->get_row( $sql, ARRAY_A );
 
-		var_dump($result);
-
-		return ( ! empty( $result ) ) ? true : false;
+		return ( ! empty( $result ) ) ? false : true;
 	}
 
 
@@ -114,19 +112,29 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 
 		//get database table
 		$table_icons = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
-
-		
-		foreach($result as $key => $value){
-
+	if ($_GET['page'] == 'allergens-dietary-add-allergen'){
 		//insert allergies
 			$wpdb->insert(
 				$table_icons,
-				array(
-					'attachment_path'  => $value['path'],
-					'attachment_name'   => $value['name'],
-				)
-			); 
-		}
+			array(
+				'attachment_path'  => $result['path'],
+				'attachment_name'   => $result['name'],
+			)
+		); 
+	}else{
+		foreach($result as $key => $value){
+
+			//insert allergies
+				$wpdb->insert(
+					$table_icons,
+					array(
+						'attachment_path'  => $value['path'],
+						'attachment_name'   => $value['name'],
+					)
+				); 
+			}
 	}
 }
+}
+
 

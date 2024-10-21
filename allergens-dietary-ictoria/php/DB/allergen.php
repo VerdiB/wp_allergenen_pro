@@ -47,7 +47,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		global $wpdb;
 
 		
-		error_log(6);
+		error_log("neeeeeeeeeee");
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
@@ -64,6 +64,25 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 				'%d',
 			)
 		);
+
+		$attachment = array(
+			'name' => $data['allergen_icon']['name'],
+			'path' => $data['allergen_icon']['full_path'],
+		);
+
+		$attachment_allergen = array(
+			'name' => $data['allergen_icon']['name'],
+			'title' => $data['allergen_name'],
+		);
+
+		error_log("error: " . $data['allergen_icon']['name']);
+		error_log("error: " . $data['allergen_icon']['full_path']);
+		error_log("error: " . $data['allergen_name']);
+
+		//activate other inserters
+		Allergens_Dietary_Ictoria_Attachment_Queries::attachment_insert($attachment);
+		Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::allergy_connection($attachment_allergen);
+
 		return (isset($wpdb->insert_id)) ? true : false;
 	}
 
@@ -212,8 +231,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 	public static function is_default_allergen(string $allergy_name): bool
 	{
-
-		error_log(1);
 		global $wpdb;
 
 		$table_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -222,8 +239,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			throw new Exception('No correct allergy given.');
 		}
 
-		// $allegen_exists = $wpdb->get_var("SELECT allergy_name FROM $table_allergy WHERE ");
-
 		$is_default = $wpdb->get_var($wpdb->prepare(
 			"SELECT is_default_option 
 				 FROM $table_allergy 
@@ -231,7 +246,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			$allergy_name
 		));
 
-		return $is_default;
+		return $is_default == 1 ? true : false;
 	}
 
 	public static function send_header(string $page = null)

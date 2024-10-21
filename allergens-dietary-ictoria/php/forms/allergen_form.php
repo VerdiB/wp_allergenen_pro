@@ -92,7 +92,7 @@ class Allergens_Dietary_Ictoria_Form {
 			echo '</form></div>';
 		}
 		print_r("start");
-		var_dump($_POST);
+		//ar_dump($_POST);
 		print_r("end");
 	}
 }

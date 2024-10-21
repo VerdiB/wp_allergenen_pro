@@ -143,9 +143,9 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
         if ($colorboolean == 1){
             $color = "grey";
-            $disabled = "disabled";
+            $disabled = "none";
         }else{
-            $disabled = "";
+            $disabled = "auto";
             if (esc_attr($action) == "delete"){
                 $color = "red";
             }else{
@@ -166,10 +166,10 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         Allergens_Dietary_Ictoria_Form::getInstance()->showForm(esc_attr($item['allergy_name']));
 
         return sprintf(
-            '<a %s class="%s" id="%s" style="color: ' . $color . ';" href="#&item=%s">%s</a>',
-            $disabled,
+            '<a class="%s" id="%s" style="color: ' . $color . '; pointer-events: %s;" href="#&item=%s">%s</a>',
             esc_attr($action),
             esc_attr($item['allergy_name']),
+            $disabled,
             esc_attr($item['allergy_name']),
             ucfirst(str_replace('_', ' ', $action)),
         );
