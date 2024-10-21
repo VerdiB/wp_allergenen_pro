@@ -92,7 +92,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 		
 		error_log(4);
-		/*
+		
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
@@ -106,7 +106,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			array(
 				'allergy_name' => $data['allergen_name_hidden'],
 			)
-		);*/
+		);
 	}
 
 	public function getAllergen(string $allergenName)

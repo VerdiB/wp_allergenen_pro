@@ -30,10 +30,11 @@ function dropdown_form(){
 
 function quick_edit(form){
     var field = form.querySelector('.update_form');
-    var selectdropdown = field.querySelector('.type')
-    var allselectdropdownoptions = selectdropdown.querySelectorAll('.option')
-    var allinputs = field.querySelectorAll('.update_')
+    var selectdropdown = field.querySelector('.type');
+    var allselectdropdownoptions = selectdropdown.querySelectorAll('.option');
+    var allinputs = field.querySelectorAll('.update_');
 
+    if (form.style.display == "none"){
     allinputs.forEach(input => {
         input.disabled = false;
     });
@@ -43,13 +44,28 @@ function quick_edit(form){
     });
 
     form.style.display = 'block';
+}else{
+    allinputs.forEach(input => {
+        input.disabled = true;
+    });
+
+   allselectdropdownoptions.forEach(option => {
+        option.disabled = true;
+    });
+
+    form.style.display = 'none';
+}
 }
 
 document.getElementById('the-list').addEventListener('click', function(event) {
     if (event.target.classList.contains('quick_edit')) {
-        var form = event.target.id + "_form";
-        var get_form = document.getElementById(form);
-        quick_edit(get_form);
+        var quick_edit = event.target.classList.contains('quick_edit')
+        
+        if (quickEdit.disabled !== true){
+            var form = event.target.id + "_form";
+            var get_form = document.getElementById(form);
+            quick_edit(get_form);
+        }
     }
 });
 

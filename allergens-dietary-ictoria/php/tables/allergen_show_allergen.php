@@ -129,19 +129,23 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
     {
         $color = "black";
         $colorboolean = 0;
+        $disabled = "";
+        $is_default = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
 
         self::load_js();
 
-        if (esc_attr($action) == "delete"){
-            $is_default = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
+        if (esc_attr($action) == "delete" || esc_attr($action) == "quick_edit"){
             $colorboolean = $is_default::is_default_allergen($item['allergy_name']);
         }else{
             $colorboolean = 0;
+            error_log(esc_attr($action) . "is zero");
         }
 
         if ($colorboolean == 1){
             $color = "grey";
+            $disabled = "disabled";
         }else{
+            $disabled = "";
             if (esc_attr($action) == "delete"){
                 $color = "red";
             }else{
@@ -162,7 +166,8 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         Allergens_Dietary_Ictoria_Form::getInstance()->showForm(esc_attr($item['allergy_name']));
 
         return sprintf(
-            '<a class="%s" id="%s" style="color: ' . $color . ';" href="#&item=%s">%s</a>',
+            '<a %s class="%s" id="%s" style="color: ' . $color . ';" href="#&item=%s">%s</a>',
+            $disabled,
             esc_attr($action),
             esc_attr($item['allergy_name']),
             esc_attr($item['allergy_name']),
