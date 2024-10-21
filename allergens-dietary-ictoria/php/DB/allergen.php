@@ -66,13 +66,27 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
 		$sql = $wpdb->prepare(
-			"SELECT allergy_name FROM $table_name WHERE allergy_name = %s",
+			"SELECT * FROM $table_name WHERE allergy_name = %s",
 			$allergenName
 		);
 
 		$result = $wpdb->get_results( $sql );
 
 		return ( count( $result ) > 0 ) ? true : false;
+	}
+
+	public function getAllAllergens() {
+		global $wpdb;
+
+		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+
+		$sql = "SELECT allergy_name, is_allergy 
+		FROM $table_name
+		ORDER BY  is_allergy DESC, allergy_name ASC";
+
+		$result = $wpdb->get_results( $sql , ARRAY_A);
+
+		return $result;
 	}
 
 	public function updateAllergens( array $data ) {
@@ -91,20 +105,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 				'allergy_name' => $data['allergen_name_hidden'],
 			)
 		);
-	}
-
-	public function getAllAllergens() {
-		global $wpdb;
-
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-
-		$sql = "SELECT allergy_name, is_allergy 
-		FROM $table_name
-		ORDER BY  is_allergy DESC, allergy_name ASC";
-
-		$result = $wpdb->get_results( $sql , ARRAY_A);
-
-		return $result;
 	}
 
 	public function getAllergen( string $allergenName ) {
@@ -153,8 +153,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 
 	foreach($allergens_result as $key => $value){
 		$sql = $wpdb->prepare(
-			"SELECT allergy_name FROM $table_allergens WHERE allergy_name = %s"
-			,$value['title']);
+			"SELECT * FROM $table_allergens WHERE allergy_name = '" . $value['title'] . "'"
+		);
 			$exists = $wpdb->get_var( $sql );
 		if ($exists == 0){
 			$isallergy = 0;
@@ -180,5 +180,96 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 	//activate other inserters
 	Allergens_Dietary_Ictoria_Attachment_Queries::attachment_insert( $icon_allergy_result );
 	Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::allergy_connection( $icon_result );
+}
+
+public static function activationUpdate( array $data ) {
+	global $wpdb;
+
+	$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+
+	$updatenumber = 0;
+
+	foreach ($data['item'] as $key => $value){
+
+		$sql = $wpdb->prepare(
+			"SELECT * FROM $table_name WHERE allergy_name = '%s'",
+			$value
+		);
+
+		$result = $wpdb->get_row( $sql );
+
+		if (!empty($result)){
+
+		if ($result->is_active == 0){
+			$updatenumber = 1;
+		}else{
+			$updatenumber = 0;
+		}
+	}
+
+	$data = array(
+		'is_active' => $updatenumber,
+	);
+	
+	$where = array(
+		'allergy_name' => $value
+	);
+	
+	$format = array('%s', '%s');
+
+	$wpdb->update(
+		$table_name,
+		$data,
+		$where,
+		$format
+	);
+}
+}
+
+public static function singleActivationUpdate(){
+
+	global $wpdb;
+
+	$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+
+	$updatenumber = 0;
+
+	if (isset($_GET['item'])){
+	$sql = $wpdb->prepare(
+		"SELECT allergy_name, is_active FROM $table_name WHERE allergy_name = '%s'",
+		$_GET['item']
+	);
+
+	$result = $wpdb->get_row( $sql );
+
+	if ($result->is_active == 0){
+		$updatenumber = 1;
+	}else{
+		$updatenumber = 0;
+	}
+
+	$data = array(
+		'is_active' => $updatenumber,
+	);
+	
+	$where = array(
+		'allergy_name' => $_GET['item']
+	);
+	
+	$format = array('%s', '%s');
+
+	$wpdb->update(
+		$table_name,
+		$data,
+		$where,
+		$format
+	);
+
+	if (!empty($_GET)) {
+		$url = strtok($_SERVER["REQUEST_URI"], '?');
+
+		header("Location: $url" . "?page=allergens-dietary-show-allergens");
+	}
+}
 }
 }
