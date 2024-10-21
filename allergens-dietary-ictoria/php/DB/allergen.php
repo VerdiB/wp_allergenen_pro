@@ -216,16 +216,10 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			$allergy_name
 		));
 
-		return $is_default;
+		return $is_default == 1 ? true : false;
 	}
 
-	public static function send_header(string $page = null)
-	{
-		$url = strtok($_SERVER["REQUEST_URI"], '?');
-		return header("Location: $url" . "?page=" . ($page ? $page : "allergens-dietary-show-allergens"));
-	}
-
-	public static function delete_allergen_by_name(string $allergy_name, string $page_to = null)
+	public static function delete_allergen_by_name(string $allergy_name)
 	{
 		try {
 			global $wpdb;
@@ -240,6 +234,9 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 			$is_default = self::is_default_allergen($allergy_name);
 
+			$url = strtok($_SERVER["REQUEST_URI"], '?');
+
+
 			static $error_displayed = false;
 
 			if ($is_default) {
@@ -248,15 +245,14 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 				}
 			}
 
-			$existing_attachment = $wpdb->get_var(
-				$wpdb->prepare(
-					"SELECT COUNT(attachment_name) 
+			$existing_attachment = $wpdb->prepare(
+				"SELECT COUNT(attachment_name) 
 					 FROM $table_allergy_attachment 
 					 WHERE allergy_name = %s",
-					$allergy_name
-				)
-			);
-			
+				$allergy_name
+			)
+			;
+
 			if ($existing_attachment > 1) {
 				$sql = $wpdb->prepare(
 					"DELETE aa, a 
@@ -264,7 +260,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
                  JOIN $table_allergy AS a 
                  ON a.allergy_name = aa.allergy_name
                  WHERE aa.allergy_name = %s  
-                 AND a.is_default_option != 1",
+                 AND a.is_default_option != TRUE",
 					$allergy_name
 				);
 			} else {
@@ -276,7 +272,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 					JOIN $table_attachment as am
 					ON am.attachment_name = aa.attachment_name
 					WHERE aa.allergy_name = %s  
-					AND a.is_default_option != 1",
+					AND a.is_default_option != TRUE",
 					$allergy_name
 				);
 			}
@@ -286,13 +282,13 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 					throw new Exception(__("Error deleting allergen: '" . $allergy_name . "'"));
 				}
 			}
-			self::send_header($page_to);
+			header("Location: $url" . "?page=allergens-dietary-show-allergens");
 
 		} catch (Exception $e) {
 			if (!$error_displayed) {
 				echo "Error: " . $e->getMessage();
 			}
-			self::send_header($page_to);
+			header("Location: $url" . "?page=allergens-dietary-show-allergens");
 
 		}
 
