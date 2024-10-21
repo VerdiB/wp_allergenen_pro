@@ -27,9 +27,20 @@
 	background-color: white;
 }
 
+.filter-ictoria{
+	margin-top: 12px;
+	margin-right: 12px;
+}
+
 .nav-tab
 {
 	line-height: 1;
+}
+
+#info_grid
+{
+	display: grid;
+	grid-template-columns: 50% 50%;
 }
 
 #tabs_flexbox > .tabs
@@ -88,6 +99,13 @@
 	border-bottom: 2px solid gray;
 	justify-content: left;
 	flex-direction: row;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.contains{
+	font-size: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	padding-top: 10px;
 }
 
 .allergen-field>input{
@@ -130,4 +148,15 @@
 	color: black;
 	margin-bottom: -10px;
 	padding-left: 0;
+}
+
+#dropdown-ictoria
+{
+	width: 100px;
+	height: 35px;
+	display: flex;
+	position: relative;
+	/*text-align: center;*/
+	/*font-weight: bolder;*/
+	/*font-size: 20px;*/
 }

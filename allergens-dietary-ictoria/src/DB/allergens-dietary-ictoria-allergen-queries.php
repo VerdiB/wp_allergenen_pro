@@ -106,4 +106,64 @@ class Allergens_Dietary_Ictoria_Allergen_Queries {
 
 		return $result;
 	}
+
+	public static function includeItems(){
+		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
+		}
+		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Attachment_Queries' ) ) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/attachment.php';
+		}
+
+		//get arrays
+		Allergens_Dietary_Ictoria_Activator::initialize();
+
+		$allergens_result = Allergens_Dietary_Ictoria_Activator::allergens_options();
+		$icon_allergy_result = Allergens_Dietary_Ictoria_Activator::allergy_icon_options();
+		$icon_result = Allergens_Dietary_Ictoria_Activator::icon_options();
+
+		global $wpdb;
+
+		//get database table
+		$table_allergens = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+				
+		$sql = $wpdb->prepare(
+			"SELECT * FROM $table_allergens WHERE allergy_name = 'alcohol'"
+		);
+
+		$exists = $wpdb->get_var( $sql );
+
+		//checks if database record of the standard allergies already exists
+		if ($exists == 0){
+
+	foreach($allergens_result as $key => $value){
+		$sql = $wpdb->prepare(
+			"SELECT * FROM $table_allergens WHERE allergy_name = '" . $value['title'] . "'"
+		);
+			$exists = $wpdb->get_var( $sql );
+		if ($exists == 0){
+			$isallergy = 0;
+
+		if ($value['category'] == "allergen"){
+				$isallergy = 1;
+			}else{
+				$isallergy = 0;
+		}
+		//insert allergies
+		$wpdb->insert(
+			$table_allergens,
+			array(
+				'allergy_name'  => $value['title'],
+				'allergy_description'    => $value['description'],
+				'is_allergy' => 	$isallergy,
+			)
+			); 
+			}
+		}
+	}
+
+	//activate other inserters
+	Allergens_Dietary_Ictoria_Attachment_Queries::attachment_insert( $icon_allergy_result );
+	Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::allergy_connection( $icon_result );
+}
 }
