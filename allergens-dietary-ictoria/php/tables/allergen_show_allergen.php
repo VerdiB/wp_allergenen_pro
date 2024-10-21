@@ -119,34 +119,18 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
     private function build_action_url($action, $item)
     {
-        $color = "black";
-        $colorboolean = 0;
-
-        if (esc_attr($action) == "delete"){
-            $is_default = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
-            $colorboolean = $is_default::is_default_allergen($item['allergy_name']);
-        }else{
-            $colorboolean = 0;
+        $is_default = false;
+        if (esc_attr($action) == "delete") {
+            $is_default = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->is_default_allergen($item['allergy_name']);
         }
 
-        if ($colorboolean == 1){
-            $color = "grey";
-        }else{
-            if (esc_attr($action) == "delete"){
-                $color = "red";
-            }else{
-                $color = "blue";
-            }
-        }
-        
-        return sprintf(
-            '<a style="color: ' . $color . ';" href="?page=%s&item=%s&action=%s&_wpnonce=%s">%s</a>',
+        return $is_default ? '<a style="color: grey;">' . ucfirst(str_replace('_', ' ', $action)) . '</a>' : sprintf(
+            '<a href="?page=%s&item=%s&action=%s&_wpnonce=%s">%s</a>',
             esc_attr($_REQUEST['page']),
             esc_attr($item['allergy_name']),
             esc_attr($action),
             wp_create_nonce('allergens_' . $action),
             ucfirst(str_replace('_', ' ', $action)),
-
         );
     }
 
@@ -229,6 +213,19 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         $this->_column_headers = [$this->get_columns(), [], []];
 
         $this->items = $data;
+
+        $per_page = $this->get_items_per_page('my_list_table_per_page', 10);
+        $current_page = $this->get_pagenum();
+        $total_items = count($this->items);
+        // Fetch data for the current page
+        $this->items = array_slice($data, ($current_page - 1) * $per_page, $per_page);
+
+        // Set pagination args
+        $this->set_pagination_args(array(
+            'total_items' => $total_items,
+            'per_page' => $per_page,
+            'total_pages' => ceil($total_items / $per_page)
+        ));
     }
 
     public function process_quick_action()

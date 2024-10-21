@@ -100,7 +100,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		);
 	}
 
-	public function getAllAllergens() {
+	public function getAllAllergens()
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -109,12 +110,13 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		FROM $table_name
 		ORDER BY  is_allergy DESC, allergy_name ASC";
 
-		$result = $wpdb->get_results( $sql , ARRAY_A);
+		$result = $wpdb->get_results($sql, ARRAY_A);
 
 		return $result;
 	}
 
-	public function getAllergen( string $allergenName ) {
+	public function getAllergen(string $allergenName)
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -159,14 +161,16 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		//checks if database record of the standard allergies already exists
 		if ($exists == 0) {
 
-	foreach($allergens_result as $key => $value){
-		$sql = $wpdb->prepare(
-			"SELECT allergy_name FROM $table_allergens WHERE allergy_name = %s"
-			,$value['title']);
-			$exists = $wpdb->get_var( $sql );
-		if ($exists == 0){
-			$isallergy = 0;
-			$isdefault = 0;
+			foreach ($allergens_result as $key => $value) {
+				$sql = $wpdb->prepare(
+					"SELECT allergy_name FROM $table_allergens WHERE allergy_name = %s"
+					,
+					$value['title']
+				);
+				$exists = $wpdb->get_var($sql);
+				if ($exists == 0) {
+					$isallergy = 0;
+					$isdefault = 0;
 					if ($value['default']) {
 						$isdefault = 1;
 					}
@@ -205,8 +209,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			throw new Exception('No correct allergy given.');
 		}
 
-		// $allegen_exists = $wpdb->get_var("SELECT allergy_name FROM $table_allergy WHERE ");
-
 		$is_default = $wpdb->get_var($wpdb->prepare(
 			"SELECT is_default_option 
 				 FROM $table_allergy 
@@ -223,7 +225,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		return header("Location: $url" . "?page=" . ($page ? $page : "allergens-dietary-show-allergens"));
 	}
 
-	public static function delete_allergen_by_name(string $allergy_name)
+	public static function delete_allergen_by_name(string $allergy_name, string $page_to = null)
 	{
 		try {
 			global $wpdb;
@@ -246,15 +248,16 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 				}
 			}
 
-			$existing_attachment = $wpdb->query(
-				"SELECT attachment_name 
-				 FROM $table_allergy_attachment 
-				 GROUP BY attachment_name 
-				 HAVING COUNT(attachment_name) > 1
-				 LIMIT 1"
+			$existing_attachment = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT COUNT(attachment_name) 
+					 FROM $table_allergy_attachment 
+					 WHERE allergy_name = %s",
+					$allergy_name
+				)
 			);
-
-			if ($existing_attachment) {
+			
+			if ($existing_attachment > 1) {
 				$sql = $wpdb->prepare(
 					"DELETE aa, a 
                  FROM $table_allergy_attachment AS aa
@@ -283,32 +286,33 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 					throw new Exception(__("Error deleting allergen: '" . $allergy_name . "'"));
 				}
 			}
-			self::send_header();
+			self::send_header($page_to);
 
 		} catch (Exception $e) {
-			if (!$error_displayed)
-			{
+			if (!$error_displayed) {
 				echo "Error: " . $e->getMessage();
 			}
-			self::send_header();
+			self::send_header($page_to);
 
 		}
 
 	}
 
-	public static function getItems(){
+	public static function getItems()
+	{
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 		$data = $wpdb->get_results("SELECT allergy_name, allergy_description, is_allergy, is_active FROM $table_name", ARRAY_A);
-	
+
 		return $data;
 	}
 
-	public static function getColumns(){
+	public static function getColumns()
+	{
 		global $wpdb;
-        $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 		$columns = $wpdb->get_results("SHOW COLUMNS FROM $table_name", ARRAY_A);
-	
+
 		return $columns;
 	}
 
