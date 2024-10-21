@@ -1,23 +1,28 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
-class Allergens_Dietary_Ictoria_Attachment_Queries {
+class Allergens_Dietary_Ictoria_Attachment_Queries
+{
 	private static ?self $_instance = null;
-	private const PATH              = ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/assets/icons/custom/';
+	private const PATH = ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/assets/icons/custom/';
 
-	public static function getInstance() {
-		if ( self::$_instance === null ) {
+	public static function getInstance()
+	{
+		if (self::$_instance === null) {
 			self::$_instance = new self();
 		}
 		return self::$_instance;
 	}
 
-	private function __construct() {}
+	private function __construct()
+	{
+	}
 
-	public function addAttachment( array $data ) {
+	public function addAttachment(array $data)
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
@@ -30,12 +35,13 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 			)
 		);
 
-		$this->placeAttachment( $data );
+		$this->placeAttachment($data);
 
-		return ( isset( $wpdb->insert_id ) ) ? true : false;
+		return (isset($wpdb->insert_id)) ? true : false;
 	}
 
-	public function checkAttachmentExists( string $attachmentName ) {
+	public function checkAttachmentExists(string $attachmentName)
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
@@ -45,13 +51,14 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 			$attachmentName
 		);
 
-		$result = $wpdb->get_row( $sql, ARRAY_A );
+		$result = $wpdb->get_row($sql, ARRAY_A);
 
-		return ( ! empty( $result ) ) ? true : false;
+		return (!empty($result)) ? true : false;
 	}
 
 
-	public function updateAttachment( array $data, string $oldName ) {
+	public function updateAttachment(array $data, string $oldName)
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
@@ -67,7 +74,104 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 			)
 		);
 
-		$this->placeAttachment( $data );
+		$this->placeAttachment($data);
+	}
+
+	public function update_allergen_icons(array $data, array $MIME_TYPES)
+	{
+		error_log("YES UPDATE!!");
+
+		if (!isset($data['allergen_icon']['name']) || !isset($data['allergen_icon_hidden'])) {
+			return;
+		}
+
+		$updated_icons = false;
+		$allergen_icon_hidden = $data['allergen_icon_hidden'];
+
+		foreach ($data['allergen_icon']['name'] as $allergy_name => $file_name) {
+			if (
+				!array_key_exists($allergy_name, $allergen_icon_hidden) ||
+				$data['allergen_icon']['error'][$allergy_name] !== UPLOAD_ERR_OK
+			) {
+				continue;
+			}
+
+			$file_type = wp_check_filetype($data['allergen_icon']['name'][$allergy_name]);
+			if (!in_array($file_type['type'], $MIME_TYPES)) {
+				echo '<p>' . __('The new file for: ' . $allergy_name . ' is not a valid image.', 'allergens-dietary-ictoria') . '</p>';
+				continue;
+			}
+
+			$allergen_prev_attachment_name = sanitize_file_name($allergen_icon_hidden[$allergy_name]);
+			$tmp_name = $_FILES['allergen_icon']['tmp_name'][$allergy_name];
+			$upload_dir = wp_upload_dir();
+			$attachment_path = esc_url($upload_dir['path'] . '/' . basename($file_name));
+			$attachment_name = basename($file_name);
+			$sanitized_allergy_name = sanitize_text_field($allergy_name);
+
+			if (!move_uploaded_file($tmp_name, $attachment_path)) {
+				continue;
+			}
+
+			global $wpdb;
+			$wpdb->query('START TRANSACTION');
+
+			$table_name_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
+			$table_name_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+
+			try {
+
+				if (self::checkAttachmentExists($allergen_prev_attachment_name)) {
+					$result_update_prev = $wpdb->query($wpdb->prepare(
+						"UPDATE $table_name_attachment
+                    SET attachment_name = %s, 
+                        attachment_path = %s
+                    WHERE attachment_name = %s",
+						$attachment_name,
+						$attachment_path,
+						$allergen_prev_attachment_name
+					));
+				} else {
+					$result_insert = $wpdb->query($wpdb->prepare(
+						"INSERT INTO $table_name_attachment (attachment_name, attachment_path)
+                    VALUES (%s, %s)",
+						$attachment_name,
+						$attachment_path
+					));
+				}
+
+				$result_update = $wpdb->query($wpdb->prepare(
+					"UPDATE $table_name_allergy_attachment
+                SET attachment_name = %s
+                WHERE allergy_name = %s",
+					$attachment_name,
+					$sanitized_allergy_name
+				));
+
+				error_log("daUPDATE HUHHHH!!");
+
+
+				if ($result_update !== false) {
+					error_log("daUPDATE YAAAAAAAASS!!");
+
+					$wpdb->query('COMMIT'); // Both operations succeeded
+					$updated_icons = true;
+				} else {
+					error_log("daUPDATE WHAAA!!");
+					$wpdb->query('ROLLBACK'); // Something went wrong, rollback all changes
+					$updated_icons = false;
+				}
+
+			} catch (Exception $e) {
+				echo 'Error: ' . $e->getMessage();
+				$updated_icons = false;
+			}
+		}
+
+		echo $updated_icons
+			? '<p>' . __('Icons updated successfully.', 'allergens-dietary-ictoria') . '</p>'
+			: '<p>' . __('No icons were updated.', 'allergens-dietary-ictoria') . '</p>';
+
 	}
 
 	/**
@@ -78,38 +182,40 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 	 * @date 11-9-2024
 	 * @author V.B.
 	 */
-	private function placeAttachment( array $data ) {
+	private function placeAttachment(array $data)
+	{
 		$upload_dir = wp_upload_dir();
 		$upload_dir = $upload_dir['basedir'] . '/allergens-dietary-ictoria/icons/custom/';
 
-		if ( false === file_exists( self::PATH ) ) {
-			mkdir( self::PATH, 0777, true );
+		if (false === file_exists(self::PATH)) {
+			mkdir(self::PATH, 0777, true);
 		}
 
 		$full_path = self::PATH . $data['full_path'];
 
-		if ( false === file_exists( $full_path ) ) {
-			move_uploaded_file( $data['tmp_name'], $full_path );
+		if (false === file_exists($full_path)) {
+			move_uploaded_file($data['tmp_name'], $full_path);
 		}
 	}
 
-	public static function attachment_insert( array $result ){
+	public static function attachment_insert(array $result)
+	{
 		global $wpdb;
 
 		//get database table
 		$table_icons = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
 
-		
-		foreach($result as $key => $value){
 
-		//insert allergies
+		foreach ($result as $key => $value) {
+
+			//insert allergies
 			$wpdb->insert(
 				$table_icons,
 				array(
-					'attachment_path'  => $value['path'],
-					'attachment_name'   => $value['name'],
+					'attachment_path' => $value['path'],
+					'attachment_name' => $value['name'],
 				)
-			); 
+			);
 		}
 	}
 }
