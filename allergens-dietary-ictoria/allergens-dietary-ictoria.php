@@ -1,9 +1,7 @@
 <?php
 
-require_once __DIR__ . '/src/class-allergen-functions.php';
-require_once __DIR__ . '/src/Admin/class-allergen-admin-startup.php';
-// require_once __DIR__ . '/src/class-allergen-allergens-dietary-ictoria.php';
-// use Allergens_Dietary_Ictoria_Functions;
+require_once __DIR__ . '/src/allergens-dietary-ictoria-function.php';
+require_once __DIR__ . '/src/Admin/allergens-dietary-ictoria-wc-integration-startup.php';
 
 
 
@@ -14,25 +12,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 function allergen_autoloader($class_name) {
-    error_log("class name: " . $class_name);
-	if ( false !== strpos($class_name, 'Allergen' ) ) {
-        $classes_dir = realpath( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR;
-    	$class_file = strtolower($class_name);
-        error_log('file: '. $class_file);
-        
-		$class_file = str_replace( '_', '-', $class_file );
-        error_log('file: '. $class_file);
+    // error_log("class name: " . $class_name);
 
-		$namespace_arr = explode( '\\', $class_name );
-		$namespace_arr[ array_key_last( $namespace_arr ) ] = 'class-' . $namespace_arr[ array_key_last( $namespace_arr ) ];
-		$class_file = implode( DIRECTORY_SEPARATOR, $namespace_arr ) . '.php';
-		
-		error_log('dir: '. $classes_dir. ' file: ' . $class_file);
-        
-		if( file_exists( $classes_dir . $class_file ) ) {
-            error_log($classes_dir . $class_file);
-    		require_once $classes_dir . $class_file;
-		}
+    if (false !== strpos($class_name, 'Allergens')) {
+        $classes_dir = realpath(plugin_dir_path(__FILE__)) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR;
+
+        // Log de inhoud van de directory om te zien wat daar staat
+        // foreach (glob($classes_dir . "*") as $filename) {
+        //     error_log("File found in src directory: " . $filename);
+		// 	error_log("Class name: " . strtolower(str_replace('_', '-', $class_name)));
+        // }
+
+        // Maak class naam lowercase en vervang underscores door streepjes
+        $class_file = strtolower(str_replace('_', '-', $class_name));
+
+        // Voorvoegsel met 'class-' en sluit af met '.php'
+        $class_file = $class_file . '.php';
+
+        // Maak het volledige pad
+        $full_path = $classes_dir . $class_file;
+
+        // Log het pad om te controleren of het correct is
+        // error_log("Trying to include file: " . $full_path);
+
+        // Check of het bestand bestaat en laad het
+        if (file_exists($full_path)) {
+            require_once $full_path;
+        } else {
+            error_log("File does not exist: " . $full_path);
+        }
     }
 }
 spl_autoload_register( 'allergen_autoloader');
@@ -81,7 +89,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 // load file with generic static methods
 // require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/functions.php';
 add_action( 'plugins_loaded', array( '\Allergens_Dietary_Ictoria_Startup', 'load_textdomain' ) );
-require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/src/class-allergen-allergens-dietary-ictoria.php';
+require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/src/allergens-dietary-ictoria-startup.php';
 function activate(){
     Allergens_Dietary_Ictoria_Startup::get_instance()::on_activation();
 }

@@ -31,7 +31,7 @@ class Allergens_Dietary_Ictoria_Startup {
 		Allergens_Dietary_Ictoria_Products::instance();
 		Allergens_Dietary_Ictoria_Filter::instance();
 		Allergens_Dietary_Ictoria_Functions::load_style();
-		MyPluginAddMenu::instance();
+		Allergens_Dietary_Ictoria_MyPluginAddMenu::instance();
 	}
 
 	// function that runs when the deactivation hook is called

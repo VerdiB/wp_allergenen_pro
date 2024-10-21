@@ -14,7 +14,7 @@ class Allergens_Dietary_Ictoria_Wc_Integration_Startup {
         // Check if the WC_Integration class exists
         if ( class_exists( 'WC_Integration' ) ) {
             
-            include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/src/class-allergen-wc-integration.php';
+            include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/src/allergens-dietary-ictoria-wc-integration-settings.php';
             
             add_filter( 'woocommerce_integrations', array( $this, 'add_integration' ) );
             // load the plugin admin js files

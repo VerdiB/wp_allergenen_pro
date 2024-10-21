@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class MyPluginAddMenu {
+class Allergens_Dietary_Ictoria_MyPluginAddMenu {
 
 	private static $instance = null;
 
