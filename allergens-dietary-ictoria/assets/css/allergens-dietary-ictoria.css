@@ -112,14 +112,6 @@
 	float: left;
 }
 
-#showallergens_flexbox{
-	max-width: 800px;
-}
-
-.label{
-	min-width: 150px;
-}
-
 .allergen-field img{
 	max-height: 36px;
 	display: table-cell;
