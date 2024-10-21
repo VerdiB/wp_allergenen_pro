@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Allergens_Dietary_Ictoria_Activator {
 	private static $counter = 0;
-	private static $_url;
+	private static string $_url;
 
 	private static $_ALLERGENS_OPTIONS = [];
     private static $_ALLERGY_ICON_OPTIONS = [];
@@ -30,7 +30,7 @@ class Allergens_Dietary_Ictoria_Activator {
 
 	public function __construct()
 	{ 		
-		self::$_url = get_home_url() . '/allergens-dietary-ictoria/assets/icons/';
+		self::$_url = get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/';
 
 		self::$_ALLERGENS_OPTIONS = array(
 			'peanuts'     => array(
@@ -224,7 +224,7 @@ class Allergens_Dietary_Ictoria_Activator {
 			'path'          => self::$_url . 'dietary_pregnant.png',
 			'name'          => 'dietary_pregnant.png'
 ),);
-self::$_ICON_OPTIONS = array(
+	self::$_ICON_OPTIONS = array(
 	'peanuts'     => array(
 		'name'  => 'allergens_peanuts.png',
 		'title' => 'Peanuts',

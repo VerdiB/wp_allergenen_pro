@@ -1,10 +1,14 @@
 <?php
+namespace WooCommerce;
 
+use DB\Allergens_Dietary_Ictoria_Allergy_Product_Queries;
+use DB\Allergens_Dietary_Ictoria_Allergy_Attachment_Queries;
 
 // exit if user can access this file directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 
 // this class contains functions used on the front-end product pages
 class Allergens_Dietary_Ictoria_Products {
@@ -27,19 +31,11 @@ class Allergens_Dietary_Ictoria_Products {
 	public function show_product_options(): void {
 		global $post;
 		$html    = '';
-		$options = Allergens_Dietary_Ictoria_Functions::get_options();
-		$list    = get_post_meta( $post->ID, 'allergens_dietary_ictoria', true );
+		$allergen_list    = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->getAllergyProduct( $post->ID );
 
-		if ( ! empty( $list ) ) {
-			$current = array();
-
-			foreach ( $options as $key => $value ) {
-				if ( in_array( $key, $list ) ) {
-					$current[ $key ] = $value;
-				}
-			}
+		if ( ! empty( $allergen_list ) ) {
 			// set the WP filter that will call the hook used to render the plugin options of this product
-			$html = apply_filters( 'allergens_dietary_ictoria_render_html', $current );
+			$html = apply_filters( 'allergens_dietary_ictoria_render_html', $allergen_list );
 		}
 		if ( ! empty( $html ) ) {
 			echo $html;
@@ -49,13 +45,19 @@ class Allergens_Dietary_Ictoria_Products {
 	// generate the html to display all relevant options for the given product.
 	public function render_html( array $data ): string {
 		$html = array();
+		$attachments_instance = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
+		$attachments_list = array();
+		
+		foreach ( $data as $value ) {
+			$attachments_list[] = $attachments_instance->getallergyAttachment( $value['allergy_name'], false );
+		}
 
-		foreach ( $data as $key => $value ) {
-			// check if the option is globally enabled by the admin
-			if ( $value['status'] === 'active' ) {
-				$icon_url = esc_url( $value['icon'] );
-				$title    = esc_attr( $value['title'] );
-				$html[]   = "<img class='allergen-icon' src='{$icon_url}' alt='{$title}' title='{$title}' data-id='" . esc_attr( $key ) . "' />";
+		if ( ! empty( $attachments_list ) ) {
+			foreach ( $attachments_list as $attachment ) {
+				$icon_url = esc_url( $attachment['attachment_path'] );
+				$title    = esc_attr( $attachment['allergy_name'] );
+				$alt 	= esc_attr( $attachment['allergy_description'] );
+				$html[]   = "<img class='allergen-icon' src='{$icon_url}' alt='{$alt}' title='{$title}' />";
 			}
 		}
 		return implode( '', $html );

@@ -9,7 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Allergens_Dietary_Ictoria_Attachment_Queries {
 	private static ?self $_instance = null;
-	private const PATH              = ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/assets/icons/custom/';
+	private const PATH = ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/assets/icons/custom/';
+	private string $_url;
 
 	public static function getInstance() {
 		if ( self::$_instance === null ) {
@@ -18,7 +19,9 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 		return self::$_instance;
 	}
 
-	private function __construct() {}
+	private function __construct() {
+		$this->_url = get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/custom/';
+	}
 
 	public function addAttachment( array $data ) {
 		global $wpdb;
@@ -29,7 +32,7 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 			$table_name,
 			array(
 				'attachment_name' => $data['name'],
-				'attachment_path' => self::PATH . $data['full_path'],
+				'attachment_path' => $this->_url . $data['full_path'],
 			)
 		);
 
@@ -63,7 +66,7 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 			$table_name,
 			array(
 				'attachment_name' => $data['name'],
-				'attachment_path' => self::PATH . $data['name'],
+				'attachment_path' => $this->_url . $data['name'],
 			),
 			array(
 				'attachment_name' => $data['name'],
@@ -80,17 +83,14 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 	 * @author V.B.
 	 */
 	private function placeAttachment( array $data ) {
-		$upload_dir = wp_upload_dir();
-		$upload_dir = $upload_dir['basedir'] . '/allergens-dietary-ictoria/icons/custom/';
 
 		if ( ! file_exists( $upload_dir ) ) {
 			mkdir( $upload_dir, 0777, true );
 		}
 
-		$full_path = $upload_dir . $data['full_path'];
-
-		if ( ! file_exists( $full_path ) ) {
-			move_uploaded_file( $data['name'], $full_path );
+		$full_path = self::PATH . $data['full_path'];
+		if ( false === file_exists( $full_path ) ) {
+			move_uploaded_file( $data['tmp_name'], $full_path );
 		}
 	}
 
