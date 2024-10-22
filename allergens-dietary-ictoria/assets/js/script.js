@@ -1,4 +1,3 @@
-console.log("new js");
 
 var button = document.getElementById("dropdown-ictoria");
 var quickEdit = document.querySelectorAll(".quick_edit");
@@ -12,10 +11,8 @@ window.onload = function() {
 function checkElementExists(id) {
     var element = document.getElementById(id);
     if (element) {
-        console.log("Het element met ID '" + id + "' bestaat.");
         return true; 
     } else {
-        console.log("Het element met ID '" + id + "' bestaat niet.");
         return false; 
     }
 }
@@ -29,12 +26,49 @@ function dropdown_form(){
 }
 
 function quickedit(form){
+    var forms = form.querySelector('.allergens_table_form');
     var field = form.querySelector('.update_form');
     var selectdropdown = field.querySelector('.type');
     var allselectdropdownoptions = selectdropdown.querySelectorAll('.option');
     var allinputs = field.querySelectorAll('.update_');
+    var counter = 0;
+    var thelist = document.getElementById('the-list');
 
-    if (form.style.display == "none"){
+if (form.style.display == "none"){
+
+    if (thelist) {
+    var trs = thelist.querySelectorAll('tr');
+    
+    trs.forEach(tr => {
+        var closeforms = tr.querySelector('.allergens_table_form');
+
+        if (closeforms) {
+        closeforms.style.display = "none";
+        var closefield = closeforms.querySelector('.update_form');
+        var closeselectdropdown = closefield.querySelector('.type');
+        var closeallselectdropdownoptions = closeselectdropdown.querySelectorAll('.option');
+        var closeallinputs = closefield.querySelectorAll('.update_');
+
+            if (closeforms.style.display == "none"){
+                closeallinputs.forEach(closeinput => {
+                    closeinput.disabled = true;
+                });
+            
+               closeallselectdropdownoptions.forEach(closeoption => {
+                    closeoption.disabled = true;
+                });
+            
+        }
+    }
+    });
+}
+
+    if (counter > 0){
+        closeforms.forEach(form => {
+            form.style.display = false;
+        });
+    }
+
     allinputs.forEach(input => {
         input.disabled = false;
     });
@@ -60,16 +94,11 @@ function quickedit(form){
 document.getElementById('the-list').addEventListener('click', function(event) {
     if (event.target.classList.contains('quick_edit')) {
         var quickEditing = event.target;
-        
-        console.log(event.target);
 
         if (quickEditing.style.pointerEvents == "auto"){
-            console.log("access");
             var form = event.target.id + "_form";
             var get_form = document.getElementById(form);
             quickedit(get_form);
-        }else{
-            console.log("no access");
         }
     }
 });

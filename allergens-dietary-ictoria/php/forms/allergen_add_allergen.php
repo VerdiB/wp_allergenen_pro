@@ -106,7 +106,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 */
 	public function submit( array $data ) {
 		$data = $this->sanitize( $data );
-		var_dump($data);
 		$icon = $data['allergen_icon']['name'];
 
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
@@ -114,7 +113,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		}
 
 		if ( empty( $data['allergen_name_hidden'] ) ) {
-			error_log("empty allergen_name_hidden");
 			try{
 				Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->addAllergens( $data );
 			} catch ( Exception $e ) {
@@ -132,35 +130,15 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			if ( empty( $this->_allergen['attachment_name'] ) && false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] ) ) {
 			Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] );
 				// Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->updateAttachment( $data['allergen_icon'], (string)$this->_allergen['attachment_name'] );
-				
-				error_log(Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] ) . "hello2");
 				_e( 'Attachment already exists', 'allergens-dietary-ictoria' );
-				error_log("empty attachment_name");
-				if (Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] ) === false){
-					error_log("true1");
-				}else{
-					error_log("false1");
-				}
-
-				if (empty( $this->_allergen['attachment_name'] )){
-					error_log("true2");
-				}else{
-					error_log("false2");
-				}
-			}else{
-				error_log("not that");
 			}
 		}
 
 		if ( ! isset( $data['allergen_name_hidden'] ) || $data['allergen_name_hidden'] === '' && false === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'] ) ) {
-			error_log("isset allergen_name_hidden");
 			Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->addAllergyAttachment( $data );
 		} elseif ( ! empty( $data['allergen_name_hidden'] ) && $data['allergen_name_hidden'] !== $data['allergen_name'] && true === Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] ) ) {
-			error_log("not isset allergen_name_hidden");
 			Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->updateAllergyAttachment( $data, $data['allergen_name_hidden'] );
 		}
-
-		// $this->_allergen = null;
 	}
 
 	/**

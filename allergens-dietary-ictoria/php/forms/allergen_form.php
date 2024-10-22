@@ -68,7 +68,6 @@ class Allergens_Dietary_Ictoria_Form {
 	}
 
 	public function showForm( string $allergenName = null ) {
-		error_log("triggerd");
 
 		if ( ! empty( $_POST ) ) {
 			$_data = $_POST;
@@ -91,8 +90,5 @@ class Allergens_Dietary_Ictoria_Form {
 			self::$_formObject->showForm( $allergenName );
 			echo '</form></div>';
 		}
-		print_r("start");
-		//ar_dump($_POST);
-		print_r("end");
 	}
 }
