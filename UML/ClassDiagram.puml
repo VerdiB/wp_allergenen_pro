@@ -150,6 +150,7 @@ package "php"{
             + addAllergyAttachment(data:array) : boolean
             + checkAllergyAttachmentExists(allergyName:string) : boolean
             + updateAllergyAttachment(data:array) : void
+            + update_allergen_icons(data:array, MIME_TYPES:array) : void
             + getAllergyAttachment(allergyAttachmentName:string, isForm:boolean) : array
             + {static} allergy_connection(result:array) : array
         }

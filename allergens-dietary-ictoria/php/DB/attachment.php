@@ -81,8 +81,6 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 
 	public function update_allergen_icons(array $data, array $MIME_TYPES)
 	{
-		error_log("YES UPDATE!!");
-
 		if (!isset($data['allergen_icon']['name']) || !isset($data['allergen_icon_hidden'])) {
 			return;
 		}
@@ -150,16 +148,10 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 					$sanitized_allergy_name
 				));
 
-				error_log("daUPDATE HUHHHH!!");
-
-
 				if ($result_update !== false) {
-					error_log("daUPDATE YAAAAAAAASS!!");
-
 					$wpdb->query('COMMIT'); // Both operations succeeded
 					$updated_icons = true;
 				} else {
-					error_log("daUPDATE WHAAA!!");
 					$wpdb->query('ROLLBACK'); // Something went wrong, rollback all changes
 					$updated_icons = false;
 				}
