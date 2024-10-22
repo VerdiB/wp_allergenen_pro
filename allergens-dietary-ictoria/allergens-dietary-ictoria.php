@@ -142,6 +142,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 			public function init_integration()
 			{
 				// Check if the WC_Integration class exists
+
 				if (class_exists('WC_Integration')) {
 					include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/wc_integration.php';
 					add_filter('woocommerce_integrations', array($this, 'add_integration'));
@@ -155,6 +156,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 				}
 			}
 
+
 			public function add_integration($integrations)
 			{
 				$integrations[] = 'Allergens_Dietary_Ictoria_Wc_Integration_Settings';
@@ -163,13 +165,14 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 		}
 		$Allergens_Dietary_Ictoria_Wc_Integration_Startup = new Allergens_Dietary_Ictoria_Wc_Integration_Startup(__FILE__);
 		// load and run the plugin admin files
-		include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/product_settings.php';
+		include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/woocommerce/product_settings.php';
 		Allergens_Dietary_Ictoria_Product_Settings::instance();
+		// echo 'looking in the main file';
 
 		include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/activator.php';
 	}
 	// load generic files used by the plugin when active
-	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/products.php';
+	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/woocommerce/products.php';
 	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/filter.php';
 
 	Allergens_Dietary_Ictoria_Products::instance();
