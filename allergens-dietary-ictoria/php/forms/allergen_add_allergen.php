@@ -68,8 +68,8 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '<label for="allergen_name">' . __( 'Allergen name', 'allergens-dietary-ictoria' ) . '</label>';
 			$html .= '<input type="text" class="update_" name="allergen_name" id="allergen_name" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_name'] : '' ) . '" disabled required/>';
 			$html .= '<div class="dropdown-row">';
-			$html .= '<label for="dropdown">' . __( 'Type', 'allergens-dietary-ictoria' ) . '</label>';
-			$html .= '<select name="dropdown" id="type" class="type" required>';
+			$html .= '<label for="type">' . __( 'Type', 'allergens-dietary-ictoria' ) . '</label>';
+			$html .= '<select name="type" id="type" class="type" required>';
 			$html .= self::do_dropdown();
 			$html .= '</select>';
 			$html .= '</div>';
