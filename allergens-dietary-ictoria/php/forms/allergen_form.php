@@ -81,6 +81,8 @@ class Allergens_Dietary_Ictoria_Form {
 			self::$_formObject->submit( $_data );
 		}
 
+		var_dump($_data);
+
 		if ($_GET['page'] == "allergens-dietary-show-allergens"){
 			echo '<div class="allergens_table_form" style="display: none;" id="' . $allergenName . '_form">';
 			self::$_formObject->showForm( $allergenName );

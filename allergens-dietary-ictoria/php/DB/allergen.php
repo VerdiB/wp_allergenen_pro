@@ -44,6 +44,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 	 */
 	public function addAllergens(array $data)
 	{
+
+		var_dump($_POST['allergen_icon']);
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -97,6 +99,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 	public function updateAllergens(array $data)
 	{
+		var_dump($data);
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';

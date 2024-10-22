@@ -20,6 +20,8 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		
 		global $wpdb;
 
+		var_dump($data);
+
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
 		$wpdb->insert(
@@ -35,6 +37,8 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 
 	public function getallergyAttachment( string $allergy_name, bool $isForm=true ) {
 		global $wpdb;
+
+		print_r($allergy_name);
 
 		$sql = "";
 
@@ -124,15 +128,25 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 
 		//get database table
 		$table_allergens_icons = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-		if ($_GET['page'] == 'allergens-dietary-add-allergen'){
-			//insert allergies
+
+		if (isset($_GET['page'])){
+			if ($_GET['page'] == "allergens-dietary-add-allergen"){
 				$wpdb->insert(
-				$table_allergens_icons,
-				array(
-					'attachment_name'   => $result['name'],
-					'allergy_name'  => $result['title'],
-					)
+					$table_allergens_icons,
+					array(
+						'attachment_name'   => $result['name'],
+						'allergy_name'  => $result['title'],
+						)
 					);
+			}else{
+					$wpdb->insert(
+						$table_allergens_icons,
+						array(
+							'attachment_name'   => $result['name'],
+							'allergy_name'  => $result['title'],
+							)
+						);
+			}
 		}else{
 			//insert allergies
 			foreach($result as $key => $value){
