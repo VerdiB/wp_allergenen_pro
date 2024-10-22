@@ -133,6 +133,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         $is_default = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
 
         self::load_js();
+        self::load_css();
 
         if (esc_attr($action) == "delete" || esc_attr($action) == "quick_edit"){
             $colorboolean = $is_default::is_default_allergen($item['allergy_name']);
@@ -180,6 +181,10 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         wp_enqueue_script( 'Allergens_Dietary_Ictoria_Show_Allergens');
     }
 
+    public static function load_css(){
+        wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/css/allergens-dietary-ictoria.css'));
+	    wp_enqueue_style('allergens-dietary-ictoria-css');
+    }
 
     public function get_bulk_actions()
     {
@@ -358,6 +363,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    var_dump($_POST);
     $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
     if (isset($_POST['action']) && isset($_POST['post'])) {
 

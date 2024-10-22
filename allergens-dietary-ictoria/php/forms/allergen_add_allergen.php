@@ -62,18 +62,28 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		if ($_GET['page'] == "allergens-dietary-show-allergens"){
 			$html  = '<fieldset class="update_form">';
+
+			$html .= '<div class="form-column">';
 			$html .= '<input disabled type="hidden" class="update_" name="allergen_name_hidden" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_name'] : '' ) . '"/>';
-			$html .= '<label for="allergen_name">' . __( 'Allergen name', 'allergens-dietary-ictoria' ) . '</label><br>';
-			$html .= '<input type="text" class="update_" name="allergen_name" id="allergen_name" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_name'] : '' ) . '"disabled required/><br><br>';
-			$html .= '<label for="type">' . __( 'Type', 'allergens-dietary-ictoria' ) . '</label> <br/>';
-			$html .= '<select name="type" id="type" class="type" required>';
+			$html .= '<label for="allergen_name">' . __( 'Allergen name', 'allergens-dietary-ictoria' ) . '</label>';
+			$html .= '<input type="text" class="update_" name="allergen_name" id="allergen_name" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_name'] : '' ) . '" disabled required/>';
+			$html .= '<div class="dropdown-row">';
+			$html .= '<label for="dropdown">' . __( 'Type', 'allergens-dietary-ictoria' ) . '</label>';
+			$html .= '<select name="dropdown" id="type" class="type" required>';
 			$html .= self::do_dropdown();
-			$html .= '</select> <br><br>';
-			$html .= '<label for="allergen_description">' . __( 'Allergen description', 'allergens-dietary-ictoria' ) . '</label><br>';
-			$html .= '<input type="text" class="update_" name="allergen_description" id="allergen_description" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_description'] : '' ) . '"disabled/><br><br>';
-			$html .= '<label for="allergen_icon">' . __( 'Allergen icon', 'allergens-dietary-ictoria' ) . '</label><br>';
-			$html .= '<input type="file" class="update_" name="allergen_icon" id="allergen_icon" disabled><br><br>';
-			$html .= '<input disabled type="submit" class="update_" name="submit" class="button button-primary" value="' . __( 'Update', 'allergens-dietary-ictoria' ) . '"/><br>';
+			$html .= '</select>';
+			$html .= '</div>';
+			$html .= '<input disabled type="submit" class="update_" name="submit" class="button button-primary" value="' . __( 'Update', 'allergens-dietary-ictoria' ) . '"/>';
+			$html .= '</div>';
+
+			$html .= '<label for="allergen_description">' . __( 'Allergen description', 'allergens-dietary-ictoria' ) . '</label>';
+			$html .= '<input type="text" class="update_" name="allergen_description" id="allergen_description" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_description'] : '' ) . '" disabled/>';
+
+			$html .= '<div>';
+			$html .= '<label for="allergen_icon">' . __( 'Allergen icon', 'allergens-dietary-ictoria' ) . '</label>';
+			$html .= '<input type="file" class="update_" name="allergen_icon" id="allergen_icon" disabled>';
+			$html .= '</div>';
+			$html .= '</fieldset>';
 		}else{
 			$html  = '<fieldset>';
 			$html .= '<input type="hidden" name="allergen_name_hidden" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_name'] : '' ) . '"/>';
