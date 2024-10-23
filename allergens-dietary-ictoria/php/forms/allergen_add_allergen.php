@@ -58,7 +58,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
 			}
 			$this->_allergen = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllergyAttachment( $allergenName );
-		}
+		}else
 
 		if ($_GET['page'] == "allergens-dietary-show-allergens"){
 			$html  = '<fieldset class="update_form">';
@@ -166,7 +166,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->updateAllergyAttachment( $data, $data['allergen_name_hidden'] );
 		}
 
-		var_dump($_POST);
 		//wp_redirect( admin_url( 'admin.php?page=allergens-dietary-show-allergens' ) );
 	}
 

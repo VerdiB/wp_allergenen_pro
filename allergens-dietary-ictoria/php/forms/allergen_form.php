@@ -96,7 +96,8 @@ class Allergens_Dietary_Ictoria_Form {
 			echo '</div>';
 		}else{
 			echo '<div class="allergens_form"><form action="" method="post" enctype="multipart/form-data" class="add_allergens_form">';
-			self::$_formObject->showForm();
+			error_log($allergenName . "true3");
+			self::$_formObject->showForm( $allergenName );
 			echo '</form></div>';
 		}
 	}
