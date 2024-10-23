@@ -71,17 +71,23 @@ class Allergens_Dietary_Ictoria_Form {
 
 		if ( ! empty( $_POST ) ) {
 			$_data = $_POST;
+			echo "<pre>";
+			print_r("two");
+			var_dump($_data);
+			echo "<pre>";
 		}
 
 		if ( ! empty( $_FILES ) ) {
 			$_data = array_merge( $_data, $_FILES );
+			echo "<pre>";
+			print_r("one");
+			var_dump($_data);
+			echo "<pre>";
 		}
 
 		if ( ! empty( $_POST['submit'] ) ) {
 			self::$_formObject->submit( $_data );
 		}
-
-		var_dump($_data);
 
 		if ($_GET['page'] == "allergens-dietary-show-allergens"){
 			echo '<div class="allergens_table_form" style="display: none;" id="' . $allergenName . '_form">';

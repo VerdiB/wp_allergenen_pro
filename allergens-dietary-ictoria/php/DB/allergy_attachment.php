@@ -17,10 +17,9 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 	private function __construct() {}
 
 	public function addallergyAttachment( array $data ) {
+		error_log("adding2");
 		
 		global $wpdb;
-
-		var_dump($data);
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
@@ -37,8 +36,6 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 
 	public function getallergyAttachment( string $allergy_name, bool $isForm=true ) {
 		global $wpdb;
-
-		print_r($allergy_name);
 
 		$sql = "";
 
