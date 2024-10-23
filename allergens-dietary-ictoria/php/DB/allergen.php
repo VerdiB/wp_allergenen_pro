@@ -75,10 +75,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			'title' => $data['allergen_name'],
 		);
 
-		//activate other inserters
-		Allergens_Dietary_Ictoria_Attachment_Queries::attachment_insert($attachment);
-		Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::allergy_connection($attachment_allergen);
-
 		return (isset($wpdb->insert_id)) ? true : false;
 	}
 

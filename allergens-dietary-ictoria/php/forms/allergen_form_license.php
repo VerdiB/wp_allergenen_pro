@@ -34,6 +34,7 @@ class Allergens_Dietary_Ictoria_License_Form implements I_Allergens_Dietary_Icto
 
 	public function showForm( string $allergenName = null ) {
 		if ( ! is_null( $allergenName ) ) {
+			error_log("true");
 			return;
 		}
 

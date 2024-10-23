@@ -145,11 +145,19 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			throw new Exception( __( 'The file is not a valid image' ) );
 			return;
 		} else {
-		
+		if ($_POST['submit'] == 'Update'){
+			error_log("yup");
 			( empty( $this->_allergen['attachment_name'] ) && false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] ) ) ?
 				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] ) :
-				// Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->updateAttachment( $data['allergen_icon'], (string)$this->_allergen['attachment_name'] );
 				_e( 'Attachment already exists', 'allergens-dietary-ictoria' );
+			}else{
+				error_log("noo");
+				try{
+				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] );
+			} catch ( Exception $e ) {
+				_e('Attachment already exists', 'allergens-dietary-ictoria');
+			}
+			}
 		}
 
 		if ( ! isset( $data['allergen_name_hidden'] ) || $data['allergen_name_hidden'] === '' && false === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'] ) ) {
