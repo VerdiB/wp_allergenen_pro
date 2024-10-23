@@ -58,7 +58,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
 			}
 			$this->_allergen = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllergyAttachment( $allergenName );
-		}else
+		}
 
 		if ($_GET['page'] == "allergens-dietary-show-allergens"){
 			$html  = '<fieldset class="update_form">';
@@ -145,29 +145,23 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			throw new Exception( __( 'The file is not a valid image' ) );
 			return;
 		} else {
-		if ($_POST['submit'] == 'Update'){
 			error_log("yup");
 			( empty( $this->_allergen['attachment_name'] ) && false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] ) ) ?
 				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] ) :
-				_e( 'Attachment already exists', 'allergens-dietary-ictoria' );
-			}else{
-				error_log("noo");
-				try{
-				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] );
-			} catch ( Exception $e ) {
-				_e('Attachment already exists', 'allergens-dietary-ictoria');
-			}
-			}
+				error_log("nooo22");
 		}
 
-		if ( ! isset( $data['allergen_name_hidden'] ) || $data['allergen_name_hidden'] === '' && false === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'] ) ) {
-			Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->addAllergyAttachment( $data );
-		} elseif ( ! empty( $data['allergen_name_hidden'] ) && $data['allergen_name_hidden'] !== $data['allergen_name'] && true === Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] ) ) {
+		error_log("null" . Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'], $data['allergen_icon']['name'] ));
+
+		if ( isset( $data['allergen_name_hidden'] ) || $data['allergen_name_hidden'] === '' && true === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'], $data['allergen_icon']['name'] ) ) {
+			error_log("optie een");
+			Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->updateallergyAttachment( $data );
+		} elseif ( true ) {
+			error_log($data['allergen_icon']['name']);
+			error_log("optie twee: " . $data['allergen_name_hidden']);
 			Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->updateAllergyAttachment( $data, $data['allergen_name_hidden'] );
-		}
-
-		//wp_redirect( admin_url( 'admin.php?page=allergens-dietary-show-allergens' ) );
 	}
+}
 
 	/**
 	 * @param array $data
