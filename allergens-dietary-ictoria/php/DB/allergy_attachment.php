@@ -98,8 +98,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 				'attachment_name' => $data['allergen_icon']['name'],
 			),
 			array(
-				'allergy_name'    => $data['allergen_name'],
-				'attachment_name' => $data['allergen_icon']['name'],
+				'allergy_name'    => $data['allergen_name_hidden'],
 			)
 		);
 

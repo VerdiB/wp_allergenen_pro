@@ -123,7 +123,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 		}
 
-		if ( empty( $data['allergen_name_hidden'] ) && $_POST['submit'] !== "Update" ) {
+		error_log("check: " . Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] ));
+
+		if ( empty( $data['allergen_name_hidden'] ) && $_POST['submit'] !== "Update" && false == Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] ) ) {
 			try{
 				Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->addAllergens( $data );
 			} catch ( Exception $e ) {
