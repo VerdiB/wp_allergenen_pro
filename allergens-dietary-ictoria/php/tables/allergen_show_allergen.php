@@ -139,22 +139,23 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
     private function handle_search()
     {
-        if (isset($_POST['s'])) {
-            $this->search_query = isset($_POST['s'])
-                ? ($this->search_query !== $_POST['s'] ? sanitize_text_field($_POST['s']) : $this->search_query)
+        if (isset($_POST['search'])) {
+            $this->search_query = isset($_POST['search'])
+                ? ($this->search_query !== $_POST['search'] ? sanitize_text_field($_POST['search']) : $this->search_query)
                 : '';
         }
     }
     private function handle_items_per_page()
     {
         if (isset($_POST['items_per_page'])) {
-            if ($_POST['items_per_page'] < 1) {
+            if ($_POST['items_per_page'] < 1 || $_POST['items_per_page'] > 100) {
                 $this->items_per_page = 10;
                 return;
             }
-            $this->items_per_page = isset($_POST['items_per_page'])
-                ? ($this->items_per_page !== $_POST['items_per_page'] ? sanitize_text_field($_POST['items_per_page']) : $this->items_per_page)
+            $this->items_per_page = !empty($_POST['items_per_page']) ?
+                $_POST['items_per_page']
                 : 10;
+
         }
     }
 
@@ -240,13 +241,10 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         $this->items = $data;
 
         $total_items = count($this->items);
-        if ($this->items_per_page > $total_items) {
-            $this->items_per_page = $total_items;
-        }
 
         $per_page = $this->get_items_per_page('my_list_table_per_page', $this->items_per_page);
         $current_page = $this->get_pagenum();
-        
+
         // Fetch data for the current page
         $this->items = array_slice($data, ($current_page - 1) * $per_page, $per_page);
 
@@ -320,19 +318,85 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         }
     }
 
-    public function items_per_page_form($text, $input_id, $label)
+    public function items_per_page_form($text, $input_id, $label, $which)
     {
         if (empty($_POST['items_per_page']) && !$this->has_items()) {
             return;
         }
+        $acceptable_values = array(10, 20, 50, 100);
+        if ('top' === $which) {
+            $this->screen->render_screen_reader_content('heading_pagination');
+            ?>
+            <span class="item-select-box" style="float: right; margin-right: 10px;">
+                <label class="screen-reader-text" for="<?php echo esc_attr($input_id); ?>"><?php echo $text; ?>:</label>
+                <span><?php echo $label; ?></span>
+                <select id="items_per_page" name="items_per_page">
+                    <?php
+                    foreach ($acceptable_values as $value) {
+                        if ($value == 10) {
+                            ?>
+                            <option value="<?php echo $value ?>" <?php echo $this->items_per_page == 10 ? 'selected' : (in_array($this->items_per_page, $acceptable_values) ? '' : 'selected'); ?>><?php echo $value ?></option>
+                            <?php
+                        } else {
+                            ?>
+                            <option value="<?php echo $value ?>" <?php echo $this->items_per_page == $value ? 'selected' : '' ?>>
+                                <?php echo $value ?>
+                            </option>
+                            <?php
+                        }
+                    }
+                    ?>
+                </select>
+                <?php submit_button($text, '', '', false, array('id' => 'items-per-page-submit')); ?>
+            </span>
+            <?php
+        }
+        if ('bottom' === $which) {
+            ?>
+            <span class="item-select-box" style="float: right; margin-right: 10px;">
+                <label class="screen-reader-text" for="<?php echo esc_attr($input_id); ?>"><?php echo $text; ?>:</label>
+                <span><?php echo $label; ?></span>
+                <span
+                    class="tablenav-paging-text"><?php echo !empty($this->items_per_page) ? $this->items_per_page : null; ?></span>
+            </span>
+            <?php
+        }
+    }
+
+    public function search_box($text, $input_id)
+    {
+        if (empty($_REQUEST['search']) && !$this->has_items()) {
+            return;
+        }
+
+        $input_id = $input_id . '-search-input';
+
+        if (!empty($_REQUEST['orderby'])) {
+            if (is_array($_REQUEST['orderby'])) {
+                foreach ($_REQUEST['orderby'] as $key => $value) {
+                    echo '<input type="hidden" name="orderby[' . esc_attr($key) . ']" value="' . esc_attr($value) . '" />';
+                }
+            } else {
+                echo '<input type="hidden" name="orderby" value="' . esc_attr($_REQUEST['orderby']) . '" />';
+            }
+        }
+        if (!empty($_REQUEST['order'])) {
+            echo '<input type="hidden" name="order" value="' . esc_attr($_REQUEST['order']) . '" />';
+        }
+        if (!empty($_REQUEST['post_mime_type'])) {
+            echo '<input type="hidden" name="post_mime_type" value="' . esc_attr($_REQUEST['post_mime_type']) . '" />';
+        }
+        if (!empty($_REQUEST['detached'])) {
+            echo '<input type="hidden" name="detached" value="' . esc_attr($_REQUEST['detached']) . '" />';
+        }
+
         ?>
-        <p class="item-select-box">
+        <span class="search-box" style="float: right; margin-bottom: 10px;">
             <label class="screen-reader-text" for="<?php echo esc_attr($input_id); ?>"><?php echo $text; ?>:</label>
-            <span><?php echo $label; ?></span>
-            <input type="number" id="<?php echo esc_attr($input_id); ?>" name="items_per_page"
-                value="<?php echo isset($this->items_per_page) ? $this->items_per_page : null ?>" min="1" max="9999" />
-            <?php submit_button($text, '', '', false, array('id' => 'items-per-page-submit')); ?>
-        </p>
+            <input type="search" id="<?php echo esc_attr($input_id); ?>" name="search"
+                value="<?php echo isset($this->search_query) ? $this->search_query : '' ?>" />
+            <?php submit_button($text, '', '', false, array('id' => 'search-submit')); ?>
+        </span>
         <?php
     }
 
@@ -346,6 +410,31 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         return self::$_instance[$cls];
     }
 
+    protected function display_tablenav($which)
+    {
+        if ('top' === $which) {
+            wp_nonce_field('bulk-' . $this->_args['plural']);
+        }
+        ?>
+        <div class="tablenav <?php echo esc_attr($which); ?>">
+
+            <?php if ($this->has_items()): ?>
+                <div class="alignleft actions bulkactions">
+                    <?php $this->bulk_actions($which); ?>
+                </div>
+                <?php
+            endif;
+            $this->extra_tablenav($which);
+            $this->pagination($which);
+            $this->items_per_page_form('Select', 'items-per-page', 'Allergies per page:', $which);
+            ?>
+
+            <br class="clear" />
+        </div>
+        <?php
+    }
+
+
     public function table_page()
     {
         $table = new Allergens_Dietary_Ictoria_Show_Allergens();
@@ -358,7 +447,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         echo '<form action="#" method="POST"';
         echo "<table class='wp-list-table widefat fixed striped table-view-list pages'>";
         $table->search_box('Search', 'allergens');
-        $table->items_per_page_form('Select', 'items-per-page', 'Allergies per page:');
         $table->display();
         echo "</table>";
         echo "</form>";
@@ -376,19 +464,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $process_data = [];
 
         $process_action = sanitize_text_field($_POST['action']);
-
-        unset($_POST['action']);
-
-        foreach ($_POST['post'] as $key => $value) {
-            $process_item[] = sanitize_text_field($value);
-        }
-
-        $process_data = [
-            'action' => $process_action,
-            'item' => $process_item,
-        ];
-
-        $table->process_bulk_action($process_data);
+        $process_item = array_map('sanitize_text_field', $_POST['post']);
+        $process_data = ['action' => $process_action, 'item' => $process_item];
+        Allergens_Dietary_Ictoria_Show_Allergens::getInstance()->process_bulk_action($process_data);
+    }
+    if (isset($_POST['search'])) {
+        $search_query = sanitize_text_field($_POST['search']);
+        $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
+        $table->search_query = $search_query;
+        $table->prepare_items();
     }
 } else {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
