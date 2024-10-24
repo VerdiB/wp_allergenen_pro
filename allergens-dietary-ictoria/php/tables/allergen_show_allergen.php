@@ -233,7 +233,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             $this->items = $data;
         }
 
-
         $total_items = count($this->items);
         if ($this->items_per_page > $total_items) {
             $this->items_per_page = $total_items;
@@ -241,6 +240,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
         $per_page = $this->get_items_per_page('my_list_table_per_page', $this->items_per_page);
         $current_page = $this->get_pagenum();
+        
         // Fetch data for the current page
         $this->items = array_slice($this->items, ($current_page - 1) * $per_page, $per_page);
 
@@ -328,7 +328,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             <label class="screen-reader-text" for="<?php echo esc_attr($input_id); ?>"><?php echo $text; ?>:</label>
             <span><?php echo $label; ?></span>
             <input type="number" id="<?php echo esc_attr($input_id); ?>" name="items_per_page"
-                value="<?php echo isset($this->items_per_page) ? $this->items_per_page : null ?>" min="1" />
+                value="<?php echo isset($this->items_per_page) ? $this->items_per_page : null ?>" min="1" max="9999" />
             <?php submit_button($text, '', '', false, array('id' => 'items-per-page-submit')); ?>
         </p>
         <?php
