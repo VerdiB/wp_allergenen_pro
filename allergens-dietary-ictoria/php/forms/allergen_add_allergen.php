@@ -117,6 +117,8 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		print_r("start ");
 		var_dump($data);
 		print_r(" end");
+		$text = "Successfully added new Allergen/Diet";
+		$insertfailed = false;
 		$data = $this->sanitize( $data );
 
 		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
@@ -125,16 +127,23 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		error_log("check: " . Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] ));
 
-		if ( empty( $data['allergen_name_hidden'] ) && $_POST['submit'] !== "Update" && false == Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] ) ) {
+		if ( empty( $data['allergen_name_hidden'] ) && $_POST['submit'] !== "Update" && false === Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] ) ) {
 			try{
 				Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->addAllergens( $data );
+				echo '<div style="background-color: limegreen; max-width: 270px;">';
 			} catch ( Exception $e ) {
-				error_log("nooooooooooooooo");
-				//_e('Allergen already exists', 'allergens-dietary-ictoria');
+				echo '<div style="background-color: orange; max-width: 270px;">';
+				$text = _e(' Allergen already exists', 'allergens-dietary-ictoria');
 			}
 		} else {
 			if (false === Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] )){
 				Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->updateAllergens( $data );
+				echo '<div style="background-color: limegreen; max-width: 270px;">';
+			}else{
+				if (empty( $data['allergen_name_hidden'] )){
+					echo '<div style="background-color: orange; max-width: 270px;">';
+					$text = _e(' Allergen already exists', 'allergens-dietary-ictoria');
+				}
 			}
 		}
 
@@ -142,7 +151,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			try{
 				Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->addAllergens( $data );
 			} catch ( Exception $e ) {
-				_e('Allergen already exists', 'allergens-dietary-ictoria');
+				$text = _e(' Allergen already exists', 'allergens-dietary-ictoria');
 			}
 		}
 		if ( false === wp_check_filetype( $data['allergen_icon']['name'], self::MIME_TYPES ) ) {
@@ -152,7 +161,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			error_log("yup");
 			( empty( $this->_allergen['attachment_name'] ) && false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] ) ) ?
 				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] ) :
-				_e( 'Attachment already exists', 'allergens-dietary-ictoria' );
+				$insertfailed = true;
 		}
 
 		if (empty($data['allergen_name_hidden']) && true !== Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'], $data['allergen_icon']['name'] ) ) {
@@ -173,7 +182,10 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 					Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->addallergyAttachment( $data );
 				}
 			}
-	}
+		}
+
+		echo $text;
+		echo '</div><br>';
 }
 
 	/**allergen_name
