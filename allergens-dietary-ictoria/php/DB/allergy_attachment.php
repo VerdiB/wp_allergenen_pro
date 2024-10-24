@@ -87,6 +87,8 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 	public function updateallergyAttachment( array $data ) {
 		global $wpdb;
 
+		var_dump($data);
+
 		error_log("iueidwhqe");
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
@@ -111,14 +113,13 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
 		$sql = $wpdb->prepare(
-			"SELECT * FROM $table_name WHERE allergy_name = %s AND attachment_name = %s",
+			"SELECT * FROM $table_name WHERE allergy_name = %s",
 			$allergy_name,
-			$attachment_name
 		);
 
 		$result = $wpdb->get_results( $sql );
 
-		return ( ! empty( $result ) ) ? false : true;
+		return ( ! empty( $result ) ) ? true : false;
 	}
 
 	public static function allergy_connection( array $result ){
