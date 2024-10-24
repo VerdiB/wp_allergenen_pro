@@ -32,6 +32,11 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             'plural' => 'items',
             'ajax' => false,
         ]);
+
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        $this->set_items_per_page();
     }
 
     private $table_action_options = ['change_status', 'delete'];
@@ -129,6 +134,11 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         );
     }
 
+    private function set_items_per_page(){
+        $this->items_per_page = isset($_SESSION['items_per_page']) ? $_SESSION['items_per_page'] : 10;
+    }
+
+
     private function handle_search()
     {
         if (isset($_POST['search'])) {
@@ -140,13 +150,15 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
     private function handle_items_per_page()
     {
         if (isset($_POST['items_per_page'])) {
-            if ($_POST['items_per_page'] < 1 || $_POST['items_per_page'] > 100) {
+            if ($_POST['items_per_page'] < 1) {
                 $this->items_per_page = 10;
                 return;
             }
-            $this->items_per_page = !empty($_POST['items_per_page']) ?
-                $_POST['items_per_page']
-                : 10;
+            if (!empty($_POST['items_per_page'])) {
+                $_SESSION['items_per_page'] = $_POST['items_per_page'];
+                $this->items_per_page = !empty($_SESSION['items_per_page']) ? $_SESSION['items_per_page'] : 10;
+                // error_log(print_r($_SESSION, true));
+            }
 
         }
     }
