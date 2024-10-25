@@ -176,6 +176,12 @@ package "php"{
             + getAllergyAttachment(allergyAttachmentName:string) : array
             + {static} allergy_connection(result:array) : array
         }
+        class Allergens_Dietary_Ictoria_Allergy_Product_Queries{
+            -{static} _instance : Allergens_Dietary_Ictoria_Allergy_Product_Queries
+            +{static} getInstance() : Allergens_Dietary_Ictoria_Allergy_Product_Queries
+            - __construct() : void
+            + addAllergyProduct(product_id:int, allergen:string) : boolean
+        }
     }
     package "lists" {
         class Allergens_Dietary_Ictoria_Info{
@@ -217,6 +223,8 @@ Allergens_Dietary_Ictoria +-u- php
 Allergens_Dietary_Ictoria_Filter --> Allergens_Dietary_Ictoria_Functions : uses
 Allergens_Dietary_Ictoria_Wc_Integration_Settings -r-> Allergens_Dietary_Ictoria_Functions : uses
 Allergens_Dietary_Ictoria_Product_Settings -l-> Allergens_Dietary_Ictoria_Functions : uses
+Allergens_Dietary_Ictoria_Product_Settings .l.> Allergens_Dietary_Ictoria_Allergy_Product_Queries : uses
+Allergens_Dietary_Ictoria_Products ..> Allergens_Dietary_Ictoria_Allergy_Product_Queries
 
 
 ' forms relations
