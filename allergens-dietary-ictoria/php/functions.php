@@ -25,30 +25,6 @@ class Allergens_Dietary_Ictoria_Functions {
 		load_plugin_textdomain( __( 'allergens-dietary-ictoria', 'allergens-dietary-ictoria' ), false, basename( ALLERGENS_DIETARY_ICTORIA_FILE ) . '/l10n' );
 	}
 
-	// Get all relevant plugin settings from the WP options table
-	public static function get_settings() {
-		return get_option( __( 'allergens_dietary_ictoria_settings', 'allergens-dietary-ictoria' ) );
-	}
-	
-	//Get all allergens and dietary options added by this plugin from the WP options table
-	public static function get_options(){
-		return get_option( __( 'allergens_dietary_ictoria_options', 'allergens-dietary-ictoria' ));
-	}
-
-	// //adds the external css file(s) to the current WP execution
-	// public static function load_style(){
-	// wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/css/allergens-dietary-ictoria.css'));
-	// wp_enqueue_style('allergens-dietary-ictoria-css');
-	// }
-
-	// //adds the external js file(s) to the current WP execution
-	// public static function load_admin_js(){
-	// wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/css/allergens-dietary-ictoria.css'));
-	// wp_enqueue_style('allergens-dietary-ictoria-css');
-	// wp_register_script('allergens-dietary-admin-js', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/js/admin_set_options_by_category.js'), array('jquery'));
-	// wp_enqueue_script( 'allergens-dietary-admin-js');
-	// }
-
 	// adds the external css file(s) to the current WP execution
 	public static function load_style() {
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_styles' ) );
@@ -113,6 +89,3 @@ class Allergens_Dietary_Ictoria_Functions {
 		}
 	}
 }
-
-
-//Allergens_Dietary_Ictoria_Functions::default_options();
