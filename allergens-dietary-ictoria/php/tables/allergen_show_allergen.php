@@ -21,6 +21,7 @@ if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
  * @since 1.0.0
  */
 
+
 class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 {
 
@@ -33,17 +34,20 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             'ajax' => false,
         ]);
 
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        $this->set_items_per_page();
     }
 
     private $table_action_options = ['change_status', 'delete'];
 
     public $search_query;
+    public function get_items_per_pages(): int
+    {
+        return get_option('items_per_page', 10);
+    }
+    public function set_items_per_pages($value)
+    {
+        update_option('items_per_page', $value);
 
-    public $items_per_page = 10;
+    }
 
     public function get_table_columns_and_data()
     {
@@ -134,9 +138,10 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         );
     }
 
-    private function set_items_per_page(){
-        $this->items_per_page = isset($_SESSION['items_per_page']) ? $_SESSION['items_per_page'] : 10;
-    }
+    // private function set_items_per_page()
+    // {
+    //     $this->items_per_page = isset($_SESSION['items_per_page']) ? $_SESSION['items_per_page'] : 10;
+    // }
 
 
     private function handle_search()
@@ -149,15 +154,21 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
     }
     private function handle_items_per_page()
     {
+        error_log("set_items_per_pages");
         if (isset($_POST['items_per_page'])) {
+            error_log("isset");
             if ($_POST['items_per_page'] < 1) {
-                $this->items_per_page = 10;
+                error_log("<1");
+
+                $this->set_items_per_pages(10);
                 return;
             }
             if (!empty($_POST['items_per_page'])) {
-                $_SESSION['items_per_page'] = $_POST['items_per_page'];
-                $this->items_per_page = !empty($_SESSION['items_per_page']) ? $_SESSION['items_per_page'] : 10;
-                // error_log(print_r($_SESSION, true));
+                error_log("etmpty");
+                error_log($_POST['items_per_page']);
+
+
+                $this->set_items_per_pages(!empty($_POST['items_per_page']) ? $_POST['items_per_page'] : 10);
             }
 
         }
@@ -248,7 +259,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
         $total_items = count($this->items);
 
-        $per_page = $this->get_items_per_page('my_list_table_per_page', $this->items_per_page);
+        $per_page = $this->get_items_per_page('my_list_table_per_page', $this->get_items_per_pages());
         $current_page = $this->get_pagenum();
 
         // Fetch data for the current page
@@ -345,11 +356,11 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
                     foreach ($acceptable_values as $value) {
                         if ($value == 10) {
                             ?>
-                            <option value="<?php echo $value ?>" <?php echo $this->items_per_page == 10 ? 'selected' : (in_array($this->items_per_page, $acceptable_values) ? '' : 'selected'); ?>><?php echo $value ?></option>
+                            <option value="<?php echo $value ?>" <?php echo $this->get_items_per_pages() == 10 ? 'selected' : (in_array($this->get_items_per_pages(), $acceptable_values) ? '' : 'selected'); ?>><?php echo $value ?></option>
                             <?php
                         } else {
                             ?>
-                            <option value="<?php echo $value ?>" <?php echo $this->items_per_page == $value ? 'selected' : '' ?>>
+                            <option value="<?php echo $value ?>" <?php echo $this->get_items_per_pages() == $value ? 'selected' : '' ?>>
                                 <?php echo $value ?>
                             </option>
                             <?php
@@ -367,7 +378,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
                 <label class="screen-reader-text" for="<?php echo esc_attr($input_id); ?>"><?php echo $text; ?>:</label>
                 <span><?php echo $label; ?></span>
                 <span
-                    class="tablenav-paging-text"><?php echo !empty($this->items_per_page) ? $this->items_per_page : null; ?></span>
+                    class="tablenav-paging-text"><?php echo !empty($this->get_items_per_pages()) ? $this->get_items_per_pages() : null; ?></span>
             </span>
             <?php
         }
@@ -448,7 +459,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
     public function table_page()
     {
         $table = new Allergens_Dietary_Ictoria_Show_Allergens();
-
         $table->handle_search();
         $table->handle_items_per_page();
 
