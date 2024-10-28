@@ -348,18 +348,17 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         return self::$_instance[$cls];
     }
 
-    public function table_page()
-    {
-        $table = new Allergens_Dietary_Ictoria_Show_Allergens();
-        $table->prepare_items();
-        $self = htmlspecialchars($_SERVER["PHP_SELF"]);
-        echo '<form action="#" method="POST" enctype="multipart/form-data" class="add_allergens_form" disabled ';
-        echo "<table class='wp-list-table widefat fixed striped table-view-list pages'>";
-        $table->display();
-        echo "</table>";
-        echo "</form>";
-    }
-
+        function table_page() {
+            $table = new Allergens_Dietary_Ictoria_Show_Allergens();
+            $table->prepare_items();
+            $self = htmlspecialchars($_SERVER["PHP_SELF"]);
+            echo '<form action="#" method="POST"';
+            echo "<table class='wp-list-table widefat fixed striped table-view-list pages'>";
+                $table->display();
+            echo "</table>";
+            echo "</form>";
+        }
+    
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
