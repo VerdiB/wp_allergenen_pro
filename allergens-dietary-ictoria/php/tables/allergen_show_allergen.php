@@ -43,10 +43,9 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
     {
         return get_option('items_per_page', 10);
     }
-    public function set_items_per_pages($value)
+    private function set_items_per_pages($value)
     {
         update_option('items_per_page', $value);
-
     }
 
     public function get_table_columns_and_data()

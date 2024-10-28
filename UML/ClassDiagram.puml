@@ -83,8 +83,9 @@ package "php"{
             - __construct() : void
             - table_action_options : array
             + search_query : string
-            + items_per_page : int
             + get_table_columns_and_data() : array
+            + get_items_per_pages() : int
+            - set_items_per_pages(value:int) : void
             + column_default(item:array, column_name:string) : string
             + column_cb(item:array) : string
             + single_row(item:array) : void
