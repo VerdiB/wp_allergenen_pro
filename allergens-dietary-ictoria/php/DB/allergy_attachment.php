@@ -86,6 +86,8 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 	public function updateallergyAttachment( array $data ) {
 		global $wpdb;
 
+		error_log("update5");
+
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
 		$wpdb->update(
@@ -137,6 +139,8 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 
 		if ($found_allergy == true){
 			$result = $wpdb->get_row($sql);
+
+			var_dump($result);
 
 			return $result->attachment_name;
 		}

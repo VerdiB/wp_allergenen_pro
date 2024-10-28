@@ -155,13 +155,11 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			return;
 		} else {
 			if (empty( $this->_allergen['attachment_name'] ) && false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] ) ) {
-				if (false == Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'], $data['allergen_icon']['name'] ) && $_GET['page'] !== "allergens-dietary-show-allergens"){
 					Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] );
 					$text = $text;
-				}else{
-					$allergen_icon = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->find_allergy($data['allergen_name']);
-					Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->updateAttachment( $data['allergen_icon'], $allergen_icon );
-				}
+			}else{
+				$allergen_icon = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->find_allergy($data['allergen_name']);
+				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->updateAttachment( $data['allergen_icon'], $allergen_icon );
 			}
 		}
 
@@ -184,7 +182,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		if ($_GET['page'] !== "allergens-dietary-show-allergens"){
 			echo $text;
 		}else{
-			wp_redirect( admin_url( 'admin.php?page=allergens-dietary-show-allergens' ) );
+				wp_redirect( admin_url( 'admin.php?page=allergens-dietary-show-allergens' ) );
 		}
 
 		echo '</div><br>';
