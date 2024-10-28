@@ -54,4 +54,3 @@ attachments ||--|{ allergy_attachement
 product_meta_lookup ||--o{ allergy_product
 
 @enduml
-
