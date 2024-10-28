@@ -17,7 +17,6 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 	private function __construct() {}
 
 	public function addallergyAttachment( array $data ) {
-		error_log("adding2");
 		
 		global $wpdb;
 
@@ -87,10 +86,6 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 	public function updateallergyAttachment( array $data ) {
 		global $wpdb;
 
-		var_dump($data);
-
-		error_log("iueidwhqe");
-
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
 		$wpdb->update(
@@ -107,7 +102,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		return ( isset( $wpdb->insert_id ) ) ? true : false;
 	}
 
-	public function checkAllergyAttachmentExists( string $allergy_name, string $attachment_name ) {
+	public function checkAllergyAttachmentExists( string $allergy_name ) {
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
@@ -120,6 +115,31 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		$result = $wpdb->get_results( $sql );
 
 		return ( ! empty( $result ) ) ? true : false;
+	}
+
+	public static function find_allergy( string $allergy_name ){
+		global $wpdb;
+
+		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+
+		$sql = $wpdb->prepare(
+			"SELECT attachment_name, allergy_name FROM $table_name WHERE allergy_name = %s",
+			$allergy_name
+		);
+
+		$result = $wpdb->get_results( $sql );
+
+		$found_allergy = false;
+
+		(!empty( $result ) ) ?
+		$found_allergy = true :
+		$found_allergy = false;
+
+		if ($found_allergy == true){
+			$result = $wpdb->get_row($sql);
+
+			return $result->attachment_name;
+		}
 	}
 
 	public static function allergy_connection( array $result ){

@@ -363,7 +363,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    var_dump($_POST);
     $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
     if (isset($_POST['action']) && isset($_POST['post'])) {
 

@@ -44,7 +44,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 	 */
 	public function addAllergens(array $data)
 	{
-		error_log("adding");
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -62,8 +61,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 				'%d',
 			)
 		);
-
-		var_dump($data['allergen_icon']['name']);
 
 		$attachment = array(
 			'name' => $data['allergen_icon']['name'],
@@ -264,7 +261,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 				 HAVING COUNT(attachment_name) > 1
 				 LIMIT 1"
 			);
-
+			
 			if ($existing_attachment) {
 				$sql = $wpdb->prepare(
 					"DELETE aa, a 
