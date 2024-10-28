@@ -12,6 +12,7 @@ entity "allergy"{
    allergy_name: varchar(50) <<PK>>
    allergy_description: varchar(255)
    is_allergy: boolean   
+   is_activated: boolean
 }
 
 entity "attachments"{
@@ -52,4 +53,3 @@ attachments ||--|{ allergy_attachement
 product_meta_lookup ||--o{ allergy_product
 
 @enduml
-
