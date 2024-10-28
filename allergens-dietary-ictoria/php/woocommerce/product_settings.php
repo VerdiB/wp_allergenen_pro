@@ -20,7 +20,7 @@ if ( ! class_exists( "Allergens_Dietary_Ictoria_Allergen_Queries" ) ) {
 class Allergens_Dietary_Ictoria_Product_Settings {
 	private static $_instance = null;
 	private array $_allergens;
-	private array $_attachedAllergens;
+	private array $_attachedAllergens = array();
 
 	public static function instance() {
 		if ( is_null( self::$_instance ) ) {
