@@ -20,6 +20,7 @@ if ( ! class_exists( "Allergens_Dietary_Ictoria_Allergen_Queries" ) ) {
 class Allergens_Dietary_Ictoria_Product_Settings {
 	private static $_instance = null;
 	private array $_allergens;
+	private array $_attachedAllergens;
 
 	public static function instance() {
 		if ( is_null( self::$_instance ) ) {
@@ -59,20 +60,27 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 		global $post;
 		$options = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
 		$allergens = $options->getAllAllergyAttachmments();
-
+		$this->_attachedAllergens = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->getAllergyProduct( $post->ID );
 		
-		// }
+		$tmpArr = array();
+		//add a faux value to the array to make sure the count is correct
+		$tmpArr[] = 'faux value';
+		foreach($this->_attachedAllergens as $allergen){
+			$tmpArr[] = $allergen['allergy_name'];
+		}
+		$this->_attachedAllergens = $tmpArr;
 
 		$html = '<div id="allergens_dietary_ictoria_product_data" class="panel woocommerce_options_panel">
 			<h2>' . __( 'Select allergen(\'s) and/or dietary restrictions:', 'allergens-dietary-ictoria' ) . '</h2>';
 		// create the html for all options, seperating them by category
-		foreach ( $allergens as $allergen ) {
+		foreach ( $allergens as $allergen) {
 			// check if option is globally enabled
 			//TODO: replace with actual check in use with new db structure
 				// add the html to the relevant array entry
+				
 				$html .= '
 				<div class="allergen-field">
-					<input type="checkbox" class="checkbox" value="1" name="'.$allergen['allergy_name'].'_allergens_dietary_ictoria" />
+					<input type="checkbox" class="checkbox" value="1" name="'.$allergen['allergy_name'].'_allergens_dietary_ictoria" '. ((array_search($allergen['allergy_name'], $this->_attachedAllergens)) ? 'checked="" ' : '') . '/>
 					<span class="description">
 						<img style="max-height:50px; max-width:50px;" alt="' . $allergen['allergy_name'] .'" src="' . $allergen['attachment_path'] .'"/>&nbsp;' . $allergen['allergy_name'] . '
 					</span>
@@ -96,15 +104,60 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 			}
 		};
 
-		if ( empty( $allergensInsert ) ) {
+		//check if no allergens are attached and if there is no allergen to add
+		// return
+		if ( empty( $allergensInsert ) && count($this->_attachedAllergens) === 1 ) {
 			return;
 		}
 
+		//check if we need to delete some allergens
+		if ( count($allergensInsert) < (count($this->_attachedAllergens) - 1) ) {
+			$dbInstance = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance();
+			$deleteCheck = null;
+
+			foreach($this->_attachedAllergens as $allergen){
+				if ( !in_array($allergen, $allergensInsert)) {
+					//skip the faux value
+					if ($allergen === 'faux value') {
+						continue;
+					}
+					$deleteCheck = $dbInstance->deleteAllergyProduct( $post_id, $allergen);
+				}
+				if (false === $deleteCheck){
+					unset($dbInstance);
+					throw new Exception(__('Error: could not delete allergen from product', 'allergens-dietary-ictoria'));
+					return;
+				}
+			}
+
+			unset($dbInstance);
+			return;
+		}
+		
+		//check if all allergens are already attached
+		//if not get the allergens to add
+		//otherwise return
+		$tmpArr = '';
+		if ( count($allergensInsert) === (count($this->_attachedAllergens) -1) ) {
+			for ($i = 0; $i < count($allergensInsert); $i++) {
+				if ($allergensInsert[$i] !== $this->_attachedAllergens[$i+1]) {
+					$tmpArr[] = $allergensInsert[$i];
+				}
+			}
+
+			if (empty($tmpArr)) {
+				return;
+			} else {
+				$allergensInsert = $tmpArr;
+			}
+		}
+
+		//finally, add the allergens to the product if needed
 		$dbInstance = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance();
 		$insertCheck = null;
 
-
 		foreach($allergensInsert as $allergen){
+
 			$insertCheck = $dbInstance->addallergyProduct( $post_id, $allergen);
 			if (false === $insertCheck){
 				unset($dbInstance);

@@ -56,4 +56,15 @@ class Allergens_Dietary_Ictoria_Allergy_Product_Queries {
 
         return $wpdb->get_results( $sql, ARRAY_A );
     }
+
+    public function deleteAllergyProduct(int $product_id, string $allergen){
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';
+        $sql = $wpdb->prepare(
+            "DELETE FROM %i
+            WHERE product_id = %d AND allergy_name = %s",
+            array($table_name, $product_id, $allergen));
+        
+        return $wpdb->query($sql);
+    }
 }
