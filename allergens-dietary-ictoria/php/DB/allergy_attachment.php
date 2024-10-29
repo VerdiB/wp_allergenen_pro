@@ -120,6 +120,9 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 	public function find_allergy( string $allergy_name ){
 		global $wpdb;
 
+		error_log("triggered");
+		error_log($allergy_name);
+
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
 		$sql = $wpdb->prepare(
