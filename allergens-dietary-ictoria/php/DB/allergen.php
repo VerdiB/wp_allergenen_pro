@@ -81,7 +81,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		return (count($result) > 0) ? true : false;
 	}
 
-	public function getAllAllergens() {
+	public function getAllAllergens()
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -90,7 +91,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		FROM $table_name
 		ORDER BY  is_allergy DESC, allergy_name ASC";
 
-		$result = $wpdb->get_results( $sql , ARRAY_A);
+		$result = $wpdb->get_results($sql, ARRAY_A);
 
 		return $result;
 	}
@@ -150,6 +151,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 		//get database table
 		$table_allergens = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+
 
 		$sql = $wpdb->prepare(
 			"SELECT * FROM $table_allergens WHERE allergy_name = 'alcohol'"
