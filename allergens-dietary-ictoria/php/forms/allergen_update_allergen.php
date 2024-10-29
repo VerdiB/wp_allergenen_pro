@@ -16,6 +16,9 @@ if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
 if (!class_exists('Allergens_Dietary_Ictoria_Attachment_Queries')) {
     require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/attachment.php';
 }
+if (! enum_exists('Mime_Types')) {
+    require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/lists/mime_types.php';
+}
 
 /**
  * @brief This shows the tabs on add/update allergens .
@@ -32,12 +35,11 @@ if (!class_exists('Allergens_Dietary_Ictoria_Attachment_Queries')) {
 
 class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Dietary_Ictoria_Form
 {
-
-    private ?array $_allergen = null;
-    private const MIME_TYPES = array('image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml', 'image/webp');
+    private array $MIME_TYPES;
 
     public function __construct()
     {
+        $this->MIME_TYPES = Mime_Types::get_mime_types();
     }
 
     /**
@@ -113,7 +115,7 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
             return;
         }
 
-        Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->update_allergen_icons($data, self::MIME_TYPES);
+        Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->update_allergen_icons($data, $this->MIME_TYPES);
     }
 
     /**
