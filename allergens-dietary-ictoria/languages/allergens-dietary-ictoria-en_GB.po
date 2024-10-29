@@ -52,27 +52,27 @@ msgstr ""
 "%1$sWooCommerce is inactive or not installed. Please install & activate "
 "WooCommerce%2$s"
 
-#: php/MyPluginAddMenu.php:39
+#: php/IctoriaPlugin.php:39
 msgid "Allergens and Dietary"
 msgstr "Allergens and Dietary"
 
-#: php/MyPluginAddMenu.php:51 php/MyPluginAddMenu.php:52
+#: php/IctoriaPlugin.php:51 php/IctoriaPlugin.php:52
 #: php/forms/allergen_form_license.php:42
 #: php/forms/allergen_form_license.php:43
 msgid "License key"
 msgstr "Licence key"
 
-#: php/MyPluginAddMenu.php:63 php/MyPluginAddMenu.php:64
+#: php/IctoriaPlugin.php:63 php/IctoriaPlugin.php:64
 #: php/forms/allergen_add_allergen.php:75
 msgid "Add allergen"
 msgstr "Add allergen"
 
-#: php/MyPluginAddMenu.php:75 php/MyPluginAddMenu.php:76
+#: php/IctoriaPlugin.php:75 php/IctoriaPlugin.php:76
 #: php/tabs/allergen_tabs.php:31
 msgid "Info"
 msgstr "Info"
 
-#: php/MyPluginAddMenu.php:87 php/MyPluginAddMenu.php:88
+#: php/IctoriaPlugin.php:87 php/IctoriaPlugin.php:88
 msgid "Update allergen"
 msgstr "Update allergen"
 

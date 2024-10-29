@@ -106,9 +106,9 @@ class Allergens_Dietary_Ictoria_Startup
 		$inhoud .= "// this is an automaticly generated PHP-file\n";
 
 		file_put_contents($completepath, $inhoud);
-		if (empty($options)) {
-			update_option('allergens_dietary_ictoria_options', $options, true);
-		}
+		// if (empty($options)) {
+		// 	update_option('allergens_dietary_ictoria_options', $options, true);
+		// }
 
 		// temporary admin menu panel for testing the license form
 		add_menu_page('Allergens and Dietary', 'Allergens and Dietary', 'manage_options', 'allergens-dietary-ictoria', array('Allergens_Dietary_Ictoria_Functions', 'admin_page'), 'dashicons-carrot', 6);
@@ -176,8 +176,8 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 	Allergens_Dietary_Ictoria_Products::instance();
 	Allergens_Dietary_Ictoria_Filter::instance();
 	Allergens_Dietary_Ictoria_Functions::load_style();
-	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/MyPluginAddMenu.php';
-	MyPluginAddMenu::instance();
+	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/IctoriaPlugin.php';
+	IctoriaPlugin::instance();
 } else {
 	// WooCommerce is not installed or inactive, show error message
 	$level   = 'notice-error';
