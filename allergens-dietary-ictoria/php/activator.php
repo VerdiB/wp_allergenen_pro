@@ -442,15 +442,6 @@ class Allergens_Dietary_Ictoria_Activator
 
 		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 		$exists = $wpdb->get_var($sql);
-		$pageboolean = false;
-
-		if (isset($_GET['page'])){
-			if (in_array($page, $allowed_pages, true)) {
-				$pageboolean = true;
-			}else{
-				$pageboolean = false;
-			}
-		}
 
 		if ($exists > 0) {
 			// Record exists!
