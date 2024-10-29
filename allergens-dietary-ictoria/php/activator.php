@@ -324,7 +324,8 @@ class Allergens_Dietary_Ictoria_Activator {
 			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}allergens_dietary_ictoria_allergy(
         allergy_name VARCHAR(50) NOT NULL PRIMARY KEY,
         allergy_description VARCHAR(255),
-        is_allergy BOOLEAN NOT NULL DEFAULT 1)"
+        is_allergy BOOLEAN NOT NULL DEFAULT 1,
+		is_active BOOLEAN NOT NULL DEFAULT 1,)"
 		);
 
 		$sql_allergy_attachment = $wpdb->query(
