@@ -76,14 +76,7 @@ class Allergens_Dietary_Ictoria_Startup
 	// function that runs when the activation hook is called
 	public static function on_activation()
 	{
-		$settings = Allergens_Dietary_Ictoria_Functions::get_settings();
 		// show popup asking for certain setting options if this is the first activation after installing the plugin.
-		if (! isset($settings['initial_setup_done'])) {
-			// show popup asking wether or not the user wants to automatically export all relevant product data on uninstall
-			// tell user (within popup) that above setting can be set at all times from the plugin settings menu
-			// save chosen settings in the allergens_dietary_ictoria_settings(WP options table)
-			// add the initial_setup_done option to allergens_dietary_ictoria_settings (value: true) to prevent this popup from showing on every activation after the first
-		}
 
 		$folderName = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
 
@@ -106,10 +99,6 @@ class Allergens_Dietary_Ictoria_Startup
 		$inhoud .= "// this is an automaticly generated PHP-file\n";
 
 		file_put_contents($completepath, $inhoud);
-		if (empty($options)) {
-			update_option('allergens_dietary_ictoria_options', $options, true);
-		}
-
 		// temporary admin menu panel for testing the license form
 		add_menu_page('Allergens and Dietary', 'Allergens and Dietary', 'manage_options', 'allergens-dietary-ictoria', array('Allergens_Dietary_Ictoria_Functions', 'admin_page'), 'dashicons-carrot', 6);
 	}
