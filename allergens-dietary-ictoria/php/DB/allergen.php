@@ -108,8 +108,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 	public function updateAllergens( array $data ) {
 		global $wpdb;
 
-		error_log("update");
-
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
 		$wpdb->update(
@@ -326,8 +324,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 	{
 		global $wpdb;
 
-		error_log("update3");
-
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
 		$updatenumber = 0;
@@ -381,8 +377,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
 		$updatenumber = 0;
-
-		error_log("update4");
 
 		if (isset($_GET['item'])) {
 			$sql = $wpdb->prepare(

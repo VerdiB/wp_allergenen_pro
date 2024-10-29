@@ -3,17 +3,15 @@ var button = document.getElementById("dropdown-ictoria");
 var quickEdit = document.querySelectorAll(".quick_edit");
 
 window.onload = function() {
-    if (checkElementExists('dropdown-ictoria') == true ){
-    document.getElementById("allergens-ictoria").style.display = "none";
+    if (checkElementExists('dropdown-ictoria') == 'dropdown-ictoria' ){
+        document.getElementById("allergens-ictoria").style.display = "none";
     }
 }
 
 function checkElementExists(id) {
     var element = document.getElementById(id);
     if (element) {
-        return true; 
-    } else {
-        return false; 
+        return element;  
     }
 }
 
@@ -26,7 +24,6 @@ function dropdown_form(){
 }
 
 function quickedit(form){
-    var forms = form.querySelector('.allergens_table_form');
     var field = form.querySelector('.update_form');
     var selectdropdown = field.querySelector('.type');
     var allselectdropdownoptions = selectdropdown.querySelectorAll('.option');
