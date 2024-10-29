@@ -3,6 +3,10 @@
 if (! defined('ABSPATH')) {
 	exit;
 }
+if (! class_exists('Allergens_Dietary_Ictoria_Tabs')) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
+}
+
 
 class IctoriaPlugin
 {
@@ -10,7 +14,7 @@ class IctoriaPlugin
 	private static $instance = null;
 
 	// Moet nog worden veranderd naar de goede image. Image MOET 24x24 pixels zijn.
-	private const ictoria_plugin_icon = 'allergens_soya.png'; 
+	private const ictoria_plugin_icon = 'allergens_soya.png';
 
 	/***
 	 * Main instance
@@ -124,7 +128,6 @@ class IctoriaPlugin
 	{
 		if (! class_exists('Allergens_Dietary_Ictoria_Form')) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
-			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
 		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Form::setFormType(FormType::LICENSE);
@@ -133,9 +136,8 @@ class IctoriaPlugin
 
 	public function addallergens()
 	{
-		if (! class_exists('Allergens_Dietary_Ictoria_Form') && ! class_exists('Allergens_Dietary_Ictoria_Tabs')) {
+		if (! class_exists('Allergens_Dietary_Ictoria_Form')) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
-			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
 		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Form::setFormType(FormType::ALLERGENS);
@@ -146,7 +148,6 @@ class IctoriaPlugin
 	{
 		if (! class_exists('Allergens_Dietary_Ictoria_Form')) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
-			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
 		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Form::setFormType(FormType::ALLERGENS);
@@ -157,7 +158,6 @@ class IctoriaPlugin
 	{
 		if (! class_exists('Allergens_Dietary_Ictoria_Show_Allergens')) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tables/allergen_show_allergen.php';
-			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
 		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Show_Allergens::getInstance()->table_page();
@@ -167,7 +167,6 @@ class IctoriaPlugin
 	{
 		if (! class_exists('Allergens_Dietary_Ictoria_Info')) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/lists/allergen_info.php';
-			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
 		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Info::getInstance()->showInfo();
