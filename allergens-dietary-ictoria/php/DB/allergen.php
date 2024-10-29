@@ -91,7 +91,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		return (count($result) > 0) ? true : false;
 	}
 
-	public function getAllAllergens() {
+	public function getAllAllergens()
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -100,12 +101,13 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		FROM $table_name
 		ORDER BY  is_allergy DESC, allergy_name ASC";
 
-		$result = $wpdb->get_results( $sql , ARRAY_A);
+		$result = $wpdb->get_results($sql, ARRAY_A);
 
 		return $result;
 	}
 
-	public function updateAllergens( array $data ) {
+	public function updateAllergens(array $data)
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -123,7 +125,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		);
 	}
 
-	public function getAllergen( string $allergenName ) {
+	public function getAllergen(string $allergenName)
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
@@ -417,4 +420,3 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		}
 	}
 }
-
