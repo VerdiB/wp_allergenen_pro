@@ -65,17 +65,18 @@ class MyPluginAddMenu
 			array($this, 'addallergens')
 		);
 
-		// add_submenu_page(
-		// 	'allergens-dietary-options',
-		// 	__('Info', 'allergens-dietary-ictoria'),
-		// 	__('Info', 'allergens-dietary-ictoria'),
-		// 	'manage_options',
-		// 	'allergens-dietary-Info',
-		// 	array(
-		// 		$this,
-		// 		'Info',
-		// 	)
-		// );
+
+		add_submenu_page(
+			'allergens-dietary-options',
+			__('Info', 'allergens-dietary-ictoria'),
+			__('Info', 'allergens-dietary-ictoria'),
+			'manage_options',
+			'allergens-dietary-Info',
+			array(
+				$this,
+				'Info',
+			)
+		);
 
 		add_submenu_page(
 			'allergens-dietary-options',
@@ -87,18 +88,19 @@ class MyPluginAddMenu
 		);
 		add_submenu_page(
 			'allergens-dietary-options',
-			__( 'Show allergens', 'allergens-dietary-ictoria' ),
-			__( 'Show allergens', 'allergens-dietary-ictoria' ),
+			__('Show allergens', 'allergens-dietary-ictoria'),
+			__('Show allergens', 'allergens-dietary-ictoria'),
 			'manage_options',
 			'allergens-dietary-show-allergens',
 			array(
 				$this,
 				'showallergens',
-			), 
+			),
 		);
 	}
 
-	public function myAdminPage() {
+	public function myAdminPage()
+	{
 		// echo the HTML here ......
 	}
 
@@ -138,16 +140,26 @@ class MyPluginAddMenu
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
 	}
 
-	public function showallergens() {
-		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Show_Allergens' ) ) {
+	public function showallergens()
+	{
+		if (!class_exists('Allergens_Dietary_Ictoria_Show_Allergens')) {
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tables/allergen_show_allergen.php';
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
-		}	
+		}
 		$singleton = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
-			Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
-			$singleton->table_page();
+		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
+		$singleton->table_page();
 	}
 
+	public function info()
+	{
+		if (!class_exists('Allergens_Dietary_Ictoria_Info')) {
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/lists/allergen_info.php';
+			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
+		}
+		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
+		Allergens_Dietary_Ictoria_Info::getInstance()->showInfo();
+	}
 }
 
 // call the class and add the menus automatically

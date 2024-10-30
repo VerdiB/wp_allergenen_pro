@@ -1,6 +1,6 @@
 <?php
 // exit if user can access this file directly
-if (! defined('ABSPATH')) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
@@ -78,23 +78,21 @@ class Allergens_Dietary_Ictoria_Startup
 	{
 		$settings = Allergens_Dietary_Ictoria_Functions::get_settings();
 		// show popup asking for certain setting options if this is the first activation after installing the plugin.
-		if (! isset($settings['initial_setup_done'])) {
+		if (!isset($settings['initial_setup_done'])) {
 			// show popup asking wether or not the user wants to automatically export all relevant product data on uninstall
 			// tell user (within popup) that above setting can be set at all times from the plugin settings menu
 			// save chosen settings in the allergens_dietary_ictoria_settings(WP options table)
 			// add the initial_setup_done option to allergens_dietary_ictoria_settings (value: true) to prevent this popup from showing on every activation after the first
 		}
-
-		
-
+		$options = Allergens_Dietary_Ictoria_Functions::get_options();
 		$folderName = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
 
 		if (!file_exists($folderName)) {
-		
+
 			mkdir("/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache");
 
 		}
-		
+
 		$map = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
 		$file = '/cache.php';
 
@@ -108,9 +106,9 @@ class Allergens_Dietary_Ictoria_Startup
 		$inhoud .= "// this is an automaticly generated PHP-file\n";
 
 		file_put_contents($completepath, $inhoud);
-		// if (empty($options)) {
-		// 	update_option('allergens_dietary_ictoria_options', $options, true);
-		// }
+		if (empty($options)) {
+			update_option('allergens_dietary_ictoria_options', $options, true);
+		}
 
 		// temporary admin menu panel for testing the license form
 		add_menu_page('Allergens and Dietary', 'Allergens and Dietary', 'manage_options', 'allergens-dietary-ictoria', array('Allergens_Dietary_Ictoria_Functions', 'admin_page'), 'dashicons-carrot', 6);
@@ -150,7 +148,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 					Allergens_Dietary_Ictoria_Functions::load_admin_js();
 				} else {
 					// the integration class of WooCommerce was not found, show error message
-					$level   = 'notice-error';
+					$level = 'notice-error';
 					$message = sprintf(__('%1$sThe WooCommerce Integration class was not found. Please make sure WooCommerce is installed correctly%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
 					Allergens_Dietary_Ictoria_Functions::error_notice($level, $message);
 				}
@@ -182,7 +180,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 	MyPluginAddMenu::instance();
 } else {
 	// WooCommerce is not installed or inactive, show error message
-	$level   = 'notice-error';
+	$level = 'notice-error';
 	$message = sprintf(__('%1$sWooCommerce is inactive or not installed. Please install & activate WooCommerce%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
 	Allergens_Dietary_Ictoria_Functions::error_notice($level, $message);
 }
