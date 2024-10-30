@@ -80,7 +80,7 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 				
 				$html .= '
 				<div class="allergen-field">
-					<input type="checkbox" class="checkbox" value="1" name="'.$allergen['allergy_name'].'_allergens_dietary_ictoria" '. ((array_search($allergen['allergy_name'], $this->_attachedAllergens)) ? 'checked="" ' : '') . '/>
+					<input type="checkbox" class="checkbox" value="1" name="'. $this->replace_space_chars($allergen['allergy_name']).'_allergens_dietary_ictoria" '. ((array_search($allergen['allergy_name'], $this->_attachedAllergens)) ? 'checked="" ' : '') . '/>
 					<span class="description">
 						<img style="max-height:50px; max-width:50px;" alt="' . $allergen['allergy_name'] .'" src="' . $allergen['attachment_path'] .'"/>&nbsp;' . $allergen['allergy_name'] . '
 					</span>
@@ -98,14 +98,15 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 	public function save_product_options( $post_id ) {
 		$allergensInsert = array();
 
+		// echo 'check  first foreach <br>';
 		foreach ( $this->_allergens as $allergen ) {
-			if ( isset( $_POST[ ($allergen['allergy_name'] . '_allergens_dietary_ictoria') ] ) ) {
+			if ( isset( $_POST[ ($this-> replace_space_chars($allergen['allergy_name']) . '_allergens_dietary_ictoria') ] ) ) {
 				$allergensInsert[] = $allergen['allergy_name'];
 			}
 		};
 
 		//check if no allergens are attached and if there is no allergen to add
-		// return
+		echo 'check if no allergens are attached and if there is no allergen to add <br>';
 		if ( empty( $allergensInsert ) && count($this->_attachedAllergens) === 1 ) {
 			return;
 		}
@@ -168,5 +169,9 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 
 		unset($dbInstance);
 
+	}
+
+	private function replace_space_chars(string $allergens): string{
+		return (preg_match('/\s/', $allergens)) ? str_replace(' ', '_', $allergens) : $allergens;
 	}
 }
