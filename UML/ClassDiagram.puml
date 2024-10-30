@@ -136,6 +136,8 @@ package "php"{
 
         class Allergens_Dietary_Ictoria_Allergens_Form{
             - _allergen : array
+            - MIME_TYPES : array
+            - MIME_names : array
             + __construct(): void
             + showForm(allergenName:String) : void
             + submit(data:array) : void
