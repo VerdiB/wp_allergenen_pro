@@ -103,9 +103,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 		}
 
-		if (empty($data['allergen_icon']['name'])) {
+		if (empty($data['allergen_icon']['name']) || $data['allergen_icon']['size'] == 0) {
 			$data['allergen_icon']['name'] = 'No_Icon_Selected.png';
-			$data['allergen_icon']['tmp_name'] = ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/assets/icons/No_Icon_Selected.png';
+			$data['allergen_icon']['tmp_name'] = ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/assets/icons/no_icon_selected.png';
 		}
 
 		if (empty($data['allergen_name_hidden'])) {
@@ -120,7 +120,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		if (false === wp_check_filetype($data['allergen_icon']['name'], $this->MIME_TYPES)) {
 			throw new Exception(__('The file is not a valid image'));
-			return;
 		} else {
 
 			(empty($this->_allergen['attachment_name']) && false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists($data['allergen_icon']['name'])) ?
