@@ -108,9 +108,9 @@ class Allergens_Dietary_Ictoria_Startup
 		$inhoud .= "// this is an automaticly generated PHP-file\n";
 
 		file_put_contents($completepath, $inhoud);
-		if (empty($options)) {
-			update_option('allergens_dietary_ictoria_options', $options, true);
-		}
+		// if (empty($options)) {
+		// 	update_option('allergens_dietary_ictoria_options', $options, true);
+		// }
 
 		// temporary admin menu panel for testing the license form
 		add_menu_page('Allergens and Dietary', 'Allergens and Dietary', 'manage_options', 'allergens-dietary-ictoria', array('Allergens_Dietary_Ictoria_Functions', 'admin_page'), 'dashicons-carrot', 6);

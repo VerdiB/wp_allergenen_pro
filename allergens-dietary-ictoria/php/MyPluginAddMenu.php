@@ -134,7 +134,7 @@ class MyPluginAddMenu
 		}
 
 		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
-		Allergens_Dietary_Ictoria_Form::setFormType( FormType::ALLERGENS );
+		Allergens_Dietary_Ictoria_Form::setFormType( FormType::UPDATE );
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
 	}
 
@@ -146,61 +146,6 @@ class MyPluginAddMenu
 		$singleton = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
 			Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 			$singleton->table_page();
-	}
-
-	public function updateallergens2()
-	{
-		global $wpdb;
-		$table_name_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-		$table_name_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-
-		$allergens = $wpdb->get_results(
-			"SELECT a.allergy_name, a.allergy_description, at.attachment_name
-					FROM $table_name_allergy AS a
-					LEFT JOIN $table_name_attachment AS at ON a.allergy_name = at.allergy_name"
-		);
-		?>
-		<h1><?php _e('Update Allergen Icons', 'allergens-dietary-ictoria'); ?></h1>
-		<form method="POST" enctype="multipart/form-data">
-			<table>
-				<thead>
-					<tr>
-						<th><?php _e('Allergen', 'allergens-dietary-ictoria'); ?></th>
-						<th><?php _e('Description', 'allergens-dietary-ictoria'); ?></th>
-						<th><?php _e('Current Icon', 'allergens-dietary-ictoria'); ?></th>
-						<th><?php _e('Upload New Icon', 'allergens-dietary-ictoria'); ?></th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php foreach ($allergens as $allergen): ?>
-						<tr>
-							<td><?php echo esc_html($allergen->allergy_name); ?></td>
-							<td><?php echo esc_html($allergen->allergy_description); ?></td>
-							<td>
-								<?php echo $allergen->attachment_name ? esc_html($allergen->attachment_name) : 'No file chosen'; ?>
-							</td>
-							<td>
-								<input type="hidden" name="allergen_icon_hidden[<?php echo esc_attr($allergen->allergy_name); ?>]"
-									value="<?php echo $allergen->attachment_name ? esc_attr($allergen->attachment_name) : ""; ?>"
-									id="allergen_icon_hidden_<?php echo esc_attr($allergen->allergy_name); ?>">
-								<input type="file" name="allergen_icon[<?php echo esc_attr($allergen->allergy_name); ?>]"
-									id="allergen_icon_<?php echo esc_attr($allergen->allergy_name); ?>">
-							</td>
-						</tr>
-					<?php endforeach; ?>
-				</tbody>
-			</table>
-			<input type="submit" value="<?php _e('Update Icons', 'allergens-dietary-ictoria'); ?>">
-		</form>
-		<?php
-
-		// // Verwerk de POST-aanroep
-		// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		// 	if (!class_exists('Allergen_Icon_Manager')) {
-		// 		require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/class-allergen-icon-manager.php';
-		// 	}
-		// 	Allergen_Icon_Manager::update_allergen_icons();
-		// }
 	}
 
 }

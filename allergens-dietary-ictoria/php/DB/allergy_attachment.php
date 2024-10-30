@@ -118,7 +118,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
 		$sql = $wpdb->prepare(
-			"SELECT * FROM $table_name WHERE allergy_name = %s",
+			"SELECT allergy_name FROM $table_name WHERE allergy_name = %s",
 			$allergy_name
 		);
 

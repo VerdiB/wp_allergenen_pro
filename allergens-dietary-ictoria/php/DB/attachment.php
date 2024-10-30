@@ -25,6 +25,10 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 
 	public function addAttachment(array $data)
 	{
+		if (is_null($data)) {
+			return;
+		}
+
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
@@ -33,7 +37,7 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 			$table_name,
 			array(
 				'attachment_name' => $data['name'],
-				'attachment_path' => $this->_url . $data['full_path'],
+				'attachment_path' => $this->_url . $data['name'],
 			)
 		);
 
@@ -44,6 +48,11 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 
 	public function checkAttachmentExists(string $attachmentName)
 	{
+		if(empty($attachmentName))
+		{
+			return;
+		}
+		
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
@@ -155,7 +164,6 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 					$wpdb->query('ROLLBACK'); // Something went wrong, rollback all changes
 					$updated_icons = false;
 				}
-
 			} catch (Exception $e) {
 				echo 'Error: ' . $e->getMessage();
 				$updated_icons = false;
@@ -165,7 +173,6 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 		echo $updated_icons
 			? '<p>' . __('Icons updated successfully.', 'allergens-dietary-ictoria') . '</p>'
 			: '<p>' . __('No icons were updated.', 'allergens-dietary-ictoria') . '</p>';
-
 	}
 
 	/**
@@ -183,7 +190,7 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 			mkdir(self::PATH, 0777, true);
 		}
 
-		$full_path = self::PATH . $data['full_path'];
+		$full_path = self::PATH . $data['name'];
 		// $full_path = $_SERVER['HTTP_HOST'] . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/custom/' . $data['full_path'];
 		if (false === file_exists($full_path)) {
 			move_uploaded_file($data['tmp_name'], $full_path);
@@ -211,4 +218,3 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 		}
 	}
 }
-
