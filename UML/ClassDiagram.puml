@@ -67,7 +67,20 @@ package "php"{
         + __construct() : void
         + show_product_options() : void
         + render_html(data:array): string
+    }
 
+    class Allergens_Dietary_Ictoria_Plugin_Menu{
+        -{static} instance : Allergens_Dietary_Ictoria_Plugin_Menu
+        - ictoria_plugin_icon : string
+        +{static} instance() : Allergens_Dietary_Ictoria_Plugin_Menu
+        - __construct() : void
+        + addMyAdminMenu() : void
+        + myAdminPage() : void
+        + licenseForm() : void
+        + addallergens() : void
+        + updateallergens() : void
+        + showallergens() : void
+        + info() : void
     }
 
     class Allergens_Dietary_Ictoria_Wc_Integration_Settings{
@@ -77,6 +90,7 @@ package "php"{
         + save_settings(post:array) : void
         +{static} plugin_action_links(links:array) : array
     }
+
     package "tables"{
          class Allergens_Dietary_Ictoria_Show_Allergens{
             - {static} _instance : Allergens_Dietary_Ictoria_Show_Allergens
@@ -228,9 +242,9 @@ Allergens_Dietary_Ictoria_Filter --> Allergens_Dietary_Ictoria_Functions : uses
 Allergens_Dietary_Ictoria_Wc_Integration_Settings -r-> Allergens_Dietary_Ictoria_Functions : uses
 Allergens_Dietary_Ictoria_Product_Settings -l-> Allergens_Dietary_Ictoria_Functions : uses
 
-
 ' forms relations
 FormType  <.. Allergens_Dietary_Ictoria_Form 
+Allergens_Dietary_Ictoria_Plugin_Menu ..> Allergens_Dietary_Ictoria_Form : uses
 Allergens_Dietary_Ictoria_Form o-r-> I_Allergens_Dietary_Ictoria_Form
 Allergens_Dietary_Ictoria_License_Form ..|> I_Allergens_Dietary_Ictoria_Form
 Allergens_Dietary_Ictoria_Allergens_Form .u.|> I_Allergens_Dietary_Ictoria_Form
