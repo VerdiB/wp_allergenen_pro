@@ -108,6 +108,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
     public function handle_row_actions($item, $column_name, $primary)
     {
+
         if ($primary !== $column_name) {
             return '';
         }
@@ -268,7 +269,10 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
     public function process_quick_action()
     {
+
+        error_log("quick");
         if (isset($_GET['action']) && isset($_GET['item'])) {
+            error_log("quick2");
             $item = sanitize_text_field($_GET['item']);
             $action = sanitize_text_field($_GET['action']);
             $nonce = filter_input(INPUT_GET, '_wpnonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -387,6 +391,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 } else {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        error_log("requestmethod");
         if (isset($_GET['quick_edit'])){
             $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
 

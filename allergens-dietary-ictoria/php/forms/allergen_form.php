@@ -75,10 +75,24 @@ class Allergens_Dietary_Ictoria_Form {
 
 		if ( ! empty( $_FILES ) ) {
 			$_data = array_merge( $_data, $_FILES );
+			var_dump($_data);
 		}
 
 		if ( ! empty( $_POST['submit'] ) ) {
+
+		$showOnPage = ["allergens-dietary-show-allergens"];
+		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
+		if (in_array($page, $showOnPage, true)) {
+			if (!isset($_POST['allergen_name'])){
+				self::$_formObject->submit( $_data );
+			}else{
+				if ($_POST['allergen_name'] == $allergenName){
+					self::$_formObject->submit( $_data );
+				}
+			}
+		}else{
 			self::$_formObject->submit( $_data );
+		}
 		}
 
 		$showOnPage = ["allergens-dietary-show-allergens"];
@@ -87,11 +101,11 @@ class Allergens_Dietary_Ictoria_Form {
 		
 		if (in_array($page, $showOnPage, true)) {
 			echo '<div class="allergens_table_form" style="display: none;" id="' . $allergenName . '_form">';
-			self::$_formObject->showForm( $allergenName );
+				self::$_formObject->showForm( $allergenName );
 			echo '</div>';
 		}else{
 			echo '<div class="allergens_form"><form action="" method="post" enctype="multipart/form-data" class="add_allergens_form">';
-			self::$_formObject->showForm( $allergenName );
+				self::$_formObject->showForm( $allergenName );
 			echo '</form></div>';
 		}
 	}
