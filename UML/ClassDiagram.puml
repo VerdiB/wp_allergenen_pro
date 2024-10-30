@@ -242,13 +242,9 @@ Allergens_Dietary_Ictoria_Filter --> Allergens_Dietary_Ictoria_Functions : uses
 Allergens_Dietary_Ictoria_Wc_Integration_Settings -r-> Allergens_Dietary_Ictoria_Functions : uses
 Allergens_Dietary_Ictoria_Product_Settings -l-> Allergens_Dietary_Ictoria_Functions : uses
 
-Allergens_Dietary_Ictoria_Plugin_Menu ..> Allergens_Dietary_Ictoria_Info
-Allergens_Dietary_Ictoria_Plugin_Menu ..> Allergens_Dietary_Ictoria_License_Form
-Allergens_Dietary_Ictoria_Plugin_Menu ..> Allergens_Dietary_Ictoria_Form
-Allergens_Dietary_Ictoria_Plugin_Menu ..> Allergens_Dietary_Ictoria_Show_Allergens
-
 ' forms relations
 FormType  <.. Allergens_Dietary_Ictoria_Form 
+Allergens_Dietary_Ictoria_Plugin_Menu ..> Allergens_Dietary_Ictoria_Form : uses
 Allergens_Dietary_Ictoria_Form o-r-> I_Allergens_Dietary_Ictoria_Form
 Allergens_Dietary_Ictoria_License_Form ..|> I_Allergens_Dietary_Ictoria_Form
 Allergens_Dietary_Ictoria_Allergens_Form .u.|> I_Allergens_Dietary_Ictoria_Form
