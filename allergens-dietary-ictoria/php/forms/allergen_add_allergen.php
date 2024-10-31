@@ -101,10 +101,15 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		$no_icon_selected = false;
 
 		if (empty($data) || ! isset($data)) {
+			echo '<p style="color: red;" >' . __('Form has not been set!', 'allergens-dietary-ictoria') . '</p>';
+			return;
+		}
+		if (empty($data['allergen_name'])) {
+			echo '<p style="color: red;" >' . __("Allergen Name Can't be empty or blank!", 'allergens-dietary-ictoria') . '</p>';
 			return;
 		}
 
-		if (empty($data['allergen_icon']['name']) || $data['allergen_icon']['name'] == '') {
+		if (empty($data['allergen_icon']['name'])) {
 			$imagePath = get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/no_icon_selected.png';
 			$imageName = sanitize_file_name(basename($imagePath));
 			$data['allergen_icon'] = [
