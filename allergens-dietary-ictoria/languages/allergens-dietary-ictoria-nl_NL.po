@@ -51,29 +51,29 @@ msgstr ""
 "%1$sWooCommerce is niet actief of niet geïnstalleerd. Installeer en activeer "
 "WooCommerce%2$s"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:39
+#: php/MyPluginAddMenu.php:39
 #, fuzzy
 #| msgid "allergensdietary"
 msgid "Allergens and Dietary"
 msgstr "allergenendieët"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:51 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:52
+#: php/MyPluginAddMenu.php:51 php/MyPluginAddMenu.php:52
 #: php/forms/allergen_form_license.php:42
 msgid "License key"
 msgstr "Licentie sleutel"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:63 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:64
+#: php/MyPluginAddMenu.php:63 php/MyPluginAddMenu.php:64
 #: php/forms/allergen_add_allergen.php:75
 #, fuzzy
 #| msgid "add allergen"
 msgid "Add allergen"
 msgstr "allergeen toevoegen"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:75 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:76
+#: php/MyPluginAddMenu.php:75 php/MyPluginAddMenu.php:76
 msgid "Info"
 msgstr ""
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:87 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:88
+#: php/MyPluginAddMenu.php:87 php/MyPluginAddMenu.php:88
 #, fuzzy
 #| msgid "add allergen"
 msgid "Update allergen"
