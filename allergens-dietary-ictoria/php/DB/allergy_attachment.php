@@ -48,7 +48,6 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 				$allergy_name
 			);
 		} else{
-			error_log("this thing is not true");
 			$sql = $wpdb->prepare(
 			"SELECT a.allergy_name, a.allergy_description, att.attachment_path
 			FROM  {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment as aa
@@ -86,8 +85,6 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 
 	public function updateallergyAttachment( array $data ) {
 		global $wpdb;
-
-		error_log("updating1");
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
@@ -128,12 +125,15 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		$table_a = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
 		$sql = $wpdb->prepare(
-			"DELETE a, aa, am
-			FROM $table_a AS a
-			JOIN $table_am AS am
-			ON
-			WHERE allergy_name = %s",
-			$allergy,
+			"DELETE aa, a, am 
+			FROM $table_aa AS aa
+			JOIN $table_a AS a 
+			ON a.allergy_name = aa.allergy_name
+			JOIN $table_am as am
+			ON am.attachment_name = aa.attachment_name
+			WHERE aa.allergy_name = %s  
+			AND a.is_default_option != 1",
+			$allergy
 		);
 
 		$wpdb->query($sql);
@@ -152,20 +152,12 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		);
 
 		$exists = $wpdb->get_var($sql);
-		
-		// Example usage
-		$example_var = array("test" => 123, "foo" => "bar");
-		$result = false;
 
-		if ($exists > 2){
-			error_log("this thing is super true");
-			$result = true;
+		if ($exists > 1){
+			return true;
 		}else{
-			error_log("this thing is super false");
-			$result = false;
+			return false;
 		}
-
-		return $result;
 	}
 
 	public function find_allergy( string $allergy_name ){
@@ -187,16 +179,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		$found_allergy = false;
 
 		if ($found_allergy == true){
-
-			error_log("yesssssssss");
 			$result = $wpdb->get_row($sql);
-
-			print_r("hello5000");
-			var_dump($wpdb->get_row( $sql ));
-			print_r("hello5000");
-			print_r($result->attachment_name);
-			print_r("hello5000");
-
 			return $result->attachment_name;
 		}
 	}

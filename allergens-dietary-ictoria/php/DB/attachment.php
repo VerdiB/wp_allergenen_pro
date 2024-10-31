@@ -38,27 +38,14 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 		return ( isset( $wpdb->insert_id ) ) ? true : false;
 	}
 
-	public function deleteAttachment( string $allergy ) {
+	public function deleteAttachment( string $attachment ) {
 		global $wpdb;
 
 		$table_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
-		$table_connection = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-
-		$sqlAttachment = $wpdb->prepare(
-			"SELECT attachment_name
-			 FROM $table_connection
-			 WHERE allergy_name = %s
-			 LIMIT 1",
-			 $allergy
-			);
-
-		
-		$attachment = $wpdb->get_var($sqlAttachment);
 
 		$sqlConnection = $wpdb->prepare(
 			"DELETE FROM $table_attachment
-     		WHERE attachment_name = %s
-     		LIMIT 1",
+     		WHERE attachment_name = %s",
     		$attachment
 			);
 
@@ -83,8 +70,6 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 
 	public function updateAttachment( array $data, string $oldName ) {
 		global $wpdb;
-
-		error_log("updating2");
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
 

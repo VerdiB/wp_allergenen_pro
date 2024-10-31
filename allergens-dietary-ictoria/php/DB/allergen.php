@@ -47,18 +47,13 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-		$type = 'type';
-
-		empty($data['type']) ? 
-		$type = 'type2' :
-		$type = 'type'; 
 
 		$wpdb->insert(
 			$table_name,
 			array(
 				'allergy_name' => $data['allergen_name'],
 				'allergy_description' => $data['allergen_description'],
-				'is_allergy' => $data[$type],
+				'is_allergy' => $data['type'],
 			),
 			array(
 				'%s',
@@ -115,8 +110,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 	{
 		global $wpdb;
 
-		error_log("dit is" . $data['type2']);
-
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
 		$wpdb->update(
@@ -124,7 +117,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			array(
 				'allergy_name' => $data['allergen_name'],
 				'allergy_description' => $data['allergen_description'],
-				'is_allergy' => $data['type2'],
+				'is_allergy' => $data['type'],
 			),
 			array(
 				'allergy_name' => $data['allergen_name_hidden'],
@@ -259,7 +252,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			static $error_displayed = false;
 
 			if ($is_default) {
-				error_log("default");
 				if (!$error_displayed) {
 					throw new Exception(__("Can't delete a default allergen option: '" . $allergy_name . "'"));
 				}
@@ -274,7 +266,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			);
 			
 			if ($existing_attachment) {
-				error_log("if2222");
 				$sql = $wpdb->prepare(
 					"DELETE aa, a 
                  FROM $table_allergy_attachment AS aa
@@ -285,7 +276,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 					$allergy_name
 				);
 			} else {
-				error_log("else2");
 				$sql = $wpdb->prepare(
 					"DELETE aa, a, am 
 					FROM $table_allergy_attachment AS aa

@@ -58,20 +58,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
 			}
 			$this->_allergen = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllergyAttachment( $allergenName );
-			
-			print_r("hello2");
-			var_dump($this->_allergen);
-			print_r("hello2");
-		}
-
-		$backtrace = debug_backtrace();
-		if (isset($backtrace[1])) { // [1] is the caller of this method
-			echo "Called by method: " . $backtrace[1]['function'];
-			if (isset($backtrace[1]['class'])) {
-				echo " in class: " . $backtrace[1]['class'];
-			}
-		} else {
-			echo "Called from global scope or directly.";
 		}
 
 		$showOnPage = ["allergens-dietary-show-allergens"];
@@ -85,8 +71,8 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '<label for="allergen_name">' . __( 'Allergen name', 'allergens-dietary-ictoria' ) . '</label>';
 			$html .= '<input type="text" class="update_" name="allergen_name" id="allergen_name" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_name'] : '' ) . '" disabled required/>';
 			$html .= '<div class="dropdown-row">';
-			$html .= '<label for="type2">' . __( 'Type', 'allergens-dietary-ictoria' ) . '</label>';
-			$html .= '<select name="type2" id="type" class="type">';
+			$html .= '<label for="type">' . __( 'Type', 'allergens-dietary-ictoria' ) . '</label>';
+			$html .= '<select name="type" id="type" class="type">';
 			$html .= self::do_dropdown();
 			$html .= '</select>';
 			$html .= '</div>';
@@ -130,8 +116,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 * @date 11-9-2024
 	 */
 	public function submit( array $data ) {
-	if (isset($data['type']) || isset($data['type2']) ){
-		error_log("submitted");
+		error_log("hello");
+	if (isset($data['type'])){
+
 		$text = "Successfully added new Allergen/Diet";
 		$data = $this->sanitize( $data );
 		$ShowOnPage = ["allergens-dietary-add-allergen"];
@@ -143,7 +130,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		if ( empty( $data['allergen_name_hidden'] ) ) {
 				if (false === Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] )){
-					error_log("2if");
 					Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->addAllergens( $data );
 					echo '<div style="background-color: limegreen; max-width: 270px;">';
 					$text = __("Successfully added new Allergen/Diet", 'allergens-dietary-ictoria');
@@ -154,63 +140,41 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		} else {
 				Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->updateAllergens( $data );
 		}
+
+		$allergen_icon = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->find_allergy($data['allergen_name']);
 		if ( false === wp_check_filetype( $data['allergen_icon']['name'], self::MIME_TYPES ) ) {
 			throw new Exception( __( 'The file is not a valid image' ) );
 			return;
 		} else {
-			$allergen_icon = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->find_allergy($data['allergen_name']);
-			if (false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] ) ) {
-				error_log("this is THE ONE");
+			if (empty($data['allergen_name_hidden']) && 
+			false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] )) {
 				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] );
-			}else{
-				error_log("this is THE PROGRESSING");
-				if ($allergen_icon !== null){
-					error_log("this is THE PROGRESSING2 " . $allergen_icon);
-					if (false === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkMultipleAttachmentsExists($data['allergen_icon']['name'])){
-						error_log("this is THE TWO");
-						Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->updateAttachment( $data['allergen_icon'], $allergen_icon );
-					}
-				}
 			}
 		}
 
 	if (empty($data['allergen_name_hidden']) && true !== Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'], $data['allergen_icon']['name'] ) ) {
-		Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->addallergyAttachment( $data );
+		if (true === Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'])){
+			Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->addallergyAttachment( $data );
+		}
 	} else {
-		error_log("else1000");
-		if (true === Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] ) &&
-			true === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'], $data['allergen_icon']['name'])){
-				error_log("if1000");
-				if ($data['allergen_name_hidden'] == $data['allergen_name'] || false === Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] )){
-					error_log("if2000");
-					if (false == Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkMultipleAttachmentsExists($data['allergen_icon']['name'])){
-						if (!empty($data['allergen_name_hidden']) && false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] )){
-							$allergen_icon = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->find_allergy($data['allergen_name']);
-							if ($allergen_icon !== null){
-								if (false == Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkMultipleAttachmentsExists($data['allergen_icon']['name'])){
-									error_log("it is this");
-									Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->deleteAllergyAttachment($data['allergen_name']);
-									Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->addallergyAttachment( $data );
-									Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->updateallergyAttachment( $data, $data['allergen_name_hidden'] );
-								}else{
-									error_log("not this");
-								}
+		if (true === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'], $data['allergen_icon']['name'])){
+					$allergen_icon = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->find_allergy($data['allergen_name']);
+					if ($allergen_icon !== null && $allergen_icon !== $data['allergen_icon']['name']){
+						if (true === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkMultipleAttachmentsExists($data['allergen_icon']['name'])){
+							Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->updateallergyAttachment( $data, $data['allergen_name_hidden'] );
+							if (false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] )){
+								Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->updateAttachment( $data['allergen_icon'],  $allergen_icon);
 							}
 						}else{
-							error_log("MM");
+							Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->updateallergyAttachment( $data, $data['allergen_name_hidden'] );
+							if (false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] )){
+								Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] );
+							}
 						}
-					}else{
-						error_log("this is this onee");
-						Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->deleteAllergyAttachment($data['allergen_name']);
-						Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->addallergyAttachment( $data );
 					}
-				}
-			}else{
-				error_log("this is theee onee");
-					Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->addallergyAttachment( $data );
 			}
 		}
-
+	
 		if (in_array($page, $ShowOnPage, true)) {
 			echo $text;
 		}else{
@@ -218,6 +182,8 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		}
 
 		echo '</div><br>';
+	}else{
+		error_log("not set");
 	}
 }
 
@@ -235,7 +201,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		if (isset($data['type'])){
 			$data['type'] = absint( sanitize_text_field( wp_unslash( $data['type'] ) ) );
 		}else{
-			$data['type2'] = absint( sanitize_text_field( wp_unslash( $data['type2'] ) ) );
+			$data['type'] = absint( sanitize_text_field( wp_unslash( $data['type'] ) ) );
 		}
 		$data['allergen_icon']['name'] = sanitize_file_name( $data['allergen_icon']['name'] );
 
@@ -244,22 +210,18 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 	private function do_dropdown() {
 		$html = '';
-
-		$showOnPage = ["allergens-dietary-show-allergens"];
-
-		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
-		
-		if (!in_array($page, $showOnPage, true)) {
-			if ( empty( $this->_allergen ['is_allergy'] ) ) {
-				$html  = '<option value="1" disbaled>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
-				$html .= '<option value="0" disabled>' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
-				return $html;
-			}
+		if ( empty( $this->_allergen ['is_allergy'] ) ) {
+			$html  = '<option value="1" selected>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
+			$html .= '<option value="0">' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
+			return $html;
 		}
 
-		if (in_array($page, $showOnPage, true)) {
-				$html  = '<option value="1" class="option" disabled>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
-				$html .= '<option value="0" class="option" disabled>' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
+		if ( $this->_allergen['is_allergy'] == 1 ) {
+			$html  = '<option value="1" disabled selected>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
+			$html .= '<option value="0" disabled>' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
+		} else {
+			$html  = '<option value="1" disabled>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
+			$html .= '<option value="0" disabled selected>' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
 		}
 		return $html;
 	}
