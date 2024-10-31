@@ -52,27 +52,27 @@ msgstr ""
 "%1$sWooCommerce is inactive or not installed. Please install & activate "
 "WooCommerce%2$s"
 
-#: php/MyPluginAddMenu.php:39
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:39
 msgid "Allergens and Dietary"
 msgstr "Allergens and Dietary"
 
-#: php/MyPluginAddMenu.php:51 php/MyPluginAddMenu.php:52
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:51 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:52
 #: php/forms/allergen_form_license.php:42
 #: php/forms/allergen_form_license.php:43
 msgid "License key"
 msgstr "Licence key"
 
-#: php/MyPluginAddMenu.php:63 php/MyPluginAddMenu.php:64
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:63 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:64
 #: php/forms/allergen_add_allergen.php:75
 msgid "Add allergen"
 msgstr "Add allergen"
 
-#: php/MyPluginAddMenu.php:75 php/MyPluginAddMenu.php:76
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:75 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:76
 #: php/tabs/allergen_tabs.php:31
 msgid "Info"
 msgstr "Info"
 
-#: php/MyPluginAddMenu.php:87 php/MyPluginAddMenu.php:88
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:87 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:88
 msgid "Update allergen"
 msgstr "Update allergen"
 
