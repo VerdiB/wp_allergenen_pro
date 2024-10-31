@@ -53,6 +53,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	public function showForm( ?string $allergenName = null ) {
 
 		if ( ! is_null( $allergenName ) ) {
+			error_log("this thing");
 			// TODO: Implement showForm() method. when the allergen name is not null
 			if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) {
 				require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
@@ -86,6 +87,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '</div>';
 			$html .= '</fieldset>';
 		}else{
+			error_log("this is being runned");
 			$html  = '<fieldset>';
 			$html .= '<input type="hidden" name="allergen_name_hidden" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_name'] : '' ) . '"/>';
 			$html .= '<label for="allergen_name">' . __( 'Allergen name', 'allergens-dietary-ictoria' ) . '</label><br>';
@@ -210,18 +212,24 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 	private function do_dropdown() {
 		$html = '';
+
+		$ShowOnPage = ["allergens-dietary-add-allergen"];
+		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
+
+	if (in_array($page, $ShowOnPage, true)) {
 		if ( empty( $this->_allergen ['is_allergy'] ) ) {
 			$html  = '<option value="1" selected>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
 			$html .= '<option value="0">' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
 			return $html;
 		}
+	}
 
 		if ( $this->_allergen['is_allergy'] == 1 ) {
-			$html  = '<option value="1" disabled selected>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
-			$html .= '<option value="0" disabled>' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
+			$html  = '<option value="1" class="option" selected disabled>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
+			$html .= '<option value="0" class="option" disabled>' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
 		} else {
-			$html  = '<option value="1" disabled>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
-			$html .= '<option value="0" disabled selected>' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
+			$html  = '<option value="1" class="option" disabled>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
+			$html .= '<option value="0" class="option" selected disabled>' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
 		}
 		return $html;
 	}
