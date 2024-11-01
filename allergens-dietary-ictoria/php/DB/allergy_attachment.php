@@ -86,6 +86,8 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 	public function updateallergyAttachment( array $data ) {
 		global $wpdb;
 
+		error_log($data['allergen_name'] . $data['allergen_name_hidden']);
+
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
 		$wpdb->update(
@@ -152,7 +154,14 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		$count = $wpdb->get_var($sql);
 	
 		error_log('Count is: ' . $count);
-		return $count >= 2;
+
+		if ($count !== 0){
+			$result = ($count > 1);
+		}else{
+			$result = true;
+		}
+
+		return $result;
 	}
 
 	public function find_allergy( string $allergy_name ){
