@@ -118,26 +118,18 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 		}
 
 		//check if we need to delete some allergens
-		error_log('count($allergensInsert): ' . count($allergensInsert) . ' count($this->_attachedAllergens): ' . count($this->_attachedAllergens));
 		if ( count($allergensInsert) < (count($this->_attachedAllergens)) ) {
 			$dbInstance = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance();
 			$deleteCheck = null;
 	
-			error_log('count($allergensInsert) < (count($this->_attachedAllergens))');
-	
 			foreach($this->_attachedAllergens as $allergen){
-				if ( !in_array($allergen, $allergensInsert)) {
+				if ( !in_array($allergen['allergy_name'], $allergensInsert)) {
 					//skip the faux value
 					if ($allergen === 'faux value') {
-						error_log('faux value');
 						continue;
 						// break;
 					}
-					echo 'deleting: ' . $allergen . '<br> <pre>';
-					print_r($allergen);
-					echo '</pre>';
-					return;		
-					// $deleteCheck = $dbInstance->deleteAllergyProduct( $post_id, $allergen['allergy_name']);
+					$deleteCheck = $dbInstance->deleteAllergyProduct( $post_id, $allergen['allergy_name']);
 				}
 				if (false === $deleteCheck){
 					unset($dbInstance);
