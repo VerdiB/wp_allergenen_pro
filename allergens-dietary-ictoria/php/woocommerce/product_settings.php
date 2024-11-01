@@ -106,7 +106,6 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 		};
 
 		//check if no allergens are attached and if there is no allergen to add
-		echo 'check if no allergens are attached and if there is no allergen to add <br>';
 		if ( empty( $allergensInsert ) && count($this->_attachedAllergens) === 1 ) {
 			return;
 		}

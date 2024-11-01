@@ -49,9 +49,10 @@ class Allergens_Dietary_Ictoria_Allergy_Product_Queries {
         $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';
 
         $sql = $wpdb->prepare(
-            "SELECT allergy_name
-            FROM %i
-            WHERE product_id = %d"
+            "SELECT a.allergy_name
+            FROM %i as ap
+            JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy as a on ap.allergy_name = a.allergy_name
+            WHERE ap.product_id = %d and a.is_active = 1" 
         , array($table_name, $product_id));
 
         return $wpdb->get_results( $sql, ARRAY_A );

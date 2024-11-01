@@ -74,6 +74,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
             ON aa.allergy_name = al.allergy_name
 			JOIN {$wpdb->prefix}allergens_dietary_ictoria_attachments as att
 			ON aa.attachment_name = att.attachment_name
+			WHERE al.is_active = 1
 			ORDER BY  al.is_allergy DESC, al.allergy_name ASC
 			",$table
 
