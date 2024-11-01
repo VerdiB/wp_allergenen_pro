@@ -141,23 +141,18 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 
 	public function checkMultipleAttachmentsExists( string $icon ) {
 		global $wpdb;
-
+	
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-
+		
 		$sql = $wpdb->prepare(
-			"SELECT attachment_name FROM $table_name 
-			WHERE attachment_name = %s HAVING COUNT(attachment_name)
-			LIMIT 2",
-			$icon,
+			"SELECT COUNT(attachment_name) FROM $table_name WHERE attachment_name = %s",
+			$icon
 		);
-
-		$exists = $wpdb->get_var($sql);
-
-		if ($exists > 1){
-			return true;
-		}else{
-			return false;
-		}
+	
+		$count = $wpdb->get_var($sql);
+	
+		error_log('Count is: ' . $count);
+		return $count >= 2;
 	}
 
 	public function find_allergy( string $allergy_name ){
