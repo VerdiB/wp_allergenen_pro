@@ -43,17 +43,27 @@ class Allergens_Dietary_Ictoria_Allergy_Product_Queries {
         return ( isset( $wpdb->insert_id ) ) ? true : false;
     }
 
-    public function getAllergyProduct( int $product_id ) {
+    public function getAllergyProduct( int $product_id, string $allergen  = null) {
         global $wpdb;
 
         $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';
+        $sql = '';
+        if(is_null($allergen)){
+            $sql = $wpdb->prepare(
+                "SELECT ap.allergy_name
+                FROM %i as ap
+                JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy as a on ap.allergy_name = a.allergy_name
+                WHERE ap.product_id = %d and a.is_active = 1" 
+            , array($table_name, $product_id));
+        } else {
+            $sql = $wpdb->prepare(
+                "SELECT ap.allergy_name
+                FROM %i as ap
+                JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy as a on ap.allergy_name = a.allergy_name
+                WHERE ap.product_id = %d and a.is_active = 1 and ap.allergy_name = %s" 
+            , array($table_name, $product_id, $allergen));
+        }
 
-        $sql = $wpdb->prepare(
-            "SELECT ap.allergy_name
-            FROM %i as ap
-            JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy as a on ap.allergy_name = a.allergy_name
-            WHERE ap.product_id = %d and a.is_active = 1" 
-        , array($table_name, $product_id));
 
         return $wpdb->get_results( $sql, ARRAY_A );
     }

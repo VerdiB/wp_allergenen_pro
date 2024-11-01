@@ -96,39 +96,38 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 
 	// function that stores all selected options in the productdata of the currently selected product
 	public function save_product_options( $post_id ) {
-		$allergensInsert = array();
+		$allergensSelected = array();
 		unset($this->_attachedAllergens);
 		$this->_attachedAllergens = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->getAllergyProduct( $post_id );
-		// error_log( 'post_id: ' . $post_id);
-		// foreach($this->_attachedAllergens as $allergen){
-		// 	error_log( $allergen['allergy_name'] );
-		// }
-		// return;
 
-		// echo 'check  first foreach <br>';
 		foreach ( $this->_allergens as $allergen ) {
 			if ( isset( $_POST[ ($this-> replace_space_chars($allergen['allergy_name']) . '_allergens_dietary_ictoria') ] ) ) {
-				$allergensInsert[] = $allergen['allergy_name'];
+				$allergensSelected[] = $allergen['allergy_name'];
 			}
 		};
 
-		//check if no allergens are attached and if there is no allergen to add
-		if ( empty( $allergensInsert ) && count($this->_attachedAllergens) === 1 ) {
+		//arrays are same size but not same values
+		// we delete and add allergens
+		if (count($allergensSelected) === count($this->_attachedAllergens) &&
+		array_diff($allergensSelected, $this->_attachedAllergens))
+		{
+			foreach ($allergensSelected as $allergen) {
+					$db = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance();
+					$db = (count($db->getAllergyProduct($post_id, $allergen)) === 0) ? $db->addAllergyProduct($post_id, $allergen) : $db->deleteAllergyProduct($post_id, $allergen);
+					unset($db);
+			}
+
 			return;
 		}
 
-		//check if we need to delete some allergens
-		if ( count($allergensInsert) < (count($this->_attachedAllergens)) ) {
+		//arrays are not the same but the new array is smaller
+		// we delete allergens
+		if (count($allergensSelected) < count($this->_attachedAllergens)) {
 			$dbInstance = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance();
 			$deleteCheck = null;
 	
 			foreach($this->_attachedAllergens as $allergen){
-				if ( !in_array($allergen['allergy_name'], $allergensInsert)) {
-					//skip the faux value
-					if ($allergen === 'faux value') {
-						continue;
-						// break;
-					}
+				if ( !in_array($allergen['allergy_name'], $allergensSelected)) {
 					$deleteCheck = $dbInstance->deleteAllergyProduct( $post_id, $allergen['allergy_name']);
 				}
 				if (false === $deleteCheck){
@@ -137,56 +136,36 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 					return;
 				}
 			}
+			$this->_attachedAllergens = $dbInstance->getAllergyProduct( $post_id );
 
 			unset($dbInstance);
 			return;
 		}
-		
-		//check if all allergens are already attached
-		//if not get the allergens to add
-		//otherwise return
-		$tmpArr = array();
-		if ( count($allergensInsert) === (count($this->_attachedAllergens))) {
-			for ($i = 0; $i < count($allergensInsert); $i++) {
-				if ($allergensInsert[$i] !== $this->_attachedAllergens[$i]) {
-					$tmpArr[] = $allergensInsert[$i];
-				}
-			}
 
-			if (empty($tmpArr)) {
-				return;
-			} else {
-				$allergensInsert = $tmpArr;
-			}
-		}
-
-		//finally, add the allergens to the product if needed
-
-
-		
-		if( !in_array($allergensInsert, $this->_attachedAllergens) )
-		{
-			sort($allergensInsert);
-			sort($this->_attachedAllergens);
+		//arrays are not the same but the new array is bigger
+		// we add allergens
+		if (count($allergensSelected) > count($this->_attachedAllergens)) {
 			$dbInstance = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance();
-			$insertCheck = null;
-			foreach($allergensInsert as $allergen){
-
-				if( in_array($allergen, $this->_attachedAllergens) ){
-					continue;
+			$addCheck = null;
+	
+			foreach($allergensSelected as $allergen){
+				if ( !in_array($allergen, $this->_attachedAllergens)) {
+					$addCheck = $dbInstance->addAllergyProduct( $post_id, $allergen);
 				}
-
-				$insertCheck = $dbInstance->addallergyProduct( $post_id, $allergen);
-
-				if (false === $insertCheck){
+				if (false === $addCheck){
 					unset($dbInstance);
-					throw new Exception(__('Error: could not attach allergen into product', 'allergens-dietary-ictoria'));
+					throw new Exception(__('Error: could not add allergen to product', 'allergens-dietary-ictoria'));
 					return;
 				}
 			}
+			$this->_attachedAllergens = $dbInstance->getAllergyProduct( $post_id );
 
 			unset($dbInstance);
+			return;
 		}
+
+		// if the array size and contents are the same, we do nothing
+		return;
 
 	}
 
