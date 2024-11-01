@@ -194,7 +194,7 @@ package "php"{
             +{static} getInstance() : Allergens_Dietary_Ictoria_Allergy_Product_Queries
             - __construct() : void
             + addAllergyProduct(product_id:int, allergen:string) : boolean
-            + getAllergyProduct(product_id:int) : array
+            + getAllergyProduct(product_id:int, allergen:string=null) : array
             + deleteAllergyProduct(product_id:int, allergen:String) : boolean
         }
     }
