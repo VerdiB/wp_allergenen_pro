@@ -1,6 +1,6 @@
 <?php
 // exit if user can access this file directly
-if (! defined('ABSPATH')) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
@@ -81,11 +81,11 @@ class Allergens_Dietary_Ictoria_Startup
 		$folderName = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
 
 		if (!file_exists($folderName)) {
-		
+
 			mkdir("/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache");
 
 		}
-		
+
 		$map = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
 		$file = '/cache.php';
 
@@ -137,7 +137,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 					Allergens_Dietary_Ictoria_Functions::load_admin_js();
 				} else {
 					// the integration class of WooCommerce was not found, show error message
-					$level   = 'notice-error';
+					$level = 'notice-error';
 					$message = sprintf(__('%1$sThe WooCommerce Integration class was not found. Please make sure WooCommerce is installed correctly%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
 					Allergens_Dietary_Ictoria_Functions::error_notice($level, $message);
 				}
@@ -169,7 +169,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 	MyPluginAddMenu::instance();
 } else {
 	// WooCommerce is not installed or inactive, show error message
-	$level   = 'notice-error';
+	$level = 'notice-error';
 	$message = sprintf(__('%1$sWooCommerce is inactive or not installed. Please install & activate WooCommerce%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
 	Allergens_Dietary_Ictoria_Functions::error_notice($level, $message);
 }

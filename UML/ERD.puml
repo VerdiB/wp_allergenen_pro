@@ -13,6 +13,7 @@ entity "allergy"{
    allergy_description: varchar(255)
    is_allergy: boolean   
    is_activated: boolean
+   is_default_option: boolean
 }
 
 entity "attachments"{
