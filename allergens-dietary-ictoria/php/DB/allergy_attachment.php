@@ -83,10 +83,16 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		return $wpdb->get_results( $sql, ARRAY_A );
 	}
 
-	public function updateallergyAttachment( array $data ) {
+	public function updateallergyAttachment( array $data, bool $boolean ) {
 		global $wpdb;
 
-		error_log($data['allergen_name'] . $data['allergen_name_hidden']);
+		if ($boolean == true){
+			$allergy = 'allergen_name';
+		}else{
+			$allergy = 'allergen_name_hidden';
+		}
+
+		error_log("updating stuff: " . $data['allergen_name'] . " " . $data['allergen_name_hidden'] . " " . $data['allergen_icon']['name']);
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
@@ -97,7 +103,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 				'attachment_name' => $data['allergen_icon']['name'],
 			),
 			array(
-				'allergy_name'    => $data['allergen_name_hidden'],
+				'allergy_name'    => $data[$allergy],
 			)
 		);
 
@@ -141,7 +147,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		$wpdb->query($sql);
 	}
 
-	public function checkMultipleAttachmentsExists( string $icon ) {
+	public function checkMultipleAttachmentsExists( string $icon, bool $boolean ) {
 		global $wpdb;
 	
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
@@ -156,7 +162,9 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		error_log('Count is: ' . $count);
 
 		if ($count !== 0){
-			$result = ($count > 1);
+			(false == $boolean) ?
+			$result = ($count > 1):
+			$result = ($count > 0);
 		}else{
 			$result = true;
 		}
