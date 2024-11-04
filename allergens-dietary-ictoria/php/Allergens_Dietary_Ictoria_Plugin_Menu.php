@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-class MyPluginAddMenu
+class Allergens_Dietary_Ictoria_Plugin_Menu
 {
 
 	private static $instance = null;
@@ -19,7 +19,7 @@ class MyPluginAddMenu
 	
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
-			self::$instance = new MyPluginAddMenu();
+			self::$instance = new Allergens_Dietary_Ictoria_Plugin_Menu();
 		}
 		return self::$instance;
 	}
@@ -171,4 +171,4 @@ class MyPluginAddMenu
 }
 
 // call the class and add the menus automatically
-// $MyPluginAddMenu = MyPluginAddMenu::instance();
+// $Allergens_Dietary_Ictoria_Plugin_Menu = Allergens_Dietary_Ictoria_Plugin_Menu::instance();

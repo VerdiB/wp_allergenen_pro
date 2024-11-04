@@ -108,13 +108,18 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 
 		//arrays are same size but not same values
 		// we delete and add allergens
-		if (count($allergensSelected) === count($this->_attachedAllergens) &&
-		array_diff($allergensSelected, $this->_attachedAllergens))
+		if ( count($allergensSelected) === count($this->_attachedAllergens) &&
+		array_diff($allergensSelected, $this->_attachedAllergens) )
 		{
 			foreach ($allergensSelected as $allergen) {
-					$db = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance();
-					$db = (count($db->getAllergyProduct($post_id, $allergen)) === 0) ? $db->addAllergyProduct($post_id, $allergen) : $db->deleteAllergyProduct($post_id, $allergen);
-					unset($db);
+				$db = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance();
+				if ( count( $db->getAllergyProduct( $post_id, $allergen ) ) === 0 ) {
+					$db->addAllergyProduct($post_id, $allergen) ;
+				}
+				else {
+					$db->deleteAllergyProduct($post_id, $allergen);
+				}
+				unset($db);
 			}
 
 			return;
