@@ -368,10 +368,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		}
 	}
 
-	public static function quickEdit($item){
-		Allergens_Dietary_Ictoria_Form::getInstance()->showForm($item);
-	}
-
 	public static function singleActivationUpdate()
 	{
 		global $wpdb;

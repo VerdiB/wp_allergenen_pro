@@ -162,6 +162,7 @@ package "php"{
             +{static} getInstance() : Allergens_Dietary_Ictoria_Attachment_Queries
             - __construct() : void
             + addAttachment(data:array) : boolean
+            + deleteAttachment(attachment:string) : void
             + checkAttachmentExists(attachmentName:string) : boolean
             + updateAttachment(data:array, oldName:string) : void
             - placeAttachment(data:array) : void

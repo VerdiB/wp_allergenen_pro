@@ -78,14 +78,11 @@ class Allergens_Dietary_Ictoria_Form {
 		}
 
 	if ( ! empty( $_POST['submit'] ) ) {
-		error_log("submit");
 		$showOnPage = ["allergens-dietary-show-allergens"];
 		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 		if (in_array($page, $showOnPage, true)) {
-				error_log("submit1");
 				self::$_formObject->submit( $_data );
 			}else{
-				error_log("submit2");
 				self::$_formObject->submit( $_data );
 			}
 	}

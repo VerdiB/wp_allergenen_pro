@@ -92,8 +92,6 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 			$allergy = 'allergen_name_hidden';
 		}
 
-		error_log("updating stuff: " . $data['allergen_name'] . " " . $data['allergen_name_hidden'] . " " . $data['allergen_icon']['name']);
-
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
 		$wpdb->update(
@@ -159,7 +157,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 	
 		$count = $wpdb->get_var($sql);
 	
-		error_log('Count is: ' . $count);
+		('Count is: ' . $count);
 
 		if ($count !== 0){
 			(false == $boolean) ?
