@@ -82,7 +82,10 @@ package "php"{
             - {static} _instance : Allergens_Dietary_Ictoria_Show_Allergens
             - __construct() : void
             - table_action_options : array
+            + search_query : string
             + get_table_columns_and_data() : array
+            + get_items_per_pages() : int
+            - set_items_per_pages(value:int) : void
             + column_default(item:array, column_name:string) : string
             + column_cb(item:array) : string
             + single_row(item:array) : void
@@ -90,16 +93,21 @@ package "php"{
             # edit_row_action(id:string) : string
             + handle_row_actions(item:array, column_name:string, primary:string) : array
             - build_action_url(action:string, item:array) : string
+            - handle_search() : void
+            - handle_items_per_page() : void
             # single_row_columns(item:object) : void
             + get_columns() : array
             + prepare_items() : void
             + process_quick_action() : void
             + process_bulk_action(data:array) : void
+            + items_per_page_form(text:string, input_id:string, label:string, which:string) : void
+            + search_box(text:string, input_id:string) : void
             + {static} getInstance() : Allergens_Dietary_Ictoria_Show_Allergens
+            # display_tablenav(which:string) : void
             + table_page() : void
         }
     
-}
+    }
     package "forms"{
 
         enum FormType{

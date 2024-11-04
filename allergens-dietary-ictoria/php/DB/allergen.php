@@ -162,6 +162,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		//get database table
 		$table_allergens = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
+
 		$sql = $wpdb->prepare(
 			"SELECT * FROM $table_allergens WHERE allergy_name = 'alcohol'"
 		);
@@ -242,6 +243,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			$table_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 			$table_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 			$table_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
+			$url = strtok($_SERVER["REQUEST_URI"], '?');
 
 			if (empty($allergy_name)) {
 				return;
@@ -272,7 +274,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
                  JOIN $table_allergy AS a 
                  ON a.allergy_name = aa.allergy_name
                  WHERE aa.allergy_name = %s  
-                 AND a.is_default_option != 1",
+                 AND a.is_default_option != TRUE",
 					$allergy_name
 				);
 			} else {
@@ -284,7 +286,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 					JOIN $table_attachment as am
 					ON am.attachment_name = aa.attachment_name
 					WHERE aa.allergy_name = %s  
-					AND a.is_default_option != 1",
+					AND a.is_default_option != TRUE",
 					$allergy_name
 				);
 			}
@@ -294,14 +296,13 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 					throw new Exception(__("Error deleting allergen: '" . $allergy_name . "'"));
 				}
 			}
-			self::send_header();
+			header("Location: $url" . "?page=allergens-dietary-show-allergens");
 
 		} catch (Exception $e) {
-			if (!$error_displayed)
-			{
+			if (!$error_displayed) {
 				echo "Error: " . $e->getMessage();
 			}
-			self::send_header();
+			header("Location: $url" . "?page=allergens-dietary-show-allergens");
 
 		}
 
@@ -415,3 +416,4 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		}
 	}
 }
+
