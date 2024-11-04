@@ -82,7 +82,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '<input type="text" class="update_" name="allergen_description" id="allergen_description" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_description'] : '' ) . '" disabled/>';
 			$html .= '<div>';
 			$html .= '<label for="allergen_icon">' . __( 'Allergen icon', 'allergens-dietary-ictoria' ) . '</label>';
-			$html .= '<input type="file" class="update_" name="allergen_icon" id="allergen_icon" disabled>';
+			$html .= '<input type="file" class="update_" name="allergen_icon" id="allergen_icon" required disabled>';
 			$html .= '</div>';
 			$html .= '</fieldset>';
 		}else{
@@ -141,8 +141,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		}
 
 		if ( false === wp_check_filetype( $data['allergen_icon']['name'], self::MIME_TYPES ) ) {
-			throw new Exception( __( 'The file is not a valid image' ) );
-			return;
+			error_log("nothing");
 		} else {
 			if (empty($data['allergen_name_hidden']) && 
 			false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] )) {
