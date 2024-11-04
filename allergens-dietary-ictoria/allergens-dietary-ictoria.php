@@ -83,7 +83,6 @@ class Allergens_Dietary_Ictoria_Startup
 			// save chosen settings in the allergens_dietary_ictoria_settings(WP options table)
 			// add the initial_setup_done option to allergens_dietary_ictoria_settings (value: true) to prevent this popup from showing on every activation after the first
 		}
-		$options = Allergens_Dietary_Ictoria_Functions::get_options();
 		$folderName = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
 
 		if (!file_exists($folderName)) {
@@ -103,11 +102,6 @@ class Allergens_Dietary_Ictoria_Startup
 
 		$inhoud = "<?php\n";
 		$inhoud .= "// this is an automaticly generated PHP-file\n";
-
-		file_put_contents($completepath, $inhoud);
-		if (empty($options)) {
-			update_option('allergens_dietary_ictoria_options', $options, true);
-		}
 	}
 
 	// function that runs when the deactivation hook is called
@@ -144,7 +138,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 					// the integration class of WooCommerce was not found, show error message
 					$level = 'notice-error';
 					$message = sprintf(__('%1$sThe WooCommerce Integration class was not found. Please make sure WooCommerce is installed correctly%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
-					Allergens_Dietary_Ictoria_Activator::error_notice($level, $message);
+					Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
 				}
 			}
 
@@ -175,7 +169,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 	// WooCommerce is not installed or inactive, show error message
 	$level = 'notice-error';
 	$message = sprintf(__('%1$sWooCommerce is inactive or not installed. Please install & activate WooCommerce%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
-	Allergens_Dietary_Ictoria_Activator::error_notice($level, $message);
+	Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
 }
 // Add a filter to modify the HTML for the auto-update setting link
 add_filter('plugin_auto_update_setting_html', 'my_plugin_auto_update_link_html', 10, 3);

@@ -41,7 +41,6 @@ package "php"{
         +{static} enqueue_admin_styles() : void
         +{static} load_admin_js() : void
         +{static} enqueue_admin_scripts() : void
-        +{static} error_notice(level:string, message:string) : void
         + upload_language_file() : void
         +{static} initialize() : void
         +{static} allergens_options() : array
@@ -105,6 +104,14 @@ package "php"{
         }
     
     }
+    package "forms"{
+
+    class Allergens_Dietary_Ictoria_Error_notice{
+       +{static} error_notice(level:string, message:string) : void
+    }
+
+    }
+
     package "forms"{
 
         enum FormType{
