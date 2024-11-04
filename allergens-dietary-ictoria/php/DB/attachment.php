@@ -48,11 +48,10 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 
 	public function checkAttachmentExists(string $attachmentName)
 	{
-		if(empty($attachmentName))
-		{
+		if (empty($attachmentName)) {
 			return;
 		}
-		
+
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
@@ -113,14 +112,9 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 
 			$allergen_prev_attachment_name = sanitize_file_name($allergen_icon_hidden[$allergy_name]);
 			$tmp_name = $_FILES['allergen_icon']['tmp_name'][$allergy_name];
-			$upload_dir = wp_upload_dir();
-			$attachment_path = esc_url($upload_dir['path'] . '/' . basename($file_name));
+			$attachment_path = get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/custom/' . $file_name;
 			$attachment_name = basename($file_name);
 			$sanitized_allergy_name = sanitize_text_field($allergy_name);
-
-			if (!move_uploaded_file($tmp_name, $attachment_path)) {
-				continue;
-			}
 
 			global $wpdb;
 			$wpdb->query('START TRANSACTION');
@@ -129,44 +123,33 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 			$table_name_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
 			try {
-
-				if (self::checkAttachmentExists($allergen_prev_attachment_name)) {
-					$result_update_prev = $wpdb->query($wpdb->prepare(
-						"UPDATE $table_name_attachment
-                    SET attachment_name = %s, 
-                        attachment_path = %s
-                    WHERE attachment_name = %s",
-						$attachment_name,
-						$attachment_path,
-						$allergen_prev_attachment_name
-					));
-				} else {
-					$result_insert = $wpdb->query($wpdb->prepare(
-						"INSERT INTO $table_name_attachment (attachment_name, attachment_path)
-                    VALUES (%s, %s)",
+				if (!self::checkAttachmentExists($attachment_name)) {
+					$wpdb->query($wpdb->prepare(
+						"INSERT INTO $table_name_attachment
+							VALUES (%s, %s)",
 						$attachment_name,
 						$attachment_path
 					));
 				}
 
-				$result_update = $wpdb->query($wpdb->prepare(
+				$wpdb->query($wpdb->prepare(
 					"UPDATE $table_name_allergy_attachment
-                SET attachment_name = %s
-                WHERE allergy_name = %s",
+							SET attachment_name = %s
+							WHERE allergy_name = %s",
 					$attachment_name,
 					$sanitized_allergy_name
 				));
-
-				if ($result_update !== false) {
-					$wpdb->query('COMMIT'); // Both operations succeeded
-					$updated_icons = true;
-				} else {
-					$wpdb->query('ROLLBACK'); // Something went wrong, rollback all changes
-					$updated_icons = false;
+				foreach ($data['allergen_icon'] as $icon) {
+					self::placeAttachment($icon);
 				}
+
+				$wpdb->query('COMMIT'); // Both operations succeeded
+				$updated_icons = true;
+
 			} catch (Exception $e) {
 				echo 'Error: ' . $e->getMessage();
 				$updated_icons = false;
+				$wpdb->query('ROLLBACK'); // Something went wrong, rollback all changes
 			}
 		}
 

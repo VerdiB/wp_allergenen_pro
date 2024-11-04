@@ -68,7 +68,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		$html  = '<fieldset>';
 		$html .= '<input type="hidden" name="allergen_name_hidden" value="' . ((! empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '"/>';
-		$html .= '<label for="allergen_name">' . __('Allergen name', 'allergens-dietary-ictoria') . '</label><br>';
+		$html .= '<label for="allergen_name">' . __('Allergen name *', 'allergens-dietary-ictoria') . '</label><br>';
 		$html .= '<input type="text" name="allergen_name" id="allergen_name" value="' . ((! empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" required/><br><br>';
 		$html .= '<label for="type">' . __('Type', 'allergens-dietary-ictoria') . '</label> <br/>';
 		$html .= '<select name="type" id="type" required>';

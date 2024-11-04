@@ -16,7 +16,7 @@ if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
 if (!class_exists('Allergens_Dietary_Ictoria_Attachment_Queries')) {
     require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/attachment.php';
 }
-if (! enum_exists('Mime_Types')) {
+if (!enum_exists('Mime_Types')) {
     require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/lists/mime_types.php';
 }
 
@@ -55,14 +55,16 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
 
         global $wpdb;
         $table_name_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-        $table_name_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+        $table_name_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+        $table_name_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
 
         $html = '';
 
         $allergens = $wpdb->get_results(
-            "SELECT a.allergy_name, a.allergy_description, at.attachment_name
-					FROM $table_name_allergy AS a
-					RIGHT JOIN $table_name_attachment AS at ON a.allergy_name = at.allergy_name"
+            "SELECT a.allergy_name, a.allergy_description, aa.attachment_name, att.attachment_path
+					FROM $table_name_allergy_attachment AS aa
+					JOIN $table_name_allergy AS a ON aa.allergy_name = a.allergy_name
+                    JOIN $table_name_attachment AS att ON aa.attachment_name = att.attachment_name"
         );
 
         $html .= '<h1>' . __('Update Allergen Icons', 'allergens-dietary-ictoria') . '</h1>';
@@ -81,7 +83,7 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
             $html .= '<tr>';
             $html .= '<td>' . esc_html($allergen->allergy_name) . '</td>';
             $html .= '<td>' . esc_html($allergen->allergy_description) . '</td>';
-            $html .= '<td>' . ($allergen->attachment_name ? esc_html($allergen->attachment_name) : "No file chosen") . '</td>';
+            $html .= '<td>' . '<img style="width:50px;" src="' . esc_html($allergen->attachment_path) . '" alt="' . esc_html($allergen->attachment_name) . '" </td>';
             // $html .= '';
             $html .= '<td>';
             $html .= '<input type="hidden" name="allergen_icon_hidden[' . esc_attr($allergen->allergy_name) . ']" value="' . ($allergen->attachment_name ? esc_attr($allergen->attachment_name) : "") . '" >';
