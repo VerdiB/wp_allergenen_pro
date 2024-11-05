@@ -334,11 +334,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         }
     }
 
-    public function change_status()
-    {
-
-    }
-
     public static function getInstance()
     {
         $cls = static::class;
