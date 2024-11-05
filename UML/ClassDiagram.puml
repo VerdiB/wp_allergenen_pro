@@ -98,6 +98,8 @@ package "php"{
             + prepare_items() : void
             + process_quick_action() : void
             + process_bulk_action(data:array) : void
+            + items_per_page_form(text:string, input_id:string, label:string, which:string) : void
+            + search_box(text:string, input_id:string) : voi
             + {static} getInstance() : Allergens_Dietary_Ictoria_Show_Allergens
             + table_page() : void
         }
