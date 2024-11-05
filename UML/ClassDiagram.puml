@@ -104,7 +104,7 @@ package "php"{
         }
     
     }
-    package "forms"{
+    package "errors"{
 
     class Allergens_Dietary_Ictoria_Error_notice{
        +{static} error_notice(level:string, message:string) : void
