@@ -136,6 +136,9 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         self::load_js();
         self::load_css();
 
+        /*While using quick_edit you always need to add a file.
+        This can't be solved, because you can't put a value into
+        a file input*/
         if (esc_attr($action) == "delete" || esc_attr($action) == "quick_edit"){
             $colorboolean = $is_default::is_default_allergen($item['allergy_name']);
         }else{
@@ -344,16 +347,15 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         return self::$_instance[$cls];
     }
 
-        function table_page() {
-            $table = new Allergens_Dietary_Ictoria_Show_Allergens();
-            $table->prepare_items();
-            $self = htmlspecialchars($_SERVER["PHP_SELF"]);
-            echo '<form action="#" method="POST" enctype="multipart/form-data"';
-            echo "<table class='wp-list-table widefat fixed striped table-view-list pages'>";
-                $table->display();
-            echo "</table>";
-            echo "</form>";
-        }
+    public function table_page() {
+        $table = new Allergens_Dietary_Ictoria_Show_Allergens();
+        $table->prepare_items();
+        echo '<form action="#" method="POST" enctype="multipart/form-data"';
+        echo "<table class='wp-list-table widefat fixed striped table-view-list pages'>";
+            $table->display();
+        echo "</table>";
+        echo "</form>";
+    }
     
 }
 

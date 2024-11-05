@@ -93,6 +93,8 @@ package "php"{
             # edit_row_action(id:string) : string
             + handle_row_actions(item:array, column_name:string, primary:string) : array
             - build_action_url(action:string, item:array) : string
+            + {static} load_js() : void
+            + {static} load_css() : void
             - handle_search() : void
             - handle_items_per_page() : void
             # single_row_columns(item:object) : void
@@ -100,10 +102,7 @@ package "php"{
             + prepare_items() : void
             + process_quick_action() : void
             + process_bulk_action(data:array) : void
-            + items_per_page_form(text:string, input_id:string, label:string, which:string) : void
-            + search_box(text:string, input_id:string) : void
             + {static} getInstance() : Allergens_Dietary_Ictoria_Show_Allergens
-            # display_tablenav(which:string) : void
             + table_page() : void
         }
     
@@ -158,8 +157,14 @@ package "php"{
             - __construct() : void
             + addAllergens(data:array) : boolean
             + checkAllergenExists(allergenName:string) : boolean
+            + getAllAllergens() : array
             + updateAllergens(data:array) : void
             + getAllergen(allergenName:string) : array
+            + {static} is_default_allergen(allergy_name:string) : boolean
+            + {static} send_header(page:string) : string
+            + {static} delete_allergen_by_name(allergy_name:string) : void
+            + {static} activationUpdate(data:array) : void
+            + {static} singleActivationUpdate() : void
             + {static} getItems() : array
             + {static} getColumns() : array
             + {static} includeItems() : void
@@ -182,10 +187,14 @@ package "php"{
             +{static} getInstance() : Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
             - __construct() : void
             + addAllergyAttachment(data:array) : boolean
+            + getallergyAttachment(allergy_name:string, isform:boolean) : array
             + checkAllergyAttachmentExists(allergyName:string) : boolean
             + find_allergy(allergy_name:string) : string
             + updateAllergyAttachment(data:array) : void
-            + getAllergyAttachment(allergyAttachmentName:string) : array
+            + getAllergyAttachment() : array
+            + deleteAllergyAttachment(allergy:string) : void
+            + checkMultipleAttachmentsExists(icon:string, bool:boolean) : boolean
+            + find_allergy(allergy_name:string) : string
             + {static} allergy_connection(result:array) : array
         }
     }
