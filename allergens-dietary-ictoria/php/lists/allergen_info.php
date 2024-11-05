@@ -21,6 +21,10 @@ class Allergens_Dietary_Ictoria_Info
 
     public function showInfo()
     {
+
+        Allergens_Dietary_Ictoria_Activator::load_style();
+        Allergens_Dietary_Ictoria_Activator::enqueue_styles();
+        
         //flexbox voor tabs
         $html = '<div id="info_grid" class="nav-tab-wrapper">';
         $html .= '<div><h1 class="premium">' . __("PREMIUM  [Requires licence]", "allergens-dietary-ictoria") . '</h1>';
