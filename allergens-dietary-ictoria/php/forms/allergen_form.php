@@ -103,3 +103,31 @@ class Allergens_Dietary_Ictoria_Form {
 		}
 	}
 }
+<?php
+
+function checkElementExists($elementId) {
+    
+    return true; 
+}
+
+
+$actionSchedulerText = "Er is een fout opgetreden; iets klopt niet."; 
+$backgroundColor = "orange";
+
+
+if (checkElementExists('dropdown-ictoria')) {
+   
+}
+
+
+if (strpos($actionSchedulerText, "fout") !== false || strpos($actionSchedulerText, "niet klopt") !== false) {
+    $backgroundColor = "red"; 
+} elseif (strpos($actionSchedulerText, "waarschuwing") !== false) {
+    $backgroundColor = "yellow"; 
+} elseif (strpos($actionSchedulerText, "succes") !== false || strpos($actionSchedulerText, "alles in orde") !== false) {
+    $backgroundColor = "green";
+}
+
+
+echo "De achtergrondkleur is: " . $backgroundColor;
+?>

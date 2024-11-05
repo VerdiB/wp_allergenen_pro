@@ -87,7 +87,6 @@ if (form.style.display == "none"){
     form.style.display = 'none';
 }
 }
-
 document.getElementById('the-list').addEventListener('click', function(event) {
     if (event.target.classList.contains('quick_edit')) {
         var quickEditing = event.target;
