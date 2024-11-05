@@ -15,6 +15,7 @@ class MyPluginAddMenu
 	 * @staticvar   array   $instance
 	 * @return      The one true instance
 	 */
+
 	
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
