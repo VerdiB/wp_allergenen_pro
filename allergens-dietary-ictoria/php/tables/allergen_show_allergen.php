@@ -12,6 +12,10 @@ if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
     require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 }
 
+if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
+}
+
 /**
  * @class Allergens_Dietary_Ictoria_Show_Allergens
  * @brief Class that shows the allergens
@@ -20,7 +24,6 @@ if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
  * @date 24-9-2024
  * @since 1.0.0
  */
-
 
 class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 {
@@ -35,18 +38,8 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         ]);
     }
 
-    private $table_action_options = ['change_status', 'delete'];
+    private $table_action_options = ['change_status', 'delete', 'quick_edit'];
 
-    public $search_query;
-
-    public function get_items_per_pages(): int
-    {
-        return get_option('items_per_page', 10);
-    }
-    private function set_items_per_pages($value)
-    {
-        update_option('items_per_page', $value);
-    }
 
     public function get_table_columns_and_data()
     {
@@ -70,12 +63,21 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             'columns' => $column_names,
             'data' => $allergy_names,
         ];
+
     }
 
     public function column_default($item, $column_name)
     {
-        $translationOfAllergenNumbers = $item['is_allergy'] == 1 ? "Allergy" : "Diet";
-        $translationOfIsActiveNumbers = $item['is_active'] == 1 ? "Active" : "Inactive";
+        $translationOfAllergenNumbers = "Diet";
+        $translationOfIsActiveNumbers = "Inactive";
+
+        if ($item['is_allergy'] == 1) {
+            $translationOfAllergenNumbers = "Allergy";
+        }
+
+        if ($item['is_active'] == 1) {
+            $translationOfIsActiveNumbers = "Active";
+        }
 
         switch ($column_name) {
             case 'allergy_name':
@@ -106,6 +108,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
     public function handle_row_actions($item, $column_name, $primary)
     {
+
         if ($primary !== $column_name) {
             return '';
         }
@@ -113,51 +116,79 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
         $action_links = array();
         foreach ($valid_actions as $action) {
-            $action_links[$action] = $this->build_action_url($action, $item);
+            if ($action == "quick_edit"){
+                $action_links[$action] = $this->build_action_url($action, $item);
+            }else{
+                $action_links[$action] = $this->build_action_url($action, $item);
+            }
         }
 
         return $this->row_actions($action_links);
     }
 
-    private function build_action_url($action, $item) // loop-build actions for quick actions.
+    private function build_action_url($action, $item)
     {
-        $is_default = false;
-        if (esc_attr($action) == "delete") {
-            $is_default = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->is_default_allergen($item['allergy_name']);
+        $color = "black";
+        $colorboolean = 0;
+        $disabled = "";
+        $is_default = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
+
+        self::load_js();
+        self::load_css();
+
+        /*While using quick_edit you always need to add a file.
+        This can't be solved, because you can't put a value into
+        a file input*/
+        if (esc_attr($action) == "delete" || esc_attr($action) == "quick_edit"){
+            $colorboolean = $is_default::is_default_allergen($item['allergy_name']);
+        }else{
+            $colorboolean = 0;
         }
 
-        return $is_default ? '<a style="color: grey;">' . ucfirst(str_replace('_', ' ', $action)) . '</a>' : sprintf(
-            '<a href="?page=%s&item=%s&action=%s&_wpnonce=%s">%s</a>',
+        if ($colorboolean == 1){
+            $color = "grey";
+            $disabled = "none";
+        }else{
+            $disabled = "auto";
+            if (esc_attr($action) == "delete"){
+                $color = "red";
+            }else{
+                $color = "blue";
+            }
+        }
+        if (esc_attr($action) !== 'quick_edit'){
+        return sprintf(
+            '<a style="color: ' . $color . ';" href="?page=%s&item=%s&action=%s&_wpnonce=%s">%s</a>',
             esc_attr($_REQUEST['page']),
             esc_attr($item['allergy_name']),
             esc_attr($action),
             wp_create_nonce('allergens_' . $action),
             ucfirst(str_replace('_', ' ', $action)),
         );
+    }else{
+        Allergens_Dietary_Ictoria_Form::setFormType(FormType::ALLERGENS);
+        Allergens_Dietary_Ictoria_Form::getInstance()->showForm(esc_attr($item['allergy_name']));
+
+        return sprintf(
+            '<a class="%s" id="%s" style="color: ' . $color . '; pointer-events: %s;" href="#&item=%s">%s</a>',
+            esc_attr($action),
+            esc_attr($item['allergy_name']),
+            $disabled,
+            esc_attr($item['allergy_name']),
+            ucfirst(str_replace('_', ' ', $action)),
+        );
+    }
     }
 
-    private function handle_search()
-    {
-        if (isset($_POST['search'])) {
-            $this->search_query = isset($_POST['search'])
-                ? ($this->search_query !== $_POST['search'] ? sanitize_text_field($_POST['search']) : $this->search_query)
-                : '';
-        }
-    }
-    private function handle_items_per_page()
-    {
-        if (isset($_POST['items_per_page'])) {
-            if ($_POST['items_per_page'] < 1) {
-                $this->set_items_per_pages(10);
-                return;
-            }
-            if (!empty($_POST['items_per_page'])) {
-                $this->set_items_per_pages(!empty($_POST['items_per_page']) ? $_POST['items_per_page'] : 10);
-            }
-        }
+    public static function load_js(){
+        wp_register_script('Allergens_Dietary_Ictoria_Show_Allergens', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/js/script.js'), array('jquery'));
+        wp_enqueue_script( 'Allergens_Dietary_Ictoria_Show_Allergens');
     }
 
-
+    public static function load_css(){
+        wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/css/allergens-dietary-ictoria.css'));
+	    wp_enqueue_style('allergens-dietary-ictoria-css');
+    }
 
     public function get_bulk_actions()
     {
@@ -228,32 +259,15 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
     public function prepare_items()
     {
+        $result = $this->get_table_columns_and_data();
+
+        $this->_column_headers = [$result['columns'], [], []];
+
         $data = Allergens_Dietary_Ictoria_Allergen_Queries::getItems();
 
         $this->_column_headers = [$this->get_columns(), [], []];
 
-        if (!empty($this->search_query)) {
-            $this->items = array_filter($data, function ($item) {
-                return stripos($item['allergy_name'], $this->search_query) !== false;
-            });
-        } else {
-            $this->items = $data;
-        }
-
-        $total_items = count($this->items);
-
-        $per_page = $this->get_items_per_page('my_list_table_per_page', $this->get_items_per_pages());
-        $current_page = $this->get_pagenum();
-
-        // Fetch data for the current page
-        $this->items = array_slice($this->items, ($current_page - 1) * $per_page, $per_page);
-
-        // Set pagination args
-        $this->set_pagination_args(array(
-            'total_items' => $total_items,
-            'per_page' => $per_page,
-            'total_pages' => ceil($total_items / $per_page)
-        ));
+        $this->items = $data;
     }
 
     public function process_quick_action()
@@ -268,6 +282,8 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
                 wp_die('Security check failed for changing status!');
             } elseif ($action === 'delete' && !wp_verify_nonce($nonce, 'allergens_delete')) {
                 wp_die('Security check failed for deletion!');
+            }  elseif ($action === 'quick_edit' && !wp_verify_nonce($nonce, 'allergens_delete')) {
+                wp_die('Security check failed for quick edit!');
             }
 
             // Perform action based on case
@@ -276,6 +292,9 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
                     Allergens_Dietary_Ictoria_Allergen_Queries::singleActivationUpdate();
                     break;
                 case 'delete':
+                    Allergens_Dietary_Ictoria_Allergen_Queries::delete_allergen_by_name($item);
+                    break;
+                case 'quick_edit':
                     Allergens_Dietary_Ictoria_Allergen_Queries::delete_allergen_by_name($item);
                     break;
             }
@@ -288,10 +307,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         if (isset($_GET['_wpnonce']) && !empty($_GET['_wpnonce'])) {
             $nonce = filter_input(INPUT_GET, '_wpnonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $action = $this->current_action();
-
-            // if (!wp_verify_nonce($nonce, 'bulk_allergens_action')) {  // Verify the bulk action nonce
-            //     wp_die('Invalid token.');
-            // }
             foreach ($this->table_action_options as $bulk_action) {
                 if ($action === $bulk_action) {
                     $nonce_action = 'bulk_' . $bulk_action;
@@ -322,88 +337,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         }
     }
 
-    public function items_per_page_form($text, $input_id, $label, $which) // Custom form for selecting items per page.
-    {
-        if (empty($_POST['items_per_page']) && !$this->has_items()) {
-            return;
-        }
-        $acceptable_values = array(10, 20, 50, 100);
-        if ('top' === $which) {
-            $this->screen->render_screen_reader_content('heading_pagination');
-?>
-            <span class="item-select-box" style="float: right; margin-right: 10px;">
-                <label class="screen-reader-text" for="<?php echo esc_attr($input_id); ?>"><?php echo $text; ?>:</label>
-                <span><?php echo $label; ?></span>
-                <select id="items_per_page" name="items_per_page">
-                    <?php
-                    foreach ($acceptable_values as $value) {
-                        if ($value == 10) {
-                    ?>
-                            <option value="<?php echo $value ?>" <?php echo $this->get_items_per_pages() == 10 ? 'selected' : (in_array($this->get_items_per_pages(), $acceptable_values) ? '' : 'selected'); ?>><?php echo $value ?></option>
-                        <?php
-                        } else {
-                        ?>
-                            <option value="<?php echo $value ?>" <?php echo $this->get_items_per_pages() == $value ? 'selected' : '' ?>>
-                                <?php echo $value ?>
-                            </option>
-                    <?php
-                        }
-                    }
-                    ?>
-                </select>
-                <?php submit_button($text, '', '', false, array('id' => 'items-per-page-submit')); ?>
-            </span>
-        <?php
-        }
-        if ('bottom' === $which) {
-        ?>
-            <span class="item-select-box" style="float: right; margin-right: 10px;">
-                <label class="screen-reader-text" for="<?php echo esc_attr($input_id); ?>"><?php echo $text; ?>:</label>
-                <span><?php echo $label; ?></span>
-                <span
-                    class="tablenav-paging-text"><?php echo !empty($this->get_items_per_pages()) ? $this->get_items_per_pages() : null; ?></span>
-            </span>
-        <?php
-        }
-    }
-
-    public function search_box($text, $input_id) // a WP_LIST_TABLE FUNCTION; Built custom for name and position reasons.
-    {
-        if (empty($_REQUEST['search']) && !$this->has_items()) {
-            return;
-        }
-
-        $input_id = $input_id . '-search-input';
-
-        if (!empty($_REQUEST['orderby'])) {
-            if (is_array($_REQUEST['orderby'])) {
-                foreach ($_REQUEST['orderby'] as $key => $value) {
-                    echo '<input type="hidden" name="orderby[' . esc_attr($key) . ']" value="' . esc_attr($value) . '" />';
-                }
-            } else {
-                echo '<input type="hidden" name="orderby" value="' . esc_attr($_REQUEST['orderby']) . '" />';
-            }
-        }
-        if (!empty($_REQUEST['order'])) {
-            echo '<input type="hidden" name="order" value="' . esc_attr($_REQUEST['order']) . '" />';
-        }
-        if (!empty($_REQUEST['post_mime_type'])) {
-            echo '<input type="hidden" name="post_mime_type" value="' . esc_attr($_REQUEST['post_mime_type']) . '" />';
-        }
-        if (!empty($_REQUEST['detached'])) {
-            echo '<input type="hidden" name="detached" value="' . esc_attr($_REQUEST['detached']) . '" />';
-        }
-
-        ?>
-        <span class="search-box" style="float: right; margin-bottom: 10px;">
-            <label class="screen-reader-text" for="<?php echo esc_attr($input_id); ?>"><?php echo $text; ?>:</label>
-            <input type="search" id="<?php echo esc_attr($input_id); ?>" name="search"
-                value="<?php echo isset($this->search_query) ? $this->search_query : '' ?>" />
-            <?php submit_button($text, '', '', false, array('id' => 'search-submit')); ?>
-        </span>
-    <?php
-    }
-
     public static function getInstance()
     {
         $cls = static::class;
@@ -414,65 +347,52 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         return self::$_instance[$cls];
     }
 
-    protected function display_tablenav($which) // WP_LIST_TABLE FUNCTION!
-    {
-        if ('top' === $which) {
-            wp_nonce_field('bulk-' . $this->_args['plural']);
-        }
-    ?>
-        <div class="tablenav <?php echo esc_attr($which); ?>">
-
-            <?php if ($this->has_items()): ?>
-                <div class="alignleft actions bulkactions">
-                    <?php $this->bulk_actions($which); ?>
-                </div>
-            <?php
-            endif;
-            $this->extra_tablenav($which);
-            $this->pagination($which);
-            $this->items_per_page_form('Select', 'items-per-page', 'Allergies per page:', $which);
-            ?>
-
-            <br class="clear" />
-        </div>
-<?php
-    }
-
-
-    public function table_page()
-    {
+    public function table_page() {
         $table = new Allergens_Dietary_Ictoria_Show_Allergens();
-        $table->handle_search();
-        $table->handle_items_per_page();
-
         $table->prepare_items();
-
-        echo '<form action="" method="POST"';
+        echo '<form action="#" method="POST" enctype="multipart/form-data"';
         echo "<table class='wp-list-table widefat fixed striped table-view-list pages'>";
-        $table->search_box('Search', 'allergens');
-        $table->display();
+            $table->display();
         echo "</table>";
         echo "</form>";
     }
+    
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
     if (isset($_POST['action']) && isset($_POST['post'])) {
+
+        $counter = 0;
+        $process_item = [];
+        $process_action = "";
+        $process_data = [];
+
         $process_action = sanitize_text_field($_POST['action']);
-        $process_item = array_map('sanitize_text_field', $_POST['post']);
-        $process_data = ['action' => $process_action, 'item' => $process_item];
-        Allergens_Dietary_Ictoria_Show_Allergens::getInstance()->process_bulk_action($process_data);
-    }
-    if (isset($_POST['search'])) {
-        $search_query = sanitize_text_field($_POST['search']);
-        $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
-        $table->search_query = $search_query;
-        $table->prepare_items();
+
+        unset($_POST['action']);
+
+        foreach ($_POST['post'] as $key => $value) {
+            $process_item[] = sanitize_text_field($value);
+        }
+
+        $process_data = [
+            'action' => $process_action,
+            'item' => $process_item,
+        ];
+
+        $table->process_bulk_action($process_data);
     }
 } else {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        if (isset($_GET['action']) && isset($_GET['item'])) {
-            Allergens_Dietary_Ictoria_Show_Allergens::getInstance()->process_quick_action();
+        if (isset($_GET['quick_edit'])){
+            $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
+
+            $table->process_quick_action();
+        }else{
+            $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
+
+            $table->process_quick_action();
         }
     }
 }
