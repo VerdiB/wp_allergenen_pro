@@ -172,7 +172,8 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         Allergens_Dietary_Ictoria_Form::getInstance()->showForm(esc_attr($item['allergy_name']));
 
         return $is_default ? '<a style="color: grey;">' . ucfirst(str_replace('_', ' ', $action)) . '</a>' : sprintf(
-            '<a class="%s" id="%s" style="color: ' . $color . '; pointer-events: %s;" href="#&item=%s">%s</a>',
+            '<a class="%s" id="%s" style="color: ' . $color . '; pointer-events: %s;" href="?page=%s#&item=%s">%s</a>',
+            esc_attr($_REQUEST['page']),
             esc_attr($action),
             esc_attr($item['allergy_name']),
             $disabled,
