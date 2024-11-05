@@ -1,48 +1,52 @@
 <?php
 // exit if user can access this file directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
-if ( ! class_exists( "Allergens_Dietary_Ictoria_Allergy_Attachment_Queries" ) ) {
+if (!class_exists("Allergens_Dietary_Ictoria_Allergy_Attachment_Queries")) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
 }
 
-if ( ! class_exists( "Allergens_Dietary_Ictoria_Allergy_Product_Queries" ) ) {
+if (!class_exists("Allergens_Dietary_Ictoria_Allergy_Product_Queries")) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_product.php';
 }
 
-if ( ! class_exists( "Allergens_Dietary_Ictoria_Allergen_Queries" ) ) {
+if (!class_exists("Allergens_Dietary_Ictoria_Allergen_Queries")) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 }
 
 // this class contains functions used to add/remove allergens and dietary options to/from a WooCommerce product
-class Allergens_Dietary_Ictoria_Product_Settings {
+class Allergens_Dietary_Ictoria_Product_Settings
+{
 	private static $_instance = null;
 	private array $_allergens;
 	private array $_attachedAllergens = array();
 
-	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
+	public static function instance()
+	{
+		if (is_null(self::$_instance)) {
 			self::$_instance = new Allergens_Dietary_Ictoria_Product_Settings();
 		}
 	}
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->_allergens = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->getAllAllergens();
 
-		add_filter( 'woocommerce_product_data_tabs', array( $this, 'data_tab' ) );
-		add_action( 'woocommerce_product_data_panels', array( $this, 'data_fields' ) );
+		add_filter('woocommerce_product_data_tabs', array($this, 'data_tab'));
+		add_action('woocommerce_product_data_panels', array($this, 'data_fields'));
 		// add_action( 'woocommerce_process_product_meta_(product_type)','save_product_options' );
 		// add_action( 'woocommerce_process_product_meta',array($this, 'save_product_options'), 10, 1 );
 		add_action('save_post', array($this, 'save_product_options'));
-		
+
 	}
 
 	// function that sets the name of the menu tab for this plugin
-	public function data_tab( $product_data_tabs ) {
+	public function data_tab($product_data_tabs)
+	{
 		$product_data_tabs['allergens-tab'] = array(
-			'label'  => __( 'Allergens', 'allergens-dietary-ictoria' ),
+			'label' => __('Allergens', 'allergens-dietary-ictoria'),
 			'target' => 'allergens_dietary_ictoria_product_data',
 		);
 		return $product_data_tabs;
@@ -56,42 +60,43 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 	 * @since 1.0.0
 	 * @date 30-9-2024
 	 */
-	public function data_fields() {
+	public function data_fields()
+	{
 		global $post;
 		$options = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
 		$allergens = $options->getAllAllergyAttachmments();
-		$this->_attachedAllergens = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->getAllergyProduct( $post->ID );
-		
+		$this->_attachedAllergens = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->getAllergyProduct($post->ID);
+
 		$tmpArr = array();
 		//add a faux value to the array to make sure the count is correct
 		$tmpArr[] = 'faux value';
-		foreach($this->_attachedAllergens as $allergen){
+		foreach ($this->_attachedAllergens as $allergen) {
 			$tmpArr[] = $allergen['allergy_name'];
 		}
 		$this->_attachedAllergens = $tmpArr;
 
 		$html = '<div id="allergens_dietary_ictoria_product_data" class="panel woocommerce_options_panel">
-			<h2>' . __( 'Select allergen(\'s) and/or dietary restrictions:', 'allergens-dietary-ictoria' ) . '</h2>';
+			<h2>' . __('Select allergen(\'s) and/or dietary restrictions:', 'allergens-dietary-ictoria') . '</h2>';
 		// create the html for all options, seperating them by category
-		foreach ( $allergens as $allergen) {
+		foreach ($allergens as $allergen) {
 			// check if option is globally enabled
 			//TODO: replace with actual check in use with new db structure
-				// add the html to the relevant array entry
-				
-				$html .= '
+			// add the html to the relevant array entry
+
+			$html .= '
 				<div class="allergen-field">
-					<input type="checkbox" class="checkbox" value="1" name="'. $this->replace_space_chars($allergen['allergy_name']).'_allergens_dietary_ictoria" '. ((array_search($allergen['allergy_name'], $this->_attachedAllergens)) ? 'checked="" ' : '') . '/>
+					<input type="checkbox" class="checkbox" value="1" name="' . $this->replace_space_chars($allergen['allergy_name']) . '_allergens_dietary_ictoria" ' . ((array_search($allergen['allergy_name'], $this->_attachedAllergens)) ? 'checked="" ' : '') . '/>
 					<span class="description">
-						<img style="max-height:50px; max-width:50px;" alt="' . $allergen['allergy_name'] .'" src="' . $allergen['attachment_path'] .'"/>&nbsp;' . $allergen['allergy_name'] . '
+						<img style="max-height:50px; max-width:50px;" alt="' . $allergen['allergy_name'] . '" src="' . $allergen['attachment_path'] . '"/>&nbsp;' . $allergen['allergy_name'] . '
 					</span>
 				</div>';
 		}
 
 		$html .= '</div><br/>';
 
-		
+
 		echo $html;
-		
+
 	}
 
 	// function that stores all selected options in the productdata of the currently selected product
@@ -105,92 +110,44 @@ class Allergens_Dietary_Ictoria_Product_Settings {
 	 * @since 1.0.0
 	 * @date 5-11-2024
 	 */
-	public function save_product_options( $post_id ) {
+	public function save_product_options($post_id)
+	{
 		$allergensSelected = array();
+		$allergenNames = array();
 		unset($this->_attachedAllergens);
-		$this->_attachedAllergens = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->getAllergyProduct( $post_id );
+		$this->_attachedAllergens = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->getAllergyProduct($post_id);
 
-		foreach ( $this->_allergens as $allergen ) {
-			if ( isset( $_POST[ ($this-> replace_space_chars($allergen['allergy_name']) . '_allergens_dietary_ictoria') ] ) ) {
+		foreach ($this->_allergens as $allergen) {
+			if (isset($_POST[($this->replace_space_chars($allergen['allergy_name']) . '_allergens_dietary_ictoria')])) {
 				$allergensSelected[] = $allergen['allergy_name'];
 			}
-		};
+		}
+		// Set old allergen name settings
+		foreach ($this->_attachedAllergens as $allergen) {
+			$allergenNames[] = $allergen['allergy_name'];
+		}
+		
+		$new_diff = array_diff($allergensSelected, $allergenNames);
+		$old_diff = array_diff($allergenNames, $allergensSelected);
 
-		//arrays are same size but not same values
-		// we delete and add allergens
-		if ( count($allergensSelected) === count($this->_attachedAllergens) &&
-		array_diff($allergensSelected, $this->_attachedAllergens) )
-		{
-			//test the toDelete array
-			$toDelete = array_diff($this->_attachedAllergens, $allergensSelected);
-			foreach ($allergensSelected as $index => $allergen) {
-				$db = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance();
-				if ( count( $db->getAllergyProduct( $post_id, $allergen ) ) === 0  ) {
-					$db->addAllergyProduct($post_id, $allergen) ;
-				}
-				if ( !empty( $toDelete ) ) {
-					try{
-						$db->deleteAllergyProduct($post_id, $allergen);
-					}catch(Exception $e){
-						unset($db);
-					}
-				}
-				unset($db);
+		// If the new doesnt contain allergens from the old one, Delete the old.
+		if ($old_diff) {
+			foreach ($old_diff as $allergen) {
+				Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->deleteAllergyProduct($post_id, $allergen);
 			}
-
-			return;
+		}
+		// If the old doesn't contain allergens from the new one, Add the new.
+		if ($new_diff) {
+			foreach ($new_diff as $allergen) {
+				Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->addAllergyProduct($post_id, $allergen);
+			}
 		}
 
-		//arrays are not the same but the new array is smaller
-		// we delete allergens
-		if (count($allergensSelected) < count($this->_attachedAllergens)) {
-			$dbInstance = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance();
-			$deleteCheck = null;
-	
-			foreach($this->_attachedAllergens as $allergen){
-				if ( !in_array($allergen['allergy_name'], $allergensSelected)) {
-					$deleteCheck = $dbInstance->deleteAllergyProduct( $post_id, $allergen['allergy_name']);
-				}
-				if (false === $deleteCheck){
-					unset($dbInstance);
-					throw new Exception(__('Error: could not delete allergen from product', 'allergens-dietary-ictoria'));
-					return;
-				}
-			}
-			$this->_attachedAllergens = $dbInstance->getAllergyProduct( $post_id );
-
-			unset($dbInstance);
-			return;
-		}
-
-		//arrays are not the same but the new array is bigger
-		// we add allergens
-		if (count($allergensSelected) > count($this->_attachedAllergens)) {
-			$dbInstance = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance();
-			$addCheck = null;
-	
-			foreach($allergensSelected as $allergen){
-				if ( !in_array($allergen, $this->_attachedAllergens)) {
-					$addCheck = $dbInstance->addAllergyProduct( $post_id, $allergen);
-				}
-				if (false === $addCheck){
-					unset($dbInstance);
-					throw new Exception(__('Error: could not add allergen to product', 'allergens-dietary-ictoria'));
-					return;
-				}
-			}
-			$this->_attachedAllergens = $dbInstance->getAllergyProduct( $post_id );
-
-			unset($dbInstance);
-			return;
-		}
-
-		// if the array size and contents are the same, we do nothing
 		return;
-
 	}
 
-	private function replace_space_chars(string $allergens): string{
+	private function replace_space_chars(string $allergens): string
+	{
 		return (preg_match('/\s/', $allergens)) ? str_replace(' ', '_', $allergens) : $allergens;
 	}
 }
