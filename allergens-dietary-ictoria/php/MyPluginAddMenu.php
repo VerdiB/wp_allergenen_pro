@@ -39,6 +39,9 @@ class MyPluginAddMenu
 	public function addMyAdminMenu()
 	{
 
+		// temporary admin menu panel for testing the license form
+		add_menu_page('Allergens and Dietary', 'Allergens and Dietary', 'manage_options', 'allergens-dietary-ictoria', array('Allergens_Dietary_Ictoria_Activator', 'admin_page'), 'dashicons-carrot', 6);
+
 		add_menu_page(
 			__('Allergens and Dietary', 'allergens-dietary-ictoria'),
 			'Ictoria',
@@ -165,6 +168,7 @@ class MyPluginAddMenu
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/lists/allergen_info.php';
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
+		Allergens_Dietary_Ictoria_Activator::load_style();
 		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		Allergens_Dietary_Ictoria_Info::getInstance()->showInfo();
 	}
