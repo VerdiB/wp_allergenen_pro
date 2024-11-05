@@ -187,7 +187,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		}
 	}
 	
-	//refresh bij update of een melding bij add allergeen
+	//refresh for update or a notification for add allergeen
 		if (in_array($page, $ShowOnPage, true)) {
 			echo $text;
 		}else{
