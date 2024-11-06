@@ -127,10 +127,11 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 		}
 
-		if (Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists($data['allergen_name'])) {
-			return;
+		if ( empty( $data['allergen_name_hidden'] ) ) {
+			if (Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists($data['allergen_name'])) {
+				return;
+			}
 		}
-
 		if ( empty( $data['allergen_name_hidden'] ) ) {
 			$file_info = wp_check_filetype( $data['allergen_icon']['name'] );
 
@@ -190,7 +191,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			if (false == Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkMultipleAttachmentsExists($allergen_icon)){	
 				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->deleteAttachment($allergen_icon);
 			}
-		}elseif($multiple_attachment !== "no_access" && false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] )){
+		}elseif($multiple_attachment !== "no_access"){
 			$file_info = wp_check_filetype( $data['allergen_icon']['name'] );
 			if (false === in_array($file_info["ext"], self::MIME_TYPES)){
 				return;
