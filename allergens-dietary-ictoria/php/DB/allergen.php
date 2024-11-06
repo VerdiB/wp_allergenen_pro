@@ -62,16 +62,6 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			)
 		);
 
-		$attachment = array(
-			'name' => $data['allergen_icon']['name'],
-			'path' => $data['allergen_icon']['full_path'],
-		);
-
-		$attachment_allergen = array(
-			'name' => $data['allergen_icon']['name'],
-			'title' => $data['allergen_name'],
-		);
-
 		return (isset($wpdb->insert_id)) ? true : false;
 	}
 

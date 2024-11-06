@@ -24,7 +24,6 @@ function dropdown_form(){
 }
 
 function quickedit(form){
-    console.log("clicked");
     var field = form.querySelector('.update_form');
     var selectdropdown = field.querySelector('.type');
     var allselectdropdownoptions = selectdropdown.querySelectorAll('.option');
@@ -90,21 +89,13 @@ if (form.style.display == "none"){
 }
 
 document.getElementById('the-list').addEventListener('click', function(event) {
-    console.log("clicked2");
     if (event.target.classList.contains('quick_edit')) {
-        console.log("yes");
         var quickEditing = event.target;
-
         if (quickEditing.style.pointerEvents == "auto"){ 
-            console.log("yes");
             var form = event.target.id + "_form";
             var get_form = document.getElementById(form);
             quickedit(get_form);
-        }else{
-            console.log("yes2");
         }
-    }else{
-        console.log("no");
     }
 });
 
