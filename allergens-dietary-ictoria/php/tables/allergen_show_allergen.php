@@ -336,9 +336,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
                 case 'delete':
                     Allergens_Dietary_Ictoria_Allergen_Queries::delete_allergen_by_name($item);
                     break;
-                case 'quick_edit':
-                    Allergens_Dietary_Ictoria_Allergen_Queries::delete_allergen_by_name($item);
-                    break;
             }
         }
     }

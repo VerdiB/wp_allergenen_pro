@@ -227,6 +227,8 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 	public static function delete_allergen_by_name(string $allergy_name)
 	{
+
+		error_log("deleting");
 		try {
 			global $wpdb;
 

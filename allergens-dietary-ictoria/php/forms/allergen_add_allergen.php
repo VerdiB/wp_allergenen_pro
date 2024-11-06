@@ -37,7 +37,7 @@ if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) 
 class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ictoria_Form {
 
 	private ?array $_allergen = null;
-	private const MIME_TYPES = array( 'image/png', 'image/jpeg', 'image/jpg' );
+	private const MIME_TYPES = array( 'png', 'jpeg', 'jpg' );
 
 	public function __construct() {
 	}
@@ -131,6 +131,17 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			return;
 		}
 
+		if ( empty( $data['allergen_name_hidden'] ) ) {
+			$file_info = wp_check_filetype( $data['allergen_icon']['name'] );
+
+			//Adding attachment for add allergen
+			if (false === in_array($file_info["ext"], self::MIME_TYPES)){
+				return;
+			} else {
+				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] );
+			}
+		}
+
 		//update for update allergen and add for add allergen
 		if ( empty( $data['allergen_name_hidden'] ) ) {
 				if (false === Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'] )){
@@ -143,13 +154,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				}
 		} else {
 				Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->updateAllergens( $data );
-		}
-
-		//Adding attachment for add allergen
-		if ( true === wp_check_filetype( $data['allergen_icon']['name'], self::MIME_TYPES ) ) {
-			if (empty($data['allergen_name_hidden']) && false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] )) {
-				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] );
-			}
 		}
 
 	//The attachment of the allergen before the update
@@ -171,7 +175,8 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 	//those if-statements create the connection between the allergen and the attachment
 	if (empty($data['allergen_name_hidden']) && true !== Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'], $data['allergen_icon']['name'] ) ) {
-		if (true === Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name'])){
+		if (true === Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists( $data['allergen_name']) &&
+		true === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists($data['allergen_icon']['name'])){
 			Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->addallergyAttachment( $data );
 		}
 	}
@@ -186,13 +191,11 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->deleteAttachment($allergen_icon);
 			}
 		}elseif($multiple_attachment !== "no_access" && false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] )){
-			if (false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] )){
-				$file_info = wp_check_filetype( $data['allergen_icon']['name'] );
-				if ( false === $file_info['type'] || !in_array( $file_info['type'], self::MIME_TYPES ) ) {
-					return;
-				} else {
-					Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] );
-				}
+			$file_info = wp_check_filetype( $data['allergen_icon']['name'] );
+			if (false === in_array($file_info["ext"], self::MIME_TYPES)){
+				return;
+			} else {
+				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] );
 			}
 			Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->updateallergyAttachment( $data['allergen_icon']['name'], $data["allergen_name"] );
 			if (false == Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkMultipleAttachmentsExists($allergen_icon)){	
