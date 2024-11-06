@@ -46,7 +46,7 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 			"DELETE FROM $table_attachment
      		WHERE attachment_name = %s",
     		$attachment
-			);
+		);
 
 		$wpdb->query($sqlConnection);
 	}
