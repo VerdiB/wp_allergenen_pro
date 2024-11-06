@@ -89,7 +89,7 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 
 	public function update_allergen_icons(array $data, array $MIME_TYPES)
 	{
-		if (!isset($data['allergen_icon']['name']) || !isset($data['allergen_icon_hidden'])) {
+		if (!isset($data['name']) || !isset($data['allergen_icon_hidden'])) {
 			return;
 		}
 
