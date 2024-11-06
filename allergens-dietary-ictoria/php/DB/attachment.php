@@ -95,9 +95,6 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 	 * @author V.B.
 	 */
 	private function placeAttachment( array $data ) {
-		$upload_dir = wp_upload_dir();
-		$upload_dir = $upload_dir['basedir'] . '/allergens-dietary-ictoria/icons/custom/';
-
 		if ( false === file_exists( self::PATH ) ) {
 			mkdir( self::PATH, 0777, true );
 		}
