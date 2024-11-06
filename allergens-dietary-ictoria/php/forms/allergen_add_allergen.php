@@ -115,6 +115,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 * @since 1.0.0
 	 * @date 11-9-2024
 	 */
+
+
+
 	public function submit( array $data ) {
 	if (isset($data['type'])){
 
@@ -127,9 +130,12 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 		}
 
-		if ( empty( $data['allergen_name_hidden'] ) ) {
-			if (Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists($data['allergen_name'])) {
-				return;
+		if ( !empty( $data['allergen_name_hidden'] )) {
+				if ($data['allergen_name_hidden'] !== $data['allergen_name']){
+				if (Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->checkAllergenExists($data['allergen_name'])) {
+					error_log($data['allergen_name']);
+					return;
+				}
 			}
 		}
 		if ( empty( $data['allergen_name_hidden'] ) ) {
@@ -166,11 +172,14 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		if (true === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'], $data['allergen_icon']['name']) &&
 			true === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkMultipleAttachmentsExists($data['allergen_icon']['name'])){
 			$multiple_attachment = "access";
+			error_log("access");
 		}elseif(false === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkMultipleAttachmentsExists($data['allergen_icon']['name']) &&
 			true === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkAllergyAttachmentExists( $data['allergen_name'], $data['allergen_icon']['name'])){
 			$multiple_attachment = "no_multiple_attachment_access";
+			error_log("access2");
 		}else{
 			$multiple_attachment = "no_access";
+			error_log("no access");
 		}
 	}
 
@@ -188,7 +197,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			if (false === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists( $data['allergen_icon']['name'] )){
 				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->updateAttachment( $data['allergen_icon'],  $allergen_icon);
 			}
-			if (false == Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkMultipleAttachmentsExists($allergen_icon)){	
+			if (false === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkMultipleAttachmentsExists($allergen_icon)){	
 				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->deleteAttachment($allergen_icon);
 			}
 		}elseif($multiple_attachment !== "no_access"){
@@ -199,7 +208,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->addAttachment( $data['allergen_icon'] );
 			}
 			Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->updateallergyAttachment( $data['allergen_icon']['name'], $data["allergen_name"] );
-			if (false == Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkMultipleAttachmentsExists($allergen_icon)){	
+			if (false === Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->checkMultipleAttachmentsExists($allergen_icon)){	
 				Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->deleteAttachment($allergen_icon);
 			}
 		}
