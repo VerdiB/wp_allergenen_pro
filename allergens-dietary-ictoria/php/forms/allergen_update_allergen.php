@@ -105,31 +105,37 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
      */
     public function submit(array $data)
     {
+        // echo 'before loop: <br/><pre>';
+        // print_r($data);
         $data = $this->sanitize($data);
 
-        echo 'before loop: <br/><pre>';
-        print_r($data);
 
-        $tmpArr = array();
-        foreach ($data as $set) {
-            if (!empty($set['name'])) {
-                $tmpArr[] = $set;
-            }
-        }
-        $data = $tmpArr;
-        unset($tmpArr);
+        // $tmpArr = array();
+        // foreach ($data as $set) {
+        //     if (!empty($set['name'])) {
+        //         $tmpArr[] = $set;
+        //     }
+        // }
 
-        echo 'after loop: <br/>';
-        print_r($data);
+        // echo 'tmpArr: <br/>';
+        // print_r($tmpArr); 
+
+        // $data = $tmpArr;
+        // unset($tmpArr);
+
+        // echo 'after loop: <br/>';
+        // print_r($data);
         // var_dump($tmpArr);
-        echo '</pre>';
-        return;
+        // echo '</pre>';
+        // return;
 
         // if (empty($data['allergen_icon']['name']) || empty($data['allergen_icon_hidden'])) {
         //     return;
         // }
 
-        Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->update_allergen_icons($data, $this->MIME_TYPES);
+        foreach( $data as $icon ) {
+            Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->updateAttachment($icon, $icon['oldName']);
+        }
     }
 
     /**
@@ -150,25 +156,26 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
         $tmpArr = array();
 
         foreach( $this->_allergens as $allergen ) {
+            //check if file is uploaded
             if (isset($data[$this->replace_spaces($allergen['allergy_name'])])) {
+                //check if file is an image and name is not empty
+                if (!in_array($data[$this->replace_spaces($allergen['allergy_name'])]['type'], $this->MIME_TYPES) &&
+                !empty($data[$this->replace_spaces($allergen['allergy_name'])]['name'])) {
+                    echo '<p>' . __('The new file for: ' . $allergen['allergy_name'] . ' is not a valid image.', 'allergens-dietary-ictoria') . '</p>';
+                    return;
+                }
+                //check and sanitize file name
                 if (is_array($data[$this->replace_spaces($allergen['allergy_name'])]) &&
-                isset($data[$this->replace_spaces($allergen['allergy_name'])]['name'])) {
-                    $tmpArr[$this->replace_spaces($allergen['allergy_name'])]['name'] = sanitize_file_name($data[$this->replace_spaces($allergen['allergy_name'])]['name']);
-                    $tmpArr['allergen_icon_hidden'][] = $data['allergen_icon_hidden'][$allergen['allergy_name']];
+                !empty($data[$this->replace_spaces($allergen['allergy_name'])]['name'])) {
+                    $tmpArr[$allergen['allergy_name']]['name'] = sanitize_file_name($data[$this->replace_spaces($allergen['allergy_name'])]['name']);
+                    $tmpArr[$allergen['allergy_name']]['tmp_name'] = $data[$allergen['allergy_name']]['tmp_name'];
+                    $tmpArr[$allergen['allergy_name']]['oldName'] = $data['allergen_icon_hidden'][$allergen['allergy_name']];
                 }
             }
         }
 
         $data = $tmpArr;
         unset($tmpArr);
-
-        // if (isset($data['allergen_icon'])) {
-        //     foreach ($data['allergen_icon'] as $fileData) {
-        //         if (is_array($fileData) && isset($fileData['name'])) {
-        //             $data['allergen_icon']['name'] = sanitize_file_name($fileData['name']);
-        //         }
-        //     }
-        // }
 
         return $data;
     }

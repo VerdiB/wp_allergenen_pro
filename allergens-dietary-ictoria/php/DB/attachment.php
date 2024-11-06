@@ -85,79 +85,8 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 		);
 
 		$this->placeAttachment($data);
+		$this->removeAttachment($oldName);
 	}
-
-	public function update_allergen_icons(array $data, array $MIME_TYPES)
-	{
-		if (!isset($data['name']) || !isset($data['allergen_icon_hidden'])) {
-			return;
-		}
-
-		$updated_icons = false;
-		$allergen_icon_hidden = $data['allergen_icon_hidden'];
-
-		foreach ($data['allergen_icon']['name'] as $allergy_name => $file_name) {
-			if (
-				!array_key_exists($allergy_name, $allergen_icon_hidden) ||
-				$data['allergen_icon']['error'][$allergy_name] !== UPLOAD_ERR_OK
-			) {
-				continue;
-			}
-
-			$file_type = wp_check_filetype($data['allergen_icon']['name'][$allergy_name]);
-			if (!in_array($file_type['type'], $MIME_TYPES)) {
-				echo '<p>' . __('The new file for: ' . $allergy_name . ' is not a valid image.', 'allergens-dietary-ictoria') . '</p>';
-				continue;
-			}
-
-			$allergen_prev_attachment_name = sanitize_file_name($allergen_icon_hidden[$allergy_name]);
-			$tmp_name = $_FILES['allergen_icon']['tmp_name'][$allergy_name];
-			$attachment_path = get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/custom/' . $file_name;
-			$attachment_name = basename($file_name);
-			$sanitized_allergy_name = sanitize_text_field($allergy_name);
-
-			global $wpdb;
-			$wpdb->query('START TRANSACTION');
-
-			$table_name_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
-			$table_name_allergy_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-
-			try {
-				if (!self::checkAttachmentExists($attachment_name)) {
-					$wpdb->query($wpdb->prepare(
-						"INSERT INTO $table_name_attachment
-							VALUES (%s, %s)",
-						$attachment_name,
-						$attachment_path
-					));
-				}
-
-				$wpdb->query($wpdb->prepare(
-					"UPDATE $table_name_allergy_attachment
-							SET attachment_name = %s
-							WHERE allergy_name = %s",
-					$attachment_name,
-					$sanitized_allergy_name
-				));
-				foreach ($data['allergen_icon'] as $icon) {
-					self::placeAttachment($icon);
-				}
-
-				$wpdb->query('COMMIT'); // Both operations succeeded
-				$updated_icons = true;
-
-			} catch (Exception $e) {
-				echo 'Error: ' . $e->getMessage();
-				$updated_icons = false;
-				$wpdb->query('ROLLBACK'); // Something went wrong, rollback all changes
-			}
-		}
-
-		echo $updated_icons
-			? '<p>' . __('Icons updated successfully.', 'allergens-dietary-ictoria') . '</p>'
-			: '<p>' . __('No icons were updated.', 'allergens-dietary-ictoria') . '</p>';
-	}
-
 	/**
 	 * @brief This method places an attachment in the plugin directories
 	 * under assets/icons/custom
@@ -177,6 +106,26 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 		// $full_path = $_SERVER['HTTP_HOST'] . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/custom/' . $data['full_path'];
 		if (false === file_exists($full_path)) {
 			move_uploaded_file($data['tmp_name'], $full_path);
+		}
+	}
+
+
+	/**
+	 * @brief This method removes an attachment from the plugin directories
+	 * under assets/icons/custom
+	 * @param string $attachmentName
+	 * @since 1.0.0
+	 * @date 6-11-2024
+	 * @author V.B.
+	 */
+	private function removeAttachment(string $attachmentName)
+	{
+		if (empty($attachmentName)) {
+			return;
+		}
+
+		if (true === file_exists(self::PATH . $attachmentName)) {
+			unlink(self::PATH . $attachmentName);
 		}
 	}
 
