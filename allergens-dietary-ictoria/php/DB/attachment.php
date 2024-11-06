@@ -40,7 +40,6 @@ class Allergens_Dietary_Ictoria_Attachment_Queries {
 
 	public function deleteAttachment( string $attachment ) {
 		global $wpdb;
-		($attachment);
 		$table_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
 
 		$sqlConnection = $wpdb->prepare(
