@@ -136,6 +136,7 @@ package "php"{
             + {static} getInstance() : Allergens_Dietary_Ictoria_Allergens_Form
             + {static} setFormType(formType:FormType) : void
             + {static} getFormType() : FormType
+            + submitUpdate() : void
             + showForm(allergenName:String) : void
         }
 

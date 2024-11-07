@@ -152,7 +152,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 	
 		$count = $wpdb->get_var($sql);
 
-		return $count > 1 ? true : false;
+		return $count > 0 ? true : false;
 	}
 
 	public function find_allergy( string $allergy_name ){
