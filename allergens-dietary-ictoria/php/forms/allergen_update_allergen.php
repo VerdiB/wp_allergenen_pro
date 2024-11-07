@@ -41,11 +41,13 @@ if (!enum_exists('Mime_Types')) {
 class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Dietary_Ictoria_Form
 {
     private array $MIME_TYPES;
+    private array $MIME_NAMES;
     private array $_allergens;
 
     public function __construct()
     {
         $this->MIME_TYPES = Mime_Types::get_mime_types();
+        $this->MIME_NAMES = array_map(fn($case) => $case->name, Mime_Types::cases());
         $this->_allergens = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllAllergyAttachmments(true);
     }
 
@@ -74,15 +76,15 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
         $html .= '<tbody>';
 
         foreach ($this->_allergens as $allergen) {
-                $html .= '<tr>';
-                $html .= '<td>' . esc_html($allergen['allergy_name']) . '</td>';
-                $html .= '<td>' . esc_html($allergen['allergy_description']) . '</td>';
-                $html .= '<td>' . '<img style="width:50px;" src="' . esc_html($allergen['attachment_path']) . '" alt="' . esc_html($allergen['attachment_name']) . '" </td>';
-                $html .= '<td>';
-                $html .= '<input type="hidden" name="allergen_icon_hidden[' . esc_attr($allergen['allergy_name']) . ']" value="' . ($allergen['attachment_name'] ? esc_attr($allergen['attachment_name']) : "") . '" >';
-                $html .= '<input type="file" name="' . esc_attr($allergen['allergy_name']) . '" id="allergen_icon_' . esc_attr($allergen['allergy_name']) . '" >';
-                $html .= '</td>';
-                $html .= '</tr>';
+            $html .= '<tr>';
+            $html .= '<td>' . esc_html($allergen['allergy_name']) . '</td>';
+            $html .= '<td>' . esc_html($allergen['allergy_description']) . '</td>';
+            $html .= '<td>' . '<img style="width:50px;" src="' . esc_html($allergen['attachment_path']) . '" alt="' . esc_html($allergen['attachment_name']) . '" </td>';
+            $html .= '<td>';
+            $html .= '<input type="hidden" name="allergen_icon_hidden[' . esc_attr($allergen['allergy_name']) . ']" value="' . ($allergen['attachment_name'] ? esc_attr($allergen['attachment_name']) : "") . '" >';
+            $html .= '<input type="file" name="' . esc_attr($allergen['allergy_name']) . '" id="allergen_icon_' . esc_attr($allergen['allergy_name']) . '" >';
+            $html .= '</td>';
+            $html .= '</tr>';
         }
         $html .= '</tbody>';
         $html .= '</table>';
@@ -109,12 +111,12 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
         foreach ($data as $icon) {
             // check if file is an image and if it is not, skip it
             if (false === in_array($icon['type'], $this->MIME_TYPES)) {
-                echo '<p>' . __('The new file: ' . $icon['name'] . ' is not a valid image.', 'allergens-dietary-ictoria') . '</p>';
+                echo '<p style="color: red;>' . __('The new file: ' . $icon['name'] . ' is not a valid image.  Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.', 'allergens-dietary-ictoria') . '</p>';
                 continue;
             }
             // check if file is in database already and if it is, skip it
             if (true === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists($icon['name'])) {
-                echo '<p>' . __('The new file: ' . $icon['name'] . ' already exists.', 'allergens-dietary-ictoria') . '</p>';
+                echo '<p style="color: red;>' . __('The new file: ' . $icon['name'] . ' already exists.', 'allergens-dietary-ictoria') . '</p>';
                 continue;
             }
 
