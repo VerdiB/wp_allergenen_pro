@@ -163,8 +163,9 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 
 	Allergens_Dietary_Ictoria_Products::instance();
 	Allergens_Dietary_Ictoria_Filter::instance();
-	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/MyPluginAddMenu.php';
-	MyPluginAddMenu::instance();
+	Allergens_Dietary_Ictoria_Activator::load_style();
+	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/Allergens_Dietary_Ictoria_Plugin_Menu.php';
+	Allergens_Dietary_Ictoria_Plugin_Menu::instance();
 } else {
 	// WooCommerce is not installed or inactive, show error message
 	$level = 'notice-error';
