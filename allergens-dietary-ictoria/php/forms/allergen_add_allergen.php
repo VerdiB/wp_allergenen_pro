@@ -40,6 +40,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	private const MIME_TYPES = array( 'image/png', 'image/jpeg', 'image/jpg' );
 
 	public function __construct() {
+		self::load_js();
 	}
 
 	/**
@@ -145,7 +146,11 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		return $data;
 	}
-
+	public static function load_js(){
+		error_log("hello");
+		wp_register_script('Allergens_Dietary_Ictoria_Show_Allergens', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/js/script.js'), array('jquery'));
+		wp_enqueue_script( 'Allergens_Dietary_Ictoria_Show_Allergens');
+	}
 	private function do_dropdown() {
 		$html = '';
 		if ( empty( $this->_allergen ['is_allergy'] ) ) {

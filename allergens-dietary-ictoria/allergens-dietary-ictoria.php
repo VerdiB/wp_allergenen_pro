@@ -142,7 +142,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 				}
 			}
 
-
+			
 			public function add_integration($integrations)
 			{
 				$integrations[] = 'Allergens_Dietary_Ictoria_Wc_Integration_Settings';
@@ -303,6 +303,7 @@ function get_plugin_changelog()
 
 	return 'Changelog not found.';
 }
+
 
 // // Changelog voor admin menu
 // function allergens_dietary_changelog_pagina() {

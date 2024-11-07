@@ -1,4 +1,22 @@
 console.log("new js");
+console.log("hello world");
+
+var actionSchedulerError = document.querySelectorAll(".notice-error");
+var actionSchedulerWarning = document.querySelectorAll(".notice-warning");
+var actionSchedulerSucces = document.querySelectorAll("notice-success");
+
+actionSchedulerError.forEach(error => {
+    error.style.backgroundColor = "red";
+});
+
+actionSchedulerWarning.forEach(warning => {
+    warning.style.backgroundColor = "orange";
+});
+
+actionSchedulerSucces.forEach(succes => {
+    succes.style.backgroundColor = "green";
+});
+
 
 var button = document.getElementById("dropdown-ictoria");
 
@@ -15,3 +33,4 @@ function dropdown_form(){
 }
 
 button.addEventListener("click", dropdown_form);
+
