@@ -511,7 +511,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     error_log("posted");
 
     Allergens_Dietary_Ictoria_Form::setFormType(FormType::ALLERGENS);
-
     Allergens_Dietary_Ictoria_Form::getInstance()->submitUpdate();
 
     if (isset($_POST['action']) && isset($_POST['post'])) {
