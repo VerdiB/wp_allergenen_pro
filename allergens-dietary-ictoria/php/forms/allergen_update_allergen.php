@@ -46,7 +46,7 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
     public function __construct()
     {
         $this->MIME_TYPES = Mime_Types::get_mime_types();
-        $this->_allergens = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllAllergyAttachmments();
+        $this->_allergens = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllAllergyAttachmments(true);
     }
 
     /**
@@ -61,7 +61,7 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
     {
         $html = '';
 
-        $html .= '<h1>' . __('Update Allergen Icons', 'allergens-dietary-ictoria') . '</h1>';
+        $html .= '<h1>' . __('Update custom allergen icons', 'allergens-dietary-ictoria') . '</h1>';
         $html .= '<table>';
         $html .= '<thead>';
         $html .= '<tr>';
@@ -74,17 +74,15 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
         $html .= '<tbody>';
 
         foreach ($this->_allergens as $allergen) {
-            $html .= '<tr>';
-            $html .= '<td>' . esc_html($allergen['allergy_name']) . '</td>';
-            $html .= '<td>' . esc_html($allergen['allergy_description']) . '</td>';
-            $html .= '<td>' . '<img style="width:50px;" src="' . esc_html($allergen['attachment_path']) . '" alt="' . esc_html($allergen['attachment_name']) . '" </td>';
-            // $html .= '';
-            $html .= '<td>';
-            $html .= '<input type="hidden" name="allergen_icon_hidden[' . esc_attr($allergen['allergy_name']) . ']" value="' . ($allergen['attachment_name'] ? esc_attr($allergen['attachment_name']) : "") . '" >';
-            $html .= '<input type="file" name="' . esc_attr($allergen['allergy_name']) . '" id="allergen_icon_' . esc_attr($allergen['allergy_name']) . '" >';
-            $html .= '</td>';
-            // $html .= '';
-            $html .= '</tr>';
+                $html .= '<tr>';
+                $html .= '<td>' . esc_html($allergen['allergy_name']) . '</td>';
+                $html .= '<td>' . esc_html($allergen['allergy_description']) . '</td>';
+                $html .= '<td>' . '<img style="width:50px;" src="' . esc_html($allergen['attachment_path']) . '" alt="' . esc_html($allergen['attachment_name']) . '" </td>';
+                $html .= '<td>';
+                $html .= '<input type="hidden" name="allergen_icon_hidden[' . esc_attr($allergen['allergy_name']) . ']" value="' . ($allergen['attachment_name'] ? esc_attr($allergen['attachment_name']) : "") . '" >';
+                $html .= '<input type="file" name="' . esc_attr($allergen['allergy_name']) . '" id="allergen_icon_' . esc_attr($allergen['allergy_name']) . '" >';
+                $html .= '</td>';
+                $html .= '</tr>';
         }
         $html .= '</tbody>';
         $html .= '</table>';
@@ -108,9 +106,9 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
         $data = $this->sanitize($data);
 
 
-        foreach( $data as $icon ) {
+        foreach ($data as $icon) {
             // check if file is an image and if it is not, skip it
-            if (false === in_array($icon['type'], $this->MIME_TYPES)){
+            if (false === in_array($icon['type'], $this->MIME_TYPES)) {
                 echo '<p>' . __('The new file: ' . $icon['name'] . ' is not a valid image.', 'allergens-dietary-ictoria') . '</p>';
                 continue;
             }
@@ -141,12 +139,14 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
 
         $tmpArr = array();
 
-        foreach( $this->_allergens as $allergen ) {
+        foreach ($this->_allergens as $allergen) {
             //check if file is uploaded
             if (isset($data[$this->replace_spaces($allergen['allergy_name'])])) {
                 //check and sanitize file name
-                if (is_array($data[$this->replace_spaces($allergen['allergy_name'])]) &&
-                !empty($data[$this->replace_spaces($allergen['allergy_name'])]['name'])) {
+                if (
+                    is_array($data[$this->replace_spaces($allergen['allergy_name'])]) &&
+                    !empty($data[$this->replace_spaces($allergen['allergy_name'])]['name'])
+                ) {
                     $tmpArr[$allergen['allergy_name']]['name'] = sanitize_file_name($data[$this->replace_spaces($allergen['allergy_name'])]['name']);
                     $tmpArr[$allergen['allergy_name']]['tmp_name'] = $data[$allergen['allergy_name']]['tmp_name'];
                     $tmpArr[$allergen['allergy_name']]['oldName'] = $data['allergen_icon_hidden'][$allergen['allergy_name']];
@@ -163,6 +163,7 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
 
     private function replace_spaces(string $allergens): string
     {
-        return (preg_match('/\s/', $allergens)) ? str_replace(' ', '_', $allergens) : $allergens;;
+        return (preg_match('/\s/', $allergens)) ? str_replace(' ', '_', $allergens) : $allergens;
+        ;
     }
 }

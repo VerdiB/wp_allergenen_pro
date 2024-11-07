@@ -20,7 +20,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
 	{
 	}
 
-	public function addallergyAttachment(array $data)
+	public function addAllergyAttachment(array $data)
 	{
 		global $wpdb;
 
@@ -68,30 +68,32 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
 		return $wpdb->get_row($sql, ARRAY_A);
 	}
 
-	public function getAllAllergyAttachmments()
+	public function getAllAllergyAttachmments($skip_default = false)
 	{
 		global $wpdb;
 		$table = "{$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment";
 
-		$sql = $wpdb->prepare(
-			"SELECT al.allergy_name, al.allergy_description, al.is_allergy,
-			att.attachment_name, att.attachment_path
+		$sql = "SELECT al.allergy_name, al.allergy_description, al.is_allergy,
+			al.is_default_option, att.attachment_name, att.attachment_path
             FROM %i as aa
             JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy as al
             ON aa.allergy_name = al.allergy_name
 			JOIN {$wpdb->prefix}allergens_dietary_ictoria_attachments as att
 			ON aa.attachment_name = att.attachment_name
 			WHERE al.is_active = 1
-			ORDER BY  al.is_allergy DESC, al.allergy_name ASC
-			",
-			$table
+			";
+		if ($skip_default) {
+			$sql .= " AND al.is_default_option = 0";
+		}
+		$sql .= " ORDER BY al.is_allergy DESC, al.allergy_name ASC";
 
-		);
+		$prepared_sql = $wpdb->prepare($sql, $table);
 
-		return $wpdb->get_results($sql, ARRAY_A);
+
+		return $wpdb->get_results($prepared_sql, ARRAY_A);
 	}
 
-	public function updateallergyAttachment(array $data)
+	public function updateAllergyAttachment(array $data)
 	{
 		global $wpdb;
 
