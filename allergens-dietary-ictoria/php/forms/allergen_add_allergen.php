@@ -1,45 +1,47 @@
 <?php
 
 // exit if user can access this file directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
-if ( ! interface_exists( 'I_Allergens_Dietary_Ictoria_Form' ) ) {
+if (!interface_exists('I_Allergens_Dietary_Ictoria_Form')) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/Iallergen_form.php';
 }
 
-if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) {
+if (!class_exists('Allergens_Dietary_Ictoria_Allergy_Attachment_Queries')) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
 }
 
-if ( ! class_exists( 'Allergens_Dietary_Ictoria_Attachment_Queries' ) ) {
+if (!class_exists('Allergens_Dietary_Ictoria_Attachment_Queries')) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/attachment.php';
 }
 
-if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) {
+if (!class_exists('Allergens_Dietary_Ictoria_Allergy_Attachment_Queries')) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
 }
 
-	/**
-	 * @brief This shows the tabs on add/update allergens .
-	 * @author T.K.
-	 * @since 1.0.0
-	 * @date 18-9-2024
-	 */
+/**
+ * @brief This shows the tabs on add/update allergens .
+ * @author T.K.
+ * @since 1.0.0
+ * @date 18-9-2024
+ */
 
-	if ( ! class_exists( 'Allergens_Dietary_Ictoria_Tabs' ) ) {
-		require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
-	}
+if (!class_exists('Allergens_Dietary_Ictoria_Tabs')) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
+}
 
-	/********************************************************************/
+/********************************************************************/
 
-class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ictoria_Form {
+class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ictoria_Form
+{
 
 	private ?array $_allergen = null;
-	private const MIME_TYPES = array( 'png', 'jpeg', 'jpg' );
+	private const MIME_TYPES = array('png', 'jpeg', 'jpg');
 
-	public function __construct() {
+	public function __construct()
+	{
 	}
 
 	/**
@@ -50,14 +52,12 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 * @since 1.0.0
 	 * @date 11-9-2024
 	 */
-	public function showForm( ?string $allergenName = null ) {
+	public function showForm(?string $allergenName = null)
+	{
 
-		if ( ! is_null( $allergenName ) ) {
+		if (!is_null($allergenName)) {
 			// TODO: Implement showForm() method. when the allergen name is not null
-			if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergy_Attachment_Queries' ) ) {
-				require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
-			}
-			$this->_allergen = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllergyAttachment( $allergenName );
+			$this->_allergen = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllergyAttachment($allergenName);
 		}
 
 		$showOnPage = ["allergens-dietary-show-allergens"];
@@ -65,40 +65,43 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 
 		if (in_array($page, $showOnPage, true)) {
-			$html  = '<fieldset class="update_form">';
+			$html = '<fieldset class="update_form">';
 			$html .= '<div class="form-column">';
-			$html .= '<input disabled type="hidden" class="update_" name="allergen_name_hidden" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_name'] : '' ) . '"/>';
-			$html .= '<label for="allergen_name">' . __( 'Allergen name', 'allergens-dietary-ictoria' ) . '</label>';
-			$html .= '<input type="text" class="update_" name="allergen_name" id="allergen_name" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_name'] : '' ) . '" disabled required/>';
+			$html .= '<input disabled type="hidden" class="update_" name="allergen_name_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '"/>';
+			$html .= '<label for="allergen_name">' . __('Allergen name', 'allergens-dietary-ictoria') . '</label>';
+			$html .= '<input type="text" class="update_" name="allergen_name" id="allergen_name" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" disabled required/>';
 			$html .= '<div class="dropdown-row">';
-			$html .= '<label for="type">' . __( 'Type', 'allergens-dietary-ictoria' ) . '</label>';
+			$html .= '<label for="type">' . __('Type', 'allergens-dietary-ictoria') . '</label>';
 			$html .= '<select name="type" id="type" class="type">';
 			$html .= self::do_dropdown();
 			$html .= '</select>';
 			$html .= '</div>';
-			$html .= '<input disabled type="submit" class="update_" name="submit" class="button button-primary" value="' . __( 'Update', 'allergens-dietary-ictoria' ) . '"/>';
+			$html .= '<input disabled type="submit" class="update_" name="submit" class="button button-primary" value="' . __('Update', 'allergens-dietary-ictoria') . '"/>';
 			$html .= '</div>';
-			$html .= '<label for="allergen_description">' . __( 'Allergen description', 'allergens-dietary-ictoria' ) . '</label>';
-			$html .= '<input type="text" class="update_" name="allergen_description" id="allergen_description" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_description'] : '' ) . '" disabled/>';
-			$html .= '<div>';
-			$html .= '<label for="allergen_icon">' . __( 'Allergen icon', 'allergens-dietary-ictoria' ) . '</label>';
-			$html .= '<input type="file" class="update_" name="allergen_icon" id="allergen_icon" required disabled>';
+			$html .= '<label for="allergen_description">' . __('Allergen description', 'allergens-dietary-ictoria') . '</label>';
+			$html .= '<input type="text" class="update_" name="allergen_description" id="allergen_description" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '" disabled/>';
+			$html .= '<div style="display: flex; align-items: center; gap: 15px;">';
+			$html .= '<img style="height: 75px;" id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
+			$html .= '<label class="label-quick-edit">';
+			$html .= '<input type="file" class="update_" name="allergen_icon" id="allergen_icon_file_input" disabled>';
+			$html .= '<span>Set image</span>';
+			$html .= '</label>';
 			$html .= '</div>';
 			$html .= '</fieldset>';
-		}else{
-			$html  = '<fieldset>';
-			$html .= '<input type="hidden" name="allergen_name_hidden" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_name'] : '' ) . '"/>';
-			$html .= '<label for="allergen_name">' . __( 'Allergen name', 'allergens-dietary-ictoria' ) . '</label><br>';
-			$html .= '<input type="text" name="allergen_name" id="allergen_name" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_name'] : '' ) . '" required/><br><br>';
-			$html .= '<label for="type">' . __( 'Type', 'allergens-dietary-ictoria' ) . '</label> <br/>';
+		} else {
+			$html = '<fieldset>';
+			$html .= '<input type="hidden" name="allergen_name_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '"/>';
+			$html .= '<label for="allergen_name">' . __('Allergen name', 'allergens-dietary-ictoria') . '</label><br>';
+			$html .= '<input type="text" name="allergen_name" id="allergen_name" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" required/><br><br>';
+			$html .= '<label for="type">' . __('Type', 'allergens-dietary-ictoria') . '</label> <br/>';
 			$html .= '<select name="type" id="type" required>';
 			$html .= self::do_dropdown();
 			$html .= '</select> <br><br>';
-			$html .= '<label for="allergen_description">' . __( 'Allergen description', 'allergens-dietary-ictoria' ) . '</label><br>';
-			$html .= '<input type="text" name="allergen_description" id="allergen_description" value="' . ( ( ! empty( $this->_allergen ) ) ? $this->_allergen['allergy_description'] : '' ) . '"/><br><br>';
-			$html .= '<label for="allergen_icon">' . __( 'Allergen icon', 'allergens-dietary-ictoria' ) . '</label><br>';
+			$html .= '<label for="allergen_description">' . __('Allergen description', 'allergens-dietary-ictoria') . '</label><br>';
+			$html .= '<input type="text" name="allergen_description" id="allergen_description" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '"/><br><br>';
+			$html .= '<label for="allergen_icon">' . __('Allergen icon', 'allergens-dietary-ictoria') . '</label><br>';
 			$html .= '<input type="file" name="allergen_icon"><br><br>';
-			$html .= '<input type="submit" name="submit" class="button button-primary" value="' . __( 'Add allergen', 'allergens-dietary-ictoria' ) . '"/><br>';
+			$html .= '<input type="submit" name="submit" class="button button-primary" value="' . __('Add allergen', 'allergens-dietary-ictoria') . '"/><br>';
 		}
 		$html .= '</fieldset>';
 
@@ -127,9 +130,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		$file_info = wp_check_filetype( $data['allergen_icon']['name'] );
 		$valid_icon = in_array($file_info["ext"], self::MIME_TYPES) ? true : false;
 
-		if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
-			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
-		}
+			if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
+				require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
+			}
 
 		$table_al_at = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
 		$table_at = Allergens_Dietary_Ictoria_Attachment_Queries::getInstance();
@@ -141,6 +144,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		if (!empty($data['allergen_name_hidden'])){
 			$mlpleatt_exists = $table_al_at->checkMultipleAttachmentsExists($data['allergen_name']);
 		}
+	
 
 		if ( !empty( $data['allergen_name_hidden'] )) {
 				if ($data['allergen_name_hidden'] !== $data['allergen_name']){
@@ -160,6 +164,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			} else {
 				$table_at->addAttachment( $data['allergen_icon'] );
 			}
+
 		}
 	}
 
@@ -175,7 +180,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 					$table_al->addAllergens( $data );
 					echo '<div style="background-color: limegreen; max-width: 270px;">';
 					$text = __("Successfully added new Allergen/Diet", 'allergens-dietary-ictoria');
-				}else{
+				} else {
 					echo '<div style="background-color: orange; max-width: 270px;">';
 					$text = __("Allergen already exists", 'allergens-dietary-ictoria');
 				}
@@ -240,40 +245,42 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 * @since 1.0.0
 	 * @date 11-9-2024
 	 */
-	public function sanitize( array $data ) {
-		$data['allergen_name']         = sanitize_text_field( wp_unslash( $data['allergen_name'] ) );
-		$data['allergen_description']  = sanitize_text_field( wp_unslash( $data['allergen_description'] ) );
-		if (isset($data['type'])){
-			$data['type'] = absint( sanitize_text_field( wp_unslash( $data['type'] ) ) );
+	public function sanitize(array $data)
+	{
+		$data['allergen_name'] = sanitize_text_field(wp_unslash($data['allergen_name']));
+		$data['allergen_description'] = sanitize_text_field(wp_unslash($data['allergen_description']));
+		if (isset($data['type'])) {
+			$data['type'] = absint(sanitize_text_field(wp_unslash($data['type'])));
 		}
-		$data['allergen_icon']['name'] = sanitize_file_name( $data['allergen_icon']['name'] );
+		$data['allergen_icon']['name'] = sanitize_file_name($data['allergen_icon']['name']);
 
 		return $data;
 	}
 
-	private function do_dropdown() {
+	private function do_dropdown()
+	{
 		$html = '';
 
 		$ShowOnPage = ["allergens-dietary-add-allergen"];
 		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 
-	if (in_array($page, $ShowOnPage, true)) {
-		if ( empty( $this->_allergen ['is_allergy'] ) ) {
-			$html  = '<option value="1" selected>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
-			$html .= '<option value="0">' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
-			return $html;
+		if (in_array($page, $ShowOnPage, true)) {
+			if (empty($this->_allergen['is_allergy'])) {
+				$html = '<option value="1" selected>' . __('Allergy', 'allergens-dietary-ictoria') . '</option>';
+				$html .= '<option value="0">' . __('Dietary restriction', 'allergens-dietary-ictoria') . '</option>';
+				return $html;
+			}
 		}
-	}
 
-	if (!empty($this->_allergen)){
-		if ( $this->_allergen['is_allergy'] == 1 ) {
-			$html  = '<option value="1" class="option" selected disabled>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
-			$html .= '<option value="0" class="option" disabled>' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
-		} else {
-			$html  = '<option value="1" class="option" disabled>' . __( 'Allergy', 'allergens-dietary-ictoria' ) . '</option>';
-			$html .= '<option value="0" class="option" selected disabled>' . __( 'Dietary restriction', 'allergens-dietary-ictoria' ) . '</option>';
+		if (!empty($this->_allergen)) {
+			if ($this->_allergen['is_allergy'] == 1) {
+				$html = '<option value="1" class="option" selected disabled>' . __('Allergy', 'allergens-dietary-ictoria') . '</option>';
+				$html .= '<option value="0" class="option" disabled>' . __('Dietary restriction', 'allergens-dietary-ictoria') . '</option>';
+			} else {
+				$html = '<option value="1" class="option" disabled>' . __('Allergy', 'allergens-dietary-ictoria') . '</option>';
+				$html .= '<option value="0" class="option" selected disabled>' . __('Dietary restriction', 'allergens-dietary-ictoria') . '</option>';
+			}
 		}
-	}
 		return $html;
 	}
 }

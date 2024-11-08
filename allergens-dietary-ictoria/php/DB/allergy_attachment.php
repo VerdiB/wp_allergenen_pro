@@ -1,23 +1,28 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
-class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
+class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
+{
 	private static ?self $_instance = null;
 
-	public static function getInstance() {
-		if ( self::$_instance === null ) {
+	public static function getInstance()
+	{
+		if (self::$_instance === null) {
 			self::$_instance = new static();
 		}
 		return self::$_instance;
 	}
 
-	private function __construct() {}
+	private function __construct()
+	{
+	}
 
-	public function addallergyAttachment( array $data ) {
-		
+	public function addallergyAttachment(array $data)
+	{
+
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
@@ -25,48 +30,52 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		$wpdb->insert(
 			$table_name,
 			array(
-				'allergy_name'    => $data['allergen_name'],
+				'allergy_name' => $data['allergen_name'],
 				'attachment_name' => $data['allergen_icon']['name'],
 			)
 		);
 
-		return ( isset( $wpdb->insert_id ) ) ? true : false;
+		return (isset($wpdb->insert_id)) ? true : false;
 	}
 
-	public function getallergyAttachment( string $allergy_name, bool $isForm=true ) {
+	public function getallergyAttachment(string $allergy_name, bool $isForm = true)
+	{
 		global $wpdb;
 
 		$sql = "";
 
-		if ( $isForm ) {
+		if ($isForm) {
 			$sql = $wpdb->prepare(
-				"SELECT a.allergy_name, a.allergy_description, a.is_allergy, aa.attachment_name
+				"SELECT a.allergy_name, a.allergy_description, a.is_allergy, aa.attachment_name, att.attachment_path
 				FROM  {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment as aa
 				JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy as a
 				ON aa.allergy_name = a.allergy_name
+				JOIN {$wpdb->prefix}allergens_dietary_ictoria_attachments as att
+				ON aa.attachment_name = att.attachment_name
 				WHERE aa.allergy_name = %s",
 				$allergy_name
 			);
-		} else{
+		} else {
 			$sql = $wpdb->prepare(
-			"SELECT a.allergy_name, a.allergy_description, att.attachment_path
+				"SELECT a.allergy_name, a.allergy_description, att.attachment_path
 			FROM  {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment as aa
 			JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy as a
 			ON aa.allergy_name = a.allergy_name
 			JOIN {$wpdb->prefix}allergens_dietary_ictoria_attachments as att
 			ON aa.attachment_name = att.attachment_name
 			WHERE aa.allergy_name = %s",
-			$allergy_name
-		);
+				$allergy_name
+			);
 		}
 
-		return $wpdb->get_row( $sql, ARRAY_A );
+		return $wpdb->get_row($sql, ARRAY_A);
 	}
 
-	public function getAllAllergyAttachmments() {
+	public function getAllAllergyAttachmments()
+	{
 		global $wpdb;
 		$table = "{$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment";
-		
+
 		$sql = $wpdb->prepare(
 			"SELECT al.allergy_name, al.allergy_description, al.is_allergy,
 			att.attachment_name, att.attachment_path
@@ -77,14 +86,16 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 			ON aa.attachment_name = att.attachment_name
 			WHERE al.is_active = 1
 			ORDER BY  al.is_allergy DESC, al.allergy_name ASC
-			",$table
+			",
+			$table
 
 		);
 
-		return $wpdb->get_results( $sql, ARRAY_A );
+		return $wpdb->get_results($sql, ARRAY_A);
 	}
 
-	public function updateallergyAttachment( string $attachment, string $allergy ) {
+	public function updateallergyAttachment(string $attachment, string $allergy)
+	{
 
 		global $wpdb;
 
@@ -93,33 +104,35 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		$wpdb->update(
 			$table_name,
 			array(
-				'allergy_name'    => $allergy,
+				'allergy_name' => $allergy,
 				'attachment_name' => $attachment,
 			),
 			array(
-				'allergy_name'    => $allergy,
+				'allergy_name' => $allergy,
 			)
 		);
 
-		return ( isset( $wpdb->insert_id ) ) ? true : false;
+		return (isset($wpdb->insert_id)) ? true : false;
 	}
 
-	public function checkAllergyAttachmentExists( string $allergy_name ) {
+	public function checkAllergyAttachmentExists(string $allergy_name)
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
 		$sql = $wpdb->prepare(
-			"SELECT * FROM $table_name WHERE allergy_name = %s",
+			"SELECT attachment_name FROM $table_name WHERE allergy_name = %s",
 			$allergy_name,
 		);
 
-		$result = $wpdb->get_results( $sql );
+		$result = $wpdb->get_results($sql);
 
-		return ( ! empty( $result ) ) ? true : false;
+		return (!empty($result)) ? true : false;
 	}
 
-	public function deleteAllergyAttachment( string $allergy ) {
+	public function deleteAllergyAttachment(string $allergy)
+	{
 		global $wpdb;
 
 		$table_aa = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
@@ -141,62 +154,56 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		$wpdb->query($sql);
 	}
 
-	public function checkMultipleAttachmentsExists( string $icon ) {
+	public function checkMultipleAttachmentsExists(string $icon)
+	{
 		global $wpdb;
-	
+
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-		
+
 		$sql = $wpdb->prepare(
 			"SELECT COUNT(attachment_name) FROM $table_name WHERE attachment_name = %s",
 			$icon
 		);
-	
+
 		$count = $wpdb->get_var($sql);
 
-		return $count > 0 ? true : false;
+		return $count > 1 ? true : false;
 	}
 
-	public function find_allergy( string $allergy_name ){
+	public function find_allergy(string $allergy_name)
+	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
 		$sql = $wpdb->prepare(
-			"SELECT attachment_name, allergy_name FROM $table_name WHERE allergy_name = %s",
+			"SELECT attachment_name FROM $table_name WHERE allergy_name = %s",
 			$allergy_name
 		);
 
-		$checkresult = $wpdb->get_results( $sql );
 
-		$found_allergy = false;
+		$result = $wpdb->get_row($sql);
+		return !empty($result->attachment_name) ? $result->attachment_name : null ;
 
-		(!empty( $checkresult ) ) ?
-		$found_allergy = true :
-		$found_allergy = false;
-
-		if ($found_allergy == true){
-			$result = $wpdb->get_row($sql);
-			return $result->attachment_name;
-		}
 	}
 
-	public static function allergy_connection( array $result){
+	public static function allergy_connection(array $result)
+	{
 
 		global $wpdb;
 
 		//get database table
 		$table_allergens_icons = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
-			//insert allergies
-			foreach($result as $value){
-				$wpdb->insert(
+		//insert allergies
+		foreach ($result as $value) {
+			$wpdb->insert(
 				$table_allergens_icons,
 				array(
-					'attachment_name'   => $value['name'],
-					'allergy_name'  => $value['title'],
-					)
-				);
-			}
+					'attachment_name' => $value['name'],
+					'allergy_name' => $value['title'],
+				)
+			);
+		}
 	}
 }
-	
