@@ -1,9 +1,10 @@
 console.log("new js");
 console.log("hello world");
 
+
 var actionSchedulerError = document.querySelectorAll(".notice-error");
 var actionSchedulerWarning = document.querySelectorAll(".notice-warning");
-var actionSchedulerSucces = document.querySelectorAll("notice-success");
+var actionSchedulerSucces = document.querySelectorAll(".notice-success");
 
 actionSchedulerError.forEach(error => {
     error.style.backgroundColor = "red";
