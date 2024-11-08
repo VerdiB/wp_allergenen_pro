@@ -233,8 +233,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		}else{
 			//wp_redirect( admin_url( 'admin.php?page=allergens-dietary-show-allergens' ) );
 		}
-
-		echo '</div><br>';
+		if ( empty( $data['allergen_name_hidden'] ) ) {
+			echo '</div><br>';
+		}
 }
 
 	/**allergen_name
