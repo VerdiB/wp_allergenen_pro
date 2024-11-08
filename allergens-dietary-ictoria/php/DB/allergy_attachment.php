@@ -143,8 +143,6 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 
 	public function checkMultipleAttachmentsExists( string $icon ) {
 		global $wpdb;
-
-		error_log($icon);
 	
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 		
@@ -154,8 +152,6 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries {
 		);
 	
 		$count = $wpdb->get_var($sql);
-
-		error_log($count);
 
 		return $count > 0 ? true : false;
 	}

@@ -119,6 +119,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 
 	public function submit( array $data ) {
+		
 		$text = "Successfully added new Allergen/Diet";
 		$data = $this->sanitize( $data );
 		$ShowOnPage = ["allergens-dietary-add-allergen"];
@@ -133,10 +134,13 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		$table_al_at = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
 		$table_at = Allergens_Dietary_Ictoria_Attachment_Queries::getInstance();
 		$table_al = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
-		$mlpleatt_exists = $table_al_at->checkMultipleAttachmentsExists($data['allergen_name']);
 		$att_exists = $table_at->checkAttachmentExists($data['allergen_icon']['name']);
 		$al_exists = $table_al->checkAllergenExists( $data['allergen_name'] );
 		$al_at_exists = $table_al_at->checkAllergyAttachmentExists( $data['allergen_name_hidden']);
+
+		if (!empty($data['allergen_name_hidden'])){
+			$mlpleatt_exists = $table_al_at->checkMultipleAttachmentsExists($data['allergen_name']);
+		}
 
 		if ( !empty( $data['allergen_name_hidden'] )) {
 				if ($data['allergen_name_hidden'] !== $data['allergen_name']){
@@ -157,6 +161,10 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				$table_at->addAttachment( $data['allergen_icon'] );
 			}
 		}
+	}
+
+	if (!empty($data['allergen_name_hidden'])){
+		$allergen_icon = $table_al_at->find_allergy($data['allergen_name_hidden']);
 	}
 
 	$multiple_attachment = "no_access";
@@ -180,13 +188,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				}elseif(false === $mlpleatt_exists && true === $al_at_exists){
 					$multiple_attachment = "no_multiple_attachment_access";
 				}else{
-					if (true === $al_at_exists){
-						error_log("al_at");
-					}else{
-						error_log("no al_at " . $al_at_exists);
-					}
 					$multiple_attachment = "no_access";
-					error_log("no_access");
 				}
 				if (false === $att_exists){
 					$valid_icon === true ? $table_at->addAttachment( $data['allergen_icon'] ) : $valid_icon = null;
@@ -194,14 +196,16 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				$multiple_attachment !== "no_access" ? $table_al_at->updateallergyAttachment( $data['allergen_icon']['name'], $data["allergen_name"] ) : $multiple_attachment = "no_access";
 		}
 
-		$allergen_icon = $table_al_at->find_allergy($data['allergen_name']);
-		$mlpleoldatt_exists = $table_al_at->checkMultipleAttachmentsExists($allergen_icon);
+		$add_att_exists = $table_at->checkAttachmentExists($data['allergen_icon']['name']);
+		$add_al_exists = $table_al->checkAllergenExists( $data['allergen_name'] );
 
 	//those if-statements create the connection between the allergen and the attachment
 	if (empty($data['allergen_name_hidden']) && true !== $al_at_exists ) {
-		if (true === $al_exists && true === $att_exists){
+		if (true === $add_al_exists && true === $add_att_exists){
 			$table_al_at->addallergyAttachment( $data );
 		}
+	}else{
+		$mlpleoldatt_exists = $table_al_at->checkMultipleAttachmentsExists($allergen_icon);
 	}
 
 		//access if-statements
@@ -215,8 +219,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		}elseif($multiple_attachment !== "no_access"){
 			if (false === $mlpleoldatt_exists){		
 				$table_at->deleteAttachment($allergen_icon);
-			}else{
-				error_log("nope");
 			}
 		}
 	
