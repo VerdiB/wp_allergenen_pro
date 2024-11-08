@@ -231,7 +231,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		if (in_array($page, $ShowOnPage, true)) {
 			echo $text;
 		}else{
-			wp_redirect( admin_url( 'admin.php?page=allergens-dietary-show-allergens' ) );
+			//wp_redirect( admin_url( 'admin.php?page=allergens-dietary-show-allergens' ) );
 		}
 
 		echo '</div><br>';
