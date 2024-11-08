@@ -224,7 +224,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		return $is_default == 1 ? true : false;
 	}
 
-	public static function delete_allergen_by_name(string $allergy_name)
+	public static function delete_allergen_by_name(string $allergy_name, int $return_page)
 	{
 		try {
 			global $wpdb;
@@ -287,15 +287,13 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 					throw new Exception(__("Error deleting allergen: '" . $allergy_name . "'"));
 				}
 			}
-			header("Location: $url" . "?page=allergens-dietary-show-allergens");
-
 		} catch (Exception $e) {
 			if (!$error_displayed) {
 				echo "Error: " . $e->getMessage();
 			}
-			header("Location: $url" . "?page=allergens-dietary-show-allergens");
 
 		}
+		header("Location: $url" . "?page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : ''));
 
 	}
 
@@ -362,7 +360,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		}
 	}
 
-	public static function singleActivationUpdate()
+	public static function singleActivationUpdate(int $return_page)
 	{
 
 		global $wpdb;
@@ -405,7 +403,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 			if (!empty($_GET)) {
 				$url = strtok($_SERVER["REQUEST_URI"], '?');
 
-				header("Location: $url" . "?page=allergens-dietary-show-allergens");
+				header("Location: $url" . "?page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : ''));
 			}
 		}
 	}

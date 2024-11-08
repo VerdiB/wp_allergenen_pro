@@ -26,6 +26,8 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 {
 
     private static $_instance = [];
+    private static int $_page = 0;
+
     private function __construct()
     {
         parent::__construct([
@@ -33,6 +35,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             'plural' => 'items',
             'ajax' => false,
         ]);
+        self::$_page = isset($_REQUEST['paged']) ? $_REQUEST['paged'] : (self::$_page === null ? 0 : self::$_page);
     }
 
     private $table_action_options = ['change_status', 'delete'];
@@ -127,7 +130,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         }
 
         return $is_default ? '<a style="color: grey;">' . ucfirst(str_replace('_', ' ', $action)) . '</a>' : sprintf(
-            '<a href="?page=%s&item=%s&action=%s&_wpnonce=%s">%s</a>',
+            '<a href="?page=%s' . (self::$_page > 0 ? '&paged=' . strval(self::$_page) : '') . '&item=%s&action=%s&_wpnonce=%s">%s</a>',
             esc_attr($_REQUEST['page']),
             esc_attr($item['allergy_name']),
             esc_attr($action),
@@ -273,10 +276,10 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             // Perform action based on case
             switch ($action) {
                 case 'change_status':
-                    Allergens_Dietary_Ictoria_Allergen_Queries::singleActivationUpdate();
+                    Allergens_Dietary_Ictoria_Allergen_Queries::singleActivationUpdate(self::$_page);
                     break;
                 case 'delete':
-                    Allergens_Dietary_Ictoria_Allergen_Queries::delete_allergen_by_name($item);
+                    Allergens_Dietary_Ictoria_Allergen_Queries::delete_allergen_by_name($item, self::$_page);
                     break;
             }
         }
@@ -330,7 +333,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         $acceptable_values = array(10, 20, 50, 100);
         if ('top' === $which) {
             $this->screen->render_screen_reader_content('heading_pagination');
-?>
+            ?>
             <span class="item-select-box" style="float: right; margin-right: 10px;">
                 <label class="screen-reader-text" for="<?php echo esc_attr($input_id); ?>"><?php echo $text; ?>:</label>
                 <span><?php echo $label; ?></span>
@@ -338,32 +341,33 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
                     <?php
                     foreach ($acceptable_values as $value) {
                         if ($value == 10) {
-                    ?>
-                            <option value="<?php echo $value ?>" <?php echo $this->get_items_per_pages() == 10 ? 'selected' : (in_array($this->get_items_per_pages(), $acceptable_values) ? '' : 'selected'); ?>><?php echo $value ?></option>
-                        <?php
+                            ?>
+                            <option value="<?php echo $value ?>" <?php echo $this->get_items_per_pages() == 10 ? 'selected' : (in_array($this->get_items_per_pages(), $acceptable_values) ? '' : 'selected'); ?>><?php echo $value ?>
+                            </option>
+                            <?php
                         } else {
-                        ?>
+                            ?>
                             <option value="<?php echo $value ?>" <?php echo $this->get_items_per_pages() == $value ? 'selected' : '' ?>>
                                 <?php echo $value ?>
                             </option>
-                    <?php
+                            <?php
                         }
                     }
                     ?>
                 </select>
                 <?php submit_button($text, '', '', false, array('id' => 'items-per-page-submit')); ?>
             </span>
-        <?php
+            <?php
         }
         if ('bottom' === $which) {
-        ?>
+            ?>
             <span class="item-select-box" style="float: right; margin-right: 10px;">
                 <label class="screen-reader-text" for="<?php echo esc_attr($input_id); ?>"><?php echo $text; ?>:</label>
                 <span><?php echo $label; ?></span>
                 <span
                     class="tablenav-paging-text"><?php echo !empty($this->get_items_per_pages()) ? $this->get_items_per_pages() : null; ?></span>
             </span>
-        <?php
+            <?php
         }
     }
 
@@ -401,7 +405,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
                 value="<?php echo isset($this->search_query) ? $this->search_query : '' ?>" />
             <?php submit_button($text, '', '', false, array('id' => 'search-submit')); ?>
         </span>
-    <?php
+        <?php
     }
 
     public static function getInstance()
@@ -419,14 +423,14 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         if ('top' === $which) {
             wp_nonce_field('bulk-' . $this->_args['plural']);
         }
-    ?>
+        ?>
         <div class="tablenav <?php echo esc_attr($which); ?>">
 
             <?php if ($this->has_items()): ?>
                 <div class="alignleft actions bulkactions">
                     <?php $this->bulk_actions($which); ?>
                 </div>
-            <?php
+                <?php
             endif;
             $this->extra_tablenav($which);
             $this->pagination($which);
@@ -435,7 +439,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
             <br class="clear" />
         </div>
-<?php
+        <?php
     }
 
 
