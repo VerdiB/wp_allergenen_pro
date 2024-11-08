@@ -57,10 +57,7 @@ class Allergens_Dietary_Ictoria_Plugin_Menu
 			__('License key', 'allergens-dietary-ictoria'),
 			'manage_options',
 			'allergens-dietary-license',
-			array(
-				$this,
-				'licenseform',
-			)
+			array($this, 'licenseForm')
 		);
 
 		add_submenu_page(
@@ -69,11 +66,9 @@ class Allergens_Dietary_Ictoria_Plugin_Menu
 			__('Add allergen', 'allergens-dietary-ictoria'),
 			'manage_options',
 			'allergens-dietary-add-allergen',
-			array(
-				$this,
-				'addallergens',
-			)
+			array($this, 'addallergens')
 		);
+
 
 		add_submenu_page(
 			'allergens-dietary-options',
@@ -93,10 +88,7 @@ class Allergens_Dietary_Ictoria_Plugin_Menu
 			__('Update allergen', 'allergens-dietary-ictoria'),
 			'manage_options',
 			'allergens-dietary-update-allergen',
-			array(
-				$this,
-				'updateallergens',
-			)
+			array($this, 'updateallergens')
 		);
 		add_submenu_page(
 			'allergens-dietary-options',
@@ -144,8 +136,9 @@ class Allergens_Dietary_Ictoria_Plugin_Menu
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
+
 		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
-		Allergens_Dietary_Ictoria_Form::setFormType(FormType::ALLERGENS);
+		Allergens_Dietary_Ictoria_Form::setFormType(FormType::UPDATE);
 		Allergens_Dietary_Ictoria_Form::getInstance()->showForm();
 	}
 

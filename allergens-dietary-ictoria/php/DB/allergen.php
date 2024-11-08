@@ -206,16 +206,20 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 		$table_allergy = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
-		if (empty($allergy_name)) {
-			throw new Exception('No correct allergy given.');
-		}
+		try {
+			if (empty($allergy_name)) {
+				throw new Exception('No correct allergy given.');
+			}
 
-		$is_default = $wpdb->get_var($wpdb->prepare(
-			"SELECT is_default_option 
+			$is_default = $wpdb->get_var($wpdb->prepare(
+				"SELECT is_default_option 
 				 FROM $table_allergy 
 				 WHERE allergy_name = %s",
-			$allergy_name
-		));
+				$allergy_name
+			));
+		} catch (Exception $e) {
+			echo 'Error: ' . $e->getMessage();
+		}
 
 		return $is_default == 1 ? true : false;
 	}
