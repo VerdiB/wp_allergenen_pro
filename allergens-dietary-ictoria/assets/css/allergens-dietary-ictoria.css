@@ -172,7 +172,6 @@
 
 label.label-quick-edit input[type="file"] {
   position: absolute;
-  top: -1000px;
 }
 .label-quick-edit {
   border: 1px solid #8c8f94;

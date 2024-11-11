@@ -123,10 +123,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 	public function submit( array $data ) {
 		
-		$text = "Successfully added new Allergen/Diet";
 		$data = $this->sanitize( $data );
-		$ShowOnPage = ["allergens-dietary-add-allergen"];
-		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 		$file_info = wp_check_filetype( $data['allergen_icon']['name'] );
 		$valid_icon = in_array($file_info["ext"], self::MIME_TYPES) ? true : false;
 
@@ -179,10 +176,10 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				if (false === $al_exists){
 					$table_al->addAllergens( $data );
 					echo '<div style="background-color: limegreen; max-width: 270px;">';
-					$text = __("Successfully added new Allergen/Diet", 'allergens-dietary-ictoria');
+					echo __("Successfully added new Allergen/Diet", 'allergens-dietary-ictoria') . '</div><br>';
 				} else {
 					echo '<div style="background-color: orange; max-width: 270px;">';
-					$text = __("Allergen already exists", 'allergens-dietary-ictoria');
+					echo __("Allergen already exists", 'allergens-dietary-ictoria') . '</div><br>';
 				}
 		} else {
 				$table_al->updateAllergens( $data );
@@ -225,16 +222,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			if (false === $mlpleoldatt_exists){		
 				$table_at->deleteAttachment($allergen_icon);
 			}
-		}
-	
-	//refresh for update or a notification for add allergen
-		if (in_array($page, $ShowOnPage, true)) {
-			echo $text;
-		}else{
-			//wp_redirect( admin_url( 'admin.php?page=allergens-dietary-show-allergens' ) );
-		}
-		if ( empty( $data['allergen_name_hidden'] ) ) {
-			echo '</div><br>';
 		}
 }
 
