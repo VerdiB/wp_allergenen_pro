@@ -133,27 +133,21 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 * @since 1.0.0
 	 * @date 11-9-2024
 	 */
-
-
-
 	public function submit(array $data)
 	{
-
 		$data = $this->sanitize($data);
 		$file_info = wp_check_filetype($data['allergen_icon']['name']);
-		$valid_icon = in_array($file_info["ext"], $this->MIME_TYPES) ? true : false;
-
+		$valid_icon = in_array("image/" . $file_info['ext'], $this->MIME_TYPES) ? true : false;
 		$table_al_at = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
 		$table_at = Allergens_Dietary_Ictoria_Attachment_Queries::getInstance();
 		$table_al = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
 		$att_exists = $table_at->checkAttachmentExists($data['allergen_icon']['name']);
 		$al_exists = $table_al->checkAllergenExists($data['allergen_name']);
 		$al_at_exists = $table_al_at->checkAllergyAttachmentExists($data['allergen_name_hidden']);
-
+		
 		if (!empty($data['allergen_name_hidden'])) {
 			$mlpleatt_exists = $table_al_at->checkMultipleAttachmentsExists($data['allergen_name']);
 		}
-
 		if (!empty($data['allergen_name_hidden'])) {
 			if ($data['allergen_name_hidden'] !== $data['allergen_name']) {
 				if (false !== $al_exists) {
@@ -161,7 +155,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				}
 			}
 		}
-
 		if (false === $att_exists) {
 			if (empty($data['allergen_name_hidden'])) {
 				$file_info = wp_check_filetype($data['allergen_icon']['name']);
@@ -175,11 +168,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 			}
 		}
-
 		if (!empty($data['allergen_name_hidden'])) {
 			$allergen_icon = $table_al_at->find_allergy($data['allergen_name_hidden']);
 		}
-
 		$multiple_attachment = "no_access";
 
 		//update for update allergen and add for add allergen
@@ -204,9 +195,13 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				$multiple_attachment = "no_access";
 			}
 			if (false === $att_exists) {
-				$valid_icon === true ? $table_at->addAttachment($data['allergen_icon']) : $valid_icon = null;
+				if ($valid_icon === true){
+					$table_at->addAttachment($data['allergen_icon']);
+				}else{
+					return;
+				}
 			}
-			$multiple_attachment !== "no_access" ? $table_al_at->updateAllergyAttachment($data) : $multiple_attachment = "no_access";
+		$multiple_attachment !== "no_access" ? $table_al_at->updateAllergyAttachment($data['allergen_icon']['name'], $data['allergen_name']) : $multiple_attachment = "no_access";
 		}
 
 		$add_att_exists = $table_at->checkAttachmentExists($data['allergen_icon']['name']);
