@@ -135,7 +135,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 */
 	public function submit(array $data)
 	{
-		error_log("submit");
 		$data = $this->sanitize($data);
 		$file_info = wp_check_filetype($data['allergen_icon']['name']);
 		$valid_icon = in_array("image/" . $file_info['ext'], $this->MIME_TYPES) ? true : false;
@@ -157,7 +156,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			}
 		}
 		if (false === $att_exists) {
-			error_log("false");
 			if (empty($data['allergen_name_hidden'])) {
 				$file_info = wp_check_filetype($data['allergen_icon']['name']);
 
@@ -168,7 +166,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 			}
 		}
-		error_log("submit2");
 		if (!empty($data['allergen_name_hidden'])) {
 			$allergen_icon = $table_al_at->find_allergy($data['allergen_name_hidden']);
 		}
