@@ -24,7 +24,15 @@ package "php"{
         +filter_query(query : String) : void
     }
 
-    class Allergens_Dietary_Ictoria_Functions {
+    class Allergens_Dietary_Ictoria_Activator{
+        -{static} counter: int
+        -{static} url: string
+        -{static} allergens_options: array
+        -{static} allergy_icon_options: array
+        -{static} icon_options: array
+        +{static} activate() : void
+        + __construct() : void
+        -{static} create_tables() : void
         +{static} load_textdomain() : void
         +{static} get_settings() : array
         +{static} get_options() : array
@@ -33,6 +41,7 @@ package "php"{
         +{static} enqueue_admin_styles() : void
         +{static} load_admin_js() : void
         +{static} enqueue_admin_scripts() : void
+<<<<<<< HEAD
         +{static} error_notice(level:string, message:string) : void
         + upload_language_file() : void
     }
@@ -46,6 +55,9 @@ package "php"{
         +{static} activate() : void
         + __construct() : void
         -{static} create_tables() : void
+=======
+        + upload_language_file() : void
+>>>>>>> dev
         +{static} initialize() : void
         +{static} allergens_options() : array
         +{static} allergy_icon_options() : array
@@ -55,10 +67,16 @@ package "php"{
 
     class Allergens_Dietary_Ictoria_Product_Settings{
         -{static} _instance : Allergens_Dietary_Ictoria_Product_Settings
+<<<<<<< HEAD
+=======
+        - _allergens :array
+        - _allergy_attachments : array  
+>>>>>>> dev
         + __construct() : void
         + data_tab(product_data_tabs:array) : array
         + data_fields() : void
         + save_product_options(post_id:int) : void
+        - replace_space_chars(allergens:string) : string
     }
 
     class Allergens_Dietary_Ictoria_Products{
@@ -108,11 +126,23 @@ package "php"{
         }
     
     }
+<<<<<<< HEAD
+=======
+    package "errors"{
+
+    class Allergens_Dietary_Ictoria_Error_notice{
+       +{static} error_notice(level:string, message:string) : void
+    }
+
+    }
+
+>>>>>>> dev
     package "forms"{
 
         enum FormType{
             ALLERGENS
             LICENSE
+            UPDATE
 
             + match(formType:FormType) : boolean
         }
@@ -136,6 +166,11 @@ package "php"{
 
         class Allergens_Dietary_Ictoria_Allergens_Form{
             - _allergen : array
+<<<<<<< HEAD
+=======
+            - MIME_TYPES : array
+            - MIME_NAMES : array
+>>>>>>> dev
             + __construct(): void
             + showForm(allergenName:String) : void
             + submit(data:array) : void
@@ -149,6 +184,18 @@ package "php"{
             + submit(data:array) : void
             + sanitize(data:array) : array
         }
+<<<<<<< HEAD
+=======
+        class Allergens_Dietary_Ictoria_Update_Allergen_Form{
+            - MIME_TYPES : array
+            - _allergens: array
+            + __construct() : void
+            + showForm(allergenName:string) : void
+            + submit(data:array) : void
+            + sanitize(data:array) : array
+            - replace_spaces(allergen:string) : string
+        }
+>>>>>>> dev
     }
 
     package "DB" {
@@ -158,21 +205,36 @@ package "php"{
             - __construct() : void
             + addAllergens(data:array) : boolean
             + checkAllergenExists(allergenName:string) : boolean
+            + getAllAllergen() : array
             + updateAllergens(data:array) : void
             + getAllergen(allergenName:string) : array
             + {static} getItems() : array
             + {static} getColumns() : array
             + {static} includeItems() : void
+<<<<<<< HEAD
+=======
+            + {static} is_default_allergen(allergy_name:string) : boolean
+            + {static} delete_allergen_by_name(allergy_name:string) : void
+            + {static} activationUpdate(data:array) : void
+            + {static} singleActivationUpdate() : void
+
+>>>>>>> dev
         }
 
         class Allergens_Dietary_Ictoria_Attachment_Queries{
             -{static} _instance : Allergens_Dietary_Ictoria_Attachment_Queries
+            - path : string
+            - _url : string
             +{static} getInstance() : Allergens_Dietary_Ictoria_Attachment_Queries
             - __construct() : void
             + addAttachment(data:array) : boolean
             + checkAttachmentExists(attachmentName:string) : boolean
             + updateAttachment(data:array, oldName:string) : void
             - placeAttachment(data:array) : void
+<<<<<<< HEAD
+=======
+            - removeAttachment(attachmentName: string) : void
+>>>>>>> dev
             + {static} attachment_insert(result:array) : void
         }
 
@@ -181,10 +243,32 @@ package "php"{
             +{static} getInstance() : Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
             - __construct() : void
             + addAllergyAttachment(data:array) : boolean
+            + getAllergyAttachment(allergyAttachmentName:string, isForm:boolean) : array
+            + getAllAllergyAttachmments(skip_default:boolean) : array
             + checkAllergyAttachmentExists(allergyName:string) : boolean
             + updateAllergyAttachment(data:array) : void
+<<<<<<< HEAD
             + getAllergyAttachment(allergyAttachmentName:string) : array
             + {static} allergy_connection(result:array) : array
+=======
+            + {static} allergy_connection(result:array) : void
+        }
+        class Allergens_Dietary_Ictoria_Allergy_Product_Queries{
+            -{static} _instance : Allergens_Dietary_Ictoria_Allergy_Product_Queries
+            +{static} getInstance() : Allergens_Dietary_Ictoria_Allergy_Product_Queries
+            - __construct() : void
+            + addAllergyProduct(product_id:int, allergen:string) : boolean
+            + getAllergyProduct(product_id:int, allergen:string=null) : array
+            + deleteAllergyProduct(product_id:int, allergen:String) : boolean
+        }
+        class Allergens_Dietary_Ictoria_Allergy_Product_Queries{
+            -{static} _instance : Allergens_Dietary_Ictoria_Allergy_Product_Queries
+            +{static} getInstance() : Allergens_Dietary_Ictoria_Allergy_Product_Queries
+            - __construct() : void
+            + addAllergyProduct(product_id:int, allergen:string) : boolean
+            + getAllergyProduct(product_id:int, allergen:string=null) : array
+            + deleteAllergyProduct(product_id:int, allergen:String) : boolean
+>>>>>>> dev
         }
     }
     package "lists" {
@@ -193,7 +277,15 @@ package "php"{
             + {static} getInstance() : Allergens_Dietary_Ictoria_Info
             + {static} getStyles() : void
         }
+<<<<<<< HEAD
     }
+=======
+        enum Mime_Types{
+            + get_mime_types() : array
+        }
+    }
+
+>>>>>>> dev
     package "tabs" {
         class Allergens_Dietary_Ictoria_Tabs{
             + showtabs() : void
@@ -202,9 +294,13 @@ package "php"{
             +{static} getStyles() : void
 
         }
+<<<<<<< HEAD
     }
 
     
+=======
+    }  
+>>>>>>> dev
 }
 
 package Allergens_Dietary_Ictoria{
@@ -227,6 +323,8 @@ Allergens_Dietary_Ictoria +-u- php
 Allergens_Dietary_Ictoria_Filter --> Allergens_Dietary_Ictoria_Functions : uses
 Allergens_Dietary_Ictoria_Wc_Integration_Settings -r-> Allergens_Dietary_Ictoria_Functions : uses
 Allergens_Dietary_Ictoria_Product_Settings -l-> Allergens_Dietary_Ictoria_Functions : uses
+Allergens_Dietary_Ictoria_Product_Settings .l.> Allergens_Dietary_Ictoria_Allergy_Product_Queries : uses
+Allergens_Dietary_Ictoria_Products ..> Allergens_Dietary_Ictoria_Allergy_Product_Queries
 
 
 ' forms relations
