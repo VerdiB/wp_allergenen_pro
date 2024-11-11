@@ -29,7 +29,7 @@ class Allergens_Dietary_Ictoria_Activator
 	}
 
 	public function __construct()
-	{ 		
+	{
 		self::$_url = get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/';
 
 		self::$_ALLERGENS_OPTIONS = array(
@@ -265,6 +265,10 @@ class Allergens_Dietary_Ictoria_Activator
 			'pregnant' => array(
 				'path' => self::$_url . 'dietary_pregnant.png',
 				'name' => 'dietary_pregnant.png'
+			),
+			'no_icon_selected' => array(
+				'path' => self::$_url . 'no_icon_selected.png',
+				'name' => 'no_icon_selected.png'
 			),
 		);
 		self::$_ICON_OPTIONS = array(
