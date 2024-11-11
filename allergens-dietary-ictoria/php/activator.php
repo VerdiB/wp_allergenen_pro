@@ -147,35 +147,35 @@ class Allergens_Dietary_Ictoria_Activator
 			'alcohol' => array(
 				'category' => 'allergen',
 				'title' => 'Alcohol',
-				'description' => 'Lupin is a legume that is sometimes used in flour or baked goods. People with lupin allergies may experience symptoms ranging from mild digestive discomfort to severe anaphylactic reactions.',
+				'description' => 'An allergy where the body reacts to alcohol, causing symptoms like rash, swelling, and nausea. People with this allergy should avoid alcohol.',
 				'default' => 'TRUE',
 
 			),
 			'vegetarian' => array(
 				'category' => 'dietary',
 				'title' => 'Vegetarian',
-				'description' => 'Een dieet dat vlees en vis uitsluit, maar vaak wel zuivelproducten en eieren toelaat, afhankelijk van het type vegetariër.',
+				'description' => 'A diet that excludes meat and fish but often allows dairy products and eggs, depending on the type of vegetarian.',
 				'default' => 'TRUE',
 
 			),
 			'vegan' => array(
 				'category' => 'dietary',
 				'title' => 'Vegan',
-				'description' => 'Een dieet waarbij alle dierlijke producten worden vermeden, inclusief vlees, zuivel, eieren, honing en alle producten van dierlijke oorsprong.',
+				'description' => 'A diet that avoids all animal products, including meat, dairy, eggs, honey, and all products of animal origin.',
 				'default' => 'TRUE',
 
 			),
 			'halal' => array(
 				'category' => 'dietary',
 				'title' => 'Halal',
-				'description' => 'Voedsel dat volgens islamitische voorschriften is bereid, waarbij bijvoorbeeld varkensvlees en alcohol verboden zijn, en dieren ritueel worden geslacht.',
+				'description' => 'Food prepared according to Islamic guidelines, where, for example, pork and alcohol are forbidden, and animals are ritually slaughtered.',
 				'default' => 'TRUE',
 
 			),
 			'pregnant' => array(
 				'category' => 'dietary',
 				'title' => 'Risk for pregnant women',
-				'description' => 'Bepaalde voedingsmiddelen, zoals rauw vlees, vis, ongepasteuriseerde zuivel, en cafeïne, kunnen schadelijk zijn voor de gezondheid van zwangere vrouwen en hun baby.',
+				'description' => 'Certain foods, such as raw meat, fish, unpasteurized dairy, and caffeine, can be harmful to the health of pregnant women and their baby.',
 				'default' => 'TRUE',
 
 			),
