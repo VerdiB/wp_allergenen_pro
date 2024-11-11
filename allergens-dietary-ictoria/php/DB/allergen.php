@@ -89,6 +89,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 
 		$sql = "SELECT allergy_name, is_allergy 
 		FROM $table_name
+		WHERE is_active = 1
 		ORDER BY  is_allergy DESC, allergy_name ASC";
 
 		$result = $wpdb->get_results($sql, ARRAY_A);

@@ -40,7 +40,7 @@ class Allergens_Dietary_Ictoria_Filter {
 			// Added separate hidden input for the filter-action property so it doesn't have to call get_options again
 			// also added the filter-extra part
 			$html .= '<div>
-				<input type="checkbox" class="checkbox" name="allergen_filter_options[' . $allergen['allergy_name'] . ']" value="'.esc_attr($allergen['allergy_name']).'" ' . $checked . '/>
+				<input type="checkbox" class="checkbox" name="allergen_filter_options[' . $allergen['allergy_name'] . ']" value="'.esc_attr($allergen['allergy_name']) .','. esc_attr($allergen['is_allergy']).'" ' . $checked . '/>
 				<input type="hidden" name="allergen_filter_action[' . $allergen['allergy_name'] . ']" value="'.((int)$allergen['is_allergy'] === 0 ?'include':'exclude').'"/>
 				<span>' . __(((int) $allergen['is_allergy'] === 0 ? '' : 'No ' ) . $allergen['allergy_name'], 'allergens-dietary-ictoria') . '</span>
 			</div>';
@@ -62,9 +62,10 @@ class Allergens_Dietary_Ictoria_Filter {
 		if ( $query->is_main_query() && is_shop() && isset( $_POST['allergen_filter'] ) ) {			
 			$selected_options = isset( $_POST['allergen_filter_options'] ) ? $_POST['allergen_filter_options'] : array();
 			$filter_actions   = isset( $_POST['allergen_filter_action'] ) ? $_POST['allergen_filter_action'] : array();
-
+			$selected_options_sorted = array();
 			// Check if there are any options selected
 			if ( ! empty( $selected_options ) ) {
+
 				$meta_query = array();
 
 				// Loop through each selected option and build the meta query
@@ -73,22 +74,42 @@ class Allergens_Dietary_Ictoria_Filter {
 					if (!isset($filter_actions[$key])) {
 						continue;
 					}
+
+					$selected_options_sorted[] = $key;					
 	
-					$compare = $filter_actions[$key] === 'exclude' ? 'NOT LIKE' : 'LIKE';
+					// $compare = $filter_actions[$key] === 'exclude' ? 'NOT LIKE' : 'LIKE';
 	
-					$meta_query[] = array(
-						'key'     => 'allergens_dietary_ictoria', // Key of the custom field
-						'value'   => $key, // The value to compare (key is the option name)
-						'compare' => $compare,
+					// $meta_query[] = array(
+					// 	'key'     => 'allergens_dietary_ictoria', // Key of the custom field
+					// 	'value'   => $key, // The value to compare (key is the option name)
+					// 	'compare' => $compare,
 						
-					);
+					// );
 				}
+				// arsort($selected_options_sorted["is_allergy"]);
 
 				// If there are multiple conditions, set the relationship to AND
 				if ( ! empty( $meta_query ) ) {
 					$meta_query['relation'] = 'AND';
 					$query->set( 'meta_query', $meta_query );
 				}
+
+				echo '<pre>';	
+				echo 'selected_options: <br/>';
+				print_r($selected_options);
+
+				echo'filter_actions: <br/>';
+				print_r($filter_actions);
+
+				echo 'selected_options_sorted: <br/>';
+				print_r($selected_options_sorted);
+
+				// echo'query: <br/>';
+				// print_r($query);
+
+				// echo 'meta_query: <br/>';
+				// print_r($meta_query);
+				echo '</pre>';
 			}
 		}
 	}
