@@ -17,8 +17,8 @@ if (!class_exists('Allergens_Dietary_Ictoria_Attachment_Queries')) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/attachment.php';
 }
 
-if (!class_exists('Allergens_Dietary_Ictoria_Allergy_Attachment_Queries')) {
-	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergy_attachment.php';
+if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 }
 
 /**
@@ -37,6 +37,9 @@ if (!class_exists('Allergens_Dietary_Ictoria_Allergy_Attachment_Queries')) {
 if (!class_exists('Allergens_Dietary_Ictoria_Tabs')) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 }
+if (!enum_exists('Mime_Types')) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/lists/mime_types.php';
+}
 
 /********************************************************************/
 /********************************************************************/
@@ -54,6 +57,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		$this->MIME_TYPES = Mime_Types::get_mime_types();
 		$this->MIME_NAMES = array_map(fn($case) => $case->name, Mime_Types::cases());
 	}
+
 
 	/**
 	 * @param string|null $allergenName
@@ -137,11 +141,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		$data = $this->sanitize($data);
 		$file_info = wp_check_filetype($data['allergen_icon']['name']);
-		$valid_icon = in_array($file_info["ext"], self::$MIME_TYPES) ? true : false;
-
-		if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
-			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
-		}
+		$valid_icon = in_array($file_info["ext"], $this->MIME_TYPES) ? true : false;
 
 		$table_al_at = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
 		$table_at = Allergens_Dietary_Ictoria_Attachment_Queries::getInstance();
@@ -153,7 +153,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		if (!empty($data['allergen_name_hidden'])) {
 			$mlpleatt_exists = $table_al_at->checkMultipleAttachmentsExists($data['allergen_name']);
 		}
-
 
 		if (!empty($data['allergen_name_hidden'])) {
 			if ($data['allergen_name_hidden'] !== $data['allergen_name']) {
@@ -168,7 +167,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				$file_info = wp_check_filetype($data['allergen_icon']['name']);
 
 				//Adding attachment for add allergen
-				if (false === in_array($file_info["ext"], self::MIME_TYPES)) {
+				if (false === in_array($file_info["ext"], $this->MIME_TYPES)) {
 					return;
 				} else {
 					$table_at->addAttachment($data['allergen_icon']);
@@ -207,7 +206,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			if (false === $att_exists) {
 				$valid_icon === true ? $table_at->addAttachment($data['allergen_icon']) : $valid_icon = null;
 			}
-			$multiple_attachment !== "no_access" ? $table_al_at->updateallergyAttachment($data['allergen_icon']['name'], $data["allergen_name"]) : $multiple_attachment = "no_access";
+			$multiple_attachment !== "no_access" ? $table_al_at->updateAllergyAttachment($data) : $multiple_attachment = "no_access";
 		}
 
 		$add_att_exists = $table_at->checkAttachmentExists($data['allergen_icon']['name']);
