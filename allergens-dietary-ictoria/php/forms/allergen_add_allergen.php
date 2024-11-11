@@ -135,6 +135,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 */
 	public function submit(array $data)
 	{
+		error_log("submit");
 		$data = $this->sanitize($data);
 		$file_info = wp_check_filetype($data['allergen_icon']['name']);
 		$valid_icon = in_array("image/" . $file_info['ext'], $this->MIME_TYPES) ? true : false;
@@ -156,18 +157,18 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			}
 		}
 		if (false === $att_exists) {
+			error_log("false");
 			if (empty($data['allergen_name_hidden'])) {
 				$file_info = wp_check_filetype($data['allergen_icon']['name']);
 
 				//Adding attachment for add allergen
-				if (false === in_array($file_info["ext"], $this->MIME_TYPES)) {
-					return;
-				} else {
+				if ($valid_icon == true) {
 					$table_at->addAttachment($data['allergen_icon']);
 				}
 
 			}
 		}
+		error_log("submit2");
 		if (!empty($data['allergen_name_hidden'])) {
 			$allergen_icon = $table_al_at->find_allergy($data['allergen_name_hidden']);
 		}
@@ -175,6 +176,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		//update for update allergen and add for add allergen
 		if (empty($data['allergen_name_hidden'])) {
+			error_log("submit3");
 			if (false === $al_exists) {
 				$table_al->addAllergens($data);
 				echo '<div style="background-color: limegreen; max-width: 270px;">';
@@ -182,6 +184,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			} else {
 				echo '<div style="background-color: orange; max-width: 270px;">';
 				echo __("Allergen already exists", 'allergens-dietary-ictoria') . '</div><br>';
+				return;
 			}
 		} else {
 			$table_al->updateAllergens($data);
