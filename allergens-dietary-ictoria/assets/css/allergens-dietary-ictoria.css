@@ -171,8 +171,7 @@
 }
 
 label.label-quick-edit input[type="file"] {
-  position: absolute;
-  top: -1000px;
+  display: none;
 }
 .label-quick-edit {
   border: 1px solid #8c8f94;
@@ -183,7 +182,6 @@ label.label-quick-edit input[type="file"] {
   width: max-content;
   height: max-content;
   background: #ffffff;
-  /* display: inline-block; */
 }
 .label-quick-edit:hover {
   background: #e4e4e4;
