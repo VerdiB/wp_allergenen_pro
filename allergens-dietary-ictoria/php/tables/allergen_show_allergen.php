@@ -262,12 +262,17 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             $item = sanitize_text_field($_GET['item']);
             $action = sanitize_text_field($_GET['action']);
             $nonce = filter_input(INPUT_GET, '_wpnonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $melding = "succesvol  verwijdert";
 
             // Verify nonce based on action
             if ($action === 'change_status' && !wp_verify_nonce($nonce, 'allergens_change_status')) {
                 wp_die('Security check failed for changing status!');
             } elseif ($action === 'delete' && !wp_verify_nonce($nonce, 'allergens_delete')) {
                 wp_die('Security check failed for deletion!');
+            }else{
+                if ($_POST['action'] == 'delete'){
+                    echo $melding;
+                }
             }
 
             // Perform action based on case
