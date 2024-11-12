@@ -270,8 +270,9 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             } elseif ($action === 'delete' && !wp_verify_nonce($nonce, 'allergens_delete')) {
                 wp_die('Security check failed for deletion!');
             }else{
-                if ($_POST['action'] == 'delete'){
+                if ($action == 'delete'){
                     echo $melding;
+                    error_log("dit wordt uitgevoerd");
                 }
             }
 
