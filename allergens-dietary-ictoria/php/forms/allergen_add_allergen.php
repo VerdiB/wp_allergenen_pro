@@ -96,9 +96,10 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '<label for="allergen_description">' . __('Allergen description', 'allergens-dietary-ictoria') . '</label>';
 			$html .= '<input type="text" class="update_" name="allergen_description" id="allergen_description" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '" disabled/>';
 			$html .= '<div style="display: flex; align-items: center; gap: 15px;">';
-			$html .= '<img style="height: 75px;" id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
+			$html .= '<img class="update_" style="height: 75px;" disabled id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
 			$html .= '<label class="label-quick-edit">';
 			$html .= '<input type="file" class="update_" name="allergen_icon" id="allergen_icon_file_input" disabled>';
+			// $html .= '<input type="hidden" class="update_" name="allergen_icon_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . 'disabled>';
 			$html .= '<span>Set image</span>';
 			$html .= '</label>';
 			$html .= '</div>';
@@ -137,14 +138,28 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	{
 		$data = $this->sanitize($data);
 		$file_info = wp_check_filetype($data['allergen_icon']['name']);
-		$valid_icon = in_array("image/" . $file_info['ext'], $this->MIME_TYPES) ? true : false;
+		$valid_icon = in_array($file_info['type'], $this->MIME_TYPES) ? true : false;
 		$table_al_at = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
 		$table_at = Allergens_Dietary_Ictoria_Attachment_Queries::getInstance();
 		$table_al = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
 		$att_exists = $table_at->checkAttachmentExists($data['allergen_icon']['name']);
 		$al_exists = $table_al->checkAllergenExists($data['allergen_name']);
 		$al_at_exists = $table_al_at->checkAllergyAttachmentExists($data['allergen_name_hidden']);
-		
+		$no_icon_selected = false;
+
+		if (empty($data['allergen_icon']['name']) && empty($data['allergen_icon_hidden']) ) {
+			$imagePath = get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/no_icon_selected.png';
+			$imageName = sanitize_file_name(basename($imagePath));
+			$data['allergen_icon'] = [
+				'name' => $imageName,
+				'tmp_name' => $imagePath,
+				'type' => 'image/png',
+			];
+			$no_icon_selected = true;
+		}else{
+
+		}
+
 		if (!empty($data['allergen_name_hidden'])) {
 			$mlpleatt_exists = $table_al_at->checkMultipleAttachmentsExists($data['allergen_name']);
 		}
@@ -160,12 +175,10 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				echo '<div style="background-color: red; max-width: 270px;">';
 				echo __("Invalid allergen name", 'allergens-dietary-ictoria') . '</div><br>';
 			}
-			return; 
+			return;
 		}
 		if (false === $att_exists) {
 			if (empty($data['allergen_name_hidden'])) {
-				$file_info = wp_check_filetype($data['allergen_icon']['name']);
-
 				//Adding attachment for add allergen
 				if ($valid_icon == true) {
 					$table_at->addAttachment($data['allergen_icon']);
@@ -201,13 +214,13 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				$multiple_attachment = "no_access";
 			}
 			if (false === $att_exists) {
-				if ($valid_icon === true){
+				if ($valid_icon === true) {
 					$table_at->addAttachment($data['allergen_icon']);
-				}else{
+				} else {
 					return;
 				}
 			}
-			if (!empty($data['allergen_icon']['name'])){
+			if (!empty($data['allergen_icon']['name'])) {
 				$multiple_attachment !== "no_access" ? $table_al_at->updateAllergyAttachment($data['allergen_icon']['name'], $data['allergen_name']) : $multiple_attachment = "no_access";
 			}
 		}
