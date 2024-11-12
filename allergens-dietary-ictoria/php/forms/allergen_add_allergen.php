@@ -242,9 +242,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	{
 		$data['allergen_name'] = sanitize_text_field(wp_unslash($data['allergen_name']));
 		$data['allergen_description'] = sanitize_text_field(wp_unslash($data['allergen_description']));
-		if (isset($data['type'])) {
-			$data['type'] = absint(sanitize_text_field(wp_unslash($data['type'])));
-		}
+		$data['type'] = absint(sanitize_text_field(wp_unslash($data['type'])));
 		$data['allergen_icon']['name'] = sanitize_file_name($data['allergen_icon']['name']);
 
 		return $data;
