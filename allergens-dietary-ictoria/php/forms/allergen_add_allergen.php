@@ -41,6 +41,10 @@ if (!enum_exists('Mime_Types')) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/lists/mime_types.php';
 }
 
+
+if (!class_exists('Allergens_Dietary_Ictoria_Error_notice')) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/errors/error_notice.php';
+}
 /********************************************************************/
 /********************************************************************/
 
@@ -80,6 +84,8 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 
 		if (in_array($page, $showOnPage, true)) {
+
+
 			$html = '<fieldset class="update_form">';
 			$html .= '<div class="form-column">';
 			$html .= '<input disabled type="hidden" class="update_" name="allergen_name_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '"/>';
@@ -95,18 +101,17 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '</div>';
 			$html .= '<label for="allergen_description">' . __('Allergen description', 'allergens-dietary-ictoria') . '</label>';
 			$html .= '<input type="text" class="update_" name="allergen_description" id="allergen_description" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '" disabled/>';
-			$html .= '<div style="display: flex; align-items: center; gap: 15px;">';
-			$html .= '<img class="update_" style="height: 75px;" disabled id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
+			$html .= '<div class="item" style="display: flex; align-items: center; gap: 15px;">';
+			$html .= '<img class="update_ allergen_icon_img" style="height: 75px;" disabled id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
 			$html .= '<label class="label-quick-edit">';
-			$html .= '<input type="file" class="update_" name="allergen_icon" id="allergen_icon_file_input" disabled>';
-			// $html .= '<input type="hidden" class="update_" name="allergen_icon_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . 'disabled>';
+			$html .= '<input type="file" class="update_ allergen_icon_file_input" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" name="allergen_icon" id="allergen_icon_file_input" disabled>';
+			$html .= '<input type="hidden" class="update_" name="allergen_icon_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '" disabled>';
 			$html .= '<span>Set image</span>';
 			$html .= '</label>';
 			$html .= '</div>';
 			$html .= '</fieldset>';
 		} else {
 			$html = '<fieldset>';
-			$html .= '<input type="hidden" name="allergen_name_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '"/>';
 			$html .= '<label for="allergen_name">' . __('Allergen name', 'allergens-dietary-ictoria') . '</label><br>';
 			$html .= '<input type="text" name="allergen_name" id="allergen_name" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" required/><br><br>';
 			$html .= '<label for="type">' . __('Type', 'allergens-dietary-ictoria') . '</label> <br/>';
@@ -116,7 +121,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '<label for="allergen_description">' . __('Allergen description', 'allergens-dietary-ictoria') . '</label><br>';
 			$html .= '<input type="text" name="allergen_description" id="allergen_description" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '"/><br><br>';
 			$html .= '<label for="allergen_icon">' . __('Allergen icon', 'allergens-dietary-ictoria') . '</label><br>';
-			$html .= '<input type="file" name="allergen_icon"><br><br>';
+			$html .= '<input type="file" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" name="allergen_icon"><br><br>';
 			$html .= '<input type="submit" name="submit" class="button button-primary" value="' . __('Add allergen', 'allergens-dietary-ictoria') . '"/><br>';
 		}
 		$html .= '</fieldset>';
@@ -137,119 +142,98 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	public function submit(array $data)
 	{
 		$data = $this->sanitize($data);
-		$file_info = wp_check_filetype($data['allergen_icon']['name']);
-		$valid_icon = in_array($file_info['type'], $this->MIME_TYPES) ? true : false;
-		$table_al_at = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
-		$table_at = Allergens_Dietary_Ictoria_Attachment_Queries::getInstance();
-		$table_al = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
-		$att_exists = $table_at->checkAttachmentExists($data['allergen_icon']['name']);
-		$al_exists = $table_al->checkAllergenExists($data['allergen_name']);
-		$al_at_exists = $table_al_at->checkAllergyAttachmentExists($data['allergen_name_hidden']);
+
+		$file_type_input = wp_check_filetype($data['allergen_icon']['name']);
+		$valid_icon = in_array($file_type_input['type'], $this->MIME_TYPES) ? true : false;
+		$showOnPage = "allergens-dietary-add-allergen";
+		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 		$no_icon_selected = false;
+		$empty_file_input = empty($data['allergen_icon']['name']) ? true : false;
 
-		if (empty($data['allergen_icon']['name']) && empty($data['allergen_icon_hidden']) ) {
-			$imagePath = get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/no_icon_selected.png';
-			$imageName = sanitize_file_name(basename($imagePath));
-			$data['allergen_icon'] = [
-				'name' => $imageName,
-				'tmp_name' => $imagePath,
-				'type' => 'image/png',
-			];
-			$no_icon_selected = true;
-		}else{
+		// DB Query's
+		$all_query = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance();
+		$att_query = Allergens_Dietary_Ictoria_Attachment_Queries::getInstance();
+		$all_att_query = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance();
 
-		}
+		$attachment_exists = $att_query->checkAttachmentExists($data['allergen_icon']['name']);
 
-		if (!empty($data['allergen_name_hidden'])) {
-			$mlpleatt_exists = $table_al_at->checkMultipleAttachmentsExists($data['allergen_name']);
-		}
-		if (!empty($data['allergen_name_hidden'])) {
-			if ($data['allergen_name_hidden'] !== $data['allergen_name']) {
-				if (false !== $al_exists) {
-					return;
-				}
-			}
-		}
-		if (!preg_match('/\S/', $data['allergen_name'])) {
-			if (empty($data['allergen_name_hidden'])) {
-				echo '<div style="background-color: red; max-width: 270px;">';
-				echo __("Invalid allergen name", 'allergens-dietary-ictoria') . '</div><br>';
-			}
+		// This is temporary, should be WP conform errors!
+		if (empty($data) || !isset($data)) {
+			echo '<p style="color: red;" >' . __('Form has not been set!', 'allergens-dietary-ictoria') . '</p>';
+			return;
+		} elseif (empty($data['allergen_name'])) {
+			echo '<p style="color: red;" >' . __("Allergen Name Can't be empty or blank!", 'allergens-dietary-ictoria') . '</p>';
 			return;
 		}
-		if (false === $att_exists) {
-			if (empty($data['allergen_name_hidden'])) {
-				//Adding attachment for add allergen
-				if ($valid_icon == true) {
-					$table_at->addAttachment($data['allergen_icon']);
-				}
 
-			}
-		}
-		if (!empty($data['allergen_name_hidden'])) {
-			$allergen_icon = $table_al_at->find_allergy($data['allergen_name_hidden']);
-		}
-		$multiple_attachment = "no_access";
+		// ADD ALLERGEN PAGE!
+		if (!isset($data['allergen_name_hidden']) && $page === $showOnPage) {
 
-		//update for update allergen and add for add allergen
-		if (empty($data['allergen_name_hidden'])) {
-			if (false === $al_exists) {
-				$table_al->addAllergens($data);
-				echo '<div style="background-color: limegreen; max-width: 270px;">';
-				echo __("Successfully added new Allergen/Diet", 'allergens-dietary-ictoria') . '</div><br>';
-			} else {
-				echo '<div style="background-color: orange; max-width: 270px;">';
-				echo __("Allergen already exists", 'allergens-dietary-ictoria') . '</div><br>';
+			if ($all_query->checkAllergenExists($data['allergen_name'])) {
+				echo '<p style="color: red;" >' . __('Allergen name already exists', 'allergens-dietary-ictoria') . '</p>';
 				return;
 			}
-		} else {
-			$table_al->updateAllergens($data);
 
-			//check attachment amount
-			if (true === $al_at_exists && true === $mlpleatt_exists) {
-				$multiple_attachment = "access";
-			} elseif (false === $mlpleatt_exists && true === $al_at_exists) {
-				$multiple_attachment = "no_multiple_attachment_access";
-			} else {
-				$multiple_attachment = "no_access";
+			// Default image
+			if ($empty_file_input) {
+				$imagePath = get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/no_icon_selected.png';
+				$imageName = sanitize_file_name(basename($imagePath));
+				$data['allergen_icon'] = [
+					'name' => $imageName,
+					'tmp_name' => $imagePath,
+					'type' => 'image/png',
+				];
+				$no_icon_selected = true;
 			}
-			if (false === $att_exists) {
-				if ($valid_icon === true) {
-					$table_at->addAttachment($data['allergen_icon']);
-				} else {
-					return;
-				}
+
+			// This is temporary, should be WP conform errors!
+			if (!$no_icon_selected && $attachment_exists) {
+				echo '<p style="color: red;" >' . __('Attachment name already exists.', 'allergens-dietary-ictoria') . '</p>';
+				return;
+			} elseif (!$valid_icon && !$no_icon_selected) {
+				echo '<p style="color: red;" >' . __('The file is not a valid image. Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.', 'allergens-dietary-ictoria') . '</p>';
+				return;
 			}
-			if (!empty($data['allergen_icon']['name'])) {
-				$multiple_attachment !== "no_access" ? $table_al_at->updateAllergyAttachment($data['allergen_icon']['name'], $data['allergen_name']) : $multiple_attachment = "no_access";
+
+			$all_query->addAllergens($data);
+			if (!$no_icon_selected) { // Don't add attachment to the table, image already exists there.
+				$att_query->addAttachment($data['allergen_icon']);
 			}
+			$all_att_query->addAllergyAttachment($data);
+
+			// Temporary feedback, should be of WP conform.
+			echo 'Succesfully added new allergen: ' . $data['allergen_name'] . '.';
+
+		} else { // QUICK EDIT PAGE!
+			// This is temporary, should be WP conform errors!
+			if ($all_query->checkAllergenExists($data['allergen_name']) && $data['allergen_name_hidden'] !== $data['allergen_name']) {
+				echo '<p style="color: red;" >' . __('Allergen name already exists', 'allergens-dietary-ictoria') . '</p>';
+				return;
+			} elseif (!$valid_icon && !$empty_file_input) {
+				echo '<p style="color: red;" >' . __('The file is not a valid image. Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.', 'allergens-dietary-ictoria') . '</p>';
+				return;
+			}
+
+			$delete = true;
+
+			$all_query->updateAllergens($data);
+			if ($empty_file_input) {
+				$all_att_query->updateAllergyAttachment($data, $data['allergen_icon_hidden']);
+				return;
+			}
+			// Prevent losing no_icon_selected.png as image in DB, and if there are multiple of the old img don't change all of them.
+			if ($data['allergen_icon_hidden'] === 'no_icon_selected.png' || $all_att_query->checkMultipleAttachmentsExists($data['allergen_icon_hidden'])) {
+				!$attachment_exists && $att_query->addAttachment($data['allergen_icon']);
+				$delete = false;
+			} elseif (!$attachment_exists) {
+				$att_query->updateAttachment($data['allergen_icon'], $data['allergen_icon_hidden']);
+				$delete = false;
+			}
+			$all_att_query->updateAllergyAttachment($data, $data['allergen_icon_hidden']);
+			$delete && $att_query->deleteAttachment($data['allergen_icon_hidden']);
+
 		}
 
-		$add_att_exists = $table_at->checkAttachmentExists($data['allergen_icon']['name']);
-		$add_al_exists = $table_al->checkAllergenExists($data['allergen_name']);
-
-		//those if-statements create the connection between the allergen and the attachment
-		if (empty($data['allergen_name_hidden']) && true !== $al_at_exists) {
-			if (true === $add_al_exists && true === $add_att_exists) {
-				$table_al_at->addallergyAttachment($data);
-			}
-		} else {
-			$mlpleoldatt_exists = $table_al_at->checkMultipleAttachmentsExists($allergen_icon);
-		}
-
-		//access if-statements
-		if ($multiple_attachment == "access" && $multiple_attachment !== "no_access") {
-			if (false === $att_exists) {
-				$table_at->updateAttachment($data['allergen_icon'], $allergen_icon);
-			}
-			if (false === $mlpleoldatt_exists) {
-				$table_at->deleteAttachment($allergen_icon);
-			}
-		} elseif ($multiple_attachment !== "no_access") {
-			if (false === $mlpleoldatt_exists) {
-				$table_at->deleteAttachment($allergen_icon);
-			}
-		}
 	}
 
 	/**allergen_name

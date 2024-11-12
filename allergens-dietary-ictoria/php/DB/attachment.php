@@ -85,7 +85,7 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
-
+		
 		$wpdb->update(
 			$table_name,
 			array(

@@ -95,25 +95,36 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
 		return $wpdb->get_results($prepared_sql, ARRAY_A);
 	}
 
-	public function updateallergyAttachment(string $attachment, string $allergy)
+	public function updateAllergyAttachment(array $data, string $attachment)
 	{
 
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
-		$wpdb->update(
+		return $wpdb->update(
 			$table_name,
 			array(
-				'allergy_name' => $allergy,
+				'allergy_name' => $data['allergen_name'],
 				'attachment_name' => $attachment,
 			),
 			array(
-				'allergy_name' => $allergy,
+				'allergy_name' => $data['allergen_name_hidden'],
 			)
 		);
+	}
 
-		return (isset($wpdb->insert_id)) ? true : false;
+	public function attachmentIsUsed(string $attachment)
+	{
+		global $wpdb;
+
+		$table = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+
+		return $wpdb->get_var($wpdb->prepare(
+			"SELECT COUNT(attachment_name) FROM $table
+			WHERE attachment_name = %s",
+			$attachment
+		));
 	}
 
 	public function checkAllergyAttachmentExists(string $allergy_name)
@@ -155,37 +166,22 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
 		$wpdb->query($sql);
 	}
 
-	public function checkMultipleAttachmentsExists(string $icon)
+	public function checkMultipleAttachmentsExists(string $attachment)
 	{
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
 
 		$sql = $wpdb->prepare(
-			"SELECT COUNT(attachment_name) FROM $table_name WHERE attachment_name = %s",
-			$icon
+			"SELECT COUNT(attachment_name) FROM $table_name
+			WHERE attachment_name = %s
+			HAVING COUNT(attachment_name) > 1",
+			$attachment
 		);
 
 		$count = $wpdb->get_var($sql);
 
-		return $count > 0 ? true : false;
-	}
-
-	public function find_allergy(string $allergy_name)
-	{
-		global $wpdb;
-
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-
-		$sql = $wpdb->prepare(
-			"SELECT attachment_name FROM $table_name WHERE allergy_name = %s",
-			$allergy_name
-		);
-
-
-		$result = $wpdb->get_row($sql);
-		return !empty($result->attachment_name) ? $result->attachment_name : null ;
-
+		return $count > 1 ? true : false;
 	}
 
 	public static function allergy_connection(array $result)

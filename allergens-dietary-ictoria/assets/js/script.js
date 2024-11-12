@@ -103,19 +103,30 @@ if (checkElementExists("dropdown-ictoria") == true) {
 }
 
 jQuery(document).ready(function ($) {
-  function readURL(input) {
+  function readURL(input, imgElement) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
 
       reader.onload = function (e) {
-        $("#allergen_icon_img").attr("src", e.target.result);
+        $(imgElement).attr("src", e.target.result);
       };
 
       reader.readAsDataURL(input.files[0]);
     }
   }
 
-  $(document).on("change", "#allergen_icon_file_input", function () {
-    readURL(this);
+  // Listen for changes on any file input with the class 'allergen_icon_file_input'
+  $(document).on("change", ".allergen_icon_file_input", function () {
+    // Identify the closest '.item' container to get the corresponding image
+    const itemContainer = $(this).closest('.item'); // Adjust to match the row/container class
+    const imgElement = itemContainer.find('.allergen_icon_img');
+
+    if (imgElement.length === 0) {
+      // console.log("No corresponding image found in the same container.");
+      return;
+    }
+    readURL(this, imgElement);
   });
 });
+
+
