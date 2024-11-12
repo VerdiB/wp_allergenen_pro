@@ -34,6 +34,16 @@ WC Tested Up To: 8.1.1
 // along with "Allergens and Dietary". If not, see https://www.gnu.org/licenses/gpl-3.0.html
 
 // Set constant values that are used to retain file location references
+
+/*use Automattic\WooCommerce\Utilities\FeaturesUtil;
+
+// Controleer of de HPOS-functionaliteit (custom_order_tables) is ingeschakeld
+$is_hpos_enabled = FeaturesUtil::feature_is_enabled( 'custom_order_tables' );
+
+if ( ! $is_hpos_enabled ) {
+    // HPOS is niet ingeschakeld, dus je moet het ergens anders inschakelen.
+    error_log( 'HPOS is niet ingeschakeld' );
+}*/
 define('ALLERGENS_DIETARY_ICTORIA_NAME', 'allergens-dietary-ictoria');
 define('ALLERGENS_DIETARY_ICTORIA_FILE', __FILE__); // contains the full path to the plugin file
 define('ALLERGENS_DIETARY_ICTORIA_DIRNAME', __DIR__);
@@ -85,6 +95,7 @@ class Allergens_Dietary_Ictoria_Startup
 		}
 		$folderName = '/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache'; // Geef het juiste pad naar de map op
 
+		add_filter( 'woocommerce_high_performance_order_storage_enabled', '__return_false' );
 		if (!file_exists($folderName)) {
 
 			mkdir("/var/www/html/wp-content/plugins/allergens-dietary-ictoria/cache");
@@ -133,7 +144,6 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 
 				if (class_exists('WC_Integration')) {
 					include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/wc_integration.php';
-					add_filter('woocommerce_integrations', array($this, 'add_integration'));
 				} else {
 					// the integration class of WooCommerce was not found, show error message
 					$level = 'notice-error';
@@ -170,7 +180,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 	// WooCommerce is not installed or inactive, show error message
 	$level = 'notice-error';
 	$message = sprintf(__('%1$sWooCommerce is inactive or not installed. Please install & activate WooCommerce%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
-	Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
+	//Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
 }
 // Add a filter to modify the HTML for the auto-update setting link
 add_filter('plugin_auto_update_setting_html', 'my_plugin_auto_update_link_html', 10, 3);
