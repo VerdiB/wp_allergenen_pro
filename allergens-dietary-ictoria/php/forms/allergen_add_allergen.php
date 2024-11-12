@@ -155,6 +155,13 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				}
 			}
 		}
+		if (!preg_match('/\S/', $data['allergen_name'])) {
+			if (empty($data['allergen_name_hidden'])) {
+				echo '<div style="background-color: red; max-width: 270px;">';
+				echo __("Invalid allergen name", 'allergens-dietary-ictoria') . '</div><br>';
+			}
+			return; 
+		}
 		if (false === $att_exists) {
 			if (empty($data['allergen_name_hidden'])) {
 				$file_info = wp_check_filetype($data['allergen_icon']['name']);
@@ -200,7 +207,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 					return;
 				}
 			}
-		$multiple_attachment !== "no_access" ? $table_al_at->updateAllergyAttachment($data['allergen_icon']['name'], $data['allergen_name']) : $multiple_attachment = "no_access";
+			if (!empty($data['allergen_icon']['name'])){
+				$multiple_attachment !== "no_access" ? $table_al_at->updateAllergyAttachment($data['allergen_icon']['name'], $data['allergen_name']) : $multiple_attachment = "no_access";
+			}
 		}
 
 		$add_att_exists = $table_at->checkAttachmentExists($data['allergen_icon']['name']);
