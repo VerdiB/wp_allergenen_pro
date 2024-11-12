@@ -173,7 +173,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		//update for update allergen and add for add allergen
 		if (empty($data['allergen_name_hidden'])) {
-			error_log("submit3");
 			if (false === $al_exists) {
 				$table_al->addAllergens($data);
 				echo '<div style="background-color: limegreen; max-width: 270px;">';
