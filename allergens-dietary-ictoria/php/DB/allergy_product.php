@@ -81,26 +81,28 @@ class Allergens_Dietary_Ictoria_Allergy_Product_Queries {
 
 
 
-    public function getFilteredProducts( array $allergens ) {
+    public function getFilteredProducts( ?array $allergens, ?array $diaetary ) {
+        $allergens = (is_null($allergens) || empty($allergens)) ? "" : $allergens;
+        $diaetary = (is_null($diaetary) || empty($diaetary)) ? "" : $diaetary;
         global $wpdb;
 
         $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';
         $sql = $wpdb->prepare(
             "SELECT DISTINCT ap.product_id
-            FROM wp_allergens_dietary_ictoria_allergy_product AS ap
-            JOIN wp_allergens_dietary_ictoria_allergy AS a ON ap.allergy_name = a.allergy_name
+            FROM %i AS ap
+            JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy AS a ON ap.allergy_name = a.allergy_name
             WHERE ap.product_id NOT IN (
                 SELECT ap_sub.product_id
-                FROM wp_allergens_dietary_ictoria_allergy_product AS ap_sub
-                JOIN wp_allergens_dietary_ictoria_allergy AS a_sub ON ap_sub.allergy_name = a_sub.allergy_name
+                FROM {$wpdb->prefix}allergens_dietary_ictoria_allergy_product AS ap_sub
+                JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy AS a_sub ON ap_sub.allergy_name = a_sub.allergy_name
                 WHERE a_sub.is_allergy = 1
-                AND a_sub.allergy_name IN ('')
+                AND a_sub.allergy_name IN ('". (is_array($allergens)?implode("',''",$allergens): $allergens) ."')
             )
             AND a.is_allergy = 0
-            AND a.allergy_name IN ('')",
-            array($table_name, implode(',', $allergens['is_allergy']))
+            AND a.allergy_name IN ('" .(is_array($diaetary)?implode("',''",$diaetary): $diaetary)."')",
+            $table_name
         );
 
-        return $wpdb->get_results( $sql, ARRAY_A );
+        return $wpdb->get_results( $sql, ARRAY_A);
     }
 }

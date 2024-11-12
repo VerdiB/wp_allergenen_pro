@@ -41,6 +41,8 @@ define('ALLERGENS_DIETARY_ICTORIA_BASE', plugin_basename(__FILE__)); // contains
 // Check if WooCommerce is active and store the result in a constant value
 if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
 	define('ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE', true);
+	define('ALLERGENS_DIETARY_ICTORIA_WC_DIRNAME', dirname(__FILE__, 2) . '/woocommerce');
+	// define('ALLERGENS_DIETARY_ICTORIA_WC_DIRNAME', dirname(__FILE__, 2) );
 } else {
 	define('ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE', false);
 }
