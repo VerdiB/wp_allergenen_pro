@@ -1,4 +1,4 @@
-# Allergens Dietary Ictoria - V1.0.0
+# Allergens Dietary Ictoria - V1.1.0.0
 
 ## Fixes and changes
 - First release
@@ -13,11 +13,60 @@
 ## added feature
 
 
-# Allergens Dietary Ictoria - V1.0.1
+# Allergens Dietary Ictoria - V1.2.0.0
 
 ## Fixes and changes
-- First release
 - function fixes
+
+### Performance
+
+### General
+- Documentary changes
+
+## Technical Updates
+
+## added feature
+
+
+# Allergens Dietary Ictoria - V1.3.0.0
+
+## Fixes and changes
+
+### Performance
+
+### General
+- Documentary changes
+
+## Technical Updates
+
+## added feature
+- A form to fill in your licence key
+
+
+# Allergens Dietary Ictoria - V1.4.0.0
+
+## Fixes and changes
+
+### Performance
+
+### General
+
+## Technical Updates
+- automatic updates
+
+## added feature
+- The option to update allergens for premium users
+- The option to add diets for premium users
+- The option to add allergens for premium users
+
+
+# Allergens Dietary Ictoria - V1.5.0.0
+
+## Fixes and changes
+- Description plugin translation fix
+- 'allergen already exists' notification for adding allergens that already exist instead of an error
+- Made it visible when a active allergen is connected to an product
+- removed functions.php and placed it back in other files exept for the unused functions 
 
 ### Performance
 
@@ -26,30 +75,15 @@
 ## Technical Updates
 
 ## added feature
-
-- search allergens
-- updating allergens
-- uninstall
-- allergens on product page
-- allergens on producname
-
-
-# Allergens Dietary Ictoria - V1.0.2
-
-## Fixes and changes
-- First release
-- function fixes
-
-### Performance
-
-### General
-
-## Technical Updates
-
-## added feature
-
-- search allergens
-- updating allergens
-- uninstall
-- allergens on product page
-- allergens on producname
+- Default allergens 
+- Tabs to navigate through the submenu's of the plugin
+- A submenu that shows the custom and default allergens that have been added
+- An option to change the status of an allergen (active or inactive)
+- Allergen title visible when hovering over it
+- A submenu with info about the plugin
+- A standard image for an allergen without an image selected
+- The possibility to edit existing icons of our default allergens for premium users
+- UK translations
+- UX/conform front-end
+- Made the plugin wordpress theme friendly
+- The option to delete a custom allergy for premium users
