@@ -1,5 +1,8 @@
 <?php
 // exit if user can access this file directly
+
+use Automattic\WooCommerce\Utilities\FeaturesUtil;
+
 if (!defined('ABSPATH')) {
 	exit;
 }
@@ -34,6 +37,11 @@ WC Tested Up To: 8.1.1
 // along with "Allergens and Dietary". If not, see https://www.gnu.org/licenses/gpl-3.0.html
 
 // Set constant values that are used to retain file location references
+
+if ( ! class_exists( 'FeaturesUtil' ) ) {
+	require_once 'Automattic\WooCommerce\Internal\Features\FeaturesUtil';
+}
+
 define('ALLERGENS_DIETARY_ICTORIA_NAME', 'allergens-dietary-ictoria');
 define('ALLERGENS_DIETARY_ICTORIA_FILE', __FILE__); // contains the full path to the plugin file
 define('ALLERGENS_DIETARY_ICTORIA_DIRNAME', __DIR__);
@@ -138,7 +146,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 					// the integration class of WooCommerce was not found, show error message
 					$level = 'notice-error';
 					$message = sprintf(__('%1$sThe WooCommerce Integration class was not found. Please make sure WooCommerce is installed correctly%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
-					Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
+					//Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
 				}
 			}
 
@@ -163,12 +171,14 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 
 	Allergens_Dietary_Ictoria_Products::instance();
 	Allergens_Dietary_Ictoria_Filter::instance();
-	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/MyPluginAddMenu.php';
+	Allergens_Dietary_Ictoria_Activator::load_style();
+	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/Allergens_Dietary_Ictoria_Plugin_Menu.php';
+	Allergens_Dietary_Ictoria_Plugin_Menu::instance();
 } else {
 	// WooCommerce is not installed or inactive, show error message
 	$level = 'notice-error';
 	$message = sprintf(__('%1$sWooCommerce is inactive or not installed. Please install & activate WooCommerce%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
-	Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
+	//Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
 }
 // Add a filter to modify the HTML for the auto-update setting link
 add_filter('plugin_auto_update_setting_html', 'my_plugin_auto_update_link_html', 10, 3);
