@@ -200,7 +200,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::allergy_connection($icon_result);
 	}
 
-	public static function is_default_allergen(string $allergy_name): bool
+	public function is_default_allergen(string $allergy_name): bool
 	{
 		global $wpdb;
 
@@ -224,7 +224,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		return $is_default == 1 ? true : false;
 	}
 
-	public static function delete_allergen_by_name(string $allergy_name, int $return_page)
+	public function delete_allergen_by_name(string $allergy_name, int $return_page = null)
 	{
 		try {
 			global $wpdb;
@@ -315,7 +315,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		return $columns;
 	}
 
-	public static function activationUpdate(array $data)
+	public function activationUpdate(array $data)
 	{
 		global $wpdb;
 
@@ -360,7 +360,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		}
 	}
 
-	public static function singleActivationUpdate(int $return_page)
+	public function singleActivationUpdate(int $return_page)
 	{
 
 		global $wpdb;
