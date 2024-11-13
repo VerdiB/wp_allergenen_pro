@@ -147,7 +147,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		$valid_icon = in_array($file_type_input['type'], $this->MIME_TYPES) ? true : false;
 		$showOnPage = "allergens-dietary-add-allergen";
 		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
-		$no_icon_selected = false;
 		$empty_file_input = empty($data['allergen_icon']['name']) ? true : false;
 
 		// DB Query's
@@ -169,6 +168,8 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		// ADD ALLERGEN PAGE!
 		if (!isset($data['allergen_name_hidden']) && $page === $showOnPage) {
 
+			$no_icon_selected = false;
+
 			if ($all_query->checkAllergenExists($data['allergen_name'])) {
 				echo '<p style="color: red;" >' . __('Allergen name already exists', 'allergens-dietary-ictoria') . '</p>';
 				return;
@@ -187,53 +188,51 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			}
 
 			// This is temporary, should be WP conform errors!
-			if (!$no_icon_selected && $attachment_exists) {
-				echo '<p style="color: red;" >' . __('Attachment name already exists.', 'allergens-dietary-ictoria') . '</p>';
-				return;
-			} elseif (!$valid_icon && !$no_icon_selected) {
+			if (!$valid_icon && !$no_icon_selected) {
 				echo '<p style="color: red;" >' . __('The file is not a valid image. Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.', 'allergens-dietary-ictoria') . '</p>';
 				return;
 			}
 
 			$all_query->addAllergens($data);
-			if (!$no_icon_selected) { // Don't add attachment to the table, image already exists there.
+			if (!$no_icon_selected && !$attachment_exists) { // Don't add attachment to the table, image already exists there.
 				$att_query->addAttachment($data['allergen_icon']);
 			}
 			$all_att_query->addAllergyAttachment($data);
 
 			// Temporary feedback, should be of WP conform.
 			echo 'Succesfully added new allergen: ' . $data['allergen_name'] . '.';
-
 		} else { // QUICK EDIT PAGE!
 			// This is temporary, should be WP conform errors!
 			if ($all_query->checkAllergenExists($data['allergen_name']) && $data['allergen_name_hidden'] !== $data['allergen_name']) {
 				echo '<p style="color: red;" >' . __('Allergen name already exists', 'allergens-dietary-ictoria') . '</p>';
 				return;
-			} elseif (!$valid_icon && !$empty_file_input) {
+			}
+			if (!$valid_icon && !$empty_file_input) {
 				echo '<p style="color: red;" >' . __('The file is not a valid image. Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.', 'allergens-dietary-ictoria') . '</p>';
 				return;
 			}
 
-			$delete = true;
-
 			$all_query->updateAllergens($data);
 			if ($empty_file_input) {
-				$all_att_query->updateAllergyAttachment($data, $data['allergen_icon_hidden']);
 				return;
-			}
-			// Prevent losing no_icon_selected.png as image in DB, and if there are multiple of the old img don't change all of them.
-			if ($data['allergen_icon_hidden'] === 'no_icon_selected.png' || $all_att_query->checkMultipleAttachmentsExists($data['allergen_icon_hidden'])) {
-				!$attachment_exists && $att_query->addAttachment($data['allergen_icon']);
-				$delete = false;
-			} elseif (!$attachment_exists) {
-				$att_query->updateAttachment($data['allergen_icon'], $data['allergen_icon_hidden']);
-				$delete = false;
-			}
-			$all_att_query->updateAllergyAttachment($data, $data['allergen_icon_hidden']);
-			$delete && $att_query->deleteAttachment($data['allergen_icon_hidden']);
+			} // update only the new allergen data when not uploading a new image. name, description etc.
+			
 
+			if ($attachment_exists) { // if the attachment exists, set to existing img and only remove attachment when not used.
+				$all_att_query->updateAllergyAttachment($data['allergen_name_hidden'], $data['allergen_icon']['name']);
+				if ($data['allergen_icon_hidden'] !== 'no_icon_selected.png' && !$all_att_query->attachmentIsUsed($data['allergen_icon_hidden'])) {
+					$att_query->deleteAttachment($data['allergen_icon_hidden']);
+				}
+			} else {
+				// Prevent losing no_icon_selected.png as image in DB, and if there are multiple of the old img don't change all of them.
+				if ($data['allergen_icon_hidden'] === 'no_icon_selected.png' || $all_att_query->checkMultipleAttachmentsExists($data['allergen_icon_hidden'])) {
+					$att_query->addAttachment($data['allergen_icon']);
+					$all_att_query->updateAllergyAttachment($data['allergen_name_hidden'], $data['allergen_icon']['name']);
+				} else {
+					$att_query->updateAttachment($data['allergen_icon'], $data['allergen_icon_hidden']);
+				}
+			}
 		}
-
 	}
 
 	/**allergen_name

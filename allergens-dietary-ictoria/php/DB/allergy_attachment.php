@@ -16,9 +16,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
 		return self::$_instance;
 	}
 
-	private function __construct()
-	{
-	}
+	private function __construct() {}
 
 	public function addAllergyAttachment(array $data)
 	{
@@ -95,7 +93,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
 		return $wpdb->get_results($prepared_sql, ARRAY_A);
 	}
 
-	public function updateAllergyAttachment(array $data, string $attachment)
+	public function updateAllergyAttachment(string $old_allergy_name, string $attachment)
 	{
 
 		global $wpdb;
@@ -105,11 +103,10 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
 		return $wpdb->update(
 			$table_name,
 			array(
-				'allergy_name' => $data['allergen_name'],
 				'attachment_name' => $attachment,
 			),
 			array(
-				'allergy_name' => $data['allergen_name_hidden'],
+				'allergy_name' => $old_allergy_name,
 			)
 		);
 	}
@@ -119,12 +116,14 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
 		global $wpdb;
 
 		$table = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-
-		return $wpdb->get_var($wpdb->prepare(
+		
+		$count = $wpdb->get_var($wpdb->prepare(
 			"SELECT COUNT(attachment_name) FROM $table
 			WHERE attachment_name = %s",
 			$attachment
 		));
+
+		return $count > 0;
 	}
 
 	public function checkAllergyAttachmentExists(string $allergy_name)
@@ -166,7 +165,7 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
 		$wpdb->query($sql);
 	}
 
-	public function checkMultipleAttachmentsExists(string $attachment)
+	public function checkMultipleAttachmentsExists(string $attachment): bool
 	{
 		global $wpdb;
 
@@ -174,14 +173,13 @@ class Allergens_Dietary_Ictoria_Allergy_Attachment_Queries
 
 		$sql = $wpdb->prepare(
 			"SELECT COUNT(attachment_name) FROM $table_name
-			WHERE attachment_name = %s
-			HAVING COUNT(attachment_name) > 1",
+			WHERE attachment_name = %s",
 			$attachment
 		);
 
 		$count = $wpdb->get_var($sql);
 
-		return $count > 1 ? true : false;
+		return $count > 1;
 	}
 
 	public static function allergy_connection(array $result)
