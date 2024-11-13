@@ -22,13 +22,17 @@ class Allergens_Dietary_Ictoria_Filter {
 
 	private function __construct() {
 		add_action( 'woocommerce_before_shop_loop', array( $this, 'create_filter' ) );
-		// add_filter( 'pre_get_posts', array( $this, 'filter_query' ) );
-		add_filter( 'woocommerce_shortcode_products_query', array( $this, 'getAllergenFilterShortcode' ) );
+		add_filter( 'pre_get_posts', array( $this, 'filter_query' ) );
+		// add_filter( 'woocommerce_shortcode_products_query', array( $this, 'filter_query' ) );
+		// add_filter( 'woocommerce_shortcode_products_query', array( $this, 'getAllergenFilterShortcode' ) );
 		$this->_allergens = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->getAllAllergens();
 	}
 
 	public function create_filter() {
 		// Create variable that is used in the loops
+		print_r($_POST);
+
+		error_log('create_filter');
 
 		$html = '<form id="allergens-ictoria" method="post">';
 
@@ -92,7 +96,7 @@ class Allergens_Dietary_Ictoria_Filter {
 			if ( ! empty( $selected_options ) ) {
 				$filtered_products = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->getFilteredProducts( $selected_allergens, $selected_diatary );
 				$tmpArr = array();
-				$woo_arg = array(['inlcude']);
+				$woo_arg = array();
 				// $meta_query = array();
 				
 				// if ( ! empty( $meta_query ) ) {
@@ -104,8 +108,17 @@ class Allergens_Dietary_Ictoria_Filter {
 						$tmpArr[]= $product['product_id'];
 					}
 					$woo_arg['include'] = $tmpArr;
+					// print_r($woo_arg);
+					$wc = new WC_Product_Query($woo_arg);
 				// self::$_shop_shortcode = $shortcode;
-				return wc_get_products($woo_arg);
+				error_log('woo_arg: '.print_r($woo_arg, true));
+				print_r($woo_arg);
+				// return;
+				// print_r(wc_get_products($woo_arg));
+				// wc_get_products($woo_arg);
+				// return wc_get_products($woo_arg);
+				// $wc->get_products();
+				// return $wc->get_products();
 
 				// echo '<pre>';	
 				// echo 'selected_options: <br/>';

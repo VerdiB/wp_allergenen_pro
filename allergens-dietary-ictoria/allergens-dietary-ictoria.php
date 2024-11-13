@@ -138,6 +138,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 					add_filter('woocommerce_integrations', array($this, 'add_integration'));
 				} else {
 					// the integration class of WooCommerce was not found, show error message
+					require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/errors/error_notice.php';
 					$level = 'notice-error';
 					$message = sprintf(__('%1$sThe WooCommerce Integration class was not found. Please make sure WooCommerce is installed correctly%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
 					Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
@@ -170,6 +171,8 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 	Allergens_Dietary_Ictoria_Plugin_Menu::instance();
 } else {
 	// WooCommerce is not installed or inactive, show error message
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/errors/error_notice.php';
+
 	$level = 'notice-error';
 	$message = sprintf(__('%1$sWooCommerce is inactive or not installed. Please install & activate WooCommerce%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
 	Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
