@@ -52,7 +52,7 @@
 ### General
 
 ## Technical Updates
-- automatic updates
+- Automatic updates
 
 ## added feature
 - The option to update allergens for premium users
