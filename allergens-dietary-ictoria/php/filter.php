@@ -25,7 +25,7 @@ class Allergens_Dietary_Ictoria_Filter {
 	public function create_filter() {
 		$allergens = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->getAllAllergens();
 		// Create variable that is used in the loops
-
+		
 		$html = '<form id="allergens-ictoria" method="post">';
 
 		echo '<button type="button" id="dropdown-ictoria">filters</button>';

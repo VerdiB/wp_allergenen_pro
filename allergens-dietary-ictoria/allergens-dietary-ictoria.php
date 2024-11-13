@@ -1,8 +1,5 @@
 <?php
 // exit if user can access this file directly
-
-use Automattic\WooCommerce\Utilities\FeaturesUtil;
-
 if (!defined('ABSPATH')) {
 	exit;
 }
@@ -37,11 +34,6 @@ WC Tested Up To: 8.1.1
 // along with "Allergens and Dietary". If not, see https://www.gnu.org/licenses/gpl-3.0.html
 
 // Set constant values that are used to retain file location references
-
-if ( ! class_exists( 'FeaturesUtil' ) ) {
-	require_once 'Automattic\WooCommerce\Internal\Features\FeaturesUtil';
-}
-
 define('ALLERGENS_DIETARY_ICTORIA_NAME', 'allergens-dietary-ictoria');
 define('ALLERGENS_DIETARY_ICTORIA_FILE', __FILE__); // contains the full path to the plugin file
 define('ALLERGENS_DIETARY_ICTORIA_DIRNAME', __DIR__);
@@ -53,10 +45,44 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	define('ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE', false);
 }
 
+if (!class_exists('Allergens_Dietary_Ictoria_Error_notice')) {
+    require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/errors/error_notice.php';
+}
+
+
 // load file with generic static methods
 require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/activator.php';
 add_action('plugins_loaded', array('Allergens_Dietary_Ictoria_Activator', 'load_textdomain'));
 
+
+add_action('woocommerce_after_register_post_type', 'my_custom_woocommerce_function');
+
+add_action( 'woocommerce_init', 'my_custom_woocommerce_function' );
+
+function my_custom_woocommerce_function() {
+    // Controleer of de functie wc_is_hpos_enabled() beschikbaar is
+    if ( class_exists( 'WooCommerce' ) ) {
+        error_log("WooCommerce bestaat");
+        
+        if ( function_exists( 'wc_is_hpos_enabled' ) && wc_is_hpos_enabled() ) {
+            // HPOS is ingeschakeld
+            error_log("HPOS is ingeschakeld");
+        } else {
+            error_log("HPOS is NIET ingeschakeld");
+        }
+    } else {
+        error_log("WooCommerce bestaat NIET");
+
+		$order = wc_get_order( $order_id );
+
+// Ordermeta ophalen
+$meta_value = $order->get_meta( '_my_custom_meta_key' );
+
+// Ordermeta bijwerken
+$order->update_meta_data( '_my_custom_meta_key', 'new_value' );
+$order->save();
+    }
+}
 /*
 Plugin Name: Allergens and Dietary
 Text Domain: allergens-dietary-icotoria
@@ -127,9 +153,11 @@ register_deactivation_hook(ALLERGENS_DIETARY_ICTORIA_BASE, array('Allergens_Diet
 
 if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 	if (is_admin()) {
+		
 		// class is used to add the plugin to the list of integrated plugins that WooCommerce uses
 		class Allergens_Dietary_Ictoria_Wc_Integration_Startup
 		{
+
 			public function __construct()
 			{
 				add_action('plugins_loaded', array($this, 'init_integration'));
@@ -146,7 +174,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 					// the integration class of WooCommerce was not found, show error message
 					$level = 'notice-error';
 					$message = sprintf(__('%1$sThe WooCommerce Integration class was not found. Please make sure WooCommerce is installed correctly%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
-					//Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
+					Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
 				}
 			}
 
@@ -178,7 +206,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 	// WooCommerce is not installed or inactive, show error message
 	$level = 'notice-error';
 	$message = sprintf(__('%1$sWooCommerce is inactive or not installed. Please install & activate WooCommerce%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
-	//Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
+	Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
 }
 // Add a filter to modify the HTML for the auto-update setting link
 add_filter('plugin_auto_update_setting_html', 'my_plugin_auto_update_link_html', 10, 3);
