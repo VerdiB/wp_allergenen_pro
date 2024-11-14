@@ -17,8 +17,8 @@ services:
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: ""
       WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_DEBUG: 1
-      # WORDPRESS_DEBUG_LOG: true
+      WORDPRESS_DEBUG: true
+      WORDPRESS_DEBUG_LOG: true
     volumes:
       - ./allergens-dietary-ictoria:/var/www/html/wp-content/plugins/allergens-dietary-ictoria
       - ./debug:/var/www/html/wp-content/logs
@@ -93,7 +93,7 @@ services:
         ipv4_address: "124.168.92.22"
 
   phpunit:
-    build: 
+    build:
       context: .
       dockerfile: phpunit/Dockerfile
     volumes:
@@ -105,11 +105,9 @@ services:
     networks:
       development:
 
-
 networks:
   development:
     ipam:
       driver: default
       config:
         - subnet: "124.168.92.0/24"
-        

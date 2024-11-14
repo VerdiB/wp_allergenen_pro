@@ -1,36 +1,41 @@
 <?php
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
 	exit;
 }
 
-if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Queries' ) ) {
+if (! class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 }
 
 
-class Allergens_Dietary_Ictoria_Filter {
+
+class Allergens_Dietary_Ictoria_Filter
+{
 	private static $_instance = null;
 	private array $_allergens;
 	private static string $_shop_shortcode = '[products]';
 
-	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
+	public static function instance()
+	{
+		if (is_null(self::$_instance)) {
 			self::$_instance = new Allergens_Dietary_Ictoria_Filter();
 		}
 	}
 
-	private function __construct() {
-		add_action( 'woocommerce_before_shop_loop', array( $this, 'create_filter' ) );
-		add_filter( 'pre_get_posts', array( $this, 'filter_query' ) );
+	private function __construct()
+	{
+		add_action('woocommerce_before_shop_loop', array($this, 'create_filter'));
+		add_filter('pre_get_posts', array($this, 'filter_query'));
 		// add_filter( 'woocommerce_shortcode_products_query', array( $this, 'filter_query' ) );
 		// add_filter( 'woocommerce_shortcode_products_query', array( $this, 'getAllergenFilterShortcode' ) );
 		$this->_allergens = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->getAllAllergens();
 	}
 
-	public function create_filter() {
+	public function create_filter()
+	{
 		// Create variable that is used in the loops
-		print_r($_POST);
+		// print_r($_POST);
 
 		error_log('create_filter');
 
@@ -39,115 +44,81 @@ class Allergens_Dietary_Ictoria_Filter {
 		echo '<button type="button" id="dropdown-ictoria">filters</button>';
 
 		// Create the HTML for all filter options, separating them by category
-		foreach ( $this->_allergens as $allergen ) {
+		foreach ($this->_allergens as $allergen) {
 			// Check if the option is active or not
 			$checked = '';
-			if ( isset( $_POST['allergen_filter_options'][ $allergen['allergy_name'] ] ) ) {
+			if (isset($_POST['allergen_filter_options'][$allergen['allergy_name']])) {
 				$checked = 'checked="checked"';
 			}
 			// Added separate hidden input for the filter-action property so it doesn't have to call get_options again
 			// also added the filter-extra part
 			$html .= '<div>
-				<input type="checkbox" class="checkbox" name="allergen_filter_options[' . $allergen['allergy_name'] . ']" value="'.esc_attr($allergen['allergy_name']) .'" ' . $checked . '/>
-				<input type="hidden" name="allergen_filter_action[' . $allergen['allergy_name'] . ']" value="'.((int)$allergen['is_allergy'] === 0 ?'include':'exclude').'"/>
-				<span>' . __(((int) $allergen['is_allergy'] === 0 ? '' : 'No ' ) . $allergen['allergy_name'], 'allergens-dietary-ictoria') . '</span>
+				<input type="checkbox" class="checkbox" name="allergen_filter_options[' . $allergen['allergy_name'] . ']" value="' . esc_attr($allergen['allergy_name']) . '" ' . $checked . '/>
+				<input type="hidden" name="allergen_filter_action[' . $allergen['allergy_name'] . ']" value="' . ((int)$allergen['is_allergy'] === 0 ? 'include' : 'exclude') . '"/>
+				<span>' . __(((int) $allergen['is_allergy'] === 0 ? '' : 'No ') . $allergen['allergy_name'], 'allergens-dietary-ictoria') . '</span>
 			</div>';
 		}
 
 		// Create the HTML for the filter that this plugin adds. Does not show the category if all options of the given category are globally disabled
-		
+
 		$html .= '<input type="submit" name="allergen_filter" value="Filter">';
 		// Added clear filter link
-		$html .= '<a href="' . get_permalink( wc_get_page_id( 'shop' ) ) . '" class="button clear-filters">Clear Filters</a>';
+		$html .= '<a href="' . get_permalink(wc_get_page_id('shop')) . '" class="button clear-filters">Clear Filters</a>';
+
+
 		$html .= '</form>';
 
 		echo $html;
 	}
 
 
-	public function getAllergenFilterShortcode() {
+	public function getAllergenFilterShortcode()
+	{
 		return $this->_shop_shortcode;
 	}
 
+	public $count = 0;
 
+	public function filter_query($query)
+	{
+		if ($query->is_main_query() && is_shop()) {
+			// Count should only increase once per page load now
+			$this->count++;
+			error_log("Running filter_query count: " . $this->count);
 
-	public function filter_query( $query ) {		
-		if ( $query->is_main_query() && is_shop() && isset( $_POST['allergen_filter'] ) ) {			
-			$selected_options = isset( $_POST['allergen_filter_options'] ) ? $_POST['allergen_filter_options'] : array();
-			// $filter_actions   = isset( $_POST['allergen_filter_action'] ) ? $_POST['allergen_filter_action'] : array();
-			$selected_allergens = array();
-			$selected_diatary = array();
+			if (isset($_POST['allergen_filter'])) {
+				$selected_options = isset($_POST['allergen_filter_options']) ? $_POST['allergen_filter_options'] : array();
+				$selected_allergens = array();
+				$selected_diatary = array();
 
-			// Sort the selected options
-			foreach($this->_allergens as $allergen){
-				if(isset($selected_options[$allergen['allergy_name']]))
-					//check if the allergen is an allergy or diatary restriction
-					//where 0 is a dietary restriction and 1 is an allergy
-					if($allergen['is_allergy'] == 0)
-					{
-						$selected_diatary[] = $allergen['allergy_name'];
-					}else{
-						$selected_allergens[] = $allergen['allergy_name'];
+				// Sort the selected options
+				foreach ($this->_allergens as $allergen) {
+					if (isset($selected_options[$allergen['allergy_name']])) {
+						if ($allergen['is_allergy'] == 0) {
+							$selected_diatary[] = $allergen['allergy_name'];
+						} else {
+							$selected_allergens[] = $allergen['allergy_name'];
+						}
 					}
-			}
+				}
 
-			
-			// Check if there are any options selected
-			if ( ! empty( $selected_options ) ) {
-				$filtered_products = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->getFilteredProducts( $selected_allergens, $selected_diatary );
-				$tmpArr = array();
-				$woo_arg = array();
-				// $meta_query = array();
-				
-				// if ( ! empty( $meta_query ) ) {
-					// 	$meta_query['relation'] = 'AND';
-					// 	$query->set( 'meta_query', $meta_query );
-					// }
-					
-					foreach ( $filtered_products as $product ) {
-						$tmpArr[]= $product['product_id'];
+				if (!empty($selected_options)) {
+					$filtered_products = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->getFilteredProducts($selected_allergens, $selected_diatary);
+					error_log("Filtered Products: " . print_r($filtered_products, true));
+					$product_ids = array();
+
+					foreach ($filtered_products as $product) {
+						$product_ids[] = $product['product_id'];
 					}
-					$woo_arg['include'] = $tmpArr;
-					// print_r($woo_arg);
-					$wc = new WC_Product_Query($woo_arg);
-				// self::$_shop_shortcode = $shortcode;
-				error_log('woo_arg: '.print_r($woo_arg, true));
-				print_r($woo_arg);
-				// return;
-				// print_r(wc_get_products($woo_arg));
-				// wc_get_products($woo_arg);
-				// return wc_get_products($woo_arg);
-				// $wc->get_products();
-				// return $wc->get_products();
 
-				// echo '<pre>';	
-				// echo 'selected_options: <br/>';
-				// print_r($selected_options);
-
-				// echo 'selected_allergens: <br/>';
-				// print_r($selected_allergens);
-
-				// echo 'selected_diatary: <br/>';
-				// print_r($selected_diatary);
-
-				// echo 'filtered: <br/>';
-				// print_r($filtered_products);
-
-				// echo 'wpdb-> query:<br/>';
-				// print_r($query);
-
-				// echo'filter_actions: <br/>';
-				// print_r($filter_actions);
-
-				// echo 'selected_options_sorted: <br/>';
-				// print_r($selected_options_sorted);
-
-				// echo'query: <br/>';
-				// print_r($query);
-
-				// echo 'meta_query: <br/>';
-				// print_r($meta_query);
-				// echo '</pre>';
+					$args = array(
+						'include' => $product_ids,
+					);
+					// $query = new WC_Product_Query();
+					$products = wc_get_products($args);
+					// error_log("Products: " . print_r($products, true));
+					// return $products;
+				}
 			}
 		}
 	}
