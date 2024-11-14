@@ -262,31 +262,39 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             $item = sanitize_text_field($_GET['item']);
             $action = sanitize_text_field($_GET['action']);
             $nonce = filter_input(INPUT_GET, '_wpnonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $melding = "succesvol  verwijdert";
-
-            // Verify nonce based on action
+    
+            // Controleer op geldigheid van de nonce afhankelijk van de actie
             if ($action === 'change_status' && !wp_verify_nonce($nonce, 'allergens_change_status')) {
                 wp_die('Security check failed for changing status!');
             } elseif ($action === 'delete' && !wp_verify_nonce($nonce, 'allergens_delete')) {
                 wp_die('Security check failed for deletion!');
-            }else{
-                if ($action == 'delete'){
-                    echo $melding;
+            } else {
+                if ($action == 'delete') {
+                    // Verwijder de allergeen
+                    Allergens_Dietary_Ictoria_Allergen_Queries::delete_allergen_by_name($item);
+    
+                    // Voeg een WordPress admin-notice toe
+                    add_action('admin_notices', function () {
+                        echo '<div class="notice notice-success is-dismissible"><p>Succesvol verwijderd</p></div>';
+                    });
+                    
+                    // Loggen voor debuggen
                     error_log("dit wordt uitgevoerd");
                 }
             }
-
-            // Perform action based on case
+    
+            // Voer acties uit op basis van de opgegeven actie
             switch ($action) {
                 case 'change_status':
                     Allergens_Dietary_Ictoria_Allergen_Queries::singleActivationUpdate();
                     break;
                 case 'delete':
-                    Allergens_Dietary_Ictoria_Allergen_Queries::delete_allergen_by_name($item);
+                    // Verwijderen is al uitgevoerd boven in de code
                     break;
             }
         }
     }
+    
 
     public function process_bulk_action($data)
     {
