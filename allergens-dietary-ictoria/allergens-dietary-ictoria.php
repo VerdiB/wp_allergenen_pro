@@ -170,6 +170,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 	include_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/Allergens_Dietary_Ictoria_Plugin_Menu.php';
 	Allergens_Dietary_Ictoria_Plugin_Menu::instance();
 } else {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/errors/error_notice.php';
 	// WooCommerce is not installed or inactive, show error message
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/errors/error_notice.php';
 

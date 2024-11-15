@@ -25,10 +25,6 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 
 	public function addAttachment(array $data)
 	{
-		if (is_null($data)) {
-			return;
-		}
-
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
@@ -44,6 +40,21 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 		$this->placeAttachment($data);
 
 		return (isset($wpdb->insert_id)) ? true : false;
+	}
+
+	public function deleteAttachment( string $attachment ) {
+		global $wpdb;
+		$table_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
+
+		$sqlConnection = $wpdb->prepare(
+			"DELETE FROM $table_attachment
+     		WHERE attachment_name = %s",
+    		$attachment
+		);
+
+		$wpdb->query($sqlConnection);
+
+		$this->removeAttachment($attachment);
 	}
 
 	public function checkAttachmentExists(string $attachmentName)
@@ -72,7 +83,7 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
-
+		
 		$wpdb->update(
 			$table_name,
 			array(
@@ -103,7 +114,6 @@ class Allergens_Dietary_Ictoria_Attachment_Queries
 		}
 
 		$full_path = self::PATH . $data['name'];
-		// $full_path = $_SERVER['HTTP_HOST'] . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/custom/' . $data['full_path'];
 		if (false === file_exists($full_path)) {
 			move_uploaded_file($data['tmp_name'], $full_path);
 		}
