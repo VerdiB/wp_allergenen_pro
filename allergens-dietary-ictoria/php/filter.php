@@ -28,8 +28,11 @@ class Allergens_Dietary_Ictoria_Filter
 	{
 		add_action('woocommerce_before_shop_loop', array($this, 'create_filter'));
 		// add_filter('pre_get_posts', array($this, 'filter_products'));
-		// add_filter('pre_get_posts', array($this, 'filter_query'));
-		add_filter('woocommerce_shortcode_products_query', array($this, 'filter_query'));
+
+		// add_action('pre_get_posts', array($this, 'filter_query'));
+		add_action('woocommerce_product_query', array($this, 'filter_query'));
+
+		// add_filter('woocommerce_shortcode_products_query', array($this, 'filter_query'));
 		$this->_allergens = Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->getAllAllergens();
 	}
 
@@ -123,97 +126,38 @@ class Allergens_Dietary_Ictoria_Filter
 
 	// OUDE CODE ===== VOOR REFERENTIE.
 
-	public function filter_query( $query ) {		
-		if ( $query->is_main_query() && is_shop() && isset( $_POST['allergen_filter'] ) ) {			
-			$selected_options = isset( $_POST['allergen_filter_options'] ) ? $_POST['allergen_filter_options'] : array();
+	public function filter_query($query)
+	{
+		if ($query->is_main_query() && is_shop() && isset($_POST['allergen_filter'])) {
+			$selected_options = isset($_POST['allergen_filter_options']) ? $_POST['allergen_filter_options'] : array();
 			// $filter_actions   = isset( $_POST['allergen_filter_action'] ) ? $_POST['allergen_filter_action'] : array();
 			$selected_allergens = array();
 			$selected_diatary = array();
 
 			// Sort the selected options
-			foreach($this->_allergens as $allergen){
-				if(isset($selected_options[$allergen['allergy_name']]))
+			foreach ($this->_allergens as $allergen) {
+				if (isset($selected_options[$allergen['allergy_name']]))
 					//check if the allergen is an allergy or diatary restriction
 					//where 0 is a dietary restriction and 1 is an allergy
-					if($allergen['is_allergy'] == 0)
-					{
+					if ($allergen['is_allergy'] == 0) {
 						$selected_diatary[] = $allergen['allergy_name'];
-					}else{
+					} else {
 						$selected_allergens[] = $allergen['allergy_name'];
 					}
 			}
 
-			
+
 			// Check if there are any options selected
-			if ( ! empty( $selected_options ) ) {
-				$filtered_products = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->getFilteredProducts( $selected_allergens, $selected_diatary );
-				$tmpArr = array();
-				$woo_arg = array();
-				// $meta_query = array();
-				
-				// if ( ! empty( $meta_query ) ) {
-					// 	$meta_query['relation'] = 'AND';
-					// 	$query->set( 'meta_query', $meta_query );
-					// }
-					
-					foreach ( $filtered_products as $product ) {
-						$tmpArr[]= $product['product_id'];
-					}
-					$woo_arg= $tmpArr;
-					$arg = array(
-						'include' => $tmpArr
-					 ) ;
-					// print_r($woo_arg);
-					$wc = new WC_Product_Query();
-					$products = wc_get_products($arg);
-					$wc->get('product_id' , $products);
-					error_log('woo_arg: '.print_r($woo_arg, true));
-					echo'products <br/> <pre>';
-					print_r($products);
-					echo 'wc <br/>';
-					print_r($wc->get('product_id' , $products));
-					echo'</pre>';
-					
+			if (! empty($selected_options)) {
+				$filtered_products = Allergens_Dietary_Ictoria_Allergy_Product_Queries::getInstance()->getFilteredProducts($selected_allergens, $selected_diatary);
+				$product_arr = array();
 
-					return $wc->get('product_id' , $products);
-					// print_r( $wc->get_products());
+				foreach ($filtered_products as $product) {
+					$product_arr[] = $product['product_id'];
+				}
+				$query->set('post__in', $product_arr);
 
-				// self::$_shop_shortcode = $shortcode;
-				// return;
-				// print_r(wc_get_products($woo_arg));
-				// wc_get_products($woo_arg);
-				// return wc_get_products($woo_arg);
-				// $wc->get_products();
-				// return $wc->get_products();
 
-				// echo '<pre>';	
-				// echo 'selected_options: <br/>';
-				// print_r($selected_options);
-
-				// echo 'selected_allergens: <br/>';
-				// print_r($selected_allergens);
-
-				// echo 'selected_diatary: <br/>';
-				// print_r($selected_diatary);
-
-				// echo 'filtered: <br/>';
-				// print_r($filtered_products);
-
-				// echo 'wpdb-> query:<br/>';
-				// print_r($query);
-
-				// echo'filter_actions: <br/>';
-				// print_r($filter_actions);
-
-				// echo 'selected_options_sorted: <br/>';
-				// print_r($selected_options_sorted);
-
-				// echo'query: <br/>';
-				// print_r($query);
-
-				// echo 'meta_query: <br/>';
-				// print_r($meta_query);
-				// echo '</pre>';
 			}
 		}
 	}
