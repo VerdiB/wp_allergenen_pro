@@ -86,81 +86,81 @@ class Allergens_Dietary_Ictoria_Allergy_Product_Queries
 
 
 
-    // public function getFilteredProducts( ?array $allergens, ?array $diaetary ) {
-    //     $allergens = (is_null($allergens) || empty($allergens)) ? "" : $allergens;
-    //     $diaetary = (is_null($diaetary) || empty($diaetary)) ? "" : $diaetary;
-    //     global $wpdb;
-
-    //     $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';
-    //     $sql = $wpdb->prepare(
-    //         "SELECT DISTINCT ap.product_id
-    //         FROM %i AS ap
-    //         JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy AS a ON ap.allergy_name = a.allergy_name
-    //         WHERE ap.product_id NOT IN (
-    //             SELECT ap_sub.product_id
-    //             FROM {$wpdb->prefix}allergens_dietary_ictoria_allergy_product AS ap_sub
-    //             JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy AS a_sub ON ap_sub.allergy_name = a_sub.allergy_name
-    //             WHERE a_sub.is_allergy = 1
-    //             AND a_sub.allergy_name IN ('". (is_array($allergens)?implode("',''",$allergens): $allergens) ."')
-    //         )
-    //         AND a.is_allergy = 0
-    //         AND a.allergy_name IN ('" .(is_array($diaetary)?implode("',''",$diaetary): $diaetary)."')",
-    //         $table_name
-    //     );
-
-    //     return $wpdb->get_results( $sql, ARRAY_A);
-    // }
-    public function getFilteredProducts(?array $allergens, ?array $dietary)
-    {
+    public function getFilteredProducts( ?array $allergens, ?array $dietary ) {
+        $allergens = (is_null($allergens) || empty($allergens)) ? "" : $allergens;
+        $dietary = (is_null($dietary) || empty($dietary)) ? "" : $dietary;
         global $wpdb;
+
         $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';
-        $allergens_table = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+        $sql = $wpdb->prepare(
+            "SELECT DISTINCT ap.product_id
+            FROM %i AS ap
+            JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy AS a ON ap.allergy_name = a.allergy_name
+            WHERE ap.product_id NOT IN (
+                SELECT ap_sub.product_id
+                FROM {$wpdb->prefix}allergens_dietary_ictoria_allergy_product AS ap_sub
+                JOIN {$wpdb->prefix}allergens_dietary_ictoria_allergy AS a_sub ON ap_sub.allergy_name = a_sub.allergy_name
+                WHERE a_sub.is_allergy = 1
+                AND a_sub.allergy_name IN ('". (is_array($allergens)?implode("',''",$allergens): $allergens) ."')
+            )".(!empty($dietary) ? "
+            AND a.is_allergy = 0
+            AND a.allergy_name IN ('" .(is_array($dietary)?implode("',''",$dietary): $dietary)."')": "") ,
+            $table_name
+        );
 
-        // Initialize base query
-        $query_parts = [];
-        $query_parts[] = "SELECT DISTINCT ap.product_id 
-                          FROM {$table_name} ap
-                          JOIN {$allergens_table} a ON ap.allergy_name = a.allergy_name";
-
-        $where_conditions = [];
-
-        // Handle allergens filtering
-        if (!empty($allergens)) {
-            $allergens_list = "'" . implode("','", array_map('esc_sql', $allergens)) . "'";
-            $query_parts[] = "LEFT JOIN (
-                SELECT DISTINCT product_id 
-                FROM {$table_name} ap_exclude
-                JOIN {$allergens_table} a_exclude ON ap_exclude.allergy_name = a_exclude.allergy_name
-                WHERE a_exclude.is_allergy = 1 
-                AND a_exclude.allergy_name IN ({$allergens_list})
-            ) as excluded_products ON ap.product_id = excluded_products.product_id";
-
-            $where_conditions[] = "excluded_products.product_id IS NULL";
-        }
-
-        // Handle dietary requirements filtering
-        if (!empty($dietary)) {
-            // For each dietary requirement, ensure the product has it
-            foreach ($dietary as $index => $diet) {
-                $diet = esc_sql($diet);
-                $alias = "diet_check_{$index}";
-
-                $query_parts[] = "JOIN (
-                    SELECT DISTINCT product_id 
-                    FROM {$table_name} ap_diet
-                    JOIN {$allergens_table} a_diet ON ap_diet.allergy_name = a_diet.allergy_name
-                    WHERE a_diet.is_allergy = 0 
-                    AND a_diet.allergy_name = '{$diet}'
-                ) as {$alias} ON ap.product_id = {$alias}.product_id";
-            }
-        }
-
-        // Combine all parts of the query
-        $sql = implode(" ", $query_parts);
-        if (!empty($where_conditions)) {
-            $sql .= " WHERE " . implode(" AND ", $where_conditions);
-        }
-
-        return $wpdb->get_results($sql, ARRAY_A);
+        return $wpdb->get_results( $sql, ARRAY_A);
     }
+    // public function getFilteredProducts(?array $allergens, ?array $dietary)
+    // {
+    //     global $wpdb;
+    //     $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';
+    //     $allergens_table = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+
+    //     // Initialize base query
+    //     $query_parts = [];
+    //     $query_parts[] = "SELECT DISTINCT ap.product_id 
+    //                       FROM {$table_name} ap
+    //                       JOIN {$allergens_table} a ON ap.allergy_name = a.allergy_name";
+
+    //     $where_conditions = [];
+
+    //     // Handle allergens filtering
+    //     if (!empty($allergens)) {
+    //         $allergens_list = "'" . implode("','", array_map('esc_sql', $allergens)) . "'";
+    //         $query_parts[] = "LEFT JOIN (
+    //             SELECT DISTINCT product_id 
+    //             FROM {$table_name} ap_exclude
+    //             JOIN {$allergens_table} a_exclude ON ap_exclude.allergy_name = a_exclude.allergy_name
+    //             WHERE a_exclude.is_allergy = 1 
+    //             AND a_exclude.allergy_name IN ({$allergens_list})
+    //         ) as excluded_products ON ap.product_id = excluded_products.product_id";
+
+    //         $where_conditions[] = "excluded_products.product_id IS NULL";
+    //     }
+
+    //     // Handle dietary requirements filtering
+    //     if (!empty($dietary)) {
+    //         // For each dietary requirement, ensure the product has it
+    //         foreach ($dietary as $index => $diet) {
+    //             $diet = esc_sql($diet);
+    //             $alias = "diet_check_{$index}";
+
+    //             $query_parts[] = "JOIN (
+    //                 SELECT DISTINCT product_id 
+    //                 FROM {$table_name} ap_diet
+    //                 JOIN {$allergens_table} a_diet ON ap_diet.allergy_name = a_diet.allergy_name
+    //                 WHERE a_diet.is_allergy = 0 
+    //                 AND a_diet.allergy_name = '{$diet}'
+    //             ) as {$alias} ON ap.product_id = {$alias}.product_id";
+    //         }
+    //     }
+
+    //     // Combine all parts of the query
+    //     $sql = implode(" ", $query_parts);
+    //     if (!empty($where_conditions)) {
+    //         $sql .= " WHERE " . implode(" AND ", $where_conditions);
+    //     }
+
+    //     return $wpdb->get_results($sql, ARRAY_A);
+    // }
 }
