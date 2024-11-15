@@ -12,8 +12,8 @@ if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
     require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 }
 
-if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
-	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
+if (! class_exists('Allergens_Dietary_Ictoria_Form')) {
+    require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
 }
 
 /**
@@ -79,7 +79,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             'columns' => $column_names,
             'data' => $allergy_names,
         ];
-
     }
 
     public function column_default($item, $column_name)
@@ -114,7 +113,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         echo '</tr>';
     }
 
-      public function handle_row_actions($item, $column_name, $primary)
+    public function handle_row_actions($item, $column_name, $primary)
     {
         if ($primary !== $column_name) {
             return '';
@@ -141,9 +140,9 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 
         (esc_attr($action) == "delete") ? $color = "red" : $color = "blue";
 
-        if ($is_default){
+        if ($is_default) {
             $disabled = "none";
-        }else{
+        } else {
             $disabled = "auto";
         }
 
@@ -153,47 +152,49 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         /*While using quick_edit you always need to add a file.
         This can't be solved, because you can't put a value into
         a file input*/
-    if (esc_attr($action) !== 'quick_edit' && esc_attr($action) !== 'change_status'){
-        return $is_default ? '<a style="color: grey;">' . ucfirst(str_replace('_', ' ', $action)) . '</a>' : sprintf(
-            '<a style="color: ' . $color . ';" href="?page=%s&item=%s&action=%s&_wpnonce=%s">%s</a>',
-            esc_attr($_REQUEST['page']),
-            esc_attr($item['allergy_name']),
-            esc_attr($action),
-            wp_create_nonce('allergens_' . $action),
-            ucfirst(str_replace('_', ' ', $action)),
-        );
-    }elseif(esc_attr($action) == 'change_status'){
-        return sprintf(
-            '<a style="color: ' . $color . ';" href="?page=%s&item=%s&action=%s&_wpnonce=%s">%s</a>',
-            esc_attr($_REQUEST['page']),
-            esc_attr($item['allergy_name']),
-            esc_attr($action),
-            wp_create_nonce('allergens_' . $action),
-            ucfirst(str_replace('_', ' ', $action)),
-        );
-    }else{
-        Allergens_Dietary_Ictoria_Form::setFormType(FormType::ALLERGENS);
-        Allergens_Dietary_Ictoria_Form::getInstance()->showForm(esc_attr($item['allergy_name']));
+        if (esc_attr($action) !== 'quick_edit' && esc_attr($action) !== 'change_status') {
+            return $is_default ? '<a style="color: grey;">' . ucfirst(str_replace('_', ' ', $action)) . '</a>' : sprintf(
+                '<a style="color: ' . $color . ';" href="?page=%s' . (self::$_page > 0 ? '&paged=' . strval(self::$_page) : '') . '&item=%s&action=%s&_wpnonce=%s">%s</a>',
+                esc_attr($_REQUEST['page']),
+                esc_attr($item['allergy_name']),
+                esc_attr($action),
+                wp_create_nonce('allergens_' . $action),
+                ucfirst(str_replace('_', ' ', $action)),
+            );
+        } elseif (esc_attr($action) == 'change_status') {
+            return sprintf(
+                '<a style="color: ' . $color . ';" href="?page=%s' . (self::$_page > 0 ? '&paged=' . strval(self::$_page) : '') . '&item=%s&action=%s&_wpnonce=%s">%s</a>',
+                esc_attr($_REQUEST['page']),
+                esc_attr($item['allergy_name']),
+                esc_attr($action),
+                wp_create_nonce('allergens_' . $action),
+                ucfirst(str_replace('_', ' ', $action)),
+            );
+        } else {
+            Allergens_Dietary_Ictoria_Form::setFormType(FormType::ALLERGENS);
+            Allergens_Dietary_Ictoria_Form::getInstance()->showForm(esc_attr($item['allergy_name']));
 
-        return $is_default ? '<a style="color: grey;">' . ucfirst(str_replace('_', ' ', $action)) . '</a>' : sprintf(
-            '<a class="%s" id="%s" style="color: ' . $color . '; pointer-events: %s;" href="#&item=%s">%s</a>',
-            esc_attr($action),
-            esc_attr($item['allergy_name']),
-            $disabled,
-            esc_attr($item['allergy_name']),
-            ucfirst(str_replace('_', ' ', $action)),
-        );
-    }
-    }
-
-    public static function load_js(){
-        wp_register_script('Allergens_Dietary_Ictoria_Show_Allergens', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/js/script.js'), array('jquery'));
-        wp_enqueue_script( 'Allergens_Dietary_Ictoria_Show_Allergens');
+            return $is_default ? '<a style="color: grey;">' . ucfirst(str_replace('_', ' ', $action)) . '</a>' : sprintf(
+                '<a class="%s" id="%s" style="color: ' . $color . '; pointer-events: %s;" href="#&item=%s">%s</a>',
+                esc_attr($action),
+                esc_attr($item['allergy_name']),
+                $disabled,
+                esc_attr($item['allergy_name']),
+                ucfirst(str_replace('_', ' ', $action)),
+            );
+        }
     }
 
-    public static function load_css(){
-        wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/css/allergens-dietary-ictoria.css'));
-	    wp_enqueue_style('allergens-dietary-ictoria-css');
+    public static function load_js()
+    {
+        wp_register_script('Allergens_Dietary_Ictoria_Show_Allergens', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME . '/assets/js/script.js'), array('jquery'));
+        wp_enqueue_script('Allergens_Dietary_Ictoria_Show_Allergens');
+    }
+
+    public static function load_css()
+    {
+        wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME . '/assets/css/allergens-dietary-ictoria.css'));
+        wp_enqueue_style('allergens-dietary-ictoria-css');
     }
 
     private function handle_search()
@@ -328,7 +329,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
                 wp_die('Security check failed for changing status!');
             } elseif ($action === 'delete' && !wp_verify_nonce($nonce, 'allergens_delete')) {
                 wp_die('Security check failed for deletion!');
-            }  elseif ($action === 'quick_edit' && !wp_verify_nonce($nonce, 'allergens_delete')) {
+            } elseif ($action === 'quick_edit' && !wp_verify_nonce($nonce, 'allergens_delete')) {
                 wp_die('Security check failed for quick edit!');
             }
 
@@ -497,8 +498,9 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 <?php
     }
 
-    
-    public function table_page() {
+
+    public function table_page()
+    {
         $table = new Allergens_Dietary_Ictoria_Show_Allergens();
         $table->handle_search();
         $table->handle_items_per_page();
@@ -506,15 +508,15 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         echo '<form action="#" method="POST" enctype="multipart/form-data"';
         echo "<table class='wp-list-table widefat fixed striped table-view-list pages'>";
         $table->search_box('Search', 'allergens');
-            $table->display();
+        $table->display();
         echo "</table>";
         echo "</form>";
     }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['action'])){
-        if ($_POST['action'] = -1){
+    if (isset($_POST['action'])) {
+        if ($_POST['action'] = -1) {
             Allergens_Dietary_Ictoria_Form::setFormType(FormType::ALLERGENS);
             Allergens_Dietary_Ictoria_Form::getInstance()->submitUpdate();
         }
@@ -534,11 +536,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 } else {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        if (isset($_GET['quick_edit'])){
+        if (isset($_GET['quick_edit'])) {
             $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
 
             $table->process_quick_action();
-        }else{
+        } else {
 
             $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
 
