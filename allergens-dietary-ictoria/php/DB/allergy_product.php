@@ -24,13 +24,11 @@ class Allergens_Dietary_Ictoria_Allergy_Product_Queries
         return self::$_instance;
     }
 
-    private function __construct()
-    {
-        
-    }
+    private function __construct() {}
 
-    public function addAllergyProduct( int $product_id, string $allergen ) {
-        
+    public function addAllergyProduct(int $product_id, string $allergen)
+    {
+
         global $wpdb;
 
         $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';

@@ -2,11 +2,9 @@ console.log("connected");
 var button = document.getElementById("dropdown-ictoria");
 var quickEdit = document.querySelectorAll(".quick_edit");
 
-window.onload = function () {
-  if (checkElementExists("dropdown-ictoria") == "dropdown-ictoria") {
-    document.getElementById("allergens-ictoria").style.display = "none";
-  }
-};
+if (checkElementExists("dropdown-ictoria") == "dropdown-ictoria") {
+  document.getElementById("allergens-ictoria").style.display = "none";
+}
 
 function checkElementExists(id) {
   var element = document.getElementById(id);
@@ -87,16 +85,20 @@ function quickedit(form) {
   }
 }
 
-document.getElementById("the-list").addEventListener("click", function (event) {
-  if (event.target.classList.contains("quick_edit")) {
-    var quickEditing = event.target;
-    if (quickEditing.style.pointerEvents == "auto") {
-      var form = event.target.id + "_form";
-      var get_form = document.getElementById(form);
-      quickedit(get_form);
-    }
-  }
-});
+if (checkElementExists("the-list")) {
+  document
+    .getElementById("the-list")
+    .addEventListener("click", function (event) {
+      if (event.target.classList.contains("quick_edit")) {
+        var quickEditing = event.target;
+        if (quickEditing.style.pointerEvents == "auto") {
+          var form = event.target.id + "_form";
+          var get_form = document.getElementById(form);
+          quickedit(get_form);
+        }
+      }
+    });
+}
 
 if (checkElementExists("dropdown-ictoria") == true) {
   button.addEventListener("click", dropdown_form);
@@ -118,8 +120,8 @@ jQuery(document).ready(function ($) {
   // Listen for changes on any file input with the class 'allergen_icon_file_input'
   $(document).on("change", ".allergen_icon_file_input", function () {
     // Identify the closest '.item' container to get the corresponding image
-    const itemContainer = $(this).closest('.item'); // Adjust to match the row/container class
-    const imgElement = itemContainer.find('.allergen_icon_img');
+    const itemContainer = $(this).closest(".item"); // Adjust to match the row/container class
+    const imgElement = itemContainer.find(".allergen_icon_img");
 
     if (imgElement.length === 0) {
       // console.log("No corresponding image found in the same container.");
@@ -128,5 +130,3 @@ jQuery(document).ready(function ($) {
     readURL(this, imgElement);
   });
 });
-
-
