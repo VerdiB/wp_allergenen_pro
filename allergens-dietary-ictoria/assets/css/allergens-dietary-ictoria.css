@@ -181,3 +181,12 @@ label.label-quick-edit input[type="file"] {
   background: #e4e4e4;
   cursor: pointer;
 }
+
+tr.inline-edit-row td {
+  padding: 8px 10px;
+  position: relative;
+}
+
+.allergy_name{
+  min-width: 500px;
+}
