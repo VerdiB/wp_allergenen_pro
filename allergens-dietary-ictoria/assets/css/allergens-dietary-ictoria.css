@@ -158,12 +158,6 @@
 
 /* QUICK EDIT */
 
-.update_form {
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-}
-
 .form-row {
   display: flex;
   justify-content: space-between;

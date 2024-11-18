@@ -24,6 +24,8 @@ function dropdown_form() {
 }
 
 function quickedit(form) {
+  var tehrightelement = form.parentElement.parentElement.parentElement;
+  console.log(tehrightelement);
   var field = form.querySelector(".update_form");
   var selectdropdown = field.querySelector(".type");
   var allselectdropdownoptions = selectdropdown.querySelectorAll(".option");
