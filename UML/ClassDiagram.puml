@@ -42,6 +42,7 @@ package "php"{
         +{static} load_admin_js() : void
         +{static} enqueue_admin_scripts() : void
 <<<<<<< HEAD
+<<<<<<< HEAD
         +{static} error_notice(level:string, message:string) : void
         + upload_language_file() : void
     }
@@ -58,6 +59,9 @@ package "php"{
 =======
         + upload_language_file() : void
 >>>>>>> dev
+=======
+        + upload_language_file() : void
+>>>>>>> dev
         +{static} initialize() : void
         +{static} allergens_options() : array
         +{static} allergy_icon_options() : array
@@ -68,6 +72,11 @@ package "php"{
     class Allergens_Dietary_Ictoria_Product_Settings{
         -{static} _instance : Allergens_Dietary_Ictoria_Product_Settings
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        - _allergens :array
+        - _allergy_attachments : array  
+>>>>>>> dev
 =======
         - _allergens :array
         - _allergy_attachments : array  
@@ -98,7 +107,13 @@ package "php"{
     package "tables"{
          class Allergens_Dietary_Ictoria_Show_Allergens{
             - {static} _instance : Allergens_Dietary_Ictoria_Show_Allergens
+<<<<<<< HEAD
             - __construct() : void
+=======
+            - {static} _page : int
+            - __construct() : void
+            # display_tablenav(which:string) : void
+>>>>>>> dev
             - table_action_options : array
             + search_query : string
             + get_table_columns_and_data() : array
@@ -111,6 +126,11 @@ package "php"{
             # edit_row_action(id:string) : string
             + handle_row_actions(item:array, column_name:string, primary:string) : array
             - build_action_url(action:string, item:array) : string
+<<<<<<< HEAD
+=======
+            + {static} load_js() : void
+            + {static} load_css() : void
+>>>>>>> dev
             - handle_search() : void
             - handle_items_per_page() : void
             # single_row_columns(item:object) : void
@@ -119,6 +139,7 @@ package "php"{
             + process_quick_action() : void
             + process_bulk_action(data:array) : void
             + items_per_page_form(text:string, input_id:string, label:string, which:string) : void
+<<<<<<< HEAD
             + search_box(text:string, input_id:string) : void
             + {static} getInstance() : Allergens_Dietary_Ictoria_Show_Allergens
             # display_tablenav(which:string) : void
@@ -128,6 +149,13 @@ package "php"{
     }
 <<<<<<< HEAD
 =======
+=======
+            + search_box(text:string, input_id:string) : voi
+            + {static} getInstance() : Allergens_Dietary_Ictoria_Show_Allergens
+            + table_page() : void
+        }
+    }
+>>>>>>> dev
     package "errors"{
 
     class Allergens_Dietary_Ictoria_Error_notice{
@@ -136,6 +164,9 @@ package "php"{
 
     }
 
+<<<<<<< HEAD
+>>>>>>> dev
+=======
 >>>>>>> dev
     package "forms"{
 
@@ -161,12 +192,18 @@ package "php"{
             + {static} getInstance() : Allergens_Dietary_Ictoria_Allergens_Form
             + {static} setFormType(formType:FormType) : void
             + {static} getFormType() : FormType
+            + submitUpdate() : void
             + showForm(allergenName:String) : void
         }
 
         class Allergens_Dietary_Ictoria_Allergens_Form{
             - _allergen : array
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            - MIME_TYPES : array
+            - MIME_NAMES : array
+>>>>>>> dev
 =======
             - MIME_TYPES : array
             - MIME_NAMES : array
@@ -185,7 +222,10 @@ package "php"{
             + sanitize(data:array) : array
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> dev
         class Allergens_Dietary_Ictoria_Update_Allergen_Form{
             - MIME_TYPES : array
             - _allergens: array
@@ -195,6 +235,9 @@ package "php"{
             + sanitize(data:array) : array
             - replace_spaces(allergen:string) : string
         }
+<<<<<<< HEAD
+>>>>>>> dev
+=======
 >>>>>>> dev
     }
 
@@ -205,6 +248,7 @@ package "php"{
             - __construct() : void
             + addAllergens(data:array) : boolean
             + checkAllergenExists(allergenName:string) : boolean
+<<<<<<< HEAD
             + getAllAllergen() : array
             + updateAllergens(data:array) : void
             + getAllergen(allergenName:string) : array
@@ -213,11 +257,27 @@ package "php"{
             + {static} includeItems() : void
 <<<<<<< HEAD
 =======
+=======
+            + getAllAllergens() : array
+            + updateAllergens(data:array) : void
+            + getAllergen(allergenName:string) : array
+            + {static} is_default_allergen(allergy_name:string) : boolean
+            + {static} send_header(page:string) : string
+            + {static} delete_allergen_by_name(allergy_name:string) : void
+            + {static} activationUpdate(data:array) : void
+            + {static} singleActivationUpdate() : void
+            + {static} getItems() : array
+            + {static} getColumns() : array
+            + {static} includeItems() : void
+>>>>>>> dev
             + {static} is_default_allergen(allergy_name:string) : boolean
             + {static} delete_allergen_by_name(allergy_name:string) : void
             + {static} activationUpdate(data:array) : void
             + {static} singleActivationUpdate() : void
 
+<<<<<<< HEAD
+>>>>>>> dev
+=======
 >>>>>>> dev
         }
 
@@ -228,10 +288,15 @@ package "php"{
             +{static} getInstance() : Allergens_Dietary_Ictoria_Attachment_Queries
             - __construct() : void
             + addAttachment(data:array) : boolean
+            + deleteAttachment(attachment:string) : void
             + checkAttachmentExists(attachmentName:string) : boolean
             + updateAttachment(data:array, oldName:string) : void
             - placeAttachment(data:array) : void
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            - removeAttachment(attachmentName: string) : void
+>>>>>>> dev
 =======
             - removeAttachment(attachmentName: string) : void
 >>>>>>> dev
@@ -246,12 +311,21 @@ package "php"{
             + getAllergyAttachment(allergyAttachmentName:string, isForm:boolean) : array
             + getAllAllergyAttachmments(skip_default:boolean) : array
             + checkAllergyAttachmentExists(allergyName:string) : boolean
+            + find_allergy(allergy_name:string) : string
             + updateAllergyAttachment(data:array) : void
+<<<<<<< HEAD
 <<<<<<< HEAD
             + getAllergyAttachment(allergyAttachmentName:string) : array
             + {static} allergy_connection(result:array) : array
 =======
             + {static} allergy_connection(result:array) : void
+=======
+            + getAllergyAttachment() : array
+            + deleteAllergyAttachment(allergy:string) : void
+            + checkMultipleAttachmentsExists(icon:string, bool:boolean) : boolean
+            + find_allergy(allergy_name:string) : string
+            + {static} allergy_connection(result:array) : array
+>>>>>>> dev
         }
         class Allergens_Dietary_Ictoria_Allergy_Product_Queries{
             -{static} _instance : Allergens_Dietary_Ictoria_Allergy_Product_Queries
@@ -260,6 +334,7 @@ package "php"{
             + addAllergyProduct(product_id:int, allergen:string) : boolean
             + getAllergyProduct(product_id:int, allergen:string=null) : array
             + deleteAllergyProduct(product_id:int, allergen:String) : boolean
+<<<<<<< HEAD
         }
         class Allergens_Dietary_Ictoria_Allergy_Product_Queries{
             -{static} _instance : Allergens_Dietary_Ictoria_Allergy_Product_Queries
@@ -268,6 +343,8 @@ package "php"{
             + addAllergyProduct(product_id:int, allergen:string) : boolean
             + getAllergyProduct(product_id:int, allergen:string=null) : array
             + deleteAllergyProduct(product_id:int, allergen:String) : boolean
+>>>>>>> dev
+=======
 >>>>>>> dev
         }
     }
@@ -278,13 +355,19 @@ package "php"{
             + {static} getStyles() : void
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
     }
 =======
+=======
+>>>>>>> dev
         enum Mime_Types{
             + get_mime_types() : array
         }
     }
 
+<<<<<<< HEAD
+>>>>>>> dev
+=======
 >>>>>>> dev
     package "tabs" {
         class Allergens_Dietary_Ictoria_Tabs{
@@ -295,9 +378,13 @@ package "php"{
 
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
     }
 
     
+=======
+    }  
+>>>>>>> dev
 =======
     }  
 >>>>>>> dev
