@@ -261,7 +261,11 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
                 echo '</td>';
             } else {
                 echo "<td $attributes>";
-                echo $this->column_default($item, $column_name);
+                if ($column_name !== "allergy_name"){
+                    echo $this->column_default($item, $column_name);
+                }else{
+                    echo "<span class='allergen_name'>" . $this->column_default($item, $column_name) . "</span>";
+                }
                 echo $this->handle_row_actions($item, $column_name, $primary);
                 echo '</td>';
             }

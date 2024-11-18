@@ -24,38 +24,22 @@ function dropdown_form() {
 
 function quickedit(form) {
   var field = form.querySelector(".update_form");
-  var tehrightelement1 = document.getElementById("the-list");
-  var tehrightelement = tehrightelement1.querySelectorAll(".inline-edit-row");
-  var element = document.getElementById("allergy_name");
-  var element5 = document.getElementById("allergy_description");
-  var element6 = document.getElementById("is_allergy");
-  var element7 = document.getElementById("is_active");
-  tehrightelement.forEach((input) => {
-  var element2 = input.querySelector(".allergy_description");
-  var element3 = input.querySelector(".is_allergy");
-  var element4 = input.querySelector(".is_active");
-  element2.style.display = "none";
-  element3.style.display = "none";
-  element4.style.display = "none";
-});
-  element.style.width = "100%";
-  element5.style.display = "none";
-  element6.style.display = "none";
-  element7.style.display = "none";
   var selectdropdown = field.querySelector(".type");
   var allselectdropdownoptions = selectdropdown.querySelectorAll(".option");
   var allinputs = field.querySelectorAll(".update_");
   var counter = 0;
   var thelist = document.getElementById("the-list");
-  var manage = document.querySelectorAll(".manage-column");
-  manage.forEach((managecolumn) => {
-  console.log(managecolumn.parentElement.parentElement);
-  if (managecolumn.tagName !== "TD"){
-    if (managecolumn.textContent !== "Allergy name" && managecolumn.parentElement.parentElement.tagName == "TFOOT"){
-      managecolumn.style.display = "none";
-    }
-  }
-  });
+  var tehrightelement = field.parentElement.parentElement.parentElement;
+  var allergy_name = tehrightelement.querySelector(".allergy_name");
+  var allergy_name_text = allergy_name.querySelector(".allergen_name");
+  var allergy_description = tehrightelement.querySelector(".allergy_description");
+  var is_allergy = tehrightelement.querySelector(".is_allergy");
+  var is_active = tehrightelement.querySelector(".is_active");
+  allergy_name.colSpan = 3;
+  allergy_description.style.display = "none";
+  is_allergy.style.display = "none";
+  is_active.style.display = "table-cell";
+  allergy_name_text.style.display = "none";
 
   if (form.style.display == "none") {
     if (thelist) {
@@ -101,35 +85,11 @@ function quickedit(form) {
 
     form.style.display = "block";
   } else {
-    var tehrightelement1 = document.getElementById("the-list");
-    var tehrightelement = tehrightelement1.querySelectorAll(".inline-edit-row");
-    var element = document.getElementById("allergy_name");
-    var element5 = document.getElementById("allergy_description");
-    var element6 = document.getElementById("is_allergy");
-    var element7 = document.getElementById("is_active");
-
-    element.style.width = "";
-    element5.style.display = "table-cell";
-    element6.style.display = "table-cell";
-    element7.style.display = "table-cell";
-    tehrightelement.forEach((input) => {
-    var element2 = input.querySelector(".allergy_description");
-    var element3 = input.querySelector(".is_allergy");
-    var element4 = input.querySelector(".is_active");
-    element2.style.display = "table-cell";
-    element3.style.display = "table-cell";
-    element4.style.display = "table-cell";
-  });
-
-  var manage = document.querySelectorAll(".manage-column");
-  manage.forEach((managecolumn) => {
-  console.log(managecolumn.parentElement.parentElement);
-  if (managecolumn.tagName !== "TD"){
-    if (managecolumn.textContent !== "Allergy name" && managecolumn.parentElement.parentElement.tagName == "TFOOT"){
-      managecolumn.style.display = "table-cell";
-    }
-  }
-  });
+    allergy_name.colSpan = 1;
+    allergy_description.style.display = "table-cell";
+    is_allergy.style.display = "table-cell";
+    is_active.style.display = "table-cell";
+    allergy_name_text.style.display = "block";
 
     allinputs.forEach((input) => {
       input.disabled = true;
