@@ -45,8 +45,6 @@ class Allergens_Dietary_Ictoria_Filter
 			if (isset($_POST['allergen_filter_options'][$allergen['allergy_name']])) {
 				$checked = 'checked="checked"';
 			}
-			// Added separate hidden input for the filter-action property so it doesn't have to call get_options again
-			// also added the filter-extra part
 			$html .= '<div>
 				<input type="checkbox" class="checkbox" name="allergen_filter_options[' . $allergen['allergy_name'] . ']" value="' . esc_attr($allergen['allergy_name']) . '" ' . $checked . '/>
 				<span>' . __(((int) $allergen['is_allergy'] === 0 ? '' : 'No ') . $allergen['allergy_name'], 'allergens-dietary-ictoria') . '</span>

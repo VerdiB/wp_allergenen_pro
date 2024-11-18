@@ -84,9 +84,6 @@ class Allergens_Dietary_Ictoria_Allergy_Product_Queries
 
         return $wpdb->query($sql);
     }
-
-
-
     // public function getFilteredProducts( ?array $allergens, ?array $dietary ) {
     //     $allergens = (is_null($allergens) || empty($allergens)) ? "" : $allergens;
     //     $dietary = (is_null($dietary) || empty($dietary)) ? "" : $dietary;
@@ -118,7 +115,6 @@ class Allergens_Dietary_Ictoria_Allergy_Product_Queries
         $allergens_table = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
         // Initialize base query
-        $query_parts = [];
         $query_parts[] = "SELECT DISTINCT ap.product_id 
                           FROM {$table_name} ap
                           JOIN {$allergens_table} a ON ap.allergy_name = a.allergy_name";

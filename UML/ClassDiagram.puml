@@ -18,10 +18,13 @@ package "php"{
 
     class Allergens_Dietary_Ictoria_Filter{
         -{static} _instance : Allergens_Dietary_Ictoria_Filter
+        - _allergens : array
         +{static} instance() : Allergens_Dietary_Ictoria_Filter
         - __construct() : void
-        +create_filter() : void
-        +filter_query(query : String) : void
+        + create_filter() : void
+        + filter_query(query:array) : void
+        + load_css() : void
+        + load_js() : void
     }
 
     class Allergens_Dietary_Ictoria_Activator{
