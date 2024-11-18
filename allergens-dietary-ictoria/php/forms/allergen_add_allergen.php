@@ -20,7 +20,6 @@ if (!class_exists('Allergens_Dietary_Ictoria_Attachment_Queries')) {
 if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Queries')) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/DB/allergen.php';
 }
-
 /**
  * @brief This shows the tabs on add/update allergens .
  * @author T.K.
@@ -42,8 +41,8 @@ if (!enum_exists('Mime_Types')) {
 }
 
 
-if (!class_exists('Allergens_Dietary_Ictoria_Error_notice')) {
-	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/errors/error_notice.php';
+if (!class_exists('Allergens_Dietary_Ictoria_Notices')) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/notice/notice.php';
 }
 /********************************************************************/
 /********************************************************************/
@@ -73,6 +72,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 */
 	public function showForm(?string $allergenName = null)
 	{
+
+		$test = Allergens_Dietary_Ictoria_Notices::getInstance();
+		add_action('admin_notices', $test->display_admin_notice(Notice_Types::SUCCESS, 'Is great success'), 1);
 
 		if (!is_null($allergenName)) {
 			// TODO: Implement showForm() method. when the allergen name is not null
