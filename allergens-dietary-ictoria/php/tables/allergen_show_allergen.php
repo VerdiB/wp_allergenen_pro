@@ -29,6 +29,9 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
 {
 
     private static $_instance = [];
+    private static int $_page = 0;
+    // Page is statisch zodat er maar 1 is, en de zelfde waarde blijft.
+
     private function __construct()
     {
         parent::__construct([
@@ -36,6 +39,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             'plural' => 'items',
             'ajax' => false,
         ]);
+        self::$_page = isset($_REQUEST['paged']) ? $_REQUEST['paged'] : (self::$_page === null ? 0 : self::$_page);
     }
 
     private $table_action_options = ['change_status', 'delete', 'quick_edit'];
@@ -335,10 +339,10 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             // Perform action based on case
             switch ($action) {
                 case 'change_status':
-                    Allergens_Dietary_Ictoria_Allergen_Queries::singleActivationUpdate();
+                    Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->singleActivationUpdate(self::$_page);
                     break;
                 case 'delete':
-                    Allergens_Dietary_Ictoria_Allergen_Queries::delete_allergen_by_name($item);
+                    Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->delete_allergen_by_name($item, self::$_page);
                     break;
             }
         }
@@ -369,12 +373,12 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         $action = $this->current_action();
         switch ($action) {
             case 'change_status':
-                Allergens_Dietary_Ictoria_Allergen_Queries::activationUpdate($data);
+                Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->activationUpdate($data);
                 break;
             case 'delete':
                 foreach ($data['item'] as $allergy_name) {
                     $allergy_name = sanitize_text_field($allergy_name);
-                    Allergens_Dietary_Ictoria_Allergen_Queries::delete_allergen_by_name($allergy_name);
+                    Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->delete_allergen_by_name($allergy_name, self::$_page);
                 }
                 break;
         }
@@ -397,7 +401,8 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
                     foreach ($acceptable_values as $value) {
                         if ($value == 10) {
                     ?>
-                            <option value="<?php echo $value ?>" <?php echo $this->get_items_per_pages() == 10 ? 'selected' : (in_array($this->get_items_per_pages(), $acceptable_values) ? '' : 'selected'); ?>><?php echo $value ?></option>
+                            <option value="<?php echo $value ?>" <?php echo $this->get_items_per_pages() == 10 ? 'selected' : (in_array($this->get_items_per_pages(), $acceptable_values) ? '' : 'selected'); ?>><?php echo $value ?>
+                            </option>
                         <?php
                         } else {
                         ?>
