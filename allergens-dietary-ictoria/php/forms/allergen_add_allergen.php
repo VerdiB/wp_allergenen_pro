@@ -211,7 +211,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				return;
 			}
 
-			$all_query->updateAllergens($data);
 			if ($empty_file_input) {
 				return;
 			} // update only the new allergen data when not uploading a new image. name, description etc.
@@ -231,6 +230,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 					$att_query->updateAttachment($data['allergen_icon'], $data['allergen_icon_hidden']);
 				}
 			}
+			$all_query->updateAllergens($data);
 		}
 	}
 
