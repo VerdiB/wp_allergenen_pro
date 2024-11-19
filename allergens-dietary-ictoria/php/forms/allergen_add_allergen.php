@@ -211,13 +211,14 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				return;
 			}
 
+			$all_query->updateAllergens($data);
 			if ($empty_file_input) {
 				return;
 			} // update only the new allergen data when not uploading a new image. name, description etc.
 			
 
 			if ($attachment_exists) { // if the attachment exists, set to existing img and only remove attachment when not used.
-				$all_att_query->updateAllergyAttachment($data['allergen_name_hidden'], $data['allergen_icon']['name']);
+				$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
 				if ($data['allergen_icon_hidden'] !== 'no_icon_selected.png' && !$all_att_query->attachmentIsUsed($data['allergen_icon_hidden'])) {
 					$att_query->deleteAttachment($data['allergen_icon_hidden']);
 				}
@@ -225,12 +226,11 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				// Prevent losing no_icon_selected.png as image in DB, and if there are multiple of the old img don't change all of them.
 				if ($data['allergen_icon_hidden'] === 'no_icon_selected.png' || $all_att_query->checkMultipleAttachmentsExists($data['allergen_icon_hidden'])) {
 					$att_query->addAttachment($data['allergen_icon']);
-					$all_att_query->updateAllergyAttachment($data['allergen_name_hidden'], $data['allergen_icon']['name']);
+					$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
 				} else {
 					$att_query->updateAttachment($data['allergen_icon'], $data['allergen_icon_hidden']);
 				}
 			}
-			$all_query->updateAllergens($data);
 		}
 	}
 
