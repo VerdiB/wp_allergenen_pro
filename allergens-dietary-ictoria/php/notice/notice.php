@@ -69,7 +69,7 @@ class Allergens_Dietary_Ictoria_Notices
 		);
 
 	}
-	public function display_admin_notice(Notice_Types $type, $message)
+	private static function admin_notice(Notice_Types $type, string $message)
 	{
 		$message_full   = '<strong>Allergens and Dietary: </strong> '. $message;
 		$html = '<div class="notice is-dismissible ' . esc_attr($type->value) . '" style="padding:12px 12px"> <p>
@@ -77,6 +77,10 @@ class Allergens_Dietary_Ictoria_Notices
 		</p></div>';
 		echo $html;
 
+	}
+
+	public function display_admin_notice(Notice_Types $type, string $message){
+		add_action('admin_notices', self::admin_notice($type, $message));
 	}
 
 }

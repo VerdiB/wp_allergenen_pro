@@ -25,6 +25,10 @@ if (!enum_exists('Mime_Types')) {
     require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/lists/mime_types.php';
 }
 
+if ( ! class_exists( 'Allergens_Dietary_Ictoria_Notices' ) ) {
+    require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/notice/notice.php';
+}
+
 /**
  * @brief This shows the tabs on add/update allergens .
  * @author T.K.
@@ -111,12 +115,14 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
         foreach ($data as $icon) {
             // check if file is an image and if it is not, skip it
             if (false === in_array($icon['type'], $this->MIME_TYPES)) {
-                echo '<p style="color: red;">' . __('The new file: ' . $icon['name'] . ' is not a valid image.  Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.', 'allergens-dietary-ictoria') . '</p>';
+                $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+			$notice->display_admin_notice(Notice_Types::ERROR, __('The new file: ' . $icon['name'] . ' is not a valid image.  Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.', 'allergens-dietary-ictoria'));
                 continue;
             }
             // check if file is in database already and if it is, skip it
             if (true === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists($icon['name'])) {
-                echo '<p style="color: red;">' . __('The new file: ' . $icon['name'] . ' already exists.', 'allergens-dietary-ictoria') . '</p>';
+                $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+                $notice->display_admin_notice(Notice_Types::ERROR, __('The new file: ' . $icon['name'] . ' already exists.', 'allergens-dietary-ictoria'));
                 continue;
             }
 

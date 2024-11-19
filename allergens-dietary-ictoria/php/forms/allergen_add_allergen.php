@@ -73,9 +73,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	public function showForm(?string $allergenName = null)
 	{
 
-		$test = Allergens_Dietary_Ictoria_Notices::getInstance();
-		add_action('admin_notices', $test->display_admin_notice(Notice_Types::SUCCESS, 'Is great success'), 1);
-
 		if (!is_null($allergenName)) {
 			// TODO: Implement showForm() method. when the allergen name is not null
 			$this->_allergen = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllergyAttachment($allergenName);
@@ -158,12 +155,15 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		$attachment_exists = $att_query->checkAttachmentExists($data['allergen_icon']['name']);
 
-		// This is temporary, should be WP conform errors!
+		// This is temporary, should be WP conform errors!'
 		if (empty($data) || !isset($data)) {
-			echo '<p style="color: red;" >' . __('Form has not been set!', 'allergens-dietary-ictoria') . '</p>';
+			$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+			$notice->display_admin_notice(Notice_Types::ERROR, __('Form has not been set!', 'allergens-dietary-ictoria'));
+		
 			return;
 		} elseif (empty($data['allergen_name'])) {
-			echo '<p style="color: red;" >' . __("Allergen Name Can't be empty or blank!", 'allergens-dietary-ictoria') . '</p>';
+			$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+			$notice->display_admin_notice(Notice_Types::ERROR, __('Allergen Name Can\'t be empty or blank!', 'allergens-dietary-ictoria'));
 			return;
 		}
 
@@ -173,7 +173,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$no_icon_selected = false;
 
 			if ($all_query->checkAllergenExists($data['allergen_name'])) {
-				echo '<p style="color: red;" >' . __('Allergen name already exists', 'allergens-dietary-ictoria') . '</p>';
+				$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+				$notice->display_admin_notice(Notice_Types::ERROR, __('Allergen name already exists', 'allergens-dietary-ictoria'));
+				
 				return;
 			}
 
@@ -191,7 +193,8 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 			// This is temporary, should be WP conform errors!
 			if (!$valid_icon && !$no_icon_selected) {
-				echo '<p style="color: red;" >' . __('The file is not a valid image. Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.', 'allergens-dietary-ictoria') . '</p>';
+				$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+				$notice->display_admin_notice(Notice_Types::ERROR, __('The file is not a valid image. Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.', 'allergens-dietary-ictoria'));
 				return;
 			}
 
@@ -202,15 +205,18 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$all_att_query->addAllergyAttachment($data);
 
 			// Temporary feedback, should be of WP conform.
-			echo 'Succesfully added new allergen: ' . $data['allergen_name'] . '.';
+			$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+			$notice->display_admin_notice(Notice_Types::SUCCESS, __('Succesfully added new allergen: ' . $data['allergen_name'] . '.', 'allergens-dietary-ictoria'));
 		} else { // QUICK EDIT PAGE!
 			// This is temporary, should be WP conform errors!
 			if ($all_query->checkAllergenExists($data['allergen_name']) && $data['allergen_name_hidden'] !== $data['allergen_name']) {
-				echo '<p style="color: red;" >' . __('Allergen name already exists', 'allergens-dietary-ictoria') . '</p>';
+				$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+				$notice->display_admin_notice(Notice_Types::ERROR, __('Allergen name already exists', 'allergens-dietary-ictoria'));
 				return;
 			}
 			if (!$valid_icon && !$empty_file_input) {
-				echo '<p style="color: red;" >' . __('The file is not a valid image. Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.', 'allergens-dietary-ictoria') . '</p>';
+				$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+				$notice->display_admin_notice(Notice_Types::ERROR, __('The file is not a valid image. Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.', 'allergens-dietary-ictoria'));
 				return;
 			}
 
@@ -237,7 +243,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		}
 	}
 
-	/**allergen_name
+	/**
 	 * @param array $data
 	 * @brief This method sanitizes the form data for the DB.
 	 * @return array $data
