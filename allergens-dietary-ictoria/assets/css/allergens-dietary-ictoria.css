@@ -190,3 +190,7 @@ tr.inline-edit-row td {
 .allergy_name{
   min-width: 500px;
 }
+
+.allergen_icon_img{
+  margin-top: 15%;
+}

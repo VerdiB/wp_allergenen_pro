@@ -91,7 +91,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '<legend class="inline-edit-legend">' . __("Quick Edit", "allergens-dietary-ictoria") . '</legend>';
 			$html .= '<input disabled type="hidden" id="the_hidden_allergy_name" class="update_" name="allergen_name_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '"/>';
 			$html .= '<label for="allergen_name">' . __('Allergen name', 'allergens-dietary-ictoria') . '</label>';
-			$html .= '<input type="text" class="update_" name="allergen_name" id="allergen_name" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" disabled required/>';
+			$html .= '<input type="text" class="update_" name="allergen_name" id="allergen_name" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" maxlength="50" disabled required/>';
 			$html .= '<div class="dropdown-row">';
 			$html .= '<label for="type">' . __('Type', 'allergens-dietary-ictoria') . '</label>';
 			$html .= '<select name="type" id="type" class="type">';
@@ -99,7 +99,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '</select>';
 			$html .= '</div>';
 			$html .= '<label for="allergen_description">' . __('Allergen description', 'allergens-dietary-ictoria') . '</label>';
-			$html .= '<textarea class="update_" name="allergen_description" id="allergen_description" style="width: 300px; height: 70px; resize: none;" maxlength="250" disabled>'. ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '</textarea><br><br>';
+			$html .= '<textarea class="update_" name="allergen_description" id="allergen_description" style="width: 300px; min-height: 100px; resize: none;" maxlength="255" disabled>'. ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '</textarea><br><br>';
 			$html .= '</div><input disabled type="submit" class="update_ button button-primary save" name="submit" class="button button-primary" value="' . __('Update', 'allergens-dietary-ictoria') . '"/><br><br></fieldset>';
 			$html .= '<fieldset class="inline-edit-col-right drag-drop-buttons"><div class="item">';
 			$html .= '<img class="update_ allergen_icon_img" style="height: 75px;" disabled id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '"><br><br>';
