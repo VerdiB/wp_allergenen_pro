@@ -19,10 +19,14 @@ class Allergens_Dietary_Ictoria_Tabs
     //private static tabType $_tabType;
     //private static Allergens_Dietary_Ictoria_tabs $_tabsBox;
 
-
+    public static function load_js(){
+        wp_register_script('Allergens_Dietary_Ictoria_Show_Allergens', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/js/script.js'), array('jquery'));
+        wp_enqueue_script( 'Allergens_Dietary_Ictoria_Show_Allergens');
+    }
 
     public function showtabs()
     {
+        self::load_js();
         //flexbox voor tabs
         $html = '<div id="tabs_flexbox" class="nav-tab-wrapper">';
         $html .= '<a class="nav-tab" href="#">' . __("Change allergens", "allergens-dietary-ictoria") . '</a>';

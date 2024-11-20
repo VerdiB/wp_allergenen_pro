@@ -147,7 +147,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             $disabled = "auto";
         }
 
-        self::load_js();
         self::load_css();
 
         /*While using quick_edit you always need to add a file.
@@ -184,11 +183,6 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             ucfirst(str_replace('_', ' ', $action)),
         );
     }
-    }
-
-    public static function load_js(){
-        wp_register_script('Allergens_Dietary_Ictoria_Show_Allergens', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/js/script.js'), array('jquery'));
-        wp_enqueue_script( 'Allergens_Dietary_Ictoria_Show_Allergens');
     }
 
     public static function load_css(){
@@ -507,7 +501,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         $table->handle_search();
         $table->handle_items_per_page();
         $table->prepare_items();
-        echo '<form action="#" method="POST" enctype="multipart/form-data"';
+        echo '<form action="#" method="POST" id="show_allergens_form" enctype="multipart/form-data">';
         echo "<table class='wp-list-table widefat fixed striped table-view-list pages'>";
         $table->search_box('Search', 'allergens');
             $table->display();

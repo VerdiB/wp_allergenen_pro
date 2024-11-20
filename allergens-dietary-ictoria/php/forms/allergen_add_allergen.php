@@ -62,7 +62,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 		$this->MIME_NAMES = array_map(fn($case) => $case->name, Mime_Types::cases());
 	}
 
-
 	/**
 	 * @param string|null $allergenName
 	 * @brief This method shows the form to add/update allergens .
@@ -73,7 +72,6 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	 */
 	public function showForm(?string $allergenName = null)
 	{
-
 		if (!is_null($allergenName)) {
 			// TODO: Implement showForm() method. when the allergen name is not null
 			$this->_allergen = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllergyAttachment($allergenName);

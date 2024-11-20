@@ -10,7 +10,9 @@ window.onload = function () {
 function checkElementExists(id) {
   var element = document.getElementById(id);
   if (element) {
-    return element;
+    return true;
+  }else{
+    return false;
   }
 }
 
@@ -114,6 +116,7 @@ function quickedit(form) {
   }
 }
 
+if (checkElementExists("the-list") == true) {
 document.getElementById("the-list").addEventListener("click", function (event) {
   if (event.target.classList.contains("quick_edit")) {
     var quickEditing = event.target;
@@ -124,6 +127,7 @@ document.getElementById("the-list").addEventListener("click", function (event) {
     }
   }
 });
+}
 
 if (checkElementExists("dropdown-ictoria") == true) {
   button.addEventListener("click", dropdown_form);
@@ -142,18 +146,42 @@ jQuery(document).ready(function ($) {
     }
   }
 
-  // Listen for changes on any file input with the class 'allergen_icon_file_input'
   $(document).on("change", ".allergen_icon_file_input", function () {
-    // Identify the closest '.item' container to get the corresponding image
-    const itemContainer = $(this).closest('.item'); // Adjust to match the row/container class
+    const itemContainer = $(this).closest('.item');
     const imgElement = itemContainer.find('.allergen_icon_img');
 
     if (imgElement.length === 0) {
-      // console.log("No corresponding image found in the same container.");
       return;
     }
     readURL(this, imgElement);
   });
 });
 
+var formTouched = false;
 
+if (checkElementExists("show_allergens_form") == true) {
+document.getElementById('show_allergens_form').addEventListener('input', () => {
+  formTouched = true;
+});
+}
+if (checkElementExists("add_allergens_form") == true) {
+document.getElementById('add_allergens_form').addEventListener('input', () => {
+  formTouched = true;
+});
+}
+window.addEventListener('beforeunload', (event) => {
+  if (formTouched) {
+    event.preventDefault();
+    event.returnValue = '';
+  }
+});
+if (checkElementExists("show_allergens_form") == true) {
+document.getElementById('show_allergens_form').addEventListener('submit', () => {
+  formTouched = false;
+});
+}
+if (checkElementExists("add_allergens_form") == true) {
+document.getElementById('add_allergens_form').addEventListener('submit', () => {
+  formTouched = false;
+});
+}
