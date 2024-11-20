@@ -102,7 +102,9 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '<label for="allergen_description">' . __('Allergen description', 'allergens-dietary-ictoria') . '</label>';
 			$html .= '<input type="text" class="update_" name="allergen_description" id="allergen_description" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '" disabled/>';
 			$html .= '<div class="item" style="display: flex; align-items: center; gap: 15px;">';
-			$html .= '<img class="update_ allergen_icon_img" style="height: 75px;" disabled id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
+			$html .= '<figure style="text-align: center;"><img class="update_ allergen_icon_img" style="max-height: 40px; max-width: 40px;" disabled id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
+			$html .= '<figcaption style="font-size: 10px; color: gray;">The width and height of an icon are max 40px by 40px.</figcaption>';
+			$html .= '</figure>';
 			$html .= '<label class="label-quick-edit">';
 			$html .= '<input type="file" class="update_ allergen_icon_file_input" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" name="allergen_icon" id="allergen_icon_file_input" disabled>';
 			$html .= '<input type="hidden" class="update_" name="allergen_icon_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '" disabled>';
