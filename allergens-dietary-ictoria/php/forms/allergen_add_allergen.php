@@ -85,31 +85,30 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		if (in_array($page, $showOnPage, true)) {
 
-
-			$html = '<fieldset class="update_form">';
-			$html .= '<div class="form-column">';
-			$html .= '<input disabled type="hidden" class="update_" name="allergen_name_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '"/>';
+			$html = '<fieldset class="update_form inline-edit-product.quick-edit-row">';
+			$html .= '<div class="inline-edit-wrapper" aria-labelledby="quick-edit-legend">';
+			$html .= '<fieldset class="inline-edit-col-left"><div>';
+			$html .= '<legend class="inline-edit-legend">' . __("Quick Edit", "allergens-dietary-ictoria") . '</legend>';
+			$html .= '<input disabled type="hidden" id="the_hidden_allergy_name" class="update_" name="allergen_name_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '"/>';
 			$html .= '<label for="allergen_name">' . __('Allergen name', 'allergens-dietary-ictoria') . '</label>';
-			$html .= '<input type="text" class="update_" name="allergen_name" id="allergen_name" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" disabled required/>';
+			$html .= '<input type="text" class="update_" name="allergen_name" id="allergen_name" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" maxlength="50" disabled required/>';
 			$html .= '<div class="dropdown-row">';
 			$html .= '<label for="type">' . __('Type', 'allergens-dietary-ictoria') . '</label>';
 			$html .= '<select name="type" id="type" class="type">';
 			$html .= self::do_dropdown();
 			$html .= '</select>';
 			$html .= '</div>';
-			$html .= '<input disabled type="submit" class="update_" name="submit" class="button button-primary" value="' . __('Update', 'allergens-dietary-ictoria') . '"/>';
-			$html .= '</div>';
 			$html .= '<label for="allergen_description">' . __('Allergen description', 'allergens-dietary-ictoria') . '</label>';
-			$html .= '<input type="text" class="update_" name="allergen_description" id="allergen_description" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '" disabled/>';
-			$html .= '<div class="item" style="display: flex; align-items: center; gap: 15px;">';
-			$html .= '<img class="update_ allergen_icon_img" style="height: 75px;" disabled id="allergen_icon_img" src="' . $this->_allergen['attachment_path'] . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
-			$html .= '<label class="label-quick-edit">';
+			$html .= '<textarea class="update_" name="allergen_description" id="allergen_description" style="width: 300px; min-height: 100px; resize: none;" maxlength="255" disabled>'. ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '</textarea><br><br>';
+			$html .= '</div><input disabled type="submit" class="update_ button button-primary save" name="submit" class="button button-primary" value="' . __('Update', 'allergens-dietary-ictoria') . '"/><br><br></fieldset>';
+			$html .= '<fieldset class="inline-edit-col-right drag-drop-buttons"><div class="item">';
+			$html .= '<img class="update_ allergen_icon_img" style="height: 75px;" disabled id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '"><br><br>';
+			$html .= '<label class="label-quick-edit wp-core-ui button">';
 			$html .= '<input type="file" class="update_ allergen_icon_file_input" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" name="allergen_icon" id="allergen_icon_file_input" disabled>';
 			$html .= '<input type="hidden" class="update_" name="allergen_icon_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '" disabled>';
 			$html .= '<span>Set image</span>';
-			$html .= '</label>';
-			$html .= '</div>';
-			$html .= '</fieldset>';
+			$html .= '</label></div><br></fieldset>';
+			$html .= '</div></fieldset">';
 		} else {
 			$html = '<fieldset>';
 			$html .= '<label for="allergen_name">' . __('Allergen name', 'allergens-dietary-ictoria') . '</label><br>';
@@ -127,8 +126,8 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '<span>Set image</span>';
 			$html .= '</label><br><br><br>';
 			$html .= '<input type="submit" name="submit" class="button button-primary" value="' . __('Add allergen', 'allergens-dietary-ictoria') . '"/><br>';
+			$html .= '</fieldset>';
 		}
-		$html .= '</fieldset>';
 
 		echo $html;
 	}
@@ -223,7 +222,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			
 
 			if ($attachment_exists) { // if the attachment exists, set to existing img and only remove attachment when not used.
-				$all_att_query->updateAllergyAttachment($data['allergen_name_hidden'], $data['allergen_icon']['name']);
+				$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
 				if ($data['allergen_icon_hidden'] !== 'no_icon_selected.png' && !$all_att_query->attachmentIsUsed($data['allergen_icon_hidden'])) {
 					$att_query->deleteAttachment($data['allergen_icon_hidden']);
 				}
@@ -231,7 +230,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				// Prevent losing no_icon_selected.png as image in DB, and if there are multiple of the old img don't change all of them.
 				if ($data['allergen_icon_hidden'] === 'no_icon_selected.png' || $all_att_query->checkMultipleAttachmentsExists($data['allergen_icon_hidden'])) {
 					$att_query->addAttachment($data['allergen_icon']);
-					$all_att_query->updateAllergyAttachment($data['allergen_name_hidden'], $data['allergen_icon']['name']);
+					$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
 				} else {
 					$att_query->updateAttachment($data['allergen_icon'], $data['allergen_icon_hidden']);
 				}

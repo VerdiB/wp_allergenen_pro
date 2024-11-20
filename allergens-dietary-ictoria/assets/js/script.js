@@ -1,4 +1,3 @@
-console.log("connected");
 var button = document.getElementById("dropdown-ictoria");
 var quickEdit = document.querySelectorAll(".quick_edit");
 
@@ -30,6 +29,12 @@ function quickedit(form) {
   var allinputs = field.querySelectorAll(".update_");
   var counter = 0;
   var thelist = document.getElementById("the-list");
+  var tablerow = field.parentElement.parentElement.parentElement;
+  var allergy_name = tablerow.querySelector(".allergy_name");
+  var allergy_name_text = allergy_name.querySelector(".allergen_name");
+  var allergy_description = tablerow.querySelector(".allergy_description");
+  var is_allergy = tablerow.querySelector(".is_allergy");
+  var is_active = tablerow.querySelector(".is_active");
 
   if (form.style.display == "none") {
     if (thelist) {
@@ -45,10 +50,21 @@ function quickedit(form) {
           var closeallselectdropdownoptions =
             closeselectdropdown.querySelectorAll(".option");
           var closeallinputs = closefield.querySelectorAll(".update_");
+          var closetablerow = closefield.parentElement.parentElement.parentElement;
+          var closeallergy_name = closetablerow.querySelector(".allergy_name");
+          var closeallergy_name_text = closeallergy_name.querySelector(".allergen_name");
+          var closeallergy_description = closetablerow.querySelector(".allergy_description");
+          var closeis_allergy = closetablerow.querySelector(".is_allergy");
+          var closeis_active = closetablerow.querySelector(".is_active");
 
           if (closeforms.style.display == "none") {
             closeallinputs.forEach((closeinput) => {
               closeinput.disabled = true;
+              closeallergy_name.colSpan = 1;
+              closeallergy_description.style.display = "table-cell";
+              closeis_allergy.style.display = "table-cell";
+              closeis_active.style.display = "table-cell";
+              closeallergy_name_text.style.display = "block";
             });
 
             closeallselectdropdownoptions.forEach((closeoption) => {
@@ -73,8 +89,19 @@ function quickedit(form) {
       option.disabled = false;
     });
 
+    allergy_name.colSpan = 3;
+    allergy_description.style.display = "none";
+    is_allergy.style.display = "none";
+    is_active.style.display = "table-cell";
+    allergy_name_text.style.display = "none";
     form.style.display = "block";
   } else {
+    allergy_name.colSpan = 1;
+    allergy_description.style.display = "table-cell";
+    is_allergy.style.display = "table-cell";
+    is_active.style.display = "table-cell";
+    allergy_name_text.style.display = "block";
+
     allinputs.forEach((input) => {
       input.disabled = true;
     });
