@@ -170,10 +170,10 @@
   align-items: center;
 }
 
-label.label-quick-edit input[type="file"] {
+label.label-quick-edit, label.label-add input[type="file"] {
   display: none;
 }
-.label-quick-edit {
+.label-quick-edit .label-add {
   border: 1px solid #8c8f94;
   color: black;
   border-radius: 4px;
@@ -183,7 +183,7 @@ label.label-quick-edit input[type="file"] {
   height: max-content;
   background: #ffffff;
 }
-.label-quick-edit:hover {
+.label-quick-edit:hover, label.label-add:hover {
   background: #e4e4e4;
   cursor: pointer;
 }

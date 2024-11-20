@@ -117,6 +117,7 @@ jQuery(document).ready(function ($) {
 
   // Listen for changes on any file input with the class 'allergen_icon_file_input'
   $(document).on("change", ".allergen_icon_file_input", function () {
+    console.log("running")
     // Identify the closest '.item' container to get the corresponding image
     const itemContainer = $(this).closest('.item'); // Adjust to match the row/container class
     const imgElement = itemContainer.find('.allergen_icon_img');
