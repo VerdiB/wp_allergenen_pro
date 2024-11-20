@@ -502,10 +502,8 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
         $table->handle_items_per_page();
         $table->prepare_items();
         echo '<form action="#" method="POST" id="show_allergens_form" enctype="multipart/form-data">';
-        echo "<table class='wp-list-table widefat fixed striped table-view-list pages'>";
         $table->search_box('Search', 'allergens');
             $table->display();
-        echo "</table>";
         echo "</form>";
     }
 }
