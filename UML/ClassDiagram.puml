@@ -253,7 +253,6 @@ package "php"{
             + showtabs() : void
             + showpages() : void
             + {static} getInstance() : Allergens_Dietary_Ictoria_Tabs
-            + {static} load_js() : void
             + {static} getStyles() : void
 
         }
