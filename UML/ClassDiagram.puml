@@ -114,19 +114,19 @@ package "php"{
     }
     package "notice"{
 
-    enum NoticeTypes{
-        ERROR
-        INFO
-        SUCCESS
-        NOTICE
-    }
+        enum NoticeTypes{
+            ERROR
+            INFO
+            SUCCESS
+            NOTICE
+        }
 
-    class Allergens_Dietary_Ictoria_Notices{
-        -{static} _instance : Allergens_Dietary_Ictoria_Notices
-        + getInstance(): Allergens_Dietary_Ictoria_Notices
-        - __construct():void 
-        + display_notice(type:NoticeType, message:string) : void
-    }
+        class Allergens_Dietary_Ictoria_Notices{
+            -{static} _instance : Allergens_Dietary_Ictoria_Notices
+            + getInstance(): Allergens_Dietary_Ictoria_Notices
+            - __construct():void 
+            + display_notice(type:NoticeType, message:string) : void
+        }
 
     }
 
@@ -163,6 +163,7 @@ package "php"{
             - MIME_TYPES : array
             - MIME_NAMES : array
             - {static} _message : string 
+            - {static} _type: Notice_Types
             + __construct(isTable:bool): void
             + showForm(allergenName:String) : void
             + submit(data:array) : void
