@@ -45,8 +45,6 @@ class Allergens_Dietary_Ictoria_Form
 	private static ?self $_instance = null;
 	private static FormType $_formType;
 	private static I_Allergens_Dietary_Ictoria_Form $_formObject;
-	private /*associative*/ array $_data;
-	// private static bool $_isTable;
 
 	private function __construct(bool $isTable = false)
 	{

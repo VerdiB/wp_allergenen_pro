@@ -20,7 +20,7 @@ class Allergens_Dietary_Ictoria_Notices
 {
 
 	private static ?Allergens_Dietary_Ictoria_Notices $_instance = null;
-
+	
 	/**
 	 * @brief singleton method to get the instance of the class
 	 * @return Allergens_Dietary_Ictoria_Notices

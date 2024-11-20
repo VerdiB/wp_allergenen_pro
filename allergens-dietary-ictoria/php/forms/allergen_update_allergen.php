@@ -55,7 +55,7 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
         $this->MIME_NAMES = array_map(fn($case) => $case->name, Mime_Types::cases());
         $this->_allergens = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllAllergyAttachmments(true);
     
-        if (! empty(self::$message) || self::$message != ''){
+        if (! empty(self::$_message) || self::$_message != ''){
 
             $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
             $notice->display_admin_notice(Notice_Types::ERROR, __(self::$_message, 'allergens-dietary-ictoria'));		
@@ -125,11 +125,17 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
             // check if file is an image and if it is not, skip it
             if (false === in_array($icon['type'], $this->MIME_TYPES)) {
                 self::$_message = 'The new file: ' . $icon['name'] . ' is not a valid image.  Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.';
+                $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+                $notice->display_admin_notice(Notice_Types::ERROR, __(self::$_message, 'allergens-dietary-ictoria'));		
+    
                 continue;
             }
             // check if file is in database already and if it is, skip it
             if (true === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists($icon['name'])) {
                 self::$_message ='The new file: ' . $icon['name'] . ' already exists.';
+                $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+                $notice->display_admin_notice(Notice_Types::ERROR, __(self::$_message, 'allergens-dietary-ictoria'));		
+    
                 continue;
             }
 
