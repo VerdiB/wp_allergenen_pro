@@ -54,7 +54,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	private ?array $_allergen = null;
 	private array $MIME_TYPES;
 	private array $MIME_NAMES;
-	private static string $message = 'test';
+	private static string $message = '';
 
 	public function __construct(bool $isTable = false)
 	{
@@ -64,7 +64,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			if (! empty(self::$message) || self::$message != ''){
 
 				$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
-				$notice->display_admin_notice(Notice_Types::WARNING, __(self::$message, 'allergens-dietary-ictoria'));		
+				$notice->display_admin_notice(Notice_Types::ERROR, __(self::$message, 'allergens-dietary-ictoria'));		
 				self::$message = '';
 			}
 			Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
@@ -203,8 +203,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 			// This is temporary, should be WP conform errors!
 			if (!$valid_icon && !$no_icon_selected) {
-				$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
-				$notice->display_admin_notice(Notice_Types::ERROR, __('The file is not a valid image. Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.', 'allergens-dietary-ictoria'));
+				self::$message = 'The file is not a valid image. Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.';
 				return;
 			}
 
@@ -215,18 +214,15 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$all_att_query->addAllergyAttachment($data);
 
 			// Temporary feedback, should be of WP conform.
-			$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
-			$notice->display_admin_notice(Notice_Types::SUCCESS, __('Succesfully added new allergen: ' . $data['allergen_name'] . '.', 'allergens-dietary-ictoria'));
+			self::$message = 'Succesfully added new allergen: ' . $data['allergen_name'] . '.';
 		} else { // QUICK EDIT PAGE!
 			// This is temporary, should be WP conform errors!
 			if ($all_query->checkAllergenExists($data['allergen_name']) && $data['allergen_name_hidden'] !== $data['allergen_name']) {
-				$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
-				$notice->display_admin_notice(Notice_Types::ERROR, __('Allergen name already exists', 'allergens-dietary-ictoria'));
+				self::$message = 'Allergen name already exists';
 				return;
 			}
 			if (!$valid_icon && !$empty_file_input) {
-				$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
-				$notice->display_admin_notice(Notice_Types::ERROR, __('The file is not a valid image. Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.', 'allergens-dietary-ictoria'));
+				self::$message = 'The file is not a valid image. Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.';
 				return;
 			}
 
