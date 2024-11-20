@@ -123,7 +123,7 @@ class Allergens_Dietary_Ictoria_Form
 			self::$_formObject->showForm($allergenName);
 			echo '</div>';
 		} else {
-			echo '<div class="allergens_form"><form action="" method="post" enctype="multipart/form-data" class="add_allergens_form">';
+			echo '<div class="allergens_form health-check-body"><form action="" method="post" enctype="multipart/form-data" class="add_allergens_form">';
 			self::$_formObject->showForm($allergenName);
 			echo '</form></div>';
 		}

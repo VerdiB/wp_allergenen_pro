@@ -164,10 +164,10 @@
   align-items: center;
 }
 
-label.label-quick-edit, label.label-add input[type="file"] {
+label.label-quick-edit input[type="file"] {
   display: none;
 }
-.label-quick-edit .label-add {
+.label-quick-edit {
   border: 1px solid #8c8f94;
   color: black;
   border-radius: 4px;
@@ -177,7 +177,7 @@ label.label-quick-edit, label.label-add input[type="file"] {
   height: max-content;
   background: #ffffff;
 }
-.label-quick-edit:hover, label.label-add:hover {
+.label-quick-edit:hover {
   background: #e4e4e4;
   cursor: pointer;
 }
@@ -191,6 +191,11 @@ tr.inline-edit-row td {
   min-width: 500px;
 }
 
-.allergen_icon_img{
+.inline-edit-col-right.item.allergen_icon_img{
   margin-top: 15%;
+}
+
+.health-check-body, .privacy-settings-body {
+  max-width: 33%;
+  margin: auto;
 }

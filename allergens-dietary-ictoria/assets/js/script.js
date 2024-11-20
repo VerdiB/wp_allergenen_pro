@@ -10,7 +10,9 @@ window.onload = function () {
 function checkElementExists(id) {
   var element = document.getElementById(id);
   if (element) {
-    return element;
+    return true;
+  }else{
+    return false;
   }
 }
 
@@ -114,6 +116,7 @@ function quickedit(form) {
   }
 }
 
+if (checkElementExists("the-list") == true) {
 document.getElementById("the-list").addEventListener("click", function (event) {
   if (event.target.classList.contains("quick_edit")) {
     var quickEditing = event.target;
@@ -124,6 +127,7 @@ document.getElementById("the-list").addEventListener("click", function (event) {
     }
   }
 });
+}
 
 if (checkElementExists("dropdown-ictoria") == true) {
   button.addEventListener("click", dropdown_form);
@@ -147,11 +151,14 @@ jQuery(document).ready(function ($) {
     console.log("running")
     // Identify the closest '.item' container to get the corresponding image
     const itemContainer = $(this).closest('.item'); // Adjust to match the row/container class
+    console.log(itemContainer);
     const imgElement = itemContainer.find('.allergen_icon_img');
+    console.log(imgElement);
 
     if (imgElement.length === 0) {
-      // console.log("No corresponding image found in the same container.");
-      return;
+      console.log("No corresponding image found in the same container.");
+    }else{
+      console.log("corresponding image found");
     }
     readURL(this, imgElement);
   });
