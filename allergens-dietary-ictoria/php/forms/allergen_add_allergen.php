@@ -54,11 +54,21 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	private ?array $_allergen = null;
 	private array $MIME_TYPES;
 	private array $MIME_NAMES;
+	private static string $message = 'test';
 
-	public function __construct()
+	public function __construct(bool $isTable = false)
 	{
 		$this->MIME_TYPES = Mime_Types::get_mime_types();
 		$this->MIME_NAMES = array_map(fn($case) => $case->name, Mime_Types::cases());
+		if (false === $isTable){
+			if (! empty(self::$message) || self::$message != ''){
+
+				$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+				$notice->display_admin_notice(Notice_Types::WARNING, __(self::$message, 'allergens-dietary-ictoria'));		
+				self::$message = '';
+			}
+			Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
+		}
 	}
 
 
@@ -157,8 +167,8 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 		// This is temporary, should be WP conform errors!'
 		if (empty($data) || !isset($data)) {
-			$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
-			$notice->display_admin_notice(Notice_Types::ERROR, __('Form has not been set!', 'allergens-dietary-ictoria'));
+			// $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+			// $notice->display_admin_notice(Notice_Types::ERROR, __('Form has not been set!', 'allergens-dietary-ictoria'));
 		
 			return;
 		} elseif (empty($data['allergen_name'])) {

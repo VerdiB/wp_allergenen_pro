@@ -69,10 +69,11 @@ class Allergens_Dietary_Ictoria_Notices
 		);
 
 	}
+
 	private static function admin_notice(Notice_Types $type, string $message)
 	{
 		$message_full   = '<strong>Allergens and Dietary: </strong> '. $message;
-		$html = '<div class="notice is-dismissible ' . esc_attr($type->value) . '" style="padding:12px 12px"> <p>
+		$html = '<div class="notice is-dismissible ' . esc_attr($type->value) . '"> <p>
 			' . wp_kses_post($message_full) . '
 		</p></div>';
 		echo $html;
@@ -80,7 +81,10 @@ class Allergens_Dietary_Ictoria_Notices
 	}
 
 	public function display_admin_notice(Notice_Types $type, string $message){
-		add_action('admin_notices', self::admin_notice($type, $message));
+		add_action('admin_notices', self::admin_notice($type, $message),5);
+		// add_action('admin_notices',  static function() use ($type, $message) {
+		// 	self::admin_notice($type, $message);
+		// });
 	}
 
 }

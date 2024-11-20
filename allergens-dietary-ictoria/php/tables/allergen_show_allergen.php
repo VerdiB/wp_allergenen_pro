@@ -40,6 +40,10 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             'ajax' => false,
         ]);
         self::$_page = isset($_REQUEST['paged']) ? $_REQUEST['paged'] : (self::$_page === null ? 0 : self::$_page);
+
+
+        // $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+        // $notice->display_admin_notice(Notice_Types::WARNING, __('is great success', 'allergens-dietary-ictoria'));
     }
 
     private $table_action_options = ['change_status', 'delete', 'quick_edit'];
@@ -172,7 +176,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             );
         } else {
             Allergens_Dietary_Ictoria_Form::setFormType(FormType::ALLERGENS);
-            Allergens_Dietary_Ictoria_Form::getInstance()->showForm(esc_attr($item['allergy_name']));
+            Allergens_Dietary_Ictoria_Form::getInstance(true)->showForm(esc_attr($item['allergy_name']));
 
             return $is_default ? '<a style="color: grey;">' . ucfirst(str_replace('_', ' ', $action)) . '</a>' : sprintf(
                 '<a class="%s" id="%s" style="color: ' . $color . '; pointer-events: %s;" href="#&item=%s">%s</a>',
