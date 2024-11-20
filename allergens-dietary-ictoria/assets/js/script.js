@@ -159,6 +159,7 @@ jQuery(document).ready(function ($) {
 
 var formTouched = false;
 
+/*Detects if an input in the form is being edited*/
 if (checkElementExists("show_allergens_form") == true) {
 document.getElementById('show_allergens_form').addEventListener('input', () => {
   formTouched = true;
@@ -169,12 +170,16 @@ document.getElementById('add_allergens_form').addEventListener('input', () => {
   formTouched = true;
 });
 }
+
+/*Gives a notification if the form is edited without being submitted*/
 window.addEventListener('beforeunload', (event) => {
   if (formTouched) {
     event.preventDefault();
     event.returnValue = '';
   }
 });
+
+/*This is to avoid that the notification is shown when the form was already submitted*/
 if (checkElementExists("show_allergens_form") == true) {
 document.getElementById('show_allergens_form').addEventListener('submit', () => {
   formTouched = false;
