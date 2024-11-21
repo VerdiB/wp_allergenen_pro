@@ -1,6 +1,5 @@
 var button = document.getElementById("dropdown-ictoria");
 var quickEdit = document.querySelectorAll(".quick_edit");
-//document.getElementsByTagName("body")[0].classList.remove("mobile");
 
 window.onload = function () {
   if (checkElementExists("dropdown-ictoria") == "dropdown-ictoria") {
@@ -8,6 +7,7 @@ window.onload = function () {
   }
 };
 
+//Check if the element exists
 function checkElementExists(id) {
   var element = document.getElementById(id);
   if (element) {
@@ -17,6 +17,7 @@ function checkElementExists(id) {
   }
 }
 
+//Opens the form when triggered
 function dropdown_form() {
   if (document.getElementById("allergens-ictoria").style.display == "none") {
     document.getElementById("allergens-ictoria").style.display = "block";
@@ -25,6 +26,7 @@ function dropdown_form() {
   }
 }
 
+//Opens the quick edit
 function quickedit(form) {
   var field = form.querySelector(".update_form");
   var selectdropdown = field.querySelector(".type");
