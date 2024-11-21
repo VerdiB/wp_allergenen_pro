@@ -187,11 +187,7 @@ tr.inline-edit-row td {
   position: relative;
 }
 
-.allergy_name{
-  min-width: 500px;
-}
-
-.inline-edit-col-right.item.allergen_icon_img{
+.allergen_icon_img{
   margin-top: 15%;
 }
 

@@ -223,13 +223,7 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		return $is_default == 1 ? true : false;
 	}
 
-	public static function send_header(string $page = null)
-	{
-		$url = strtok($_SERVER["REQUEST_URI"], '?');
-		return header("Location: $url" . "?page=" . ($page ? $page : "allergens-dietary-show-allergens"));
-	}
-
-	public static function delete_allergen_by_name(string $allergy_name)
+	public function delete_allergen_by_name(string $allergy_name, int $return_page = null)
 	{
 		try {
 			global $wpdb;
@@ -408,4 +402,3 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		}
 	}
 }
-
