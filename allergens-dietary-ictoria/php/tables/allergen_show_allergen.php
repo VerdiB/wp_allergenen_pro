@@ -109,7 +109,7 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
     public function single_row($item)
     {
         $this->column_location_id($item);
-        echo '<tr class="inline-edit-row inline-edit-row-post quick-edit-row quick-edit-row-post inline-edit-post">';
+        echo '<tr class="inline-edit-row-post quick-edit-row quick-edit-row-post inline-edit-post">';
         $this->single_row_columns($item);
         echo '</tr>';
     }

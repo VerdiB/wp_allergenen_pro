@@ -1,5 +1,6 @@
 var button = document.getElementById("dropdown-ictoria");
 var quickEdit = document.querySelectorAll(".quick_edit");
+//document.getElementsByTagName("body")[0].classList.remove("mobile");
 
 window.onload = function () {
   if (checkElementExists("dropdown-ictoria") == "dropdown-ictoria") {
@@ -26,6 +27,7 @@ function dropdown_form() {
 
 function quickedit(form) {
   var field = form.querySelector(".update_form");
+  field.parentElement.parentElement.parentElement.classList.add("inline-edit-row");
   var selectdropdown = field.querySelector(".type");
   var allselectdropdownoptions = selectdropdown.querySelectorAll(".option");
   var allinputs = field.querySelectorAll(".update_");
@@ -93,15 +95,21 @@ function quickedit(form) {
 
     allergy_name.colSpan = 3;
     allergy_description.style.display = "none";
+    allergy_description.classList.add("hidden");
     is_allergy.style.display = "none";
+    is_allergy.classList.add("hidden");
     is_active.style.display = "table-cell";
     allergy_name_text.style.display = "none";
     form.style.display = "block";
   } else {
+    field.parentElement.parentElement.parentElement.classList.remove("inline-edit-row");
     allergy_name.colSpan = 1;
     allergy_description.style.display = "table-cell";
+    allergy_description.classList.remove("hidden");
     is_allergy.style.display = "table-cell";
+    is_allergy.classList.remove("hidden");
     is_active.style.display = "table-cell";
+    is_active.classList.remove("hidden");
     allergy_name_text.style.display = "block";
 
     allinputs.forEach((input) => {
