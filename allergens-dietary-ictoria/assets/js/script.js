@@ -27,7 +27,6 @@ function dropdown_form() {
 
 function quickedit(form) {
   var field = form.querySelector(".update_form");
-  field.parentElement.parentElement.parentElement.classList.add("inline-edit-row");
   var selectdropdown = field.querySelector(".type");
   var allselectdropdownoptions = selectdropdown.querySelectorAll(".option");
   var allinputs = field.querySelectorAll(".update_");
@@ -35,13 +34,21 @@ function quickedit(form) {
   var thelist = document.getElementById("the-list");
   var tablerow = field.parentElement.parentElement.parentElement;
   var allergy_name = tablerow.querySelector(".allergy_name");
+  var togglerow = allergy_name.querySelector(".toggle-row");
   var allergy_name_text = allergy_name.querySelector(".allergen_name");
   var allergy_description = tablerow.querySelector(".allergy_description");
   var is_allergy = tablerow.querySelector(".is_allergy");
   var is_active = tablerow.querySelector(".is_active");
 
+  if (document.getElementsByTagName("body")[0].classList.contains("mobile")){
+    is_allergy.classList.add("hidden");
+    allergy_description.classList.add("hidden");
+    is_active.classList.add("hidden");
+  }
+
   if (form.style.display == "none") {
     if (thelist) {
+      field.parentElement.parentElement.parentElement.classList.add("inline-edit-row");
       var trs = thelist.querySelectorAll("tr");
 
       trs.forEach((tr) => {
@@ -64,11 +71,20 @@ function quickedit(form) {
           if (closeforms.style.display == "none") {
             closeallinputs.forEach((closeinput) => {
               closeinput.disabled = true;
-              closeallergy_name.colSpan = 1;
-              closeallergy_description.style.display = "table-cell";
-              closeis_allergy.style.display = "table-cell";
-              closeis_active.style.display = "table-cell";
-              closeallergy_name_text.style.display = "block";
+              if (!document.getElementsByTagName("body")[0].classList.contains("mobile")){
+                closeallergy_name.colSpan = 1;
+                closeallergy_description.style.display = "table-cell";
+                closeis_allergy.style.display = "table-cell";
+                closeis_active.style.display = "table-cell";
+                closeallergy_name_text.style.display = "block";
+              }else{
+                if (document.getElementsByTagName("body")[0].classList.contains("mobile")){
+                  is_allergy.classList.add("hidden");
+                  allergy_description.classList.add("hidden");
+                  is_active.classList.add("hidden");
+                  togglerow.style.display = "none";
+                }
+              }
             });
 
             closeallselectdropdownoptions.forEach((closeoption) => {
@@ -93,24 +109,30 @@ function quickedit(form) {
       option.disabled = false;
     });
 
+  if (!document.getElementsByTagName("body")[0].classList.contains("mobile")){
     allergy_name.colSpan = 3;
     allergy_description.style.display = "none";
-    allergy_description.classList.add("hidden");
     is_allergy.style.display = "none";
-    is_allergy.classList.add("hidden");
     is_active.style.display = "table-cell";
     allergy_name_text.style.display = "none";
-    form.style.display = "block";
+  }
+  form.style.display = "block";
   } else {
     field.parentElement.parentElement.parentElement.classList.remove("inline-edit-row");
-    allergy_name.colSpan = 1;
-    allergy_description.style.display = "table-cell";
-    allergy_description.classList.remove("hidden");
-    is_allergy.style.display = "table-cell";
-    is_allergy.classList.remove("hidden");
-    is_active.style.display = "table-cell";
-    is_active.classList.remove("hidden");
-    allergy_name_text.style.display = "block";
+    if (!document.getElementsByTagName("body")[0].classList.contains("mobile")){
+      allergy_name.colSpan = 1;
+      allergy_description.style.display = "table-cell";
+      is_allergy.style.display = "table-cell";
+      is_active.style.display = "table-cell";
+      allergy_name_text.style.display = "block";
+    }else{
+      if (document.getElementsByTagName("body")[0].classList.contains("mobile")){
+        is_allergy.classList.remove("hidden");
+        allergy_description.classList.remove("hidden");
+        is_active.classList.remove("hidden");
+        togglerow.style.display = "block";
+      }
+    }
 
     allinputs.forEach((input) => {
       input.disabled = true;
