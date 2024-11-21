@@ -119,7 +119,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= self::do_dropdown();
 			$html .= '</select> <br><br>';
 			$html .= '<label for="allergen_description">' . __('Allergen description', 'allergens-dietary-ictoria') . '</label><br>';
-			$html .= '<input type="text" name="allergen_description" id="allergen_description" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '"/><br><br>';
+			$html .= '<textarea class="update_" name="allergen_description" id="allergen_description" style="width: 300px; min-height: 100px; resize: none;" maxlength="255">'. ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '</textarea><br><br>';
 			$html .= '<div class="item"></fieldset><fieldset class="inline-edit-col-right drag-drop-buttons"><div class="item">';
 			$html .= '<img class="update_ add_allergen_icon_img" id="allergen_icon_img"  style="height: 75px;" src="' . get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/no_icon_selected.png" alt="no_icon_selected.png"><br>';
 			$html .= '<label class="label-quick-edit wp-core-ui button">';
