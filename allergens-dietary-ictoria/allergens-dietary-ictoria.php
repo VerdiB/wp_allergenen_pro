@@ -63,7 +63,7 @@ class load_language
 
 	function translation_init()
 	{
-		load_plugin_textdomain('allergens-dietary-ictoria', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+		load_plugin_textdomain('allergens-dietary-ictoria', false, ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/languages');
 	}
 }
 

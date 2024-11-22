@@ -97,8 +97,6 @@ package "php"{
             # edit_row_action(id:string) : string
             + handle_row_actions(item:array, column_name:string, primary:string) : array
             - build_action_url(action:string, item:array) : string
-            + {static} load_js() : void
-            + {static} load_css() : void
             - handle_search() : void
             - handle_items_per_page() : void
             # single_row_columns(item:object) : void
@@ -269,8 +267,8 @@ package "php"{
         class Allergens_Dietary_Ictoria_Tabs{
             + showtabs() : void
             + showpages() : void
-            +{static} getInstance() : Allergens_Dietary_Ictoria_Tabs
-            +{static} getStyles() : void
+            + {static} getInstance() : Allergens_Dietary_Ictoria_Tabs
+            + {static} getStyles() : void
 
         }
     }  
