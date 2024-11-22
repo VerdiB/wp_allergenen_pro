@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Allergens-Dietary-Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2024-10-11 10:46+0200\n"
+"POT-Creation-Date: 2024-11-22 08:55+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -33,7 +33,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-7: tests\n"
 "X-Poedit-SearchPathExcluded-8: UML\n"
 
-#: allergens-dietary-ictoria.php:146
+#: allergens-dietary-ictoria.php:140
 #, php-format
 msgid ""
 "%1$sThe WooCommerce Integration class was not found. Please make sure "
@@ -42,7 +42,7 @@ msgstr ""
 "%1$sDe WooCommerce-integratieklasse is niet gevonden. Controleer of "
 "WooCommerce correct is geïnstalleerd%2$s"
 
-#: allergens-dietary-ictoria.php:176
+#: allergens-dietary-ictoria.php:173
 #, php-format
 msgid ""
 "%1$sWooCommerce is inactive or not installed. Please install & activate "
@@ -51,129 +51,237 @@ msgstr ""
 "%1$sWooCommerce is niet actief of niet geïnstalleerd. Installeer en activeer "
 "WooCommerce%2$s"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:39
-#, fuzzy
-#| msgid "allergensdietary"
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:43
 msgid "Allergens and Dietary"
-msgstr "allergenendieët"
+msgstr "Allergenen en dieet"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:51 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:52
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:56
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:57
 #: php/forms/allergen_form_license.php:42
+#: php/forms/allergen_form_license.php:43
 msgid "License key"
 msgstr "Licentie sleutel"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:63 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:64
-#: php/forms/allergen_add_allergen.php:75
-#, fuzzy
-#| msgid "add allergen"
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:65
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:66
+#: php/forms/allergen_add_allergen.php:125
 msgid "Add allergen"
-msgstr "allergeen toevoegen"
+msgstr "Allergeen toevoegen"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:75 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:76
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:75
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:76
+#: php/tabs/allergen_tabs.php:31
 msgid "Info"
-msgstr ""
+msgstr "Info"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:87 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:88
-#, fuzzy
-#| msgid "add allergen"
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:87
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:88
 msgid "Update allergen"
-msgstr "allergeen toevoegen"
+msgstr "Allergeen updaten"
 
-#: php/filter.php:68
-msgid "exclude"
-msgstr "exclusief"
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:95
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:96
+msgid "Show allergens"
+msgstr "Weergeef allergenen"
 
-#: php/forms/allergen_add_allergen.php:65
-#, fuzzy
-#| msgid "Allergens"
+#: php/DB/allergen.php:246
+msgid "Can't delete a default allergen option: '"
+msgstr "Kan geen standaard allergeen verwijderen"
+
+#: php/DB/allergen.php:284
+msgid "Error deleting allergen: '"
+msgstr "Fout met verwijderen van allergeen:"
+
+#: php/activator.php:414
+msgid "allergens-dietary-ictoria"
+msgstr "allergenen-dieët-ictoria"
+
+#: php/errors/error_notice.php:14
+#, php-format
+msgid "%1$sAllergens and Dietary is inactive:%2$s"
+msgstr "%1$sAllergenen en Dieët is niet actief:%2$s"
+
+#: php/forms/allergen_add_allergen.php:92
+#: php/forms/allergen_add_allergen.php:115
 msgid "Allergen name"
-msgstr "Allergenen"
+msgstr "Allergeen naam"
 
-#: php/forms/allergen_add_allergen.php:67
+#: php/forms/allergen_add_allergen.php:95
+#: php/forms/allergen_add_allergen.php:117
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
-#: php/forms/allergen_add_allergen.php:71
-#, fuzzy
-#| msgid "allergens_dietary_ictoria_options"
-msgid "Allergen description"
-msgstr "allergenen_dieët_ictoria_opties"
-
-#: php/forms/allergen_add_allergen.php:73
-#, fuzzy
-#| msgid "Allergens"
-msgid "Allergen icon"
-msgstr "Allergenen"
+#: php/forms/allergen_add_allergen.php:100
+msgid "Update"
+msgstr "Allergeen updaten"
 
 #: php/forms/allergen_add_allergen.php:102
-msgid "Allergen already exists"
-msgstr ""
+#: php/forms/allergen_add_allergen.php:121
+msgid "Allergen description"
+msgstr "Allergeen descriptie"
 
-#: php/forms/allergen_add_allergen.php:109
-msgid "The file is not a valid image"
-msgstr ""
+#: php/forms/allergen_add_allergen.php:123
+msgid "Allergen icon"
+msgstr "Allergenen icoon"
 
-#: php/forms/allergen_add_allergen.php:116
-msgid "Attachment already exists"
-msgstr ""
-
-#: php/forms/allergen_add_allergen.php:152
-#: php/forms/allergen_add_allergen.php:158
 #: php/forms/allergen_add_allergen.php:161
-#, fuzzy
-#| msgid "Allergens"
-msgid "Allergy"
-msgstr "Allergenen"
+msgid "Form has not been set!"
+msgstr "Formulier is niet ingevuld!"
 
-#: php/forms/allergen_add_allergen.php:153
-#: php/forms/allergen_add_allergen.php:159
-#: php/forms/allergen_add_allergen.php:162
-msgid "Dietary restriction"
+#: php/forms/allergen_add_allergen.php:164
+msgid "Allergen Name Can't be empty or blank!"
+msgstr "Allergeen naam kan niet leeg zijn!"
+
+#: php/forms/allergen_add_allergen.php:174
+#: php/forms/allergen_add_allergen.php:207
+msgid "Allergen name already exists"
+msgstr "Allergeen naam bestaat reeks al"
+
+#: php/forms/allergen_add_allergen.php:192
+#: php/forms/allergen_add_allergen.php:211
+msgid "The file is not a valid image. Supported image types are: "
 msgstr ""
+"Het gekozen bestand is geen valide afbeelding formaat. De toegestane "
+"afbeelding formaten zijn: "
+
+#: php/forms/allergen_add_allergen.php:264
+#: php/forms/allergen_add_allergen.php:272
+#: php/forms/allergen_add_allergen.php:275
+msgid "Allergy"
+msgstr "Allergie"
+
+#: php/forms/allergen_add_allergen.php:265
+#: php/forms/allergen_add_allergen.php:273
+#: php/forms/allergen_add_allergen.php:276
+msgid "Dietary restriction"
+msgstr "Dieet restrictie"
 
 #: php/forms/allergen_form_license.php:44
 msgid "Verify license key"
 msgstr "Verifieer licentie sleutel"
 
-#: php/functions.php:20
-msgid "allergens-dietary-ictoria"
-msgstr "allergenen-dieët-ictoria"
+#: php/forms/allergen_update_allergen.php:66
+msgid "Update custom allergen icons"
+msgstr "Update aangepaste allergeen iconen"
 
-#: php/functions.php:25
-msgid "allergens_dietary_ictoria_settings"
-msgstr "allergenen_dieët_ictoria_instellingen"
+#: php/forms/allergen_update_allergen.php:70
+msgid "Allergen"
+msgstr "Allergeen"
 
-#: php/functions.php:79
-#, php-format
-msgid "%1$sAllergens and Dietary is inactive:%2$s"
-msgstr "%1$sAllergenen en Dieët is niet actief:%2$s"
+#: php/forms/allergen_update_allergen.php:71
+msgid "Description"
+msgstr "Descriptie"
 
-#: php/product_settings.php:26
-msgid "Allergens"
-msgstr "Allergenen"
+#: php/forms/allergen_update_allergen.php:72
+msgid "Current Icon"
+msgstr "Huidig icoon"
 
-#: php/product_settings.php:27
-msgid "allergens_dietary_ictoria_product_data"
-msgstr "allergenen_dieët_ictoria_product_gegevens"
+#: php/forms/allergen_update_allergen.php:73
+msgid "Upload New Icon"
+msgstr "Upload Nieuwe Icoon"
 
-#: php/product_settings.php:37 php/product_settings.php:96
-#: php/wc_integration.php:12
-msgid "allergens_dietary_ictoria"
-msgstr "allergenen_dieët_ictoria"
+#: php/forms/allergen_update_allergen.php:91
+msgid "Update Icons"
+msgstr "Update Iconen"
 
-#: php/product_settings.php:92
-msgid "_allergens_dietary_ictoria_option"
-msgstr "allergenen_dieët_ictoria_optie"
+#: php/forms/allergen_update_allergen.php:114
+#: php/forms/allergen_update_allergen.php:119
+msgid "The new file: "
+msgstr "Het nieuwe bestand: "
 
-#: php/wc_integration.php:13
+#: php/lists/allergen_info.php:30
+msgid "PREMIUM  [Requires licence]"
+msgstr "PREMIUM  [Vereist een licentie]"
+
+#: php/lists/allergen_info.php:32
+msgid "Updating allergies"
+msgstr "Update allergenen"
+
+#: php/lists/allergen_info.php:33
+msgid "Changing allergy themes"
+msgstr "Verander allergeen thema's"
+
+#: php/lists/allergen_info.php:34
+msgid "Deleting allergies"
+msgstr "Verwijder allergenen"
+
+#: php/lists/allergen_info.php:35
+msgid "Adding allergies"
+msgstr "Allergenen toevoegen"
+
+#: php/lists/allergen_info.php:36
+msgid "Custom look on product"
+msgstr "Aangepaste uitstraling op product"
+
+#: php/lists/allergen_info.php:37
+msgid "Custom look in store"
+msgstr "Aangepaste uitstraling op winkel"
+
+#: php/lists/allergen_info.php:40
+msgid "FREE VERSION  [Standard]"
+msgstr "GRATIS VERSIE  [Standaard]"
+
+#: php/lists/allergen_info.php:42
+msgid "Connecting allergies to products"
+msgstr "Verbind allergenen aan producten"
+
+#: php/lists/allergen_info.php:43
+msgid "Wordpress theme fiendly styles"
+msgstr "Wordpress thema vriendelijke styles"
+
+#: php/lists/allergen_info.php:44
+msgid "An allergen overview"
+msgstr "Een allergenen overzicht"
+
+#: php/lists/allergen_info.php:45
+msgid "Turning the use of allergies on/off"
+msgstr "Zet het gebruik van allergenen aan/uit"
+
+#: php/tables/allergen_show_allergen.php:225
+msgid "Change status"
+msgstr "Verander status"
+
+#: php/tables/allergen_show_allergen.php:226
+msgid "Delete"
+msgstr "Verwijder"
+
+#: php/tables/allergen_show_allergen.php:280
+msgid "Allergy name"
+msgstr "Allergeen naam"
+
+#: php/tables/allergen_show_allergen.php:281
+msgid "Allergy description"
+msgstr "Allergeen omschrijving"
+
+#: php/tables/allergen_show_allergen.php:282
+msgid "Allergy or Dietary"
+msgstr "Allergeen of Dieetwens"
+
+#: php/tables/allergen_show_allergen.php:283
+msgid "Status"
+msgstr "Status"
+
+#: php/tabs/allergen_tabs.php:28
+msgid "Change allergens"
+msgstr "Verander allergenen"
+
+#: php/tabs/allergen_tabs.php:29
+msgid "Create allergens"
+msgstr "Voeg allergenen toe"
+
+#: php/tabs/allergen_tabs.php:30
+msgid "See allergens"
+msgstr "Zie allergenen"
+
+#: php/wc_integration.php:25
 msgid "Allergens and Dietary Ictoria plugin settings"
 msgstr "Allergenen en Dieët Ictoria plugin instellingen"
 
-#: php/wc_integration.php:30
+#: php/wc_integration.php:42
 msgid "allergensdietary"
 msgstr "allergenendieët"
 
-#: php/wc_integration.php:58
+#: php/wc_integration.php:70
 msgid ""
 "Enable and disable allergens and dietary options on the whole website. This "
 "only changes the availability of the options and does not add or remove them "
@@ -183,26 +291,48 @@ msgstr ""
 "verandert alleen de beschikbaarheid van de opties en voegt ze niet toe aan "
 "of verwijdert ze van producten"
 
-#: php/wc_integration.php:111
+#: php/wc_integration.php:123
 msgid "allergens_dietary_ictoria_options"
 msgstr "allergenen_dieët_ictoria_opties"
 
-#: php/wc_integration.php:116
+#: php/wc_integration.php:128
 msgid "Settings"
 msgstr "Instellingen"
 
-#: php/activator:php:37
-msgid "Peanuts"
-msgstr "Pinda's"
+#: php/woocommerce/product_settings.php:49
+msgid "Allergens"
+msgstr "Allergenen"
+
+#: php/woocommerce/product_settings.php:79
+msgid "Select allergen('s) and/or dietary restrictions:"
+msgstr "Selecteer allergenen en/of dieet restricties:"
+
+#~ msgid "exclude"
+#~ msgstr "exclusief"
+
+#~ msgid "Attachment already exists"
+#~ msgstr "Bijlage bestaat al reeks"
+
+#~ msgid "allergens_dietary_ictoria_settings"
+#~ msgstr "allergenen_dieët_ictoria_instellingen"
+
+#~ msgid "allergens_dietary_ictoria_product_data"
+#~ msgstr "allergenen_dieët_ictoria_product_gegevens"
+
+#~ msgid "allergens_dietary_ictoria"
+#~ msgstr "allergenen_dieët_ictoria"
+
+#~ msgid "_allergens_dietary_ictoria_option"
+#~ msgstr "allergenen_dieët_ictoria_optie"
+
+#~ msgid "Peanuts"
+#~ msgstr "Pinda's"
 
 #~ msgid "initial_setup_done"
 #~ msgstr "initiële_setup_voltooid"
 
 #~ msgid "no"
 #~ msgstr "geen "
-
-#~ msgid "allergen"
-#~ msgstr "allergeen"
 
 #~ msgid "active"
 #~ msgstr "actief"
