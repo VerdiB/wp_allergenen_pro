@@ -110,7 +110,7 @@ class Allergens_Dietary_Ictoria_Plugin_Menu
 
 	public function myAdminPage()
 	{
-		remove_submenu_page('allergens-dietary-options', 'allergens-dietary-options');
+		// echo the HTML here .......
 	}
 
 	public function licenseForm()
