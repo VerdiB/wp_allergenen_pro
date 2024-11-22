@@ -163,12 +163,6 @@
 
 /* QUICK EDIT */
 
-.update_form {
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-}
-
 .form-row {
   display: flex;
   justify-content: space-between;
@@ -191,4 +185,13 @@ label.label-quick-edit input[type="file"] {
 .label-quick-edit:hover {
   background: #e4e4e4;
   cursor: pointer;
+}
+
+tr.inline-edit-row td {
+  padding: 8px 10px;
+  position: relative;
+}
+
+.allergen_icon_img{
+  margin-top: 15%;
 }

@@ -16,10 +16,17 @@ if (!defined('ABSPATH')) {
 class Allergens_Dietary_Ictoria_Tabs
 {
     private static ?self $_instance = null;
-    //private static tabType $_tabType;
-    //private static Allergens_Dietary_Ictoria_tabs $_tabsBox;
+    
+    public function __construct()
+	{
+        //load js
+		wp_register_script('Allergens_Dietary_Ictoria_Show_Allergens', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/js/script.js'), array('jquery'));
+        wp_enqueue_script( 'Allergens_Dietary_Ictoria_Show_Allergens');
 
-
+        //load css
+        wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/css/allergens-dietary-ictoria.css'));
+	    wp_enqueue_style('allergens-dietary-ictoria-css');
+	}
 
     public function showtabs()
     {

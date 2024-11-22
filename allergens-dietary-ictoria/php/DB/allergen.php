@@ -403,4 +403,3 @@ class Allergens_Dietary_Ictoria_Allergen_Queries
 		}
 	}
 }
-
