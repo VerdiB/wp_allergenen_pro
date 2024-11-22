@@ -79,7 +79,7 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
             $html .= '<tr>';
             $html .= '<td>' . esc_html($allergen['allergy_name']) . '</td>';
             $html .= '<td>' . esc_html($allergen['allergy_description']) . '</td>';
-            $html .= '<td>' . '<img style="width:50px;" src="' . esc_html($allergen['attachment_path']) . '" alt="' . esc_html($allergen['attachment_name']) . '" </td>';
+            $html .= '<td>' . '<img style="max-height: 40px; max-width: 40px;" src="' . esc_html($allergen['attachment_path']) . '" alt="' . esc_html($allergen['attachment_name']) . '" </td>';
             $html .= '<td>';
             $html .= '<input type="hidden" name="allergen_icon_hidden[' . esc_attr($allergen['allergy_name']) . ']" value="' . ($allergen['attachment_name'] ? esc_attr($allergen['attachment_name']) : "") . '" >';
             $html .= '<input type="file" name="' . esc_attr($allergen['allergy_name']) . '" id="allergen_icon_' . esc_attr($allergen['allergy_name']) . '" >';
