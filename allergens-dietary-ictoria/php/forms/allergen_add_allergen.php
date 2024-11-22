@@ -71,7 +71,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				$notice->display_admin_notice(self::$_type,self::$message);		
 				self::$message = '';
 			}
-			Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
+			// Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
 		}
 	}
 
