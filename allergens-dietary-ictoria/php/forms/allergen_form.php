@@ -45,9 +45,8 @@ class Allergens_Dietary_Ictoria_Form
 	private static ?self $_instance = null;
 	private static FormType $_formType;
 	private static I_Allergens_Dietary_Ictoria_Form $_formObject;
-	private /*associative*/ array $_data;
 
-	private function __construct()
+	private function __construct(bool $isTable = false)
 	{
 		if (FormType::ALLERGENS === self::$_formType) {
 			self::$_formObject = new Allergens_Dietary_Ictoria_Allergen_Form();
@@ -63,7 +62,7 @@ class Allergens_Dietary_Ictoria_Form
 		}
 	}
 
-	public static function getInstance()
+	public static function getInstance(bool $isTable = false)
 	{
 		if (self::$_instance === null) {
 			self::$_instance = new self();
