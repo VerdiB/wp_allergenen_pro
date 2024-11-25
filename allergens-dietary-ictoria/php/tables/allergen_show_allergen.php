@@ -16,6 +16,10 @@ if ( ! class_exists( 'Allergens_Dietary_Ictoria_Form' ) ) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form.php';
 }
 
+if ( ! class_exists( 'Allergens_Dietary_Ictoria_Notices' ) ) {
+    require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/notice/notice.php';
+}
+
 /**
  * @class Allergens_Dietary_Ictoria_Show_Allergens
  * @brief Class that shows the allergens
@@ -330,11 +334,19 @@ class Allergens_Dietary_Ictoria_Show_Allergens extends WP_List_Table
             // Perform action based on case
             switch ($action) {
                 case 'change_status':
+                    $message = __('Status changed', 'allergens-dietary-ictoria');
+                    $type = Notice_Types::INFO;
+                    $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+                    $notice->display_admin_notice($type, $message);
                     Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->singleActivationUpdate(self::$_page);
-                    break;
+                break;
                 case 'delete':
+                    $message = __('Allergen deleted', 'allergens-dietary-ictoria');
+                    $type = Notice_Types::INFO;
+                    $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+                    $notice->display_admin_notice($type, $message);
                     Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->delete_allergen_by_name($item, self::$_page);
-                    break;
+                break;
             }
         }
     }

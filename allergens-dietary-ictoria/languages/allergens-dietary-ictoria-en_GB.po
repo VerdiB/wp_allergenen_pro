@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Allergens-Dietary-Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2024-11-25 13:42+0100\n"
+"POT-Creation-Date: 2024-11-25 14:14+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -254,29 +254,37 @@ msgstr "Turning the the use of allergies on/off"
 msgid "%1$sAllergens and Dietary is inactive:%2$s"
 msgstr "%1$sAllergens and Dietary is inactive:%2$s"
 
-#: php/tables/allergen_show_allergen.php:215
+#: php/tables/allergen_show_allergen.php:219
 msgid "Change status"
 msgstr "Change status"
 
-#: php/tables/allergen_show_allergen.php:216
+#: php/tables/allergen_show_allergen.php:220
 msgid "Delete"
 msgstr "Delete"
 
-#: php/tables/allergen_show_allergen.php:274
+#: php/tables/allergen_show_allergen.php:278
 msgid "Allergy name"
 msgstr "Allergen name"
 
-#: php/tables/allergen_show_allergen.php:275
+#: php/tables/allergen_show_allergen.php:279
 msgid "Allergy description"
 msgstr "Allergen description"
 
-#: php/tables/allergen_show_allergen.php:276
+#: php/tables/allergen_show_allergen.php:280
 msgid "Allergy or Dietary"
 msgstr "Allergens or Dietary"
 
-#: php/tables/allergen_show_allergen.php:277
+#: php/tables/allergen_show_allergen.php:281
 msgid "Status"
 msgstr "Status"
+
+#: php/tables/allergen_show_allergen.php:337
+msgid "Status changed"
+msgstr "Status changed"
+
+#: php/tables/allergen_show_allergen.php:344
+msgid "Allergen deleted"
+msgstr "Allergen deleted"
 
 #: php/tabs/allergen_tabs.php:35
 msgid "Change allergens"
