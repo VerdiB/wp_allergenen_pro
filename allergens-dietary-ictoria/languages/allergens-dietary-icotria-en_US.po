@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Allergens-Dietary-Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2024-10-15 09:31+0200\n"
+"POT-Creation-Date: 2024-11-25 11:00+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -34,7 +34,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-7: tests\n"
 "X-Poedit-SearchPathExcluded-8: UML\n"
 
-#: allergens-dietary-ictoria.php:151
+#: allergens-dietary-ictoria.php:140
 #, php-format
 msgid ""
 "%1$sThe WooCommerce Integration class was not found. Please make sure "
@@ -43,7 +43,7 @@ msgstr ""
 "%1$sThe WooCommerce Integration class was not found. Please make sure "
 "WooCommerce is installed correctly%2$s"
 
-#: allergens-dietary-ictoria.php:181
+#: allergens-dietary-ictoria.php:173
 #, php-format
 msgid ""
 "%1$sWooCommerce is inactive or not installed. Please install & activate "
@@ -52,205 +52,243 @@ msgstr ""
 "%1$sWooCommerce is inactive or not installed. Please install & activate "
 "WooCommerce%2$s"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:39
-#, fuzzy
-#| msgid "allergensdietary"
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:43
 msgid "Allergens and Dietary"
-msgstr "allergensdietary"
+msgstr "Allergens and Dietary"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:51 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:52
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:56
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:57
 #: php/forms/allergen_form_license.php:42
 #: php/forms/allergen_form_license.php:43
 msgid "License key"
-msgstr ""
+msgstr "License key"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:63 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:64
-#: php/forms/allergen_add_allergen.php:75
-#, fuzzy
-#| msgid "allergen"
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:65
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:66
+#: php/forms/allergen_add_allergen.php:122
 msgid "Add allergen"
-msgstr "allergen"
+msgstr "Add allergen"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:75 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:76
-#: php/tabs/allergen_tabs.php:31
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:75
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:76
+#: php/tabs/allergen_tabs.php:38
 msgid "Info"
-msgstr ""
+msgstr "Info"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:87 php/Allergens_Dietary_Ictoria_Plugin_Menu.php:88
-#, fuzzy
-#| msgid "allergen"
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:87
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:88
 msgid "Update allergen"
-msgstr "allergen"
+msgstr "Update allergen"
 
-#: php/filter.php:71
-msgid "exclude"
-msgstr "exclude"
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:95
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:96
+msgid "Show allergens"
+msgstr "Show allergens"
 
-#: php/forms/allergen_add_allergen.php:65
-#, fuzzy
-#| msgid "Allergens"
-msgid "Allergen name"
-msgstr "Allergens"
+#: php/DB/allergen.php:246
+msgid "Can't delete a default allergen option: '"
+msgstr "Can't delete a default allergen option: '"
 
-#: php/forms/allergen_add_allergen.php:67
-msgid "Type"
-msgstr ""
+#: php/DB/allergen.php:284
+msgid "Error deleting allergen: '"
+msgstr "Error deleting allergen: '"
 
-#: php/forms/allergen_add_allergen.php:71
-#, fuzzy
-#| msgid "allergens_dietary_ictoria_options"
-msgid "Allergen description"
-msgstr "allergens_dietary_ictoria_options"
-
-#: php/forms/allergen_add_allergen.php:73
-#, fuzzy
-#| msgid "Allergens"
-msgid "Allergen icon"
-msgstr "Allergens"
-
-#: php/forms/allergen_add_allergen.php:102
-msgid "Allergen already exists"
-msgstr ""
-
-#: php/forms/allergen_add_allergen.php:109
-msgid "The file is not a valid image"
-msgstr ""
-
-#: php/forms/allergen_add_allergen.php:116
-msgid "Attachment already exists"
-msgstr ""
-
-#: php/forms/allergen_add_allergen.php:152
-#: php/forms/allergen_add_allergen.php:158
-#: php/forms/allergen_add_allergen.php:161
-#, fuzzy
-#| msgid "Allergens"
-msgid "Allergy"
-msgstr "Allergens"
-
-#: php/forms/allergen_add_allergen.php:153
-#: php/forms/allergen_add_allergen.php:159
-#: php/forms/allergen_add_allergen.php:162
-msgid "Dietary restriction"
-msgstr ""
-
-#: php/forms/allergen_form_license.php:44
-msgid "Verify license key"
-msgstr ""
-
-#: php/functions.php:25
+#: php/activator.php:414
 msgid "allergens-dietary-ictoria"
 msgstr "allergens-dietary-ictoria"
 
-#: php/functions.php:30
-msgid "allergens_dietary_ictoria_settings"
-msgstr "allergens_dietary_ictoria_settings"
-
-#: php/functions.php:35 php/wc_integration.php:111
-msgid "allergens_dietary_ictoria_options"
-msgstr "allergens_dietary_ictoria_options"
-
-#: php/functions.php:84
+#: php/errors/error_notice.php:14
 #, php-format
 msgid "%1$sAllergens and Dietary is inactive:%2$s"
 msgstr "%1$sAllergens and Dietary is inactive:%2$s"
 
-#: php/lists/allergen_info.php:26
-msgid "PREMIUM  [Requires licence]"
-msgstr ""
+#: php/forms/allergen_add_allergen.php:89
+msgid "Quick Edit"
+msgstr "Quick Edit"
 
-#: php/lists/allergen_info.php:28
-#, fuzzy
-#| msgid "allergen"
-msgid "Updating allergy"
-msgstr "allergen"
+#: php/forms/allergen_add_allergen.php:91
+#: php/forms/allergen_add_allergen.php:112
+msgid "Allergen name"
+msgstr "Allergen name"
 
-#: php/lists/allergen_info.php:29
-msgid "Changing allergy themes"
-msgstr ""
+#: php/forms/allergen_add_allergen.php:94
+#: php/forms/allergen_add_allergen.php:114
+msgid "Type"
+msgstr "Type"
+
+#: php/forms/allergen_add_allergen.php:99
+#: php/forms/allergen_add_allergen.php:118
+msgid "Allergen description"
+msgstr "Allergen description"
+
+#: php/forms/allergen_add_allergen.php:101
+msgid "Update"
+msgstr "Update"
+
+#: php/forms/allergen_add_allergen.php:107
+msgid "Set image"
+msgstr "Set image"
+
+#: php/forms/allergen_add_allergen.php:120
+msgid "Allergen icon"
+msgstr "Allergen icon"
+
+#: php/forms/allergen_add_allergen.php:158
+msgid "Form has not been set!"
+msgstr "Form has not been set!"
+
+#: php/forms/allergen_add_allergen.php:161
+msgid "Allergen Name Can't be empty or blank!"
+msgstr "Allergen Name Can't be empty or blank!"
+
+#: php/forms/allergen_add_allergen.php:171
+#: php/forms/allergen_add_allergen.php:204
+msgid "Allergen name already exists"
+msgstr "AllergensAllergen name already exists"
+
+#: php/forms/allergen_add_allergen.php:189
+#: php/forms/allergen_add_allergen.php:208
+msgid "The file is not a valid image. Supported image types are: "
+msgstr "The file is not a valid image. Supported image types are: "
+
+#: php/forms/allergen_add_allergen.php:261
+#: php/forms/allergen_add_allergen.php:269
+#: php/forms/allergen_add_allergen.php:272
+msgid "Allergy"
+msgstr "Allergy"
+
+#: php/forms/allergen_add_allergen.php:262
+#: php/forms/allergen_add_allergen.php:270
+#: php/forms/allergen_add_allergen.php:273
+msgid "Dietary restriction"
+msgstr "Dietary restriction"
+
+#: php/forms/allergen_form_license.php:44
+msgid "Verify license key"
+msgstr "Verify license key"
+
+#: php/forms/allergen_update_allergen.php:66
+msgid "Update custom allergen icons"
+msgstr "Update custom allergen icons"
+
+#: php/forms/allergen_update_allergen.php:70
+msgid "Allergen"
+msgstr "Allergen"
+
+#: php/forms/allergen_update_allergen.php:71
+msgid "Description"
+msgstr "Description"
+
+#: php/forms/allergen_update_allergen.php:72
+msgid "Current Icon"
+msgstr "Current Icon"
+
+#: php/forms/allergen_update_allergen.php:73
+msgid "Upload New Icon"
+msgstr "Upload New Icon"
+
+#: php/forms/allergen_update_allergen.php:91
+msgid "Update Icons"
+msgstr "Update Icons"
+
+#: php/forms/allergen_update_allergen.php:114
+#: php/forms/allergen_update_allergen.php:119
+msgid "The new file: "
+msgstr "The new file: "
 
 #: php/lists/allergen_info.php:30
-msgid "Deleting allergies"
-msgstr ""
-
-#: php/lists/allergen_info.php:31
-#, fuzzy
-#| msgid "Allergens"
-msgid "Adding allergies"
-msgstr "Allergens"
+msgid "PREMIUM  [Requires licence]"
+msgstr "PREMIUM  [Requires licence]"
 
 #: php/lists/allergen_info.php:32
-msgid "Custom look on product"
-msgstr ""
+msgid "Updating allergies"
+msgstr "Updating allergies"
 
 #: php/lists/allergen_info.php:33
-msgid "Custom look in store"
-msgstr ""
+msgid "Changing allergy themes"
+msgstr "Changing allergy themes"
+
+#: php/lists/allergen_info.php:34
+msgid "Deleting allergies"
+msgstr "Deleting allergies"
+
+#: php/lists/allergen_info.php:35
+msgid "Adding allergies"
+msgstr "Adding allergies"
 
 #: php/lists/allergen_info.php:36
-msgid "FREE VERSION  [Standard]"
-msgstr ""
+msgid "Custom look on product"
+msgstr "Custom look on product"
 
-#: php/lists/allergen_info.php:38
-msgid "Connecting allergies to products"
-msgstr ""
-
-#: php/lists/allergen_info.php:39
-msgid "Wordpress theme fiendly styles"
-msgstr ""
+#: php/lists/allergen_info.php:37
+msgid "Custom look in store"
+msgstr "Custom look in store"
 
 #: php/lists/allergen_info.php:40
+msgid "FREE VERSION  [Standard]"
+msgstr "FREE VERSION  [Standard]"
+
+#: php/lists/allergen_info.php:42
+msgid "Connecting allergies to products"
+msgstr "Connecting allergies to products"
+
+#: php/lists/allergen_info.php:43
+msgid "Wordpress theme fiendly styles"
+msgstr "Wordpress theme fiendly styles"
+
+#: php/lists/allergen_info.php:44
 msgid "An allergen overview"
-msgstr ""
+msgstr "An allergen overview"
 
-#: php/lists/allergen_info.php:41
-msgid "Turning the the use of allergies on/off"
-msgstr ""
+#: php/lists/allergen_info.php:45
+msgid "Turning the use of allergies on/off"
+msgstr "Turning the use of allergies on/off"
 
-#: php/product_settings.php:26
-msgid "Allergens"
-msgstr "Allergens"
+#: php/tables/allergen_show_allergen.php:211
+msgid "Change status"
+msgstr "Change status"
 
-#: php/product_settings.php:27
-msgid "allergens_dietary_ictoria_product_data"
-msgstr "allergens_dietary_ictoria_product_data"
+#: php/tables/allergen_show_allergen.php:212
+msgid "Delete"
+msgstr "Delete"
 
-#: php/product_settings.php:37 php/product_settings.php:96
-#: php/wc_integration.php:12
-msgid "allergens_dietary_ictoria"
-msgstr "allergens_dietary_ictoria"
+#: php/tables/allergen_show_allergen.php:270
+msgid "Allergy name"
+msgstr "Allergy name"
 
-#: php/product_settings.php:92
-msgid "_allergens_dietary_ictoria_option"
-msgstr "_allergens_dietary_ictoria_option"
+#: php/tables/allergen_show_allergen.php:271
+msgid "Allergy description"
+msgstr "Allergy description"
 
-#: php/tabs/allergen_tabs.php:28
-#, fuzzy
-#| msgid "allergen"
+#: php/tables/allergen_show_allergen.php:272
+msgid "Allergy or Dietary"
+msgstr "Allergy or Dietary"
+
+#: php/tables/allergen_show_allergen.php:273
+msgid "Status"
+msgstr "Status"
+
+#: php/tabs/allergen_tabs.php:35
 msgid "Change allergens"
-msgstr "allergen"
+msgstr "Change allergens"
 
-#: php/tabs/allergen_tabs.php:29
-#, fuzzy
-#| msgid "allergen"
+#: php/tabs/allergen_tabs.php:36
 msgid "Create allergens"
-msgstr "allergen"
+msgstr "Create allergens"
 
-#: php/tabs/allergen_tabs.php:30
-#, fuzzy
-#| msgid "allergen"
+#: php/tabs/allergen_tabs.php:37
 msgid "See allergens"
-msgstr "allergen"
+msgstr "See allergens"
 
-#: php/wc_integration.php:13
+#: php/wc_integration.php:25
 msgid "Allergens and Dietary Ictoria plugin settings"
 msgstr "Allergens and Dietary Ictoria plugin settings"
 
-#: php/wc_integration.php:30
+#: php/wc_integration.php:42
 msgid "allergensdietary"
 msgstr "allergensdietary"
 
-#: php/wc_integration.php:58
+#: php/wc_integration.php:70
 msgid ""
 "Enable and disable allergens and dietary options on the whole website. This "
 "only changes the availability of the options and does not add or remove them "
@@ -260,9 +298,36 @@ msgstr ""
 "only changes the availability of the options and does not add or remove them "
 "from products"
 
-#: php/wc_integration.php:116
+#: php/wc_integration.php:123
+msgid "allergens_dietary_ictoria_options"
+msgstr "allergens_dietary_ictoria_options"
+
+#: php/wc_integration.php:128
 msgid "Settings"
 msgstr "Settings"
+
+#: php/woocommerce/product_settings.php:49
+msgid "Allergens"
+msgstr "Allergens"
+
+#: php/woocommerce/product_settings.php:79
+msgid "Select allergen('s) and/or dietary restrictions:"
+msgstr "Select allergen('s) and/or dietary restrictions:"
+
+#~ msgid "exclude"
+#~ msgstr "exclude"
+
+#~ msgid "allergens_dietary_ictoria_settings"
+#~ msgstr "allergens_dietary_ictoria_settings"
+
+#~ msgid "allergens_dietary_ictoria_product_data"
+#~ msgstr "allergens_dietary_ictoria_product_data"
+
+#~ msgid "allergens_dietary_ictoria"
+#~ msgstr "allergens_dietary_ictoria"
+
+#~ msgid "_allergens_dietary_ictoria_option"
+#~ msgstr "_allergens_dietary_ictoria_option"
 
 #~ msgid "initial_setup_done"
 #~ msgstr "initial_setup_done"

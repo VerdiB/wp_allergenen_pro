@@ -42,7 +42,7 @@ class Allergens_Dietary_Ictoria_Info
         $html .= '<li class="contains">' . __("Connecting allergies to products", "allergens-dietary-ictoria") . '</li>';
         $html .= '<li class="contains">' . __("Wordpress theme fiendly styles", "allergens-dietary-ictoria") . '</li>';
         $html .= '<li class="contains">' . __("An allergen overview", "allergens-dietary-ictoria") . '</li>';
-        $html .= '<li class="contains">' . __("Turning the the use of allergies on/off", "allergens-dietary-ictoria") . '</li>';
+        $html .= '<li class="contains">' . __("Turning the use of allergies on/off", "allergens-dietary-ictoria") . '</li>';
         $html .= '      </ol>';
         $html .= '  </div>';
         $html .= '  </div>';
