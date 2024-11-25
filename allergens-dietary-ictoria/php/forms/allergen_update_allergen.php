@@ -117,7 +117,7 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
         foreach ($data as $icon) {
             // check if file is an image and if it is not, skip it
             if (false === in_array($icon['type'], $this->MIME_TYPES)) {
-                self::$_message = 'The new file: ' . $icon['name'] . ' is not a valid image.  Supported image types are: ' . implode(', ', $this->MIME_NAMES) . '.';
+                self::$_message = __('The new file: ' . $icon['name'] . ' is not a valid image.  Supported image types are: ' . implode(', ', $this->MIME_NAMES), 'allergens-dietary-ictoria') . '.';
                 $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
                 $notice->display_admin_notice(Notice_Types::ERROR, __(self::$_message, 'allergens-dietary-ictoria'));		
     
@@ -125,7 +125,7 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
             }
             // check if file is in database already and if it is, skip it
             if (true === Allergens_Dietary_Ictoria_Attachment_Queries::getInstance()->checkAttachmentExists($icon['name'])) {
-                self::$_message ='The new file: ' . $icon['name'] . ' already exists.';
+                self::$_message =__('The new file: ' . $icon['name'] . ' already exists.', 'allergens-dietary-ictoria');
                 $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
                 $notice->display_admin_notice(Notice_Types::ERROR, __(self::$_message, 'allergens-dietary-ictoria'));		
     
