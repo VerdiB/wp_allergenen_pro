@@ -100,12 +100,15 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '<textarea class="update_" name="allergen_description" id="allergen_description" style="width: 300px; min-height: 100px; resize: none;" maxlength="255" disabled>'. ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '</textarea><br><br>';
 			$html .= '</div><input disabled type="submit" class="update_ button button-primary save" name="submit" class="button button-primary" value="' . __('Update', 'allergens-dietary-ictoria') . '"/><br><br></fieldset>';
 			$html .= '<fieldset class="inline-edit-col-right drag-drop-buttons"><div class="item">';
-			$html .= '<img class="update_ allergen_icon_img" style="height: 75px;" disabled id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '"><br><br>';
-			$html .= '<label class="label-quick-edit wp-core-ui button">';
+			$html .= '<figure style="text-align: center;"><img class="update_ allergen_icon_img" style="max-height: 40px; max-width: 40px;" disabled id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
+			$html .= '<figcaption style="font-size: 10px; color: gray;">The width and height of an icon are max 40px by 40px.</figcaption>';
+			$html .= '<br><label class="label-quick-edit wp-core-ui button">';
 			$html .= '<input type="file" class="update_ allergen_icon_file_input" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" name="allergen_icon" id="allergen_icon_file_input" disabled>';
 			$html .= '<input type="hidden" class="update_" name="allergen_icon_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '" disabled>';
 			$html .= '<span>Set image</span>';
-			$html .= '</label></div><br></fieldset>';
+			$html .= '</label>';
+			$html .= '</figure>';
+			$html .= '</div><br></fieldset>';
 			$html .= '</div></fieldset">';
 		} else {
 			$html = '<table><fieldset id="the-list" class="inline-edit-product.quick-edit-row">';

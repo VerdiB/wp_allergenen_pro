@@ -87,7 +87,7 @@ class Allergens_Dietary_Ictoria_Product_Settings
 				<div class="allergen-field">
 					<input type="checkbox" class="checkbox" value="1" name="' . $this->replace_space_chars($allergen['allergy_name']) . '_allergens_dietary_ictoria" ' . ((array_search($allergen['allergy_name'], $this->_attachedAllergens)) ? 'checked="" ' : '') . '/>
 					<span class="description">
-						<img style="max-height:50px; max-width:50px;" alt="' . $allergen['allergy_name'] . '" src="' . $allergen['attachment_path'] . '"/>&nbsp;' . $allergen['allergy_name'] . '
+						<img style="max-height: 40px; max-width: 40px;" alt="' . $allergen['allergy_name'] . '" src="' . $allergen['attachment_path'] . '"/>&nbsp;' . $allergen['allergy_name'] . '
 					</span>
 				</div>';
 		}
