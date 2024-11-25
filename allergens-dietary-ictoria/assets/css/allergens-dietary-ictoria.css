@@ -192,6 +192,6 @@ tr.inline-edit-row td {
 }
 
 .health-check-body, .privacy-settings-body {
-  max-width: 33%;
+  /*max-width: 33%;*/
   margin: auto;
 }

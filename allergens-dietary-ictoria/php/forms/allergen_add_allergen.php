@@ -108,28 +108,31 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '</label></div><br></fieldset>';
 			$html .= '</div></fieldset">';
 		} else {
-			$html = '<fieldset id="the-list" class="inline-edit-product.quick-edit-row">';
+			$html = '<table><fieldset id="the-list" class="inline-edit-product.quick-edit-row">';
 			$html .= '<div class="inline-edit-wrapper" aria-labelledby="quick-edit-legend">';
 			$html .= '<fieldset class="inline-edit-col-left "><div class="inline-edit-row">';
-			$html .= '<legend class="inline-edit-legend">' . __("Add allergen", "allergens-dietary-ictoria") . '</legend>';
-			$html .= '<label for="allergen_name">' . __('Allergen name', 'allergens-dietary-ictoria') . '</label><br>';
-			$html .= '<input type="text" name="allergen_name" id="allergen_name" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" required/><br><br>';
-			$html .= '<label for="type">' . __('Type', 'allergens-dietary-ictoria') . '</label> <br/>';
-			$html .= '<select name="type" id="type" required>';
+			$html .= '<legend class="inline-edit-legend">' . __("Add allergen", "allergens-dietary-ictoria") . '</legend><br>';
+			$html .= '<tr><th scope="row"><label for="allergen_name">' . __('Allergen name', 'allergens-dietary-ictoria') . '</label></th>';
+			$html .= '<td><input type="text" name="allergen_name" id="allergen_name" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" required/></td></tr>';
+			$html .= '<tr><th scope="row"><label for="type">' . __('Type', 'allergens-dietary-ictoria') . '</label></th>';
+			$html .= '<td><select name="type" id="type" required>';
 			$html .= self::do_dropdown();
-			$html .= '</select> <br><br>';
-			$html .= '<label for="allergen_description">' . __('Allergen description', 'allergens-dietary-ictoria') . '</label><br>';
-			$html .= '<textarea class="update_" name="allergen_description" id="allergen_description" style="width: 300px; min-height: 100px; resize: none;" maxlength="255">'. ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '</textarea><br><br>';
+			$html .= '</select></td></tr>';
+			$html .= '<tr><th scope="row"></th><td><br><label for="allergen_description">' . __('Allergen description', 'allergens-dietary-ictoria') . '</label></td></tr>';
+			$html .= '<tr><th scope="row"></th>';
+			$html .= '<td><textarea class="update_" name="allergen_description" id="allergen_description" style="width: 300px; min-height: 100px; resize: none;" maxlength="255">'. ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '</textarea></td></tr>';
 			$html .= '<div class="item"></fieldset><fieldset class="inline-edit-col-right drag-drop-buttons"><div class="item">';
-			$html .= '<img class="update_ add_allergen_icon_img" id="allergen_icon_img"  style="height: 75px;" src="' . get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/no_icon_selected.png" alt="no_icon_selected.png"><br>';
-			$html .= '<label class="label-quick-edit wp-core-ui button">';
+			$html .= '<tr class="item-row">';
+			$html .= '<td><label class="label-quick-edit wp-core-ui button">';
 			$html .= '<input type="file" class="update_ allergen_icon_file_input" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" name="allergen_icon" id="allergen_icon_file_input">';
 			$html .= '<input type="hidden" class="update_" name="allergen_icon_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
 			$html .= '<span>Set image</span>';
-			$html .= '</label></div></fieldset><br>';
-			$html .= '<input type="submit" name="submit" class="button button-primary" value="' . __('Add allergen', 'allergens-dietary-ictoria') . '"/>';
-			$html .= '</div>';
+			$html .= '</label></td>';
+			$html .= '<th class="item-header"><img class="update_ add_allergen_icon_img" id="allergen_icon_img"  style="height: 75px;" src="' . get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/no_icon_selected.png" alt="no_icon_selected.png"></th></tr></div>';
 			$html .= '</fieldset>';
+			$html .= '<td><input type="submit" name="submit" class="button button-primary" value="' . __('Add allergen', 'allergens-dietary-ictoria') . '"/></td>';
+			$html .= '</div>';
+			$html .= '</fieldset></table>';
 		}
 
 		echo $html;

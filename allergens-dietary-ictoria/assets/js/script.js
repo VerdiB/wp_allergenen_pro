@@ -189,8 +189,10 @@ jQuery(document).ready(function ($) {
   });
 
   $(document).on("change", ".allergen_icon_file_input", function () {
-    const itemContainer = $(this).closest('.item');
-    const addImgElement = itemContainer.find('.add_allergen_icon_img');
+    console.log($(this));
+    const itemRow = $(this).closest('.item-row');
+    const itemHeader = itemRow.find('.item-header');
+    const addImgElement = itemHeader.find('.add_allergen_icon_img');
 
     if (addImgElement.length === 0) {
       return;
