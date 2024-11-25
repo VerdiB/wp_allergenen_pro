@@ -192,6 +192,15 @@ tr.inline-edit-row td {
 }
 
 .health-check-body, .privacy-settings-body {
-  /*max-width: 33%;*/
-  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.align-header {
+  text-align: left;
+}
+
+.bold {
+  font-weight: bold;
 }
