@@ -63,6 +63,17 @@ class Allergens_Dietary_Ictoria_Filter
 		echo $html;
 	}
 
+	/**
+	 * @param array $query
+	 * @return void
+	 * @brief Calls the db and activates a query where the result will be given to woocommerce
+	 * Where the input is either  allergens and/or dietary restrictions
+	 * So that a customer can see selected products with certain dietary restrictions
+	 * and won't see any products containing selected allergens
+	 * @author Unkown
+	 * @since 0.16.5.1
+	 * @date 18-11-2024
+	 */
 	public function filter_query($query)
 	{
 		if ($query->is_main_query() && is_shop() && isset($_POST['allergen_filter'])) {
