@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Allergens-Dietary-Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2024-11-22 09:48+0100\n"
+"POT-Creation-Date: 2024-11-25 10:59+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -123,6 +123,10 @@ msgstr "Allergeen descriptie"
 #: php/forms/allergen_add_allergen.php:101
 msgid "Update"
 msgstr "Allergeen updaten"
+
+#: php/forms/allergen_add_allergen.php:107
+msgid "Set image"
+msgstr "Zet afbeelding"
 
 #: php/forms/allergen_add_allergen.php:120
 msgid "Allergen icon"

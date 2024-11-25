@@ -8,7 +8,7 @@ msgstr ""
 "Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name "
 "<translations@example.com>\n"
-"POT-Creation-Date: 2024-11-22 09:49+0100\n"
+"POT-Creation-Date: 2024-11-25 11:00+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example."
 "com>\n"
@@ -131,6 +131,10 @@ msgstr ""
 
 #: php/forms/allergen_add_allergen.php:101
 msgid "Update"
+msgstr ""
+
+#: php/forms/allergen_add_allergen.php:107
+msgid "Set image"
 msgstr ""
 
 #: php/forms/allergen_add_allergen.php:120
