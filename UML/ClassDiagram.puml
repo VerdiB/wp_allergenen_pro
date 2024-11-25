@@ -148,8 +148,8 @@ package "php"{
             -{static} _instance : Allergens_Dietary_Ictoria_Allergens_Form
             -{static} formType : FormType
             -{static} formObject : I_Allergens_Dietary_Ictoria_Form
-            - __construct(isTable:bool) : void
-            + {static} getInstance(isTable:bool) : Allergens_Dietary_Ictoria_Allergens_Form
+            - __construct() : void
+            + {static} getInstance() : Allergens_Dietary_Ictoria_Allergens_Form
             + {static} setFormType(formType:FormType) : void
             + {static} getFormType() : FormType
             + submitUpdate() : void
@@ -162,7 +162,7 @@ package "php"{
             - MIME_NAMES : array
             - {static} _message : string 
             - {static} _type: Notice_Types
-            + __construct(isTable:bool): void
+            + __construct(): void
             + showForm(allergenName:String) : void
             + submit(data:array) : void
             + sanitize(data:array) : array

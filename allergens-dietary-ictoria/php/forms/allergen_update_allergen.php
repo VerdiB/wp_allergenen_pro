@@ -55,13 +55,6 @@ class Allergens_Dietary_Ictoria_Update_Allergen_Form implements I_Allergens_Diet
         $this->MIME_NAMES = array_map(fn($case) => $case->name, Mime_Types::cases());
         $this->_allergens = Allergens_Dietary_Ictoria_Allergy_Attachment_Queries::getInstance()->getAllAllergyAttachmments(true);
     
-        if (! empty(self::$_message) || self::$_message != ''){
-
-            $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
-            $notice->display_admin_notice(Notice_Types::ERROR, __(self::$_message, 'allergens-dietary-ictoria'));		
-            self::$_message = '';
-        }
-        Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
     } 
 
     /**

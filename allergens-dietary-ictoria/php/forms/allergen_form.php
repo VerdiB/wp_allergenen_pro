@@ -48,13 +48,8 @@ class Allergens_Dietary_Ictoria_Form
 
 	private function __construct(bool $isTable = false)
 	{
-		if (FormType::ALLERGENS === self::$_formType &&
-		$isTable === false) {
+		if (FormType::ALLERGENS === self::$_formType) {
 			self::$_formObject = new Allergens_Dietary_Ictoria_Allergen_Form();
-		}
-		if (FormType::ALLERGENS === self::$_formType &&
-		$isTable === true) {
-			self::$_formObject = new Allergens_Dietary_Ictoria_Allergen_Form($isTable);
 		}
 		if (FormType::LICENSE === self::$_formType) {
 			self::$_formObject = new Allergens_Dietary_Ictoria_License_Form();
@@ -69,11 +64,8 @@ class Allergens_Dietary_Ictoria_Form
 
 	public static function getInstance(bool $isTable = false)
 	{
-		if (self::$_instance === null && $isTable === false) {
+		if (self::$_instance === null) {
 			self::$_instance = new self();
-		}
-		if (self::$_instance === null && $isTable === true){
-			self::$_instance = new self($isTable);
 		}
 		return self::$_instance;
 	}

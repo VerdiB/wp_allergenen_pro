@@ -61,18 +61,10 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 	private static string $message = '';
 	private static Notice_Types $_type; 
 
-	public function __construct(bool $isTable = false)
+	public function __construct()
 	{
 		$this->MIME_TYPES = Mime_Types::get_mime_types();
 		$this->MIME_NAMES = array_map(fn($case) => $case->name, Mime_Types::cases());
-		if (false === $isTable){
-			if (! empty(self::$message) || self::$message != ''){
-				$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
-				$notice->display_admin_notice(self::$_type,self::$message);		
-				self::$message = '';
-			}
-			// Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
-		}
 	}
 
 	/**
@@ -249,6 +241,10 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 
 			$all_query->updateAllergens($data);
 			if ($empty_file_input) {
+				self::$_type = Notice_Types::SUCCESS;
+				self::$message = 'Allergen successfully updated.';
+				$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+				$notice->display_admin_notice(self::$_type,self::$message);
 				return;
 			} // update only the new allergen data when not uploading a new image. name, description etc.
 			
@@ -258,6 +254,10 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				if ($data['allergen_icon_hidden'] !== 'no_icon_selected.png' && !$all_att_query->attachmentIsUsed($data['allergen_icon_hidden'])) {
 					$att_query->deleteAttachment($data['allergen_icon_hidden']);
 				}
+				self::$_type = Notice_Types::SUCCESS;
+				self::$message = 'Allergen successfully updated.';
+				$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+				$notice->display_admin_notice(self::$_type,self::$message);
 			} else {
 				// Prevent losing no_icon_selected.png as image in DB, and if there are multiple of the old img don't change all of them.
 				if ($data['allergen_icon_hidden'] === 'no_icon_selected.png' || $all_att_query->checkMultipleAttachmentsExists($data['allergen_icon_hidden'])) {
@@ -266,6 +266,10 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 				} else {
 					$att_query->updateAttachment($data['allergen_icon'], $data['allergen_icon_hidden']);
 				}
+				self::$_type = Notice_Types::SUCCESS;
+				self::$message = 'Allergen successfully updated.';
+				$notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+				$notice->display_admin_notice(self::$_type,self::$message);
 			}
 		}
 	}
