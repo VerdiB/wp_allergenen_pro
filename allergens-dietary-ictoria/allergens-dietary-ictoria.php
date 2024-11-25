@@ -41,6 +41,8 @@ define('ALLERGENS_DIETARY_ICTORIA_BASE', plugin_basename(__FILE__)); // contains
 // Check if WooCommerce is active and store the result in a constant value
 if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
 	define('ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE', true);
+	define('ALLERGENS_DIETARY_ICTORIA_WC_DIRNAME', dirname(__FILE__, 2) . '/woocommerce');
+	// define('ALLERGENS_DIETARY_ICTORIA_WC_DIRNAME', dirname(__FILE__, 2) );
 } else {
 	define('ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE', false);
 }
@@ -136,6 +138,7 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 					add_filter('woocommerce_integrations', array($this, 'add_integration'));
 				} else {
 					// the integration class of WooCommerce was not found, show error message
+					require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/errors/error_notice.php';
 					$level = 'notice-error';
 					$message = sprintf(__('%1$sThe WooCommerce Integration class was not found. Please make sure WooCommerce is installed correctly%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
 					Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
@@ -169,6 +172,8 @@ if (ALLERGENS_DIETARY_ICTORIA_WC_ACTIVE) {
 } else {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/errors/error_notice.php';
 	// WooCommerce is not installed or inactive, show error message
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/errors/error_notice.php';
+
 	$level = 'notice-error';
 	$message = sprintf(__('%1$sWooCommerce is inactive or not installed. Please install & activate WooCommerce%2$s', 'allergens-dietary-ictoria'), '<p>', '</p>');
 	Allergens_Dietary_Ictoria_Error_notice::error_notice($level, $message);
