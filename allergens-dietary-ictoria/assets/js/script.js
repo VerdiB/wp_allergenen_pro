@@ -1,23 +1,11 @@
 console.log("connected");
-var button = document.getElementById("dropdown-ictoria");
+var button = document.getElementById("ictoria-filter-dropdown-button");
 var quickEdit = document.querySelectorAll(".quick_edit");
-
-if (checkElementExists("dropdown-ictoria") == "dropdown-ictoria") {
-  document.getElementById("allergens-ictoria").style.display = "none";
-}
 
 function checkElementExists(id) {
   var element = document.getElementById(id);
   if (element) {
     return element;
-  }
-}
-
-function dropdown_form() {
-  if (document.getElementById("allergens-ictoria").style.display == "none") {
-    document.getElementById("allergens-ictoria").style.display = "block";
-  } else {
-    document.getElementById("allergens-ictoria").style.display = "none";
   }
 }
 
@@ -100,11 +88,29 @@ if (checkElementExists("the-list")) {
     });
 }
 
-if (checkElementExists("dropdown-ictoria") == true) {
-  button.addEventListener("click", dropdown_form);
+function confirmResetInput() {
+  if (confirm("Are you sure you want to reset the form?")) {
+    location.reload(true);
+  }
+  return;
 }
 
 jQuery(document).ready(function ($) {
+  if (checkElementExists("ictoria-filter-dropdown")) {
+    $(document).on("click", "#ictoria-filter-dropdown-button", dropdown_form);
+  }
+
+  function dropdown_form() {
+    if (
+      document.getElementById("ictoria-filter-dropdown").style.display == "none"
+    ) {
+      document.getElementById("ictoria-filter-dropdown").style.display =
+        "block";
+    } else {
+      document.getElementById("ictoria-filter-dropdown").style.display = "none";
+    }
+  }
+
   function readURL(input, imgElement) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
