@@ -115,7 +115,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			//Image figure below. Max image size is 40x40.
 			$html .= '<fieldset class="inline-edit-col-right drag-drop-buttons"><div class="item">';
 			$html .= '<figure style="text-align: center;"><img class="update_ allergen_icon_img" style="max-height: 40px; max-width: 40px;" disabled id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
-			$html .= '<figcaption style="font-size: 10px; color: gray;">' . __('Max size of an icon is 40x40 pixels.', 'allergens-dietary-ictoria') . '</figcaption>';
+			$html .= '<figcaption style="font-size: 10px; font-weight: bold; color: gray;">' . __('Max size of an icon is 40x40 pixels.', 'allergens-dietary-ictoria') . '</figcaption>';
 			$html .= '<br><label class="label-quick-edit wp-core-ui button">';
 			$html .= '<input type="file" class="update_ allergen_icon_file_input" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" name="allergen_icon" id="allergen_icon_file_input" disabled>';
 			$html .= '<input type="hidden" class="update_" name="allergen_icon_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '" disabled>';
@@ -131,7 +131,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			//Allergen name and style elements 
 			$html = '<table style="width: 100%"><fieldset id="the-list" class="inline-edit-product.quick-edit-row">';
 			$html .= '<fieldset class="inline-edit-col-left"><div class="inline-edit-row">';
-			$html .= '<legend class="inline-edit-legend">' . __("Add allergen", "allergens-dietary-ictoria") . '</legend><br>';
+			$html .= '<legend style="font-weight: bold;" class="inline-edit-legend">' . __("Add allergen", "allergens-dietary-ictoria") . '</legend><br>';
 			$html .= '<div class="inline-edit-wrapper" aria-labelledby="quick-edit-legend">';
 			$html .= '<tr><th class="align-header" scope="row"><label for="allergen_name">' . __('Allergen name', 'allergens-dietary-ictoria') . '</label></th>';
 			$html .= '<td><input type="text" name="allergen_name" id="allergen_name" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" required/></td></tr>';
