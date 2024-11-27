@@ -163,7 +163,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '<td><br><br><input type="submit" name="submit" class="button button-primary" value="' . __('Add allergen', 'allergens-dietary-ictoria') . '"/></td>';
 			
 			//close fieldset and table
-			$html .= '</div>>';
+			$html .= '</div>';
 		}
 
 		echo $html;

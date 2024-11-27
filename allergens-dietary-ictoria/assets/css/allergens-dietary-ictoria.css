@@ -196,7 +196,7 @@ tr.inline-edit-row td {
   margin-top: 15%;
 }
 
-.health-check-body, .privacy-settings-body {
+.health-check-body {
   display: flex;
   justify-content: center;
   align-items: center;
