@@ -73,7 +73,7 @@ class Allergens_Dietary_Ictoria_Filter
 		$html .= '<div class="filter-container">';
 		$html .= '<div class="checkbox-container">';
 		$html .= '<div class="filter-header">';
-		$html .= '<h3>Allergens</h3>';
+		$html .= '<h3>' . __('Allergens', 'allergens-dietary-ictoria') . '</h3>';
 		$html .= '</div>';
 		$html .= '<div class="checkbox-group">';
 		foreach ($allergen_arr as $allergen) {
@@ -91,7 +91,7 @@ class Allergens_Dietary_Ictoria_Filter
 		$html .= '</div>';
 		$html .= '<div class="checkbox-container">';
 		$html .= '<div class="filter-header">';
-		$html .= '<h3>Dietary restrictions</h3>';
+		$html .= '<h3>' . __('Dietary restrictions', 'allergens-dietary-ictoria') . '</h3>';
 		$html .= '</div>';
 		$html .= '<div class="checkbox-group">';
 		foreach ($diet_arr as $diet) {

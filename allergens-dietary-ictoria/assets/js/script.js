@@ -1,4 +1,3 @@
-console.log("connected");
 var button = document.getElementById("ictoria-filter-dropdown-button");
 var quickEdit = document.querySelectorAll(".quick_edit");
 
