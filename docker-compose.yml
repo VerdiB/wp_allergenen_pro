@@ -1,6 +1,7 @@
 services:
   wordpresslatest:
     image: "wordpress:latest"
+    # pull_policy: "always"
     ports:
       - "8080:80"
     depends_on:
@@ -92,7 +93,7 @@ services:
         ipv4_address: "124.168.92.22"
 
   phpunit:
-    build: 
+    build:
       context: .
       dockerfile: phpunit/Dockerfile
     volumes:
@@ -104,11 +105,9 @@ services:
     networks:
       development:
 
-
 networks:
   development:
     ipam:
       driver: default
       config:
         - subnet: "124.168.92.0/24"
-        
