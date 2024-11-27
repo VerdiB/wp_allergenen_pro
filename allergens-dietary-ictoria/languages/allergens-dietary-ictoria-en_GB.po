@@ -129,7 +129,7 @@ msgstr "Update"
 #: php/forms/allergen_add_allergen.php:112
 #: php/forms/allergen_add_allergen.php:152
 msgid "Max size of an icon is 40x40 pixels."
-msgstr "Max size of an icon is 40x40 pixels."
+msgstr ""
 
 #: php/forms/allergen_add_allergen.php:116
 #: php/forms/allergen_add_allergen.php:149
