@@ -115,7 +115,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			//Image figure below. Max image size is 40x40.
 			$html .= '<fieldset class="inline-edit-col-right drag-drop-buttons"><div class="item">';
 			$html .= '<figure style="text-align: center;"><img class="update_ allergen_icon_img" style="max-height: 40px; max-width: 40px;" disabled id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
-			$html .= '<figcaption style="font-size: 12px; font-weight: bolder; color: gray;">' . __('Max size of an icon is 40x40 pixels.', 'allergens-dietary-ictoria') . '</figcaption>';
+			$html .= '<figcaption style="font-size: 10px; color: gray;">' . __('Max size of an icon is 40x40 pixels.', 'allergens-dietary-ictoria') . '</figcaption>';
 			$html .= '<br><label class="label-quick-edit wp-core-ui button">';
 			$html .= '<input type="file" class="update_ allergen_icon_file_input" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" name="allergen_icon" id="allergen_icon_file_input" disabled>';
 			$html .= '<input type="hidden" class="update_" name="allergen_icon_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '" disabled>';
@@ -145,7 +145,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			//description input
 			$html .= '</fieldset></table><br>';
 			$html .= '<label class="bold" for="allergen_description"><span style="display: block; margin-bottom: 10px;">' . __('Allergen description', 'allergens-dietary-ictoria') . '</span></label>';
-			$html .= '<textarea class="update_" name="allergen_description" id="allergen_description" style="width: 100%; min-height: 100px; resize: none;" maxlength="255">'. ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '</textarea>';
+			$html .= '<textarea class="update_" name="allergen_description" id="allergen_description" style="width: 100%; max-width: 400px; min-height: 100px; resize: none;" maxlength="255">'. ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '</textarea>';
 			
 			//Image figure below. Max image size is 40x40.
 			$html .= '<table><div class="item"><fieldset class="inline-edit-col-right drag-drop-buttons"><div class="item">';
@@ -156,7 +156,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '<span>'.__('Set image', 'allergens-dietary-ictoria') .'</span>';
 			$html .= '</label></td>';
 			$html .= '<td><figure style="text-align: center;"><th class="item-header"><br><img class="update_ add_allergen_icon_img" id="allergen_icon_img"  style="max-height: 40px; max-width: 40px;" src="' . get_home_url() . '/wp-content/plugins/allergens-dietary-ictoria/assets/icons/no_icon_selected.png" alt="no_icon_selected.png">';
-			$html .= '<figcaption style="font-size: 12px; max-width: 200px; font-weight: bolder; color: gray;">' . __('Max size of an icon is 40x40 pixels.', 'allergens-dietary-ictoria') . '</figcaption></figure></td></tr></div>';
+			$html .= '<figcaption style="font-size: 10px; max-width: 200px; font-weight: bold; color: gray;">' . __('Max size of an icon is 40x40 pixels.', 'allergens-dietary-ictoria') . '</figcaption></figure></td></tr></div>';
 			$html .= '</fieldset></table>';
 			
 			//submit
