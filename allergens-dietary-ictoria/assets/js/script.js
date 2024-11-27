@@ -1,11 +1,9 @@
 var button = document.getElementById("dropdown-ictoria");
 var quickEdit = document.querySelectorAll(".quick_edit");
 
-window.onload = function () {
-  if (checkElementExists("dropdown-ictoria") == "dropdown-ictoria") {
-    document.getElementById("allergens-ictoria").style.display = "none";
-  }
-};
+if (checkElementExists("dropdown-ictoria") == "dropdown-ictoria") {
+  document.getElementById("allergens-ictoria").style.display = "none";
+}
 
 //Check if the element exists
 function checkElementExists(id) {

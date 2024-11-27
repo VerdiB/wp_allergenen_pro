@@ -153,8 +153,8 @@ class Allergens_Dietary_Ictoria_Plugin_Menu
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tables/allergen_show_allergen.php';
 			require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
-		$singleton = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
 		Allergens_Dietary_Ictoria_Tabs::getInstance()->showtabs();
+		$singleton = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
 		$singleton->table_page();
 	}
 
