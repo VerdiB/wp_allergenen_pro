@@ -128,7 +128,7 @@ msgstr "Allergeen updaten"
 #: php/forms/allergen_add_allergen.php:112
 #: php/forms/allergen_add_allergen.php:152
 msgid "Max size of an icon is 40x40 pixels."
-msgstr ""
+msgstr "Maximale grootte van een icoon is 40x40 pixels."
 
 #: php/forms/allergen_add_allergen.php:116
 msgid "Set image"
