@@ -33,7 +33,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-7: tests\n"
 "X-Poedit-SearchPathExcluded-8: UML\n"
 
-#: allergens-dietary-ictoria.php:143
+#: allergens-dietary-ictoria.php:140
 #, php-format
 msgid ""
 "%1$sThe WooCommerce Integration class was not found. Please make sure "
@@ -42,7 +42,7 @@ msgstr ""
 "%1$sDe WooCommerce-integratieklasse is niet gevonden. Controleer of "
 "WooCommerce correct is geïnstalleerd%2$s"
 
-#: allergens-dietary-ictoria.php:178
+#: allergens-dietary-ictoria.php:173
 #, php-format
 msgid ""
 "%1$sWooCommerce is inactive or not installed. Please install & activate "
@@ -88,7 +88,7 @@ msgstr "Weergeef allergenen"
 msgid "Can't delete a default allergen option: '"
 msgstr "Kan geen standaard allergeen verwijderen"
 
-#: php/DB/allergen.php:285
+#: php/DB/allergen.php:284
 msgid "Error deleting allergen: '"
 msgstr "Fout met verwijderen van allergeen:"
 
@@ -96,7 +96,12 @@ msgstr "Fout met verwijderen van allergeen:"
 msgid "allergens-dietary-ictoria"
 msgstr "allergenen-dieët-ictoria"
 
-#: php/forms/allergen_add_allergen.php:94
+#: php/errors/error_notice.php:14
+#, php-format
+msgid "%1$sAllergens and Dietary is inactive:%2$s"
+msgstr "%1$sAllergenen en Dieët is niet actief:%2$s"
+
+#: php/forms/allergen_add_allergen.php:89
 msgid "Quick Edit"
 msgstr "Snel Bewerken"
 
@@ -159,32 +164,32 @@ msgstr "Dieet restrictie"
 msgid "Verify license key"
 msgstr "Verifieer licentie sleutel"
 
-#: php/forms/allergen_update_allergen.php:72
+#: php/forms/allergen_update_allergen.php:66
 msgid "Update custom allergen icons"
 msgstr "Update aangepaste allergeen iconen"
 
-#: php/forms/allergen_update_allergen.php:76
+#: php/forms/allergen_update_allergen.php:70
 msgid "Allergen"
 msgstr "Allergeen"
 
-#: php/forms/allergen_update_allergen.php:77
+#: php/forms/allergen_update_allergen.php:71
 msgid "Description"
 msgstr "Descriptie"
 
-#: php/forms/allergen_update_allergen.php:78
+#: php/forms/allergen_update_allergen.php:72
 msgid "Current Icon"
 msgstr "Huidig icoon"
 
-#: php/forms/allergen_update_allergen.php:79
+#: php/forms/allergen_update_allergen.php:73
 msgid "Upload New Icon"
 msgstr "Upload Nieuwe Icoon"
 
-#: php/forms/allergen_update_allergen.php:97
+#: php/forms/allergen_update_allergen.php:91
 msgid "Update Icons"
 msgstr "Update Iconen"
 
-#: php/forms/allergen_update_allergen.php:120
-#: php/forms/allergen_update_allergen.php:128
+#: php/forms/allergen_update_allergen.php:114
+#: php/forms/allergen_update_allergen.php:119
 msgid "The new file: "
 msgstr "Het nieuwe bestand: "
 
@@ -236,42 +241,29 @@ msgstr "Een allergenen overzicht"
 msgid "Turning the use of allergies on/off"
 msgstr "Zet het gebruik van allergenen aan/uit"
 
-#: php/notice/notice.php:60
-#, php-format
-msgid "%1$sAllergens and Dietary is inactive:%2$s"
-msgstr "%1$sAllergenen en Dieët is niet actief:%2$s"
-
-#: php/tables/allergen_show_allergen.php:219
+#: php/tables/allergen_show_allergen.php:211
 msgid "Change status"
 msgstr "Verander status"
 
-#: php/tables/allergen_show_allergen.php:220
+#: php/tables/allergen_show_allergen.php:212
 msgid "Delete"
 msgstr "Verwijder"
 
-#: php/tables/allergen_show_allergen.php:278
+#: php/tables/allergen_show_allergen.php:270
 msgid "Allergy name"
 msgstr "Allergeen naam"
 
-#: php/tables/allergen_show_allergen.php:279
+#: php/tables/allergen_show_allergen.php:271
 msgid "Allergy description"
 msgstr "Allergeen omschrijving"
 
-#: php/tables/allergen_show_allergen.php:280
+#: php/tables/allergen_show_allergen.php:272
 msgid "Allergy or Dietary"
 msgstr "Allergeen of Dieetwens"
 
-#: php/tables/allergen_show_allergen.php:281
+#: php/tables/allergen_show_allergen.php:273
 msgid "Status"
 msgstr "Status"
-
-#: php/tables/allergen_show_allergen.php:337
-msgid "Status changed"
-msgstr "Status veranderd"
-
-#: php/tables/allergen_show_allergen.php:344
-msgid "Allergen deleted"
-msgstr "Allergeen verwijderd"
 
 #: php/tabs/allergen_tabs.php:35
 msgid "Change allergens"
