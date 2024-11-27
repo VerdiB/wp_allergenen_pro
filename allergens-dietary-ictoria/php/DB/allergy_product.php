@@ -108,6 +108,18 @@ class Allergens_Dietary_Ictoria_Allergy_Product_Queries
     //     error_log($sql);
     //     return $wpdb->get_results( $sql, ARRAY_A);
     // }
+
+    /**
+     * @param array $allergens
+     * @param array $dietary
+     * @return array $results
+     * @brief Searches and selects product ids with the selected allergens and or dietary restrictions
+     * where if a product has an allergy that is being searched for is being excluded.
+     * Whereas a dietary restriction works different where products who do not have a dietary restriction will be excluded
+     * @author @MaikHendriks
+     * @since 0.16.5.1
+     * @date 18-11-2024
+     */
     public function getFilteredProducts(?array $allergens, ?array $dietary)
     {
         global $wpdb;
