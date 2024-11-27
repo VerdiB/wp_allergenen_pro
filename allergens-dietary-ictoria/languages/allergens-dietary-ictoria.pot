@@ -8,7 +8,7 @@ msgstr ""
 "Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name "
 "<translations@example.com>\n"
-"POT-Creation-Date: 2024-11-22 09:49+0100\n"
+"POT-Creation-Date: 2024-11-25 14:14+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example."
 "com>\n"
@@ -42,7 +42,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-7: tests\n"
 "X-Poedit-SearchPathExcluded-8: UML\n"
 
-#: allergens-dietary-ictoria.php:140
+#: allergens-dietary-ictoria.php:143
 #, php-format
 msgid ""
 "%1$sThe WooCommerce Integration class was "
@@ -50,7 +50,7 @@ msgid ""
 "installed correctly%2$s"
 msgstr ""
 
-#: allergens-dietary-ictoria.php:173
+#: allergens-dietary-ictoria.php:178
 #, php-format
 msgid ""
 "%1$sWooCommerce is inactive or not "
@@ -62,41 +62,41 @@ msgstr ""
 msgid "Allergens and Dietary"
 msgstr ""
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:56
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:57
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:60
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:61
+msgid "Show allergens"
+msgstr ""
+
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:72
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:73
 #: php/forms/allergen_form_license.php:42
 #: php/forms/allergen_form_license.php:43
 msgid "License key"
 msgstr ""
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:65
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:66
-#: php/forms/allergen_add_allergen.php:122
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:81
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:82
+#: php/forms/allergen_add_allergen.php:130
 msgid "Add allergen"
 msgstr ""
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:75
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:76
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:91
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:92
 #: php/tabs/allergen_tabs.php:38
 msgid "Info"
 msgstr ""
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:87
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:88
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:103
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:104
 msgid "Update allergen"
 msgstr ""
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:95
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:96
-msgid "Show allergens"
-msgstr ""
-
-#: php/DB/allergen.php:246
+#: php/DB/allergen.php:247
 msgid ""
 "Can't delete a default allergen option: '"
 msgstr ""
 
-#: php/DB/allergen.php:284
+#: php/DB/allergen.php:285
 msgid "Error deleting allergen: '"
 msgstr ""
 
@@ -104,68 +104,76 @@ msgstr ""
 msgid "allergens-dietary-ictoria"
 msgstr ""
 
-#: php/errors/error_notice.php:14
-#, php-format
-msgid ""
-"%1$sAllergens and Dietary is inactive:%2$s"
-msgstr ""
-
-#: php/forms/allergen_add_allergen.php:89
+#: php/forms/allergen_add_allergen.php:94
 msgid "Quick Edit"
 msgstr ""
 
-#: php/forms/allergen_add_allergen.php:91
-#: php/forms/allergen_add_allergen.php:112
+#: php/forms/allergen_add_allergen.php:96
+#: php/forms/allergen_add_allergen.php:120
 msgid "Allergen name"
 msgstr ""
 
-#: php/forms/allergen_add_allergen.php:94
-#: php/forms/allergen_add_allergen.php:114
+#: php/forms/allergen_add_allergen.php:99
+#: php/forms/allergen_add_allergen.php:122
 msgid "Type"
 msgstr ""
 
-#: php/forms/allergen_add_allergen.php:99
-#: php/forms/allergen_add_allergen.php:118
+#: php/forms/allergen_add_allergen.php:104
+#: php/forms/allergen_add_allergen.php:126
 msgid "Allergen description"
 msgstr ""
 
-#: php/forms/allergen_add_allergen.php:101
+#: php/forms/allergen_add_allergen.php:106
 msgid "Update"
 msgstr ""
 
-#: php/forms/allergen_add_allergen.php:120
+#: php/forms/allergen_add_allergen.php:113
+msgid "Set image"
+msgstr ""
+
+#: php/forms/allergen_add_allergen.php:128
 msgid "Allergen icon"
 msgstr ""
 
-#: php/forms/allergen_add_allergen.php:158
+#: php/forms/allergen_add_allergen.php:167
 msgid "Form has not been set!"
 msgstr ""
 
-#: php/forms/allergen_add_allergen.php:161
+#: php/forms/allergen_add_allergen.php:173
 msgid "Allergen Name Can't be empty or blank!"
 msgstr ""
 
-#: php/forms/allergen_add_allergen.php:171
-#: php/forms/allergen_add_allergen.php:204
+#: php/forms/allergen_add_allergen.php:186
+#: php/forms/allergen_add_allergen.php:229
 msgid "Allergen name already exists"
 msgstr ""
 
-#: php/forms/allergen_add_allergen.php:189
-#: php/forms/allergen_add_allergen.php:208
+#: php/forms/allergen_add_allergen.php:207
+#: php/forms/allergen_add_allergen.php:236
 msgid ""
 "The file is not a valid image. Supported "
 "image types are: "
 msgstr ""
 
-#: php/forms/allergen_add_allergen.php:261
-#: php/forms/allergen_add_allergen.php:269
-#: php/forms/allergen_add_allergen.php:272
+#: php/forms/allergen_add_allergen.php:221
+msgid "Succesfully added new allergen: "
+msgstr ""
+
+#: php/forms/allergen_add_allergen.php:245
+#: php/forms/allergen_add_allergen.php:258
+#: php/forms/allergen_add_allergen.php:270
+msgid "Allergen successfully updated."
+msgstr ""
+
+#: php/forms/allergen_add_allergen.php:303
+#: php/forms/allergen_add_allergen.php:311
+#: php/forms/allergen_add_allergen.php:314
 msgid "Allergy"
 msgstr ""
 
-#: php/forms/allergen_add_allergen.php:262
-#: php/forms/allergen_add_allergen.php:270
-#: php/forms/allergen_add_allergen.php:273
+#: php/forms/allergen_add_allergen.php:304
+#: php/forms/allergen_add_allergen.php:312
+#: php/forms/allergen_add_allergen.php:315
 msgid "Dietary restriction"
 msgstr ""
 
@@ -173,32 +181,32 @@ msgstr ""
 msgid "Verify license key"
 msgstr ""
 
-#: php/forms/allergen_update_allergen.php:66
+#: php/forms/allergen_update_allergen.php:72
 msgid "Update custom allergen icons"
 msgstr ""
 
-#: php/forms/allergen_update_allergen.php:70
+#: php/forms/allergen_update_allergen.php:76
 msgid "Allergen"
 msgstr ""
 
-#: php/forms/allergen_update_allergen.php:71
+#: php/forms/allergen_update_allergen.php:77
 msgid "Description"
 msgstr ""
 
-#: php/forms/allergen_update_allergen.php:72
+#: php/forms/allergen_update_allergen.php:78
 msgid "Current Icon"
 msgstr ""
 
-#: php/forms/allergen_update_allergen.php:73
+#: php/forms/allergen_update_allergen.php:79
 msgid "Upload New Icon"
 msgstr ""
 
-#: php/forms/allergen_update_allergen.php:91
+#: php/forms/allergen_update_allergen.php:97
 msgid "Update Icons"
 msgstr ""
 
-#: php/forms/allergen_update_allergen.php:114
-#: php/forms/allergen_update_allergen.php:119
+#: php/forms/allergen_update_allergen.php:120
+#: php/forms/allergen_update_allergen.php:128
 msgid "The new file: "
 msgstr ""
 
@@ -250,28 +258,42 @@ msgstr ""
 msgid "Turning the use of allergies on/off"
 msgstr ""
 
-#: php/tables/allergen_show_allergen.php:211
+#: php/notice/notice.php:60
+#, php-format
+msgid ""
+"%1$sAllergens and Dietary is inactive:%2$s"
+msgstr ""
+
+#: php/tables/allergen_show_allergen.php:219
 msgid "Change status"
 msgstr ""
 
-#: php/tables/allergen_show_allergen.php:212
+#: php/tables/allergen_show_allergen.php:220
 msgid "Delete"
 msgstr ""
 
-#: php/tables/allergen_show_allergen.php:270
+#: php/tables/allergen_show_allergen.php:278
 msgid "Allergy name"
 msgstr ""
 
-#: php/tables/allergen_show_allergen.php:271
+#: php/tables/allergen_show_allergen.php:279
 msgid "Allergy description"
 msgstr ""
 
-#: php/tables/allergen_show_allergen.php:272
+#: php/tables/allergen_show_allergen.php:280
 msgid "Allergy or Dietary"
 msgstr ""
 
-#: php/tables/allergen_show_allergen.php:273
+#: php/tables/allergen_show_allergen.php:281
 msgid "Status"
+msgstr ""
+
+#: php/tables/allergen_show_allergen.php:337
+msgid "Status changed"
+msgstr ""
+
+#: php/tables/allergen_show_allergen.php:344
+msgid "Allergen deleted"
 msgstr ""
 
 #: php/tabs/allergen_tabs.php:35
