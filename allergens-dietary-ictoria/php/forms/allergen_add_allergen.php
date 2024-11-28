@@ -138,7 +138,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			
 			//Type dropdown.
 			$html .= '<tr><th class="align-header" scope="row"><label for="type">' . __('Type', 'allergens-dietary-ictoria') . '</label></th>';
-			$html .= '<td><select name="type" id="type" required>';
+			$html .= '<td><select name="type" id="type" style="width: 100%" required>';
 			$html .= self::do_dropdown();
 			$html .= '</select></td></tr>';
 
