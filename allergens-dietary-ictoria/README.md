@@ -1,4 +1,4 @@
-# Allergens Dietary Ictoria - V1.1.0.0
+# Allergens Dietary Ictoria - V0.1.0.0
 
 ## Fixes and changes
 - First release
@@ -13,7 +13,7 @@
 ## added feature
 
 
-# Allergens Dietary Ictoria - V1.2.0.0
+# Allergens Dietary Ictoria - V0.2.0.0
 
 ## Fixes and changes
 - function fixes (Was deleted later on)
@@ -28,7 +28,7 @@
 ## added feature
 
 
-# Allergens Dietary Ictoria - V1.3.0.0
+# Allergens Dietary Ictoria - V0.3.0.0
 
 ## Fixes and changes
 
@@ -43,7 +43,7 @@
 - A form to fill in your licence key
 
 
-# Allergens Dietary Ictoria - V1.4.0.0
+# Allergens Dietary Ictoria - V0.4.0.0
 
 ## Fixes and changes
 
