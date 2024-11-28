@@ -67,7 +67,7 @@ class Allergens_Dietary_Ictoria_Filter
 		// Create variable that is used in the loops
 		$html = '';
 
-		$html .= '<button class="filter-button" id="ictoria-filter-dropdown-button">Show allergen filters</button>';
+		$html .= '<button class="filter-button" id="ictoria-filter-dropdown-button">' . __('Show allergen filters', 'allergens-dietary-ictoria') . '</button>';
 		$html .= '<div id="ictoria-filter-dropdown" style="display: none;">';
 		$html .= '<form action="" method="post" class="">';
 		$html .= '<div class="filter-container">';
@@ -84,7 +84,7 @@ class Allergens_Dietary_Ictoria_Filter
 			}
 			$html .= '<div class="checkbox-item">';
 			$html .= '<input type="checkbox" id="' . $allergen['allergy_name'] . '" class="checkbox" name="allergen_filter_options[' . $allergen['allergy_name'] . ']" value="' . esc_attr($allergen['allergy_name']) . '" ' . $checked . '/>';
-			$html .= '<label for="' . $allergen['allergy_name'] . '" >' . __('No ' . $allergen['allergy_name'], 'allergens-dietary-ictoria') . '</label>';
+			$html .= '<label for="' . $allergen['allergy_name'] . '" >' . __('No ', 'allergens-dietary-ictoria') . $allergen['allergy_name'] . '</label>';
 			$html .= '</div>';
 		}
 		$html .= '</div>';
@@ -109,8 +109,8 @@ class Allergens_Dietary_Ictoria_Filter
 		$html .= '</div>';
 		$html .= '</div>';
 		$html .= '<div class="filter-actions">';
-		$html .= '<button type="submit" name="allergen_filter" class="filter-button">Apply Filters</button>';
-		$html .= '<a href="' . get_permalink(wc_get_page_id('shop')) . '"  class="filter-button filter-reset" onclick="return confirmResetInput();">Clear Filters</a>';
+		$html .= '<button type="submit" name="allergen_filter" class="filter-button">' . __('Apply Filters', 'allergens-dietary-ictoria') . '</button>';
+		$html .= '<a href="' . get_permalink(wc_get_page_id('shop')) . '"  class="filter-button filter-reset" onclick="return confirmResetInput();">' . __('Clear Filters', 'allergens-dietary-ictoria') . '</a>';
 		$html .= '</div>';
 		$html .= '</form>';
 		$html .= '</div>';
