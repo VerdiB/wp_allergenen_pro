@@ -134,7 +134,7 @@ class Allergens_Dietary_Ictoria_Allergen_Form implements I_Allergens_Dietary_Ict
 			$html .= '<legend style="font-weight: bold;" class="inline-edit-legend">' . __("Add allergen", "allergens-dietary-ictoria") . '</legend><br>';
 			$html .= '<div class="inline-edit-wrapper" aria-labelledby="quick-edit-legend">';
 			$html .= '<tr><th class="align-header" scope="row"><label for="allergen_name">' . __('Allergen name', 'allergens-dietary-ictoria') . '</label></th>';
-			$html .= '<td><input type="text" name="allergen_name" id="allergen_name" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" required/></td></tr>';
+			$html .= '<td><input type="text" name="allergen_name" id="allergen_name" style="width: 100%;" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" required/></td></tr>';
 			
 			//Type dropdown.
 			$html .= '<tr><th class="align-header" scope="row"><label for="type">' . __('Type', 'allergens-dietary-ictoria') . '</label></th>';
