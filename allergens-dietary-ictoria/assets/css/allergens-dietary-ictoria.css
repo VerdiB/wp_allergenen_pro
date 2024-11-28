@@ -17,6 +17,73 @@
 
 /* Filter css shop page */
 
+#ictoria-filter-dropdown {
+  max-width: 400px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px 20px 20px 20px;
+  margin-top: 10px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.filter-button {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 2;
+  min-height: 30px;
+  padding: 0 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  white-space: nowrap;
+  background: white;
+  border: 1px solid #8c8f94;
+  outline: none;
+}
+
+.filter-button:hover {
+  background: #f0f0f1;
+  border-color: #0a4b78;
+  color: #0a4b78;
+}
+
+.filter-button:active {
+  background: #f6f7f7;
+  border-color: #8c8f94;
+  box-shadow: none;
+}
+.filter-reset {
+  /* margin-right: 10px; */
+  color: #606060;
+  border-color: #818385;
+  background: #f6f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+.filter-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+@media screen and (max-width: 550px) {
+  .filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
 /* admin product css*/
 .allergen-field {
   display: inline-block;
@@ -146,19 +213,6 @@
   color: black;
   margin-bottom: -10px;
   padding-left: 0;
-}
-
-#dropdown-ictoria {
-  padding: 0.5rem;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 3px;
-  border: 1px solid black;
-}
-#dropdown-ictoria:hover {
-  cursor: pointer;
 }
 
 /* QUICK EDIT */

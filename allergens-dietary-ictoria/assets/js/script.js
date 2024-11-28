@@ -1,11 +1,6 @@
-var button = document.getElementById("dropdown-ictoria");
+var button = document.getElementById("ictoria-filter-dropdown-button");
 var quickEdit = document.querySelectorAll(".quick_edit");
 
-if (checkElementExists("dropdown-ictoria") == "dropdown-ictoria") {
-  document.getElementById("allergens-ictoria").style.display = "none";
-}
-
-//Check if the element exists
 function checkElementExists(id) {
   var element = document.getElementById(id);
   if (element) {
@@ -15,16 +10,6 @@ function checkElementExists(id) {
   }
 }
 
-//Opens the form when triggered
-function dropdown_form() {
-  if (document.getElementById("allergens-ictoria").style.display == "none") {
-    document.getElementById("allergens-ictoria").style.display = "block";
-  } else {
-    document.getElementById("allergens-ictoria").style.display = "none";
-  }
-}
-
-//Opens the quick edit
 function quickedit(form) {
   var field = form.querySelector(".update_form");
   var selectdropdown = field.querySelector(".type");
@@ -146,24 +131,44 @@ function quickedit(form) {
   }
 }
 
-if (checkElementExists("the-list") == true) {
-document.getElementById("the-list").addEventListener("click", function (event) {
-  if (event.target.classList.contains("quick_edit")) {
-    var quickEditing = event.target;
-    if (quickEditing.style.pointerEvents == "auto") {
-      var form = event.target.id + "_form";
-      var get_form = document.getElementById(form);
-      quickedit(get_form);
-    }
-  }
-});
+if (checkElementExists("the-list")) {
+  document
+    .getElementById("the-list")
+    .addEventListener("click", function (event) {
+      if (event.target.classList.contains("quick_edit")) {
+        var quickEditing = event.target;
+        if (quickEditing.style.pointerEvents == "auto") {
+          var form = event.target.id + "_form";
+          var get_form = document.getElementById(form);
+          quickedit(get_form);
+        }
+      }
+    });
 }
 
-if (checkElementExists("dropdown-ictoria") == true) {
-  button.addEventListener("click", dropdown_form);
+function confirmResetInput() {
+  if (confirm("Are you sure you want to reset the form?")) {
+    location.reload(true);
+  }
+  return;
 }
 
 jQuery(document).ready(function ($) {
+  if (checkElementExists("ictoria-filter-dropdown")) {
+    $(document).on("click", "#ictoria-filter-dropdown-button", dropdown_form);
+  }
+
+  function dropdown_form() {
+    if (
+      document.getElementById("ictoria-filter-dropdown").style.display == "none"
+    ) {
+      document.getElementById("ictoria-filter-dropdown").style.display =
+        "block";
+    } else {
+      document.getElementById("ictoria-filter-dropdown").style.display = "none";
+    }
+  }
+
   function readURL(input, imgElement) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
@@ -177,8 +182,9 @@ jQuery(document).ready(function ($) {
   }
 
   $(document).on("change", ".allergen_icon_file_input", function () {
-    const itemContainer = $(this).closest('.item');
-    const imgElement = itemContainer.find('.allergen_icon_img');
+    // Identify the closest '.item' container to get the corresponding image
+    const itemContainer = $(this).closest(".item"); // Adjust to match the row/container class
+    const imgElement = itemContainer.find(".allergen_icon_img");
 
     if (imgElement.length === 0) {
       return;

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Allergens-Dietary-Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2024-11-27 14:11+0100\n"
+"POT-Creation-Date: 2024-11-28 11:21+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -97,7 +97,31 @@ msgstr "Fout met verwijderen van allergeen:"
 msgid "allergens-dietary-ictoria"
 msgstr "allergenen-dieët-ictoria"
 
-#: php/forms/allergen_add_allergen.php:95
+#: php/filter.php:70
+msgid "Show allergen filters"
+msgstr "Weergeef allergenen filters"
+
+#: php/filter.php:76 php/woocommerce/product_settings.php:49
+msgid "Allergens"
+msgstr "Allergenen"
+
+#: php/filter.php:87
+msgid "No "
+msgstr "Geen "
+
+#: php/filter.php:94
+msgid "Dietary restrictions"
+msgstr "Dieet restrictie"
+
+#: php/filter.php:112
+msgid "Apply Filters"
+msgstr "Filters toepassen"
+
+#: php/filter.php:113
+msgid "Clear Filters"
+msgstr "Filters wissen"
+
+#: php/forms/allergen_add_allergen.php:94
 msgid "Quick Edit"
 msgstr "Snel Bewerken"
 
@@ -327,10 +351,6 @@ msgstr "allergenen_dieët_ictoria_opties"
 #: php/wc_integration.php:128
 msgid "Settings"
 msgstr "Instellingen"
-
-#: php/woocommerce/product_settings.php:49
-msgid "Allergens"
-msgstr "Allergenen"
 
 #: php/woocommerce/product_settings.php:79
 msgid "Select allergen('s) and/or dietary restrictions:"
