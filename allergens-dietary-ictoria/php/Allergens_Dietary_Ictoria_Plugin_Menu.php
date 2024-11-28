@@ -55,6 +55,16 @@ class Allergens_Dietary_Ictoria_Plugin_Menu
 			remove_submenu_page('allergens-dietary-options', 'allergens-dietary-options');
 		}, 999); 
 
+		
+		add_submenu_page(
+			'allergens-dietary-options',
+			__('License key', 'allergens-dietary-ictoria'),
+			__('License key', 'allergens-dietary-ictoria'),
+			'manage_options',
+			'allergens-dietary-license',
+			array($this, 'licenseForm')
+		);
+
 		add_submenu_page(
 			'allergens-dietary-options',
 			__('Show allergens', 'allergens-dietary-ictoria'),
@@ -69,22 +79,21 @@ class Allergens_Dietary_Ictoria_Plugin_Menu
 
 		add_submenu_page(
 			'allergens-dietary-options',
-			__('License key', 'allergens-dietary-ictoria'),
-			__('License key', 'allergens-dietary-ictoria'),
-			'manage_options',
-			'allergens-dietary-license',
-			array($this, 'licenseForm')
-		);
-
-		add_submenu_page(
-			'allergens-dietary-options',
 			__('Add allergen', 'allergens-dietary-ictoria'),
 			__('Add allergen', 'allergens-dietary-ictoria'),
 			'manage_options',
 			'allergens-dietary-add-allergen',
 			array($this, 'addallergens')
 		);
-
+		
+		add_submenu_page(
+			'allergens-dietary-options',
+			__('Update allergen', 'allergens-dietary-ictoria'),
+			__('Update allergen', 'allergens-dietary-ictoria'),
+			'manage_options',
+			'allergens-dietary-update-allergen',
+			array($this, 'updateallergens')
+		);
 
 		add_submenu_page(
 			'allergens-dietary-options',
@@ -96,15 +105,6 @@ class Allergens_Dietary_Ictoria_Plugin_Menu
 				$this,
 				'Info',
 			)
-		);
-
-		add_submenu_page(
-			'allergens-dietary-options',
-			__('Update allergen', 'allergens-dietary-ictoria'),
-			__('Update allergen', 'allergens-dietary-ictoria'),
-			'manage_options',
-			'allergens-dietary-update-allergen',
-			array($this, 'updateallergens')
 		);
 	}
 
