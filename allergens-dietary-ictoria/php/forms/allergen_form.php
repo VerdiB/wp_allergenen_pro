@@ -100,6 +100,7 @@ class Allergens_Dietary_Ictoria_Form
 	{
 
 		$showOnPage = ["allergens-dietary-show-allergens"];
+		$showOnPageSecondOption = ["allergens-dietary-add-allergen"];
 
 		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 
@@ -122,9 +123,15 @@ class Allergens_Dietary_Ictoria_Form
 			self::$_formObject->showForm($allergenName);
 			echo '</div>';
 		} else {
-			echo '<div class="allergens_form"><form action="" method="post" enctype="multipart/form-data" id="add_allergens_form" class="add_allergens_form">';
-			self::$_formObject->showForm($allergenName);
-			echo '</form></div>';
+			if (in_array($page, $showOnPageSecondOption, true)) {
+				echo '<div class="allergens_form health-check-body"><form action="" method="post" style="max-width: 350px;" enctype="multipart/form-data" class="add_allergens_form">';
+				self::$_formObject->showForm($allergenName);
+				echo '</form></div>';
+			}else{
+				echo '<div class="allergens_form health-check-body"><form action="" method="post" enctype="multipart/form-data" class="add_allergens_form">';
+				self::$_formObject->showForm($allergenName);
+				echo '</form></div>';
+			}
 		}
 	}
 }

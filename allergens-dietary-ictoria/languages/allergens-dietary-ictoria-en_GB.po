@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Allergens-Dietary-Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2024-11-25 14:14+0100\n"
+"POT-Creation-Date: 2024-11-27 14:18+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -70,7 +70,8 @@ msgstr "Licence key"
 
 #: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:81
 #: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:82
-#: php/forms/allergen_add_allergen.php:130
+#: php/forms/allergen_add_allergen.php:134
+#: php/forms/allergen_add_allergen.php:163
 msgid "Add allergen"
 msgstr "Add allergen"
 
@@ -97,74 +98,76 @@ msgstr "Error Deleting allergen: '"
 msgid "allergens-dietary-ictoria"
 msgstr "allergens-dietary-ictoria"
 
-#: php/forms/allergen_add_allergen.php:94
+#: php/forms/allergen_add_allergen.php:95
 msgid "Quick Edit"
 msgstr "Quick Edit"
 
-#: php/forms/allergen_add_allergen.php:96
-#: php/forms/allergen_add_allergen.php:120
+#: php/forms/allergen_add_allergen.php:97
+#: php/forms/allergen_add_allergen.php:136
 msgid "Allergen name"
 msgstr "Allergen name"
 
-#: php/forms/allergen_add_allergen.php:99
-#: php/forms/allergen_add_allergen.php:122
+#: php/forms/allergen_add_allergen.php:102
+#: php/forms/allergen_add_allergen.php:140
 msgid "Type"
 msgstr "Type"
 
-#: php/forms/allergen_add_allergen.php:104
-#: php/forms/allergen_add_allergen.php:126
+#: php/forms/allergen_add_allergen.php:109
+#: php/forms/allergen_add_allergen.php:147
 msgid "Allergen description"
 msgstr "Allergen description"
 
-#: php/forms/allergen_add_allergen.php:106
+#: php/forms/allergen_add_allergen.php:113
 msgid "Update"
 msgstr "Update"
 
-#: php/forms/allergen_add_allergen.php:113
+#: php/forms/allergen_add_allergen.php:118
+#: php/forms/allergen_add_allergen.php:159
+msgid "Max size of an icon is 40x40 pixels."
+msgstr "Max size of an icon is 40x40 pixels."
+
+#: php/forms/allergen_add_allergen.php:122
+#: php/forms/allergen_add_allergen.php:156
 msgid "Set image"
 msgstr "Set image"
 
-#: php/forms/allergen_add_allergen.php:128
-msgid "Allergen icon"
-msgstr "Allergen icon"
-
-#: php/forms/allergen_add_allergen.php:167
+#: php/forms/allergen_add_allergen.php:202
 msgid "Form has not been set!"
 msgstr "Form has not been set!"
 
-#: php/forms/allergen_add_allergen.php:173
+#: php/forms/allergen_add_allergen.php:208
 msgid "Allergen Name Can't be empty or blank!"
 msgstr "Allergen Name Can't be empty or blank!"
 
-#: php/forms/allergen_add_allergen.php:186
-#: php/forms/allergen_add_allergen.php:229
+#: php/forms/allergen_add_allergen.php:221
+#: php/forms/allergen_add_allergen.php:264
 msgid "Allergen name already exists"
 msgstr "Allergen name already exists"
 
-#: php/forms/allergen_add_allergen.php:207
-#: php/forms/allergen_add_allergen.php:236
+#: php/forms/allergen_add_allergen.php:242
+#: php/forms/allergen_add_allergen.php:271
 msgid "The file is not a valid image. Supported image types are: "
 msgstr "The file is not a valid image. Supported image types are: "
 
-#: php/forms/allergen_add_allergen.php:221
+#: php/forms/allergen_add_allergen.php:256
 msgid "Succesfully added new allergen: "
 msgstr "Succesfully added new allergen: "
 
-#: php/forms/allergen_add_allergen.php:245
-#: php/forms/allergen_add_allergen.php:258
-#: php/forms/allergen_add_allergen.php:270
+#: php/forms/allergen_add_allergen.php:280
+#: php/forms/allergen_add_allergen.php:293
+#: php/forms/allergen_add_allergen.php:305
 msgid "Allergen successfully updated."
 msgstr "Allergen successfully updated."
 
-#: php/forms/allergen_add_allergen.php:303
-#: php/forms/allergen_add_allergen.php:311
-#: php/forms/allergen_add_allergen.php:314
+#: php/forms/allergen_add_allergen.php:338
+#: php/forms/allergen_add_allergen.php:346
+#: php/forms/allergen_add_allergen.php:349
 msgid "Allergy"
 msgstr "Allergy"
 
-#: php/forms/allergen_add_allergen.php:304
-#: php/forms/allergen_add_allergen.php:312
-#: php/forms/allergen_add_allergen.php:315
+#: php/forms/allergen_add_allergen.php:339
+#: php/forms/allergen_add_allergen.php:347
+#: php/forms/allergen_add_allergen.php:350
 msgid "Dietary restriction"
 msgstr "Dietary restriction"
 
@@ -331,6 +334,9 @@ msgstr "Allergens"
 #: php/woocommerce/product_settings.php:79
 msgid "Select allergen('s) and/or dietary restrictions:"
 msgstr "Select allergen('s) and/or dietary restrictions:"
+
+#~ msgid "Allergen icon"
+#~ msgstr "Allergen icon"
 
 #~ msgid "exclude"
 #~ msgstr "exclude"

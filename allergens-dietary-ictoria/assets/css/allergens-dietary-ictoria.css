@@ -195,3 +195,17 @@ tr.inline-edit-row td {
 .allergen_icon_img{
   margin-top: 15%;
 }
+
+.health-check-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.align-header {
+  text-align: left;
+}
+
+.bold {
+  font-weight: bold;
+}

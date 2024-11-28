@@ -185,6 +185,18 @@ jQuery(document).ready(function ($) {
     }
     readURL(this, imgElement);
   });
+
+  $(document).on("change", ".allergen_icon_file_input", function () {
+    console.log($(this));
+    const itemRow = $(this).closest('.item-row');
+    const itemHeader = itemRow.find('.item-header');
+    const addImgElement = itemHeader.find('.add_allergen_icon_img');
+
+    if (addImgElement.length === 0) {
+      return;
+    }
+    readURL(this, addImgElement);
+  });
 });
 
 var formTouched = false;
