@@ -1,26 +1,32 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
-if ( ! interface_exists( 'I_Allergens_Dietary_Ictoria_Form' ) ) {
+if (!interface_exists('I_Allergens_Dietary_Ictoria_Form')) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/Iallergen_form.php';
 }
 
-if ( ! class_exists( 'Allergens_Dietary_Ictoria_License_Form' ) ) {
+if (!class_exists('Allergens_Dietary_Ictoria_License_Form')) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_form_license.php';
 }
 
-if ( ! class_exists( 'Allergens_Dietary_Ictoria_Allergen_Form' ) ) {
+if (!class_exists('Allergens_Dietary_Ictoria_Allergen_Form')) {
 	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_add_allergen.php';
 }
+if (!class_exists('Allergens_Dietary_Ictoria_Update_Allergen_Form')) {
+	require_once ALLERGENS_DIETARY_ICTORIA_DIRNAME . '/php/forms/allergen_update_allergen.php';
+}
 
-enum FormType {
+enum FormType
+{
 	case ALLERGENS;
 	case LICENSE;
+	case UPDATE;
 
-	public function match( FormType $formType ): bool {
+	public function match(FormType $formType): bool
+	{
 		return $this === $formType;
 	}
 }
@@ -34,53 +40,98 @@ enum FormType {
  * @since 1.0.0
  */
 
-class Allergens_Dietary_Ictoria_Form {
+class Allergens_Dietary_Ictoria_Form
+{
 	private static ?self $_instance = null;
 	private static FormType $_formType;
 	private static I_Allergens_Dietary_Ictoria_Form $_formObject;
-	private /*associative*/ array $_data;
 
-	private function __construct() {
-		if ( FormType::ALLERGENS === self::$_formType ) {
+	private function __construct(bool $isTable = false)
+	{
+		if (FormType::ALLERGENS === self::$_formType) {
 			self::$_formObject = new Allergens_Dietary_Ictoria_Allergen_Form();
 		}
-		if ( FormType::LICENSE === self::$_formType ) {
+		if (FormType::LICENSE === self::$_formType) {
 			self::$_formObject = new Allergens_Dietary_Ictoria_License_Form();
 		}
-		if ( ! isset( self::$_formType ) || false === self::$_formType->match( self::$_formType ) ) {
-			throw new Exception( 'FormType not yet supported/implemented' );
+		if (FormType::UPDATE === self::$_formType) {
+			self::$_formObject = new Allergens_Dietary_Ictoria_Update_Allergen_Form();
+		}
+		if (!isset(self::$_formType) || false === self::$_formType->match(self::$_formType)) {
+			throw new Exception('FormType not yet supported/implemented');
 		}
 	}
 
-	public static function getInstance() {
-		if ( self::$_instance === null ) {
+	public static function getInstance(bool $isTable = false)
+	{
+		if (self::$_instance === null) {
 			self::$_instance = new self();
 		}
 		return self::$_instance;
 	}
 
-	public static function setFormType( FormType $formType ) {
+	public static function setFormType(FormType $formType)
+	{
 		self::$_formType = $formType;
 	}
 
-	public static function getFormType() {
+	public static function getFormType()
+	{
 		return self::$_formType;
 	}
 
-	public function showForm( string $allergenName = null ) {
+	public function submitUpdate()
+	{
 
-		if ( ! empty( $_POST ) ) {
+		if (!empty($_POST)) {
 			$_data = $_POST;
 		}
-		if ( ! empty( $_FILES ) ) {
-			$_data = array_merge( $_data, $_FILES );
-		}
-		if ( ! empty( $_POST['submit'] ) ) {
-			self::$_formObject->submit( $_data );
+
+		if (!empty($_FILES)) {
+			$_data = array_merge($_data, $_FILES);
 		}
 
-		echo '<div class="allergens_form"><form action="" method="post" enctype="multipart/form-data" class="add_allergens_form">';
-		self::$_formObject->showForm( $allergenName );
-		echo '</form></div>';
+		if (!empty($_POST['submit'])) {
+			self::$_formObject->submit($_data);
+		}
+	}
+
+	public function showForm(string $allergenName = null)
+	{
+
+		$showOnPage = ["allergens-dietary-show-allergens"];
+		$showOnPageSecondOption = ["allergens-dietary-add-allergen"];
+
+		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
+
+		if (!empty($_POST)) {
+			$_data = $_POST;
+		}
+
+		if (!empty($_FILES)) {
+			$_data = array_merge($_data, $_FILES);
+		}
+
+		if (!in_array($page, $showOnPage, true)) {
+			if (!empty($_POST['submit'])) {
+				self::$_formObject->submit($_data);
+			}
+		}
+
+		if (in_array($page, $showOnPage, true)) {
+			echo '<div class="allergens_table_form" style="display: none;" id="' . $allergenName . '_form">';
+			self::$_formObject->showForm($allergenName);
+			echo '</div>';
+		} else {
+			if (in_array($page, $showOnPageSecondOption, true)) {
+				echo '<div class="allergens_form health-check-body"><form action="" method="post" style="max-width: 350px;" enctype="multipart/form-data" class="add_allergens_form">';
+				self::$_formObject->showForm($allergenName);
+				echo '</form></div>';
+			}else{
+				echo '<div class="allergens_form health-check-body"><form action="" method="post" enctype="multipart/form-data" class="add_allergens_form">';
+				self::$_formObject->showForm($allergenName);
+				echo '</form></div>';
+			}
+		}
 	}
 }

@@ -16,19 +16,26 @@ if (!defined('ABSPATH')) {
 class Allergens_Dietary_Ictoria_Tabs
 {
     private static ?self $_instance = null;
-    //private static tabType $_tabType;
-    //private static Allergens_Dietary_Ictoria_tabs $_tabsBox;
+    
+    public function __construct()
+	{
+        //load js
+		wp_register_script('Allergens_Dietary_Ictoria_Show_Allergens', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/js/script.js'), array('jquery'));
+        wp_enqueue_script( 'Allergens_Dietary_Ictoria_Show_Allergens');
 
-
+        //load css
+        wp_register_style('allergens-dietary-ictoria-css', plugins_url(ALLERGENS_DIETARY_ICTORIA_NAME.'/assets/css/allergens-dietary-ictoria.css'));
+	    wp_enqueue_style('allergens-dietary-ictoria-css');
+	}
 
     public function showtabs()
     {
         //flexbox voor tabs
         $html = '<div id="tabs_flexbox" class="nav-tab-wrapper">';
-        $html .= '<a class="nav-tab" href="#">' . __("Change allergens", "allergens-dietary-ictoria") . '</a>';
-        $html .= '<a class="nav-tab" href="#">' . __("Create allergens", "allergens-dietary-ictoria") . '</a>';
-        $html .= '<a class="nav-tab" href="#">' . __("See allergens", "allergens-dietary-ictoria") . '</a>';
-        $html .= '<a class="nav-tab" href="#">' . __("Info", "allergens-dietary-ictoria") . '</a>';
+        $html .= '<a class="nav-tab" href="'.get_admin_url(null, 'admin.php?page=allergens-dietary-show-allergens').'">' . __("See allergens", "allergens-dietary-ictoria") . '</a>';
+        $html .= '<a class="nav-tab" href="'.get_admin_url(null, 'admin.php?page=allergens-dietary-add-allergen').'">' . __("Create allergens", "allergens-dietary-ictoria") . '</a>';
+        $html .= '<a class="nav-tab" href="'.get_admin_url(null, 'admin.php?page=allergens-dietary-update-allergen').'">' . __("Change allergens", "allergens-dietary-ictoria") . '</a>';
+        $html .= '<a class="nav-tab" href="'.get_admin_url(null, 'admin.php?page=allergens-dietary-Info').'">' . __("Info", "allergens-dietary-ictoria") . '</a>';
         $html .= '</div>';
         $html .= '<section id="added"></section> <br> <br>';
         echo $html;

@@ -21,11 +21,15 @@ class Allergens_Dietary_Ictoria_Info
 
     public function showInfo()
     {
+
+        Allergens_Dietary_Ictoria_Activator::load_style();
+        Allergens_Dietary_Ictoria_Activator::enqueue_styles();
+        
         //flexbox voor tabs
         $html = '<div id="info_grid" class="nav-tab-wrapper">';
         $html .= '<div><h1 class="premium">' . __("PREMIUM  [Requires licence]", "allergens-dietary-ictoria") . '</h1>';
         $html .= '<ol>';
-        $html .= '<li class="contains">' . __("Updating allergies", "allergens-dietary-ictoria") . '</li>';
+        $html .= '<li class="contains">' . __('Updating allergies', 'allergens-dietary-ictoria') . '</li>';
         $html .= '<li class="contains">' . __("Changing allergy themes", "allergens-dietary-ictoria") . '</li>';
         $html .= '<li class="contains">' . __("Deleting allergies", "allergens-dietary-ictoria") . '</li>';
         $html .= '<li class="contains">' . __("Adding allergies", "allergens-dietary-ictoria") . '</li>';
@@ -38,7 +42,7 @@ class Allergens_Dietary_Ictoria_Info
         $html .= '<li class="contains">' . __("Connecting allergies to products", "allergens-dietary-ictoria") . '</li>';
         $html .= '<li class="contains">' . __("Wordpress theme fiendly styles", "allergens-dietary-ictoria") . '</li>';
         $html .= '<li class="contains">' . __("An allergen overview", "allergens-dietary-ictoria") . '</li>';
-        $html .= '<li class="contains">' . __("Turning the the use of allergies on/off", "allergens-dietary-ictoria") . '</li>';
+        $html .= '<li class="contains">' . __("Turning the use of allergies on/off", "allergens-dietary-ictoria") . '</li>';
         $html .= '      </ol>';
         $html .= '  </div>';
         $html .= '  </div>';
