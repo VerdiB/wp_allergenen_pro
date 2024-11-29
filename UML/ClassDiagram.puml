@@ -15,7 +15,7 @@ This to support the Single Responsibility Principle and maintain clean code.
 end note
 
 note as N3
-All classes that do not  have a relation are pure singleton classes.
+All classes that do not have a relation are pure singleton classes.
 Meaning there can only be one instance of the object at any given time.
 end note
 
