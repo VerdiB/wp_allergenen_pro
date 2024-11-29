@@ -14,6 +14,11 @@ But contains 2 classes these must be separated in a later rendition of the plugi
 This to support the Single Responsibility Principle and maintain clean code.
 end note
 
+note as N3
+All classes that do not  have a relation are pure singleton classes.
+Meaning there can only be one instance of the object at any given time.
+end note
+
 package "php"{
 
     class Allergens_Dietary_Ictoria_Filter{
@@ -288,12 +293,11 @@ package Allergens_Dietary_Ictoria{
         +add_integration(integrations:array) : array
     }
 }
+
+
 N2 -- Allergens_Dietary_Ictoria
 Allergens_Dietary_Ictoria +-u- php
 
-Allergens_Dietary_Ictoria_Filter --> Allergens_Dietary_Ictoria_Functions : uses
-Allergens_Dietary_Ictoria_Wc_Integration_Settings -r-> Allergens_Dietary_Ictoria_Functions : uses
-Allergens_Dietary_Ictoria_Product_Settings -l-> Allergens_Dietary_Ictoria_Functions : uses
 Allergens_Dietary_Ictoria_Product_Settings .l.> Allergens_Dietary_Ictoria_Allergy_Product_Queries : uses
 Allergens_Dietary_Ictoria_Products ..> Allergens_Dietary_Ictoria_Allergy_Product_Queries
 
