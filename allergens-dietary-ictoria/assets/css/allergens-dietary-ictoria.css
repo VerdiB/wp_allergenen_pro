@@ -37,7 +37,8 @@
 }
 
 .filter-button {
-  display: inline-block;
+  float: right;
+  width: 25%;
   font-size: 13px;
   line-height: 2;
   min-height: 30px;
@@ -262,4 +263,14 @@ tr.inline-edit-row td {
 
 .bold {
   font-weight: bold;
+}
+
+.wc-block-catalog-sorting 
+{
+  width: 25%;
+}
+
+.orderby
+{
+  width: 100%;
 }
