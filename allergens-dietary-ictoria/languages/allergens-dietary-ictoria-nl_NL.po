@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Allergens-Dietary-Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2024-11-28 11:56+0100\n"
+"POT-Creation-Date: 2024-12-02 11:27+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -39,7 +39,7 @@ msgid ""
 "products."
 msgstr ""
 "Voegt Allergenen en Dieetopties toe die kunnen worden gebruikt met "
-"WooCommerce producten allergenen-dieet-ictoria"
+"WooCommerce producten."
 
 #: allergens-dietary-ictoria.php:149
 #, php-format
@@ -129,7 +129,7 @@ msgstr "Filters toepassen"
 msgid "Clear Filters"
 msgstr "Filters wissen"
 
-#: php/forms/allergen_add_allergen.php:94
+#: php/forms/allergen_add_allergen.php:95
 msgid "Quick Edit"
 msgstr "Snel Bewerken"
 
