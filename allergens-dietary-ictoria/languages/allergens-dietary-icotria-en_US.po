@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Allergens-Dietary-Ictoria v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2024-11-27 14:17+0100\n"
+"POT-Creation-Date: 2024-11-28 12:40+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -34,7 +34,15 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-7: tests\n"
 "X-Poedit-SearchPathExcluded-8: UML\n"
 
-#: allergens-dietary-ictoria.php:143
+#: allergens-dietary-ictoria.php:25
+msgid ""
+"Adds Allergens and Dietary options that can be used with WooCommerce "
+"products."
+msgstr ""
+"Adds Allergens and Dietary options that can be used with WooCommerce "
+"products."
+
+#: allergens-dietary-ictoria.php:149
 #, php-format
 msgid ""
 "%1$sThe WooCommerce Integration class was not found. Please make sure "
@@ -43,7 +51,7 @@ msgstr ""
 "%1$sThe WooCommerce Integration class was not found. Please make sure "
 "WooCommerce is installed correctly%2$s"
 
-#: allergens-dietary-ictoria.php:178
+#: allergens-dietary-ictoria.php:184
 #, php-format
 msgid ""
 "%1$sWooCommerce is inactive or not installed. Please install & activate "
@@ -56,20 +64,20 @@ msgstr ""
 msgid "Allergens and Dietary"
 msgstr "Allergens and Dietary"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:60
 #: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:61
-msgid "Show allergens"
-msgstr "Show allergens"
-
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:72
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:73
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:62
 #: php/forms/allergen_form_license.php:42
 #: php/forms/allergen_form_license.php:43
 msgid "License key"
 msgstr "License key"
 
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:81
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:70
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:71
+msgid "Show allergens"
+msgstr "Show allergens"
+
 #: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:82
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:83
 #: php/forms/allergen_add_allergen.php:134
 #: php/forms/allergen_add_allergen.php:163
 msgid "Add allergen"
@@ -77,14 +85,14 @@ msgstr "Add allergen"
 
 #: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:91
 #: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:92
+msgid "Update allergen"
+msgstr "Update allergen"
+
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:100
+#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:101
 #: php/tabs/allergen_tabs.php:38
 msgid "Info"
 msgstr "Info"
-
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:103
-#: php/Allergens_Dietary_Ictoria_Plugin_Menu.php:104
-msgid "Update allergen"
-msgstr "Update allergen"
 
 #: php/DB/allergen.php:247
 msgid "Can't delete a default allergen option: '"
@@ -97,6 +105,36 @@ msgstr "Error deleting allergen: '"
 #: php/activator.php:414
 msgid "allergens-dietary-ictoria"
 msgstr "allergens-dietary-ictoria"
+
+#: php/filter.php:70
+#, fuzzy
+#| msgid "Show allergens"
+msgid "Show allergen filters"
+msgstr "Show allergens"
+
+#: php/filter.php:76 php/woocommerce/product_settings.php:49
+msgid "Allergens"
+msgstr "Allergens"
+
+#: php/filter.php:87
+#, fuzzy
+#| msgid "no "
+msgid "No "
+msgstr "no "
+
+#: php/filter.php:94
+#, fuzzy
+#| msgid "Dietary restriction"
+msgid "Dietary restrictions"
+msgstr "Dietary restriction"
+
+#: php/filter.php:112
+msgid "Apply Filters"
+msgstr ""
+
+#: php/filter.php:113
+msgid "Clear Filters"
+msgstr ""
 
 #: php/forms/allergen_add_allergen.php:95
 msgid "Quick Edit"
@@ -290,16 +328,16 @@ msgid "Allergen deleted"
 msgstr "Allergen deleted"
 
 #: php/tabs/allergen_tabs.php:35
-msgid "Change allergens"
-msgstr "Change allergens"
+msgid "See allergens"
+msgstr "See allergens"
 
 #: php/tabs/allergen_tabs.php:36
 msgid "Create allergens"
 msgstr "Create allergens"
 
 #: php/tabs/allergen_tabs.php:37
-msgid "See allergens"
-msgstr "See allergens"
+msgid "Change allergens"
+msgstr "Change allergens"
 
 #: php/wc_integration.php:25
 msgid "Allergens and Dietary Ictoria plugin settings"
@@ -327,10 +365,6 @@ msgstr "allergens_dietary_ictoria_options"
 msgid "Settings"
 msgstr "Settings"
 
-#: php/woocommerce/product_settings.php:49
-msgid "Allergens"
-msgstr "Allergens"
-
 #: php/woocommerce/product_settings.php:79
 msgid "Select allergen('s) and/or dietary restrictions:"
 msgstr "Select allergen('s) and/or dietary restrictions:"
@@ -355,9 +389,6 @@ msgstr "Select allergen('s) and/or dietary restrictions:"
 
 #~ msgid "initial_setup_done"
 #~ msgstr "initial_setup_done"
-
-#~ msgid "no "
-#~ msgstr "no "
 
 #~ msgid "Peanuts"
 #~ msgstr "Pinda's"
