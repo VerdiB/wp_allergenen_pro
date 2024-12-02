@@ -174,7 +174,7 @@ class Allergens_Dietary_Ictoria_Activator
 			),
 			'pregnant' => array(
 				'category' => 'dietary',
-				'title' => 'risk for pregnancy',
+				'title' => 'Risk for pregnancy',
 				'description' => 'Certain foods, such as raw meat, fish, unpasteurized dairy, and caffeine, can be harmful to the health of pregnant women and their baby.',
 				'default' => 'TRUE',
 
@@ -354,7 +354,7 @@ class Allergens_Dietary_Ictoria_Activator
 			),
 			'pregnant' => array(
 				'name' => 'dietary_pregnant.png',
-				'title' => 'Risk for pregnant women',
+				'title' => 'Risk for pregnancy',
 			)
 		);
 	}

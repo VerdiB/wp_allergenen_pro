@@ -66,15 +66,6 @@ class Allergens_Dietary_Ictoria_Plugin_Menu
 				'Info',
 			)
 		);
-		
-		add_submenu_page(
-			'allergens-dietary-options',
-			__('License key', 'allergens-dietary-ictoria'),
-			__('License key', 'allergens-dietary-ictoria'),
-			'manage_options',
-			'allergens-dietary-license',
-			array($this, 'licenseForm')
-		);
 
 		add_submenu_page(
 			'allergens-dietary-options',
@@ -104,6 +95,15 @@ class Allergens_Dietary_Ictoria_Plugin_Menu
 			'manage_options',
 			'allergens-dietary-update-allergen',
 			array($this, 'updateallergens')
+		);
+
+		add_submenu_page(
+			'allergens-dietary-options',
+			__('License key', 'allergens-dietary-ictoria'),
+			__('License key', 'allergens-dietary-ictoria'),
+			'manage_options',
+			'allergens-dietary-license',
+			array($this, 'licenseForm')
 		);
 	}
 
