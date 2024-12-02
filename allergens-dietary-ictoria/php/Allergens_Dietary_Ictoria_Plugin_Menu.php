@@ -77,23 +77,23 @@ class Allergens_Dietary_Ictoria_Plugin_Menu
 			),
 		);
 
-		add_submenu_page(
+		/*add_submenu_page(
 			'allergens-dietary-options',
 			__('Add allergen', 'allergens-dietary-ictoria'),
 			__('Add allergen', 'allergens-dietary-ictoria'),
 			'manage_options',
 			'allergens-dietary-add-allergen',
 			array($this, 'addallergens')
-		);
+		);*/
 		
-		add_submenu_page(
+		/*add_submenu_page(
 			'allergens-dietary-options',
 			__('Update allergen', 'allergens-dietary-ictoria'),
 			__('Update allergen', 'allergens-dietary-ictoria'),
 			'manage_options',
 			'allergens-dietary-update-allergen',
 			array($this, 'updateallergens')
-		);
+		);*/
 
 		add_submenu_page(
 			'allergens-dietary-options',
