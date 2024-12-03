@@ -11,21 +11,23 @@
   display: inline-block;
   width: 36px;
   margin-right: 4px;
-  margin-bottom: 0;
+  margin-bottom: 4px;
+  margin-top: 4px;
   z-index: 99;
 }
 
 /* Filter css shop page */
 
-#ictoria-filter-dropdown {
-  max-width: 400px;
-  background-color: white;
+div#ictoria-filter-dropdown {
+  max-width: 75%;
+  width: 50%;
+  /* background-color: white; */
   border-radius: 10px;
   padding: 10px 20px 20px 20px;
   margin-top: 10px;
 }
 
-.filter-container {
+.ictoria-filter-container {
   display: flex;
   justify-content: space-between;
 }
@@ -37,8 +39,7 @@
 }
 
 .filter-button {
-  float: right;
-  width: 25%;
+  display: inline-block;
   font-size: 13px;
   line-height: 2;
   min-height: 30px;
@@ -78,7 +79,7 @@
   justify-content: space-between;
 }
 @media screen and (max-width: 550px) {
-  .filter-container {
+  .ictoria-filter-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -263,14 +264,4 @@ tr.inline-edit-row td {
 
 .bold {
   font-weight: bold;
-}
-
-.wc-block-catalog-sorting 
-{
-  width: 25%;
-}
-
-.orderby
-{
-  width: 100%;
 }
