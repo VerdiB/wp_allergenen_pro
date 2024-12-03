@@ -70,7 +70,7 @@ class Allergens_Dietary_Ictoria_Filter
 		$html .= '<button class="filter-button" id="ictoria-filter-dropdown-button">' . __('Show allergen filters', 'allergens-dietary-ictoria') . '</button>';
 		$html .= '<div id="ictoria-filter-dropdown" style="display: none;">';
 		$html .= '<form action="" method="post" class="">';
-		$html .= '<div class="filter-container">';
+		$html .= '<div class="ictoria-filter-container">';
 		$html .= '<div class="checkbox-container">';
 		$html .= '<div class="filter-header">';
 		$html .= '<h3>' . __('Allergens', 'allergens-dietary-ictoria') . '</h3>';
