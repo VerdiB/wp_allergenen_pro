@@ -47,8 +47,7 @@ div#ictoria-filter-dropdown {
   border-radius: 3px;
   white-space: nowrap;
   /* background: white; */
-  border: 1px solid #8c8f94;
-  outline: none;
+  /* outline: none; */
   margin-bottom: 16px;
 }
 
