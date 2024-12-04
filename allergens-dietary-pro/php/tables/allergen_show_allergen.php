@@ -518,6 +518,8 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+    $notice->display_admin_notice(Notice_Types::SUCCESS, __('is great success', 'allergens-dietary-ictoria'));
     if (isset($_POST['action'])){
         if ($_POST['action'] = -1){
             Allergens_Dietary_Pro_Form::setFormType(FormType::ALLERGENS);
