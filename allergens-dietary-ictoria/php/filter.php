@@ -67,10 +67,10 @@ class Allergens_Dietary_Ictoria_Filter
 		// Create variable that is used in the loops
 		$html = '';
 
-		$html .= '<button class="filter-button" id="ictoria-filter-dropdown-button">' . __('Show allergen filters', 'allergens-dietary-ictoria') . '</button>';
+		$html .= '<button class="filter-button woocommerce wc-block-catalog-sorting has-font-size has-small-font-size" id="ictoria-filter-dropdown-button">' . __('Show allergen filters', 'allergens-dietary-ictoria') . '</button>';
 		$html .= '<div id="ictoria-filter-dropdown" style="display: none;">';
 		$html .= '<form action="" method="post" class="">';
-		$html .= '<div class="filter-container">';
+		$html .= '<div class="ictoria-filter-container">';
 		$html .= '<div class="checkbox-container">';
 		$html .= '<div class="filter-header">';
 		$html .= '<h3>' . __('Allergens', 'allergens-dietary-ictoria') . '</h3>';
