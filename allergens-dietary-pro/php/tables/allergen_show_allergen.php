@@ -324,11 +324,14 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
 
             // Verify nonce based on action
             if ($action === 'change_status' && !wp_verify_nonce($nonce, 'allergens_change_status')) {
-                wp_die('Security check failed for changing status!');
+                $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+                $notice->display_admin_notice(Notice_Types::WARNING, __('Security check failed for changing status!', 'allergens-dietary-ictoria'));
             } elseif ($action === 'delete' && !wp_verify_nonce($nonce, 'allergens_delete')) {
-                wp_die('Security check failed for deletion!');
+                $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+                $notice->display_admin_notice(Notice_Types::WARNING, __('Security check failed for deletion!', 'allergens-dietary-ictoria'));
             }  elseif ($action === 'quick_edit' && !wp_verify_nonce($nonce, 'allergens_delete')) {
-                wp_die('Security check failed for quick edit!');
+                $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+                $notice->display_admin_notice(Notice_Types::WARNING, __('Security check failed for quick edit!', 'allergens-dietary-ictoria'));
             }
 
             // Perform action based on case
