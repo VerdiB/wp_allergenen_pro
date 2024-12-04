@@ -166,7 +166,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
         a file input*/
     if (esc_attr($action) !== 'quick_edit' && esc_attr($action) !== 'change_status'){
         return $is_default ? '<a style="color: grey;">' . ucfirst(str_replace('_', ' ', $action)) . '</a>' : sprintf(
-            '<a style="color: ' . $color . ';" href="?page=%s' . (self::$_page > 0 ? '&paged=' . strval(self::$_page) : '') . '&message='. self::$message .'.&item=%s&action=%s&_wpnonce=%s">%s</a>',
+            '<a style="color: ' . $color . ';" href="?page=%s' . (self::$_page > 0 ? '&paged=' . strval(self::$_page) : '') . (self::$message > 0 ? '&message=' . strval(self::$message) : '') . '.&item=%s&action=%s&_wpnonce=%s">%s</a>',
             esc_attr($_REQUEST['page']),
             esc_attr($item['allergy_name']),
             esc_attr($action),
@@ -175,9 +175,8 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
         );
     }elseif(esc_attr($action) == 'change_status'){
         return sprintf(
-            '<a style="color: ' . $color . ';" href="?page=%s' . (self::$_page > 0 ? '&paged=' . strval(self::$_page) : '') . '&message=%s&item=%s&action=%s&_wpnonce=%s">%s</a>',
+            '<a style="color: ' . $color . ';" href="?page=%s' . (self::$_page > 0 ? '&paged=' . strval(self::$_page) : '') . (self::$message > 0 ? '&message=' . strval(self::$message) : '') .'&item=%s&action=%s&_wpnonce=%s">%s</a>',
             esc_attr($_REQUEST['page']),
-            esc_attr(self::$message),
             esc_attr($item['allergy_name']),
             esc_attr($action),
             wp_create_nonce('allergens_' . $action),
@@ -549,12 +548,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_GET['quick_edit'])){
             $table = Allergens_Dietary_Pro_Show_Allergens::getInstance();
 
-            $table->process_quick_action();
+            $message = $table->process_quick_action();
+            error_log($message);
         }else{
 
             $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
 
-            $table->process_quick_action();
+            $message = $table->process_quick_action();
+            if (!empty($message)){
+                $type = Notice_Types::INFO;
+                $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+                $notice->display_admin_notice($type, $message);
+            }
         }
     }
 }
