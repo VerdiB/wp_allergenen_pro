@@ -399,7 +399,7 @@ class Allergens_Dietary_Pro_Allergen_Queries
 
 				$url = strtok($_SERVER["REQUEST_URI"], '?');
 				$separator = strpos($url, '?') === false ? '?' : '&';
-				header("Location: $url" . $separator . "page=allergens-dietary-show-allergens&messaged=" . urlencode($message));
+				header("Location: $url" . $separator . "page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : '') . "&messaged=" . urlencode($message));
 			}
 		}
 	}

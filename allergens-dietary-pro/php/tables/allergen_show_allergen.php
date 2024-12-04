@@ -552,14 +552,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             error_log($message);
         }else{
 
+            if (isset($_GET['messaged'])){
+                $type = Notice_Types::INFO;
+                $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+                $notice->display_admin_notice($type, $_GET['messaged']);
+            }
             $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
 
             $message = $table->process_quick_action();
-            if (!empty($message)){
-                $type = Notice_Types::INFO;
-                $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
-                $notice->display_admin_notice($type, $message);
-            }
         }
     }
 }
