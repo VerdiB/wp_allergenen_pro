@@ -20,7 +20,8 @@
 
 div#ictoria-filter-dropdown {
   max-width: 75%;
-  width: 50%;
+  min-width: 50%;
+  /* width: 50%; */
   /* background-color: white; */
   border-radius: 10px;
   padding: 10px 20px 20px 20px;
@@ -47,9 +48,10 @@ div#ictoria-filter-dropdown {
   cursor: pointer;
   border-radius: 3px;
   white-space: nowrap;
-  background: white;
+  /* background: white; */
   border: 1px solid #8c8f94;
   outline: none;
+  margin-bottom: 16px;
 }
 
 .filter-button:hover {
