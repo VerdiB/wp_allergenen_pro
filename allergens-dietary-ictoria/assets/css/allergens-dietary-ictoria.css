@@ -21,8 +21,6 @@
 div#ictoria-filter-dropdown {
   max-width: 75%;
   min-width: 50%;
-  /* width: 50%; */
-  /* background-color: white; */
   border-radius: 10px;
   padding: 10px 20px 20px 20px;
   margin-top: 10px;
@@ -54,22 +52,11 @@ div#ictoria-filter-dropdown {
   margin-bottom: 16px;
 }
 
-.filter-button:hover {
-  background: #f0f0f1;
-  border-color: #0a4b78;
-  color: #0a4b78;
-}
-
-.filter-button:active {
-  background: #f6f7f7;
-  border-color: #8c8f94;
-  box-shadow: none;
-}
 .filter-reset {
   /* margin-right: 10px; */
-  color: #606060;
-  border-color: #818385;
-  background: #f6f7f7;
+  /* color: #606060; */
+  /* border-color: #818385; */
+  /* background: #f6f7f7; */
   display: flex;
   align-items: center;
   justify-content: center;
