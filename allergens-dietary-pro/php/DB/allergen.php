@@ -291,8 +291,12 @@ class Allergens_Dietary_Pro_Allergen_Queries
 			}
 
 		}
-		header("Location: $url" . "?page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : '') . '&message=' . urlencode($message));
-
+		if (!empty($_GET)) {
+			error_log($message);
+			$url = strtok($_SERVER["REQUEST_URI"], '?');
+			$separator = strpos($url, '?') === false ? '?' : '&';
+			header("Location: $url" . $separator . "page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : '') . "&messaged=" . urlencode($message));
+		}
 	}
 
 	public static function getItems(){
@@ -311,7 +315,7 @@ class Allergens_Dietary_Pro_Allergen_Queries
 		return $columns;
 	}
 
-	public function activationUpdate(array $data)
+	public function activationUpdate(array $data, string $message)
 	{
 		global $wpdb;
 
@@ -353,6 +357,13 @@ class Allergens_Dietary_Pro_Allergen_Queries
 				$where,
 				$format
 			);
+
+			if (!empty($_GET)) {
+				error_log($message);
+				$url = strtok($_SERVER["REQUEST_URI"], '?');
+				$separator = strpos($url, '?') === false ? '?' : '&';
+				header("Location: $url" . $separator . "page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : '') . "&messaged=" . urlencode($message));
+			}
 		}
 	}
 
@@ -396,7 +407,7 @@ class Allergens_Dietary_Pro_Allergen_Queries
 			);
 
 			if (!empty($_GET)) {
-
+				error_log($message);
 				$url = strtok($_SERVER["REQUEST_URI"], '?');
 				$separator = strpos($url, '?') === false ? '?' : '&';
 				header("Location: $url" . $separator . "page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : '') . "&messaged=" . urlencode($message));
