@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 
 '
 /*
-Plugin Name: Allergens and Dietary
+Plugin Name: Allergens and Dietary Pro
 Plugin URI:
 Version:     1.0.0
 Description: Adds Allergens and Dietary options that can be used with WooCommerce products.
