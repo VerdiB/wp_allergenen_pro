@@ -34,6 +34,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
 
     private static $_instance = [];
     private static int $_page = 0;
+    private static string $message = "";
     // Page is statisch zodat er maar 1 is, en de zelfde waarde blijft.
 
     private function __construct()
@@ -45,6 +46,11 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
         ]);
         self::$_page = isset($_REQUEST['paged']) ? $_REQUEST['paged'] : (self::$_page === null ? 0 : self::$_page);
 
+        if (!empty($message)){
+            $type = Notice_Types::INFO;
+            $notice = Allergens_Dietary_Pro_Notices::getInstance();
+            $notice->display_admin_notice($type, self::$message);
+        }
 
         // $notice = Allergens_Dietary_Pro_Notices::getInstance();
         // $notice->display_admin_notice(Notice_Types::WARNING, __('is great success', 'allergens-dietary-pro'));
@@ -160,7 +166,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
         a file input*/
     if (esc_attr($action) !== 'quick_edit' && esc_attr($action) !== 'change_status'){
         return $is_default ? '<a style="color: grey;">' . ucfirst(str_replace('_', ' ', $action)) . '</a>' : sprintf(
-            '<a style="color: ' . $color . ';" href="?page=%s&item=%s&action=%s&_wpnonce=%s">%s</a>',
+            '<a style="color: ' . $color . ';" href="?page=%s' . (self::$_page > 0 ? '&paged=' . strval(self::$_page) : '') . '&item=%s&action=%s&_wpnonce=%s">%s</a>',
             esc_attr($_REQUEST['page']),
             esc_attr($item['allergy_name']),
             esc_attr($action),
@@ -169,7 +175,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
         );
     }elseif(esc_attr($action) == 'change_status'){
         return sprintf(
-            '<a style="color: ' . $color . ';" href="?page=%s&item=%s&action=%s&_wpnonce=%s">%s</a>',
+            '<a style="color: ' . $color . ';" href="?page=%s' . (self::$_page > 0 ? '&paged=' . strval(self::$_page) : '') . '&item=%s&action=%s&_wpnonce=%s">%s</a>',
             esc_attr($_REQUEST['page']),
             esc_attr($item['allergy_name']),
             esc_attr($action),
@@ -334,18 +340,14 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
             // Perform action based on case
             switch ($action) {
                 case 'change_status':
-                    $message = __('Status changed', 'allergens-dietary-pro');
-                    $type = Notice_Types::INFO;
-                    $notice = Allergens_Dietary_Pro_Notices::getInstance();
-                    $notice->display_admin_notice($type, $message);
-                    Allergens_Dietary_Pro_Allergen_Queries::getInstance()->singleActivationUpdate(self::$_page);
+                    self::$message = __("Status changed", 'allergens-dietary-pro');
+                    Allergens_Dietary_Pro_Allergen_Queries::getInstance()->singleActivationUpdate(self::$_page, self::$message);
+                    return self::$message;
                 break;
                 case 'delete':
-                    $message = __('Allergen deleted', 'allergens-dietary-pro');
-                    $type = Notice_Types::INFO;
-                    $notice = Allergens_Dietary_Pro_Notices::getInstance();
-                    $notice->display_admin_notice($type, $message);
-                    Allergens_Dietary_Pro_Allergen_Queries::getInstance()->delete_allergen_by_name($item, self::$_page);
+                    self::$message = __("Allergen deleted", 'allergens-dietary-pro');
+                    Allergens_Dietary_Pro_Allergen_Queries::getInstance()->delete_allergen_by_name($item, self::$_page, self::$message);
+                    return self::$message;
                 break;
             }
         }
@@ -376,12 +378,15 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
         $action = $this->current_action();
         switch ($action) {
             case 'change_status':
-                Allergens_Dietary_Pro_Allergen_Queries::getInstance()->activationUpdate($data);
+                self::$message = __("Allergen deleted", 'allergens-dietary-pro'); 
+                Allergens_Dietary_Pro_Allergen_Queries::getInstance()->activationUpdate($data, self::$message);
+                return self::$message;
                 break;
             case 'delete':
                 foreach ($data['item'] as $allergy_name) {
-                    $allergy_name = sanitize_text_field($allergy_name);
-                    Allergens_Dietary_Pro_Allergen_Queries::getInstance()->delete_allergen_by_name($allergy_name, self::$_page);
+                    self::$message = __("Allergen deleted", 'allergens-dietary-pro'); 
+                    Allergens_Dietary_Pro_Allergen_Queries::getInstance()->delete_allergen_by_name($allergy_name, self::$_page, self::$message);
+                    return self::$message;
                 }
                 break;
         }
@@ -518,6 +523,13 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (isset($_GET['messaged'])){
+        $type = Notice_Types::INFO;
+        $notice = Allergens_Dietary_Pro_Notices::getInstance();
+        $notice->display_admin_notice($type, htmlspecialchars($_GET['messaged']));
+    }
+
     if (isset($_POST['action'])){
         if ($_POST['action'] = -1){
             Allergens_Dietary_Pro_Form::setFormType(FormType::ALLERGENS);
@@ -545,6 +557,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $table->process_quick_action();
         }else{
 
+            if (isset($_GET['messaged'])){
+                $type = Notice_Types::INFO;
+                $notice = Allergens_Dietary_Pro_Notices::getInstance();
+                $notice->display_admin_notice($type, htmlspecialchars($_GET['messaged']));
+            }
             $table = Allergens_Dietary_Pro_Show_Allergens::getInstance();
 
             $table->process_quick_action();
