@@ -224,7 +224,7 @@ class Allergens_Dietary_Pro_Allergen_Queries
 		return $is_default == 1 ? true : false;
 	}
 
-	public function delete_allergen_by_name(string $allergy_name, int $return_page = null)
+	public function delete_allergen_by_name(string $allergy_name, int $return_page = null, string $message)
 	{
 		try {
 			global $wpdb;
@@ -291,7 +291,11 @@ class Allergens_Dietary_Pro_Allergen_Queries
 			}
 
 		}
-		header("Location: $url" . "?page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : ''));
+		if (!empty($_GET)) {
+			$url = strtok($_SERVER["REQUEST_URI"], '?');
+			$separator = strpos($url, '?') === false ? '?' : '&';
+			header("Location: $url" . $separator . "page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : '') . "&messaged=" . urlencode($message));
+		}
 
 	}
 
@@ -311,7 +315,7 @@ class Allergens_Dietary_Pro_Allergen_Queries
 		return $columns;
 	}
 
-	public function activationUpdate(array $data)
+	public function activationUpdate(array $data, string $message)
 	{
 		global $wpdb;
 
@@ -353,10 +357,16 @@ class Allergens_Dietary_Pro_Allergen_Queries
 				$where,
 				$format
 			);
+
+			if (!empty($_GET)) {
+				$url = strtok($_SERVER["REQUEST_URI"], '?');
+				$separator = strpos($url, '?') === false ? '?' : '&';
+				header("Location: $url" . $separator . "page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : '') . "&messaged=" . urlencode($message));
+			}
 		}
 	}
 
-	public function singleActivationUpdate(int $return_page)
+	public function singleActivationUpdate(int $return_page, string $message)
 	{
 		global $wpdb;
 
@@ -397,8 +407,8 @@ class Allergens_Dietary_Pro_Allergen_Queries
 
 			if (!empty($_GET)) {
 				$url = strtok($_SERVER["REQUEST_URI"], '?');
-
-				header("Location: $url" . "?page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : ''));
+				$separator = strpos($url, '?') === false ? '?' : '&';
+				header("Location: $url" . $separator . "page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : '') . "&messaged=" . urlencode($message));
 			}
 		}
 	}
