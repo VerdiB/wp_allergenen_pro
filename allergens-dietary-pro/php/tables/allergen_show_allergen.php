@@ -48,7 +48,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
 
         if (!empty($message)){
             $type = Notice_Types::INFO;
-            $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+            $notice = Allergens_Dietary_Pro_Notices::getInstance();
             $notice->display_admin_notice($type, self::$message);
         }
 
@@ -330,28 +330,24 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
 
             // Verify nonce based on action
             if ($action === 'change_status' && !wp_verify_nonce($nonce, 'allergens_change_status')) {
-                self::$message = __("Security check failed for changing status!", 'allergens-dietary-ictoria');
+                self::$message = __("Security check failed for changing status!", 'allergens-dietary-pro');
             } elseif ($action === 'delete' && !wp_verify_nonce($nonce, 'allergens_delete')) {
-                self::$message = __("Security check failed for deletion!", 'allergens-dietary-ictoria');
+                self::$message = __("Security check failed for deletion!", 'allergens-dietary-pro');
             }  elseif ($action === 'quick_edit' && !wp_verify_nonce($nonce, 'allergens_delete')) {
-                self::$message = __("Security check failed for quick edit!", 'allergens-dietary-ictoria');
+                self::$message = __("Security check failed for quick edit!", 'allergens-dietary-pro');
             }
 
             // Perform action based on case
             switch ($action) {
                 case 'change_status':
-                    $message = __('Status changed', 'allergens-dietary-pro');
-                    $type = Notice_Types::INFO;
-                    $notice = Allergens_Dietary_Pro_Notices::getInstance();
-                    $notice->display_admin_notice($type, $message);
-                    Allergens_Dietary_Pro_Allergen_Queries::getInstance()->singleActivationUpdate(self::$_page);
+                    self::$message = __("Status changed", 'allergens-dietary-pro');
+                    Allergens_Dietary_Pro_Allergen_Queries::getInstance()->singleActivationUpdate(self::$_page, self::$message);
+                    return self::$message;
                 break;
                 case 'delete':
-                    $message = __('Allergen deleted', 'allergens-dietary-pro');
-                    $type = Notice_Types::INFO;
-                    $notice = Allergens_Dietary_Pro_Notices::getInstance();
-                    $notice->display_admin_notice($type, $message);
-                    Allergens_Dietary_Pro_Allergen_Queries::getInstance()->delete_allergen_by_name($item, self::$_page);
+                    self::$message = __("Allergen deleted", 'allergens-dietary-pro');
+                    Allergens_Dietary_Pro_Allergen_Queries::getInstance()->delete_allergen_by_name($item, self::$_page, self::$message);
+                    return self::$message;
                 break;
             }
         }
@@ -382,13 +378,16 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
         $action = $this->current_action();
         switch ($action) {
             case 'change_status':
-                Allergens_Dietary_Pro_Allergen_Queries::getInstance()->activationUpdate($data);
+                self::$message = __("Allergen deleted", 'allergens-dietary-pro'); 
+                Allergens_Dietary_Pro_Allergen_Queries::getInstance()->activationUpdate($data, self::$message);
+                return self::$message;
                 break;
             case 'delete':
                 foreach ($data['item'] as $allergy_name) {
                     $allergy_name = sanitize_text_field($allergy_name);
-                   self::$message = __("Allergen deleted", 'allergens-dietary-ictoria'); 
-                    Allergens_Dietary_Ictoria_Allergen_Queries::getInstance()->delete_allergen_by_name($allergy_name, self::$_page, self::$message);
+                   self::$message = __("Allergen deleted", 'allergens-dietary-pro'); 
+                    Allergens_Dietary_Pro_Allergen_Queries::getInstance()->delete_allergen_by_name($allergy_name, self::$_page, self::$message);
+                    return self::$message;
                 }
                 break;
         }
@@ -535,7 +534,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action']) && isset($_POST['post'])) {
         if (isset($_GET['messaged'])){
             $type = Notice_Types::INFO;
-            $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+            $notice = Allergens_Dietary_Pro_Notices::getInstance();
             $notice->display_admin_notice($type, htmlspecialchars($_GET['messaged']));
         }
         $process_action = sanitize_text_field($_POST['action']);
@@ -559,10 +558,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if (isset($_GET['messaged'])){
                 $type = Notice_Types::INFO;
-                $notice = Allergens_Dietary_Ictoria_Notices::getInstance();
+                $notice = Allergens_Dietary_Pro_Notices::getInstance();
                 $notice->display_admin_notice($type, htmlspecialchars($_GET['messaged']));
             }
-            $table = Allergens_Dietary_Ictoria_Show_Allergens::getInstance();
+            $table = Allergens_Dietary_Pro_Show_Allergens::getInstance();
 
             $table->process_quick_action();
         }
