@@ -135,7 +135,7 @@ if (!is_plugin_active('allergens-dietary/allergens-dietary.php')) {
 	// WooCommerce is not installed or inactive, show error message
 
 	$level = 'notice-error';
-	$message = __('Allergens Dietary is niet actief', 'allergens-dietary-pro');
+	$message = __('Allergens Dietary free is not active', 'allergens-dietary-pro');
 	Allergens_Dietary_Pro_Notices::getInstance()->error_notice($level, $message);
 }
 
