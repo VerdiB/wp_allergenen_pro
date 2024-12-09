@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 /*
 Plugin Name: Allergens and Dietary Pro
 Plugin URI:
-Version:     1.0.0
+Version:     0.19.1.0
 Description: Adds Allergens and Dietary options that can be used with WooCommerce products.
 Requires at least: 6.3.1
 Requires PHP: 7.4
@@ -53,9 +53,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 	define('ALLERGENS_DIETARY_PRO_WC_ACTIVE', false);
 }
 
-// load file with generic static methods
-require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/activator.php';
-add_action('plugins_loaded', array('Allergens_Dietary_Pro_Activator', 'load_textdomain'));
 
 /*
 Plugin Name: Allergens and Dietary
@@ -85,31 +82,26 @@ class Allergens_Dietary_Pro_Startup
 	public static function on_activation()
 	{
 		// show popup asking for certain setting options if this is the first activation after installing the plugin.
-		if (!isset($settings['initial_setup_done'])) {
-			// show popup asking wether or not the user wants to automatically export all relevant product data on uninstall
-			// tell user (within popup) that above setting can be set at all times from the plugin settings menu
-			// save chosen settings in the allergens_dietary_ictoria_settings(WP options table)
-			// add the initial_setup_done option to allergens_dietary_ictoria_settings (value: true) to prevent this popup from showing on every activation after the first
-		}
-		$folderName = '/var/www/html/wp-content/plugins/allergens-dietary-pro/cache'; // Geef het juiste pad naar de map op
+		
+		// $folderName = '/var/www/html/wp-content/plugins/allergens-dietary-pro/cache'; // Geef het juiste pad naar de map op
 
-		if (!file_exists($folderName)) {
+		// if (!file_exists($folderName)) {
 
-			mkdir("/var/www/html/wp-content/plugins/allergens-dietary-pro/cache");
+		// 	mkdir("/var/www/html/wp-content/plugins/allergens-dietary-pro/cache");
 
-		}
+		// }
 
-		$map = '/var/www/html/wp-content/plugins/allergens-dietary-pro/cache'; // Geef het juiste pad naar de map op
-		$file = '/cache.php';
+		// $map = '/var/www/html/wp-content/plugins/allergens-dietary-pro/cache'; // Geef het juiste pad naar de map op
+		// $file = '/cache.php';
 
-		$completepath = $map . $file;
+		// $completepath = $map . $file;
 
-		if (!file_exists($completepath)) {
-			Allergens_Dietary_Pro_Activator::activate();
-		}
+		// if (!file_exists($completepath)) {
+		// 	Allergens_Dietary_Pro_Activator::activate();
+		// }
 
-		$inhoud = "<?php\n";
-		$inhoud .= "// this is an automaticly generated PHP-file\n";
+		// $inhoud = "<?php\n";
+		// $inhoud .= "// this is an automaticly generated PHP-file\n";
 	}
 
 	// function that runs when the deactivation hook is called
@@ -126,137 +118,19 @@ register_activation_hook(ALLERGENS_DIETARY_PRO_BASE, array('Allergens_Dietary_Pr
 register_deactivation_hook(ALLERGENS_DIETARY_PRO_BASE, array('Allergens_Dietary_Pro_Startup', 'on_deactivation'));
 
 if (ALLERGENS_DIETARY_PRO_WC_ACTIVE) {
-	if (is_admin()) {
-		// class is used to add the plugin to the list of integrated plugins that WooCommerce uses
-		class Allergens_Dietary_Pro_Wc_Integration_Startup
-		{
-			public function __construct()
-			{
-				add_action('plugins_loaded', array($this, 'init_integration'));
-			}
-
-			public function init_integration()
-			{
-				// Check if the WC_Integration class exists
-
-				if (class_exists('WC_Integration')) {
-					include_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/wc_integration.php';
-					add_filter('woocommerce_integrations', array($this, 'add_integration'));
-				} else {
-					// the integration class of WooCommerce was not found, show error message
-					require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/errors/error_notice.php';
-					$level = 'notice-error';
-					$message = sprintf(__('%1$sThe WooCommerce Integration class was not found. Please make sure WooCommerce is installed correctly%2$s', 'allergens-dietary-pro'), '<p>', '</p>');
-					Allergens_Dietary_Pro_Error_notice::error_notice($level, $message);
-				}
-			}
-
-
-			public function add_integration($integrations)
-			{
-				$integrations[] = 'Allergens_Dietary_Pro_Wc_Integration_Settings';
-				return $integrations;
-			}
-		}
-		$Allergens_Dietary_Pro_Wc_Integration_Startup = new Allergens_Dietary_Pro_Wc_Integration_Startup(__FILE__);
-		// load and run the plugin admin files
-		include_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/woocommerce/product_settings.php';
-		Allergens_Dietary_Pro_Product_Settings::instance();
-		// echo 'looking in the main file';
-
-		include_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/activator.php';
-	}
+	
 	// load generic files used by the plugin when active
-	include_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/woocommerce/products.php';
-	include_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/filter.php';
-
-	Allergens_Dietary_Pro_Products::instance();
-	Allergens_Dietary_Pro_Filter::instance();
-	Allergens_Dietary_Pro_Activator::load_style();
+// TODO
 	include_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/Allergens_Dietary_Pro_Plugin_Menu.php';
 	Allergens_Dietary_Pro_Plugin_Menu::instance();
 } else {
-	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/errors/error_notice.php';
-	// WooCommerce is not installed or inactive, show error message
-	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/errors/error_notice.php';
+	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/notice/notice.php';
 
 	$level = 'notice-error';
 	$message = sprintf(__('%1$sWooCommerce is inactive or not installed. Please install & activate WooCommerce%2$s', 'allergens-dietary-pro'), '<p>', '</p>');
-	Allergens_Dietary_Pro_Error_notice::error_notice($level, $message);
-}
-// Add a filter to modify the HTML for the auto-update setting link
-add_filter('plugin_auto_update_setting_html', 'my_plugin_auto_update_link_html', 10, 3);
-
-// get auto-update links
-function my_plugin_auto_update_link_html($html, $plugin_file, $plugin_data)
-{
-	if ($plugin_file === 'allergens-dietary-pro/allergens-dietary-pro.php') {
-		$auto_updates_enabled = get_site_option('auto_update_plugins', array());
-
-		// Check if the current plugin is in the list of auto-updated plugins
-		if (in_array($plugin_file, $auto_updates_enabled)) {
-			$html = '<a href="#" class="my-plugin-toggle-auto-update" data-plugin="' . esc_attr($plugin_file) . '" data-action="disable">Auto-updates uitschakelen</a>';
-		} else {
-			$html = '<a href="#" class="my-plugin-toggle-auto-update" data-plugin="' . esc_attr($plugin_file) . '" data-action="enable">Auto-updates inschakelen</a>';
-		}
-	}
-	return $html;
+	Allergens_Dietary_Pro_notice::error_notice($level, $message);
 }
 
-// Enqueue the JavaScript file for handling auto-update toggles
-add_action('admin_enqueue_scripts', 'my_plugin_enqueue_admin_script');
-function my_plugin_enqueue_admin_script()
-{
-	wp_enqueue_script('my-plugin-admin-js', plugins_url('admin.js', __FILE__), array('jquery'), null, true);
-	wp_localize_script('my-plugin-admin-js', 'myPluginAjax', array(
-		'ajax_url' => admin_url('admin-ajax.php'),
-		'nonce' => wp_create_nonce('my_plugin_auto_update_nonce')
-	));
-}
-
-// Handle the Ajax request to toggle auto-updates
-add_action('wp_ajax_my_plugin_toggle_auto_update', 'my_plugin_toggle_auto_update');
-function my_plugin_toggle_auto_update()
-{
-	check_ajax_referer('my_plugin_auto_update_nonce', 'security');
-
-	// Check if the plugin and action parameters are set
-	if (isset($_POST['plugin']) && isset($_POST['toggle_action'])) {
-		$plugin = sanitize_text_field($_POST['plugin']);
-		$action = sanitize_text_field($_POST['toggle_action']);
-
-		$auto_updates = get_site_option('auto_update_plugins', array());
-
-		// Enable auto-updates if requested
-		if ($action === 'enable') {
-			if (!in_array($plugin, $auto_updates)) {
-				$auto_updates[] = $plugin;
-				update_site_option('auto_update_plugins', $auto_updates);
-			}
-			// Disable auto-updates if requested
-		} elseif ($action === 'disable') {
-			if (in_array($plugin, $auto_updates)) {
-				$auto_updates = array_diff($auto_updates, array($plugin));
-				update_site_option('auto_update_plugins', $auto_updates);
-			}
-		}
-
-		wp_send_json_success();
-	} else {
-		wp_send_json_error();
-	}
-}
-
-// Filter to control auto-update settings for the plugin
-add_filter('auto_update_plugin', 'my_plugin_auto_update_control', 10, 2);
-function my_plugin_auto_update_control($update, $item)
-{
-	if ($item->plugin === 'allergens-dietary-pro/allergens-dietary-pro.php') {
-		return get_site_option('auto_update_plugins', array()) ? true : false;
-	}
-
-	return $update;
-}
 
 // Enqueue Thickbox scripts and styles
 add_action('admin_enqueue_scripts', 'load_thickbox');
@@ -315,13 +189,3 @@ function get_plugin_changelog()
 
 	return 'Changelog not found.';
 }
-
-// // Changelog voor admin menu
-// function allergens_dietary_changelog_pagina() {
-//     echo '<div class="wrap">';
-//     echo '<h1>Changelog</h1>';
-//     echo '<div>';
-//     echo wpautop(get_plugin_changelog()); 
-//     echo '</div>';
-//     echo '</div>';
-// }
