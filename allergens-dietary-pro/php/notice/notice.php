@@ -73,7 +73,7 @@ class Allergens_Dietary_Pro_Notices
 	private static function admin_notice(Notice_Types $type, string $message)
 	{
 		$message_full   = '<strong>Allergens and Dietary: </strong> '. $message;
-		$html = '<div class="notice is-dismissible ' . esc_attr($type->value) . '"> <p>
+		$html = '<div class="notice is-dismissible ' . esc_attr($type) . '"> <p>
 			' . wp_kses_post($message_full) . '
 		</p></div>';
 		echo $html;
