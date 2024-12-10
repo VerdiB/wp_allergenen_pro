@@ -20,9 +20,16 @@ if (!is_plugin_active('allergens-dietary/allergens-dietary.php')) {
 	$message = __('Allergens Dietary free is not active', 'allergens-dietary-pro');
 	Allergens_Dietary_Pro_Notices::getInstance()->error_notice($level, $message);
 	deactivate_plugins('allergens-dietary-pro/allergens-dietary-pro.php');
-	return false;
-}else{
-	return true;
+}
+
+if (!is_plugin_active('woocommerce/woocommerce.php')) {
+    require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/notice/notice.php';
+	// WooCommerce is not installed or inactive, show error message
+
+	$level = 'notice-error';
+	$message = __('WooCommerce is inactive or not installed. Please install & activate WooCommerce', 'allergens-dietary');
+	Allergens_Dietary_Pro_Notices::getInstance()->error_notice($level, $message);
+	deactivate_plugins('allergens-dietary-pro/allergens-dietary-pro.php');
 }
 }
 
@@ -205,9 +212,6 @@ if (ALLERGENS_DIETARY_PRO_WC_ACTIVE && prevent_Wrong_Activation() == true) {
 	}
 
 	if (is_plugin_active('allergens-dietary-pro/allergens-dietary-pro.php')) {
-		$level = 'notice-error';
-		$message = __('WooCommerce is inactive or not installed. Please install & activate WooCommerce', 'allergens-dietary-pro');
-		Allergens_Dietary_Pro_Notices::getInstance()->error_notice($level, $message);
 		prevent_Wrong_Activation();
 	}
 }
