@@ -62,26 +62,26 @@ class Allergens_Dietary_Pro_Notices
 		add_action(
 			'admin_notices',
 			static function () use ($type, $message_full) {
-				echo '<div class="notice is-dismissible ' . esc_attr($type) . '" style="padding:12px 12px"> <p>
+				echo '<div class="notice notice-error ' . esc_attr($type) . '" style="padding:12px 12px"> <p>
 					' . wp_kses_post($message_full) . '
 				</p></div>';
 			}
 		);
-
 	}
 
 	private static function admin_notice(Notice_Types $type, string $message)
 	{
 		$message_full   = '<strong>Allergens and Dietary: </strong> '. $message;
-		$html = '<div class="notice is-dismissible ' . esc_attr($type) . '"> <p>
+		$html = '<div class="notice ' . esc_attr($type->value) . '"> <p>
 			' . wp_kses_post($message_full) . '
 		</p></div>';
 		echo $html;
 
 	}
 
+
 	public function display_admin_notice(Notice_Types $type, string $message){
-		add_action('admin_notices', self::admin_notice($type, $message),5);
+		add_action('admin_notice', self::admin_notice($type, $message),5);
 		// add_action('admin_notices',  static function() use ($type, $message) {
 		// 	self::admin_notice($type, $message);
 		// });

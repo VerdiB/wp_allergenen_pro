@@ -47,7 +47,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
         self::$_page = isset($_REQUEST['paged']) ? $_REQUEST['paged'] : (self::$_page === null ? 0 : self::$_page);
 
         if (!empty($message)){
-            $type = Notice_Types::INFO;
+            $type = Notice_Types::SUCCESS;
             $notice = Allergens_Dietary_Pro_Notices::getInstance();
             $notice->display_admin_notice($type, self::$message);
         }
@@ -525,7 +525,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends WP_List_Table
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_GET['messaged'])){
-        $type = Notice_Types::INFO;
+        $type = Notice_Types::SUCCESS;
         $notice = Allergens_Dietary_Pro_Notices::getInstance();
         $notice->display_admin_notice($type, htmlspecialchars($_GET['messaged']));
     }
@@ -558,7 +558,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }else{
 
             if (isset($_GET['messaged'])){
-                $type = Notice_Types::INFO;
+                $type = Notice_Types::SUCCESS;
                 $notice = Allergens_Dietary_Pro_Notices::getInstance();
                 $notice->display_admin_notice($type, htmlspecialchars($_GET['messaged']));
             }
