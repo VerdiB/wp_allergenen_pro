@@ -6,6 +6,13 @@ if (!defined('ABSPATH')) {
 
 define('ALLERGENS_DIETARY_PRO_DIRNAME', __DIR__);
 
+/**
+ * @brief This function handles dependences in the old way if the user has an old version of WordPress
+ * @author T.K
+ * @date 11-12-2024
+ * @since 0.18.5.1
+ */
+
 function prevent_Wrong_Activation(){
 if (!function_exists('is_plugin_active')) {
     require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -16,26 +23,25 @@ if (!is_plugin_active('allergens-dietary/allergens-dietary.php')) {
     require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/notice/notice.php';
 	// WooCommerce is not installed or inactive, show error message
 
-	$level = 'notice-error';
-	$message = __('Allergens Dietary free is not active', 'allergens-dietary-pro');
-	Allergens_Dietary_Pro_Notices::getInstance()->error_notice($level, $message);
-	deactivate_plugins('allergens-dietary-pro/allergens-dietary-pro.php');
+	$return_url = admin_url('plugins.php?plugin_status=all&paged=1&s');
+	$message = 'Allergens Dietary free is not active <br><br> <a href="' . esc_url($return_url) . '">Go back</a>';
+	wp_die($message);
 }
 
 if (!is_plugin_active('woocommerce/woocommerce.php')) {
     require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/notice/notice.php';
 	// WooCommerce is not installed or inactive, show error message
 
-	$level = 'notice-error';
-	$message = __('WooCommerce is inactive or not installed. Please install & activate WooCommerce', 'allergens-dietary');
-	Allergens_Dietary_Pro_Notices::getInstance()->error_notice($level, $message);
-	deactivate_plugins('allergens-dietary-pro/allergens-dietary-pro.php');
+	$return_url = admin_url('plugins.php?plugin_status=all&paged=1&s');
+	$message = 'WooCommerce is inactive or not installed. Please install & activate WooCommerce <br><br> <a href="' . esc_url($return_url) . '">Go back</a>';
+	wp_die($message);
 }
 }
 
 '
 /*
 Plugin Name: Allergens and Dietary Pro
+Requires Plugins: woocommerce
 Plugin URI:
 Version:     1.0.0
 Description: Adds Allergens and Dietary options that can be used with WooCommerce products.
