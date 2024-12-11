@@ -49,7 +49,7 @@ package "php"{
         +{static} enqueue_admin_styles() : void
         +{static} load_admin_js() : void
         +{static} enqueue_admin_scripts() : void
-        + upload_language_file() : void
+        + upAllergens_Dietary_Pro_Load_Language_file() : void
         +{static} initialize() : void
         +{static} allergens_options() : array
         +{static} allergy_icon_options() : array
@@ -281,7 +281,7 @@ package "php"{
 }
 
 package Allergens_Dietary_Pro{
-    class load_language{
+    class Allergens_Dietary_Pro_Load_Language{
         + __construct() : void
         + translation_init() : void
     }

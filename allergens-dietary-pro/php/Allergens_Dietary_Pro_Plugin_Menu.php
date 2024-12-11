@@ -3,11 +3,12 @@
 if (!defined('ABSPATH')) {
 	exit;
 }
-
-class Allergens_Dietary_Pro_Plugin_Menu
+if (!class_exists('Allergens_Dietary_Plugin_Menu')){
+	require_once ALLERGENS_DIETARY_FREE_DIRNAME . '/php/Allergens_Dietary_Plugin_Menu.php' ;
+}
+class Allergens_Dietary_Pro_Plugin_Menu extends Allergens_Dietary_Plugin_Menu
 {
 
-	private static $instance = null;
 
 	/***
 	 * Main instance
@@ -18,54 +19,26 @@ class Allergens_Dietary_Pro_Plugin_Menu
 
 	
 	public static function instance() {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new Allergens_Dietary_Pro_Plugin_Menu();
+		if ( is_null( parent::$instance ) ) {
+			parent::$instance = new Allergens_Dietary_Pro_Plugin_Menu();
 		}
 		return self::$instance;
 	}
 
 	private function __construct()
 	{
-		add_action(
-			'admin_menu',
-			array(
-				$this,
-				'addMyAdminMenu',
-			)
-		);
+		parent::__construct();
 		// return self::addMyAdminMenu();
 	}
 
+	#[\Override]
 	public function addMyAdminMenu()
 	{
-
-		add_menu_page(
-			__('Allergens and Dietary', 'allergens-dietary-pro'),
-			'Ictoria',
-			'manage_options',
-			'allergens-dietary-options',
-			array(
-				$this,
-				'myAdminPage',
-			),
-			'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGFhZ18yIiBkYXRhLW5hbWU9IkxhYWcgMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNS42OSA2LjA3Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjZmZmOwogICAgICAgIHN0cm9rZS13aWR0aDogMHB4OwogICAgICB9CiAgICAgICN3cGFkbWluYmFyIGE6aG92ZXIgc3ZnIHBhdGggewogICAgICBmaWxsOiBibHVlICFpbXBvcnRhbnQ7CiAgICAgfQogICAgICAgCiAgICAgIAogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPGcgaWQ9IkxhYWdfMS0yIiBkYXRhLW5hbWU9IkxhYWcgMSI+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Im0zLjk4LDBDMS44NS0uMTIuMTksMi4yMSwwLDQuNXMzLjQzLDEuNTMsNC42MSwxLjAyQzYuMTIsNC44Niw2LjE2LjEzLDMuOTgsMFptLS44NS41M2MuMDktLjEuMi0uMTUuMzMtLjE1cy4yNC4wNS4zMy4xNWMuMDkuMS4xNC4yMi4xNC4zN3MtLjA1LjI2LS4xNC4zN2MtLjA5LjEtLjIuMTUtLjMzLjE1cy0uMjQtLjA1LS4zMy0uMTVjLS4wOS0uMS0uMTQtLjIyLS4xNC0uMzdzLjA1LS4yNi4xNC0uMzdabTEuOTguOThjLS41Ny40MS0xLjM4LjI4LTEuNzYsMy43Ny0uMDEuMTEtLjA0LjIxLS4xMy4yOS0uMDkuMDgtLjIxLjExLS4zNS4xMXMtLjI1LS4wNC0uMzUtLjExYy0uMDktLjA4LS4xNi0uMTctLjE0LS4yOS4yNi0xLjE0LjkxLTIsMC0zLjUtLjA3LS4xMS0uMTItLjI2LjAzLS4zLjI1LS4wNi40OS4zLDEuMDMuMjYuMzgtLjAzLDEuMS0uMjgsMS40Mi0uMzkuMjctLjA5LjM0LjA5LjI1LjE2WiIvPgogIDwvZz4KPC9zdmc+'
-		);
+		parent::addMyAdminMenu();
 
 		add_action('admin_menu', function () {
 			remove_submenu_page('allergens-dietary-options', 'allergens-dietary-options');
 		}, 999); 
-
-		add_submenu_page(
-			'allergens-dietary-options',
-			__('Info', 'allergens-dietary-pro'),
-			__('Info', 'allergens-dietary-pro'),
-			'manage_options',
-			'allergens-dietary-Info',
-			array(
-				$this,
-				'Info',
-			)
-		);
 
 		add_submenu_page(
 			'allergens-dietary-options',
@@ -96,20 +69,6 @@ class Allergens_Dietary_Pro_Plugin_Menu
 			'allergens-dietary-update-allergen',
 			array($this, 'updateallergens')
 		);
-
-		add_submenu_page(
-			'allergens-dietary-options',
-			__('License key', 'allergens-dietary-pro'),
-			__('License key', 'allergens-dietary-pro'),
-			'manage_options',
-			'allergens-dietary-license',
-			array($this, 'licenseForm')
-		);
-	}
-
-	public function myAdminPage()
-	{
-		// echo the HTML here .......
 	}
 
 	public function licenseForm()

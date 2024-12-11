@@ -16,22 +16,22 @@ if (! enum_exists('Notice_Types')) {
  * @date 4-11-2024
  */
 
-class Allergens_Dietary_Notices
+class Allergens_Dietary_Pro_Notices
 {
 
-	private static ?Allergens_Dietary_Notices $_instance = null;
+	private static ?Allergens_Dietary_Pro_Notices $_instance = null;
 	
 	/**
 	 * @brief singleton method to get the instance of the class
-	 * @return Allergens_Dietary_Notices
+	 * @return Allergens_Dietary_Pro_Notices
 	 * @author Ictoria
 	 * @since 0.17.0.0
 	 * @date 18-11-2024
 	 */
-	public static function getInstance(): Allergens_Dietary_Notices
+	public static function getInstance(): Allergens_Dietary_Pro_Notices
 	{
 		if (is_null(self::$_instance)) {
-			self::$_instance = new Allergens_Dietary_Notices();
+			self::$_instance = new Allergens_Dietary_Pro_Notices();
 		}
 
 		return self::$_instance;
@@ -55,14 +55,14 @@ class Allergens_Dietary_Notices
 	 * @since 1.0.0
 	 * @date 4-11-2024
 	 */
-	public function error_notice($type, $message)
+	public static function error_notice($type, $message)
 	{
 		$message_header = sprintf(__('%1$sAllergens and Dietary is inactive:%2$s', 'allergens-dietary'), '<p><strong>', '</strong></p>');
 		$message_full   = $message_header . $message;
 		add_action(
 			'admin_notices',
 			static function () use ($type, $message_full) {
-				echo '<div class="notice is-dismissible ' . esc_attr($type->value) . '" style="padding:12px 12px"> <p>
+				echo '<div class="notice ' . esc_attr($type) . '" style="padding:12px 12px"> <p>
 					' . wp_kses_post($message_full) . '
 				</p></div>';
 			}
