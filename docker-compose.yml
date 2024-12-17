@@ -21,6 +21,7 @@ services:
       WORDPRESS_DEBUG_LOG: true
     volumes:
       - ./allergens-dietary-pro:/var/www/html/wp-content/plugins/allergens-dietary-pro
+      - ${FREE_PATH}:/var/www/html/wp-content/plugins/allergens-dietary
       - ./debug:/var/www/html/wp-content/logs
       - ./phpunit/tests:/var/www/html/wordpress-tests/
       # - ./wordpress:/var/www/html/

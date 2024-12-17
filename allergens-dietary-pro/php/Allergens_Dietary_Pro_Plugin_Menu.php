@@ -31,7 +31,7 @@ class Allergens_Dietary_Pro_Plugin_Menu extends Allergens_Dietary_Plugin_Menu
 		// return self::addMyAdminMenu();
 	}
 
-	#[\Override]
+	// #[\Override]
 	public function addMyAdminMenu()
 	{
 		parent::addMyAdminMenu();

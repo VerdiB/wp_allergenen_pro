@@ -4,6 +4,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+if (! class_exists('Allergens_Dietary_Tabs') ) {
+    require_once ALLERGENS_DIETARY_FREE_DIRNAME . '/php/tabs/allergen_tabs.php';
+}
+
 /**
  * @class Allergens_Dietary_Pro_License_Tabs
  * @brief Class that creates the tabs after you filled in the licence key
@@ -13,20 +17,11 @@ if (!defined('ABSPATH')) {
  * @since 1.0.0
  */
 
-class Allergens_Dietary_Pro_Tabs
+class Allergens_Dietary_Pro_Tabs extends Allergens_Dietary_Tabs
 {
-    private static ?self $_instance = null;
+    // private static ?self $_instance = null;
     
-    public function __construct()
-	{
-        //load js
-		wp_register_script('Allergens_Dietary_Pro_Show_Allergens', plugins_url(ALLERGENS_DIETARY_PRO_NAME.'/assets/js/script.js'), array('jquery'));
-        wp_enqueue_script( 'Allergens_Dietary_Pro_Show_Allergens');
-
-        //load css
-        wp_register_style('allergens-dietary-pro-css', plugins_url(ALLERGENS_DIETARY_PRO_NAME.'/assets/css/allergens-dietary-pro.css'));
-	    wp_enqueue_style('allergens-dietary-pro-css');
-	}
+    // public function __construct()
 
     public function showtabs()
     {
