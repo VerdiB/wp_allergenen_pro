@@ -5,8 +5,12 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-if (!interface_exists('I_Allergens_Dietary_Pro_Form')) {
-	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/forms/Iallergen_form.php';
+// if (!interface_exists('I_Allergens_Dietary_Pro_Form')) {
+// 	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/forms/Iallergen_form.php';
+// }
+
+if (!interface_exists('I_Allergens_Dietary_Form')) {
+	require_once ALLERGENS_DIETARY_DIRNAME . '/php/forms/Iallergen_form.php';
 }
 
 if (!class_exists('Allergens_Dietary_Pro_Allergy_Attachment_Queries')) {
@@ -51,7 +55,7 @@ if (! enum_exists( 'Notice_Types' ) ){
 /********************************************************************/
 /********************************************************************/
 
-class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Pro_Form
+class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 {
 
 

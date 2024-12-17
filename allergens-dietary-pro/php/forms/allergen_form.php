@@ -19,17 +19,13 @@ if (!class_exists('Allergens_Dietary_Pro_Update_Allergen_Form')) {
 	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/forms/allergen_update_allergen.php';
 }
 
-enum FormType
-{
-	case ALLERGENS;
-	case LICENSE;
-	case UPDATE;
-
-	public function match(FormType $formType): bool
-	{
-		return $this === $formType;
-	}
+if (!class_exists('Allergens_Dietary_Form')) {
+	require_once ALLERGENS_DIETARY_FREE_DIRNAME . '/php/forms/allergen_form.php';
 }
+if (!enum_exists('FormType')) {
+	require_once ALLERGENS_DIETARY_FREE_DIRNAME . '/php/lists/form_type.php';
+}
+
 
 /**
  * @class Allergens_Dietary_Pro_Form
@@ -40,25 +36,17 @@ enum FormType
  * @since 1.0.0
  */
 
-class Allergens_Dietary_Pro_Form
+class Allergens_Dietary_Pro_Form extends Allergens_Dietary_Form
 {
-	private static ?self $_instance = null;
-	private static FormType $_formType;
-	private static I_Allergens_Dietary_Pro_Form $_formObject;
-
-	private function __construct(bool $isTable = false)
+	
+	protected function __construct(bool $isTable = false)
 	{
+		parent::__construct();
 		if (FormType::ALLERGENS === self::$_formType) {
 			self::$_formObject = new Allergens_Dietary_Pro_Allergen_Form();
 		}
-		if (FormType::LICENSE === self::$_formType) {
-			self::$_formObject = new Allergens_Dietary_Pro_License_Form();
-		}
 		if (FormType::UPDATE === self::$_formType) {
 			self::$_formObject = new Allergens_Dietary_Pro_Update_Allergen_Form();
-		}
-		if (!isset(self::$_formType) || false === self::$_formType->match(self::$_formType)) {
-			throw new Exception('FormType not yet supported/implemented');
 		}
 	}
 
