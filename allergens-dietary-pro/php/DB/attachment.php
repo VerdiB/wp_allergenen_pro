@@ -4,21 +4,16 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-class Allergens_Dietary_Pro_Attachment_Queries
+if(!class_exists('Allergens_Dietary_Attachment_Queries')){
+	require_once ALLERGENS_DIETARY_FREE_DIRNAME . '/php/DB/attachment.php';
+}
+
+class Allergens_Dietary_Pro_Attachment_Queries extends Allergens_Dietary_Attachment_Queries
 {
-	private static ?self $_instance = null;
 	private const PATH = ALLERGENS_DIETARY_PRO_DIRNAME . '/assets/icons/custom/';
 	private string $_url;
 
-	public static function getInstance()
-	{
-		if (self::$_instance === null) {
-			self::$_instance = new self();
-		}
-		return self::$_instance;
-	}
-
-	private function __construct()
+	protected function __construct()
 	{
 		$this->_url = get_home_url() . '/wp-content/plugins/allergens-dietary-pro/assets/icons/custom/';
 	}
@@ -136,27 +131,6 @@ class Allergens_Dietary_Pro_Attachment_Queries
 
 		if (true === file_exists(self::PATH . $attachmentName)) {
 			unlink(self::PATH . $attachmentName);
-		}
-	}
-
-	public static function attachment_insert(array $result)
-	{
-		global $wpdb;
-
-		//get database table
-		$table_icons = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
-
-
-		foreach ($result as $key => $value) {
-
-			//insert allergies
-			$wpdb->insert(
-				$table_icons,
-				array(
-					'attachment_path' => $value['path'],
-					'attachment_name' => $value['name'],
-				)
-			);
 		}
 	}
 }

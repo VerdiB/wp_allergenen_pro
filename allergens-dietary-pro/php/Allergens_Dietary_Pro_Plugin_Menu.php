@@ -14,7 +14,6 @@ class Allergens_Dietary_Pro_Plugin_Menu extends Allergens_Dietary_Plugin_Menu
 	{
 		// $this->addMyAdminMenu();
 		// parent::__construct();
-		remove_action('admin_menu', ['Allergens_Dietary_Plugin_Menu', 'addMyAdminMenu'], 6);
 		add_action('admin_menu', [$this, 'addMyAdminMenu'], 10);
 
 		// return self::addMyAdminMenu();
@@ -25,6 +24,14 @@ class Allergens_Dietary_Pro_Plugin_Menu extends Allergens_Dietary_Plugin_Menu
 	{
 		error_log("asdasdasdasdads");
 
+		if (has_action('addMyAdminMenu'))
+		{
+			error_log("kaas");
+		}
+		else{
+			
+			error_log("kaaaaa");
+		}
 		parent::addMyAdminMenu();
 
 		add_submenu_page(
@@ -94,12 +101,11 @@ class Allergens_Dietary_Pro_Plugin_Menu extends Allergens_Dietary_Plugin_Menu
 	public function info()
 	{
 		if (!class_exists('Allergens_Dietary_Pro_Form')) {
-			require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/forms/allergen_form.php';
+			require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/lists/allergen_info.php';
 			require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
 		Allergens_Dietary_Pro_Tabs::getInstance()->showtabs();
-		error_log("daea");
-		Allergens_Dietary_Info::getInstance()->showInfo();
+		Allergens_Dietary_Pro_Info::getInstance()->showInfo();
 	}
 }
 

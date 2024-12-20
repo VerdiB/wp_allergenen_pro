@@ -5,8 +5,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-if (!interface_exists('I_Allergens_Dietary_Pro_Form')) {
-    require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/forms/Iallergen_form.php';
+if (!interface_exists('I_Allergens_Dietary_Form')) {
+	require_once ALLERGENS_DIETARY_FREE_DIRNAME . '/php/forms/Iallergen_form.php';
 }
 
 if (!class_exists('Allergens_Dietary_Pro_Allergen_Queries')) {
@@ -42,7 +42,7 @@ if ( ! class_exists( 'Allergens_Dietary_Pro_Notices' ) ) {
 
 /********************************************************************/
 
-class Allergens_Dietary_Pro_Update_Allergen_Form implements I_Allergens_Dietary_Pro_Form
+class Allergens_Dietary_Pro_Update_Allergen_Form implements I_Allergens_Dietary_Form
 {
     private array $MIME_TYPES;
     private array $MIME_NAMES;

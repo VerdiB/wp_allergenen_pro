@@ -22,8 +22,8 @@ class Allergens_Dietary_Pro_Info
     public function showInfo()
     {
 
-        Allergens_Dietary_Pro_Activator::load_style();
-        Allergens_Dietary_Pro_Activator::enqueue_styles();
+        // Allergens_Dietary_Pro_Activator::load_style();
+        // Allergens_Dietary_Pro_Activator::enqueue_styles();
         
         //flexbox voor tabs
         $html = '<div id="info_grid" class="nav-tab-wrapper">';

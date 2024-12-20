@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) {
 if(!class_exists('Allergens_Dietary_Allergen_Queries')){
 	require_once ALLERGENS_DIETARY_FREE_DIRNAME . '/php/DB/allergen.php';
 }
+
 /**
  * @class Allergens_Dietary_Pro_Allergen_Queries
  * @brief This class is a singleton that handles all the queries for the allergens and dietary restrictions DB table.
@@ -64,22 +65,6 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 		return (count($result) > 0) ? true : false;
 	}
 
-	public function getAllAllergens()
-	{
-		global $wpdb;
-
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
-
-		$sql = "SELECT allergy_name, is_allergy 
-		FROM $table_name
-		WHERE is_active = 1
-		ORDER BY  is_allergy DESC, allergy_name ASC";
-
-		$result = $wpdb->get_results($sql, ARRAY_A);
-
-		return $result;
-	}
-
 	public function updateAllergens(array $data)
 	{
 		global $wpdb;
@@ -115,7 +100,7 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 		return $result;
 	}
 
-	public function delete_allergen_by_name(string $allergy_name, int $return_page = null, string $message)
+	public function delete_allergen_by_name(string $allergy_name, int $return_page = null, string $message = null)
 	{
 		try {
 			global $wpdb;
@@ -129,7 +114,7 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 				return;
 			}
 
-			$is_default = self::is_default_allergen($allergy_name);
+			$is_default = $this->is_default_allergen($allergy_name);
 
 			static $error_displayed = false;
 
@@ -180,12 +165,11 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 			if (!$error_displayed) {
 				echo "Error: " . $e->getMessage();
 			}
-
 		}
 		if (!empty($_GET)) {
 			$url = strtok($_SERVER["REQUEST_URI"], '?');
 			$separator = strpos($url, '?') === false ? '?' : '&';
-			header("Location: $url" . $separator . "page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : '') . "&messaged=" . urlencode($message));
+			header("Location: $url" . $separator . "page=allergens-dietary-show-allergens" . (isset($return_page) ? '&paged=' . $return_page : ''));
 		}
 
 	}

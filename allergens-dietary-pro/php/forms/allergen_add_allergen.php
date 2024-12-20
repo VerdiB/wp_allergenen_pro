@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 // }
 
 if (!interface_exists('I_Allergens_Dietary_Form')) {
-	require_once ALLERGENS_DIETARY_DIRNAME . '/php/forms/Iallergen_form.php';
+	require_once ALLERGENS_DIETARY_FREE_DIRNAME . '/php/forms/Iallergen_form.php';
 }
 
 if (!class_exists('Allergens_Dietary_Pro_Allergy_Attachment_Queries')) {
