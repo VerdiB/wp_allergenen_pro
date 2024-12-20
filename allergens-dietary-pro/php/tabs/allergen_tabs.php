@@ -18,9 +18,7 @@ if (! class_exists('Allergens_Dietary_Tabs') ) {
  */
 
 class Allergens_Dietary_Pro_Tabs extends Allergens_Dietary_Tabs
-{
-    // private static ?self $_instance = null;
-    
+{    
     // public function __construct()
 
     public function showtabs()
@@ -52,14 +50,6 @@ class Allergens_Dietary_Pro_Tabs extends Allergens_Dietary_Tabs
             'priority' => 10,
         ) );
     }*/
-
-    public static function getInstance()
-    {
-        if (self::$_instance === null) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
-    }
 
     public static function getStyles()
     {
