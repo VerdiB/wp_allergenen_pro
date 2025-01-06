@@ -12,26 +12,12 @@ class Allergens_Dietary_Pro_Plugin_Menu extends Allergens_Dietary_Plugin_Menu
 
 	public function __construct()
 	{
-		// $this->addMyAdminMenu();
-		// parent::__construct();
-		add_action('admin_menu', [$this, 'addMyAdminMenu'], 10);
-
-		// return self::addMyAdminMenu();
+		add_action('admin_menu', array($this, 'addMyAdminMenu'));
 	}
 
 	// #[\Override]
 	public function addMyAdminMenu()
 	{
-		error_log("asdasdasdasdads");
-
-		if (has_action('addMyAdminMenu'))
-		{
-			error_log("kaas");
-		}
-		else{
-			
-			error_log("kaaaaa");
-		}
 		parent::addMyAdminMenu();
 
 		add_submenu_page(

@@ -62,6 +62,14 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
 		return $this->row_actions( $action_links );
 	}
 
+	public function single_row($item)
+    {
+        $this->column_location_id($item);
+        echo '<tr class="inline-edit-row-post quick-edit-row quick-edit-row-post inline-edit-post">';
+        $this->single_row_columns($item);
+        echo '</tr>';
+    }
+
 
 	protected function build_action_url( $action, $item ) {
 		// loop-build actions for quick actions.
@@ -176,8 +184,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
 			// Perform action based on case
 			switch ( $action ) {
 				case 'change_status':
-                    error_log('case of change status');
-					self::$message = __( 'Status changed', 'allergens-dietary-pro' );
+					static::$message = __( 'Status changed', 'allergens-dietary-pro' );
 					Allergens_Dietary_Pro_Allergen_Queries::getInstance()->singleActivationUpdate( );
 					return self::$message;
 				break;
@@ -260,19 +267,13 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 		$table->prepare_items();
 	}
 } elseif ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
-	if ( isset( $_GET['quick_edit'] ) ) {
-		$table = Allergens_Dietary_Pro_Show_Allergens::getInstance();
+	// if ( isset( $_GET['messaged'] ) ) {
+	// 	$type   = Notice_Types::INFO;
+	// 	$notice = Allergens_Dietary_Pro_Notices::getInstance();
+	// 	$notice->display_admin_notice( $type, htmlspecialchars( $_GET['messaged'] ) );
+	// }
+	$table = Allergens_Dietary_Pro_Show_Allergens::getInstance();
 
-		$table->process_quick_action();
-	} else {
-
-		if ( isset( $_GET['messaged'] ) ) {
-			$type   = Notice_Types::INFO;
-			$notice = Allergens_Dietary_Pro_Notices::getInstance();
-			$notice->display_admin_notice( $type, htmlspecialchars( $_GET['messaged'] ) );
-		}
-		$table = Allergens_Dietary_Pro_Show_Allergens::getInstance();
-
-		$table->process_quick_action();
-	}
+	$table->process_quick_action();
+	
 }

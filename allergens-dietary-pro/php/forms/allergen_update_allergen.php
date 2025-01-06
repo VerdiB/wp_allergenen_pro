@@ -54,7 +54,7 @@ class Allergens_Dietary_Pro_Update_Allergen_Form implements I_Allergens_Dietary_
         $this->MIME_TYPES = Mime_Types::get_mime_types();
         $this->MIME_NAMES = array_map(fn($case) => $case->name, Mime_Types::cases());
         $this->_allergens = Allergens_Dietary_Pro_Allergy_Attachment_Queries::getInstance()->getAllAllergyAttachmments(true);
-    
+        error_log(print_r($this->_allergens,true));
     } 
 
     /**
