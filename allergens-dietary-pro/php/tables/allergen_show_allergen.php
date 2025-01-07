@@ -36,6 +36,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
 	protected function __construct() {
 		parent::__construct();
 
+		$this->setup();
 		// if ( ! empty( static::$message ) ) {
 		// 	$type   = Notice_Types::INFO;
 		// 	$notice = Allergens_Dietary_Pro_Notices::getInstance();
@@ -48,7 +49,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
 
 	protected $table_action_options = array( 'change_status', 'delete', 'quick_edit' );
 
-	public function handle_row_actions( $item, $column_name, $primary ) {
+	public function handle_row_actwions( $item, $column_name, $primary ) {
 		if ( $primary !== $column_name ) {
 			return '';
 		}
@@ -185,8 +186,8 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
 			switch ( $action ) {
 				case 'change_status':
 					static::$message = __( 'Status changed', 'allergens-dietary-pro' );
-					Allergens_Dietary_Pro_Allergen_Queries::getInstance()->singleActivationUpdate( );
-					return self::$message;
+					Allergens_Dietary_Pro_Allergen_Queries::getInstance()->singleActivationUpdate( static::$_page);
+					return static::$message;
 				break;
 				case 'delete':
 					static::$message = __( 'Allergen deleted', 'allergens-dietary-pro' );
@@ -221,59 +222,54 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
 		$action = $this->current_action();
 		switch ( $action ) {
 			case 'change_status':
-				$this->message = __( 'Allergen deleted', 'allergens-dietary-pro' );
-				Allergens_Dietary_Pro_Allergen_Queries::getInstance()->activationUpdate( $data, $this->message );
-				return $this->message;
+				static::$message = __( 'Allergen deleted', 'allergens-dietary-pro' );
+				Allergens_Dietary_Pro_Allergen_Queries::getInstance()->activationUpdate( $data );
+				return static::$message;
 				break;
 			case 'delete':
 				foreach ( $data['item'] as $allergy_name ) {
-					$this->message = __( 'Allergen deleted', 'allergens-dietary-pro' );
-					Allergens_Dietary_Pro_Allergen_Queries::getInstance()->delete_allergen_by_name( $allergy_name, $this->_page, $this->message );
-					return $this->message;
+					static::$message = __( 'Allergen deleted', 'allergens-dietary-pro' );
+					Allergens_Dietary_Pro_Allergen_Queries::getInstance()->delete_allergen_by_name( $allergy_name, static::$_page );
+					return static::$message;
 				}
 				break;
 		}
 	}
-}
 
-if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+	public function setup(){
+		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
-	// if ( isset( $_GET['messaged'] ) ) {
-	// 	$type   = Notice_Types::INFO;
-	// 	$notice = Allergens_Dietary_Pro_Notices::getInstance();
-	// 	$notice->display_admin_notice( $type, htmlspecialchars( $_GET['messaged'] ) );
-	// }
+			// if ( isset( $_GET['messaged'] ) ) {
+			// 	$type   = Notice_Types::INFO;
+			// 	$notice = Allergens_Dietary_Pro_Notices::getInstance();
+			// 	$notice->display_admin_notice( $type, htmlspecialchars( $_GET['messaged'] ) );
+			// }
 
-	if ( isset( $_POST['action'] ) ) {
-		if ( $_POST['action'] = -1 ) {
-			Allergens_Dietary_Pro_Form::setFormType( FormType::ALLERGENS );
-			Allergens_Dietary_Pro_Form::getInstance()->submitUpdate();
+			if ( isset( $_POST['action'] ) ) {
+				if ( $_POST['action'] = -1 ) {
+					Allergens_Dietary_Pro_Form::setFormType( FormType::ALLERGENS );
+					Allergens_Dietary_Pro_Form::getInstance()->submitUpdate();
+				}
+			}
+
+			if ( isset( $_POST['action'] ) && isset( $_POST['post'] ) ) {
+				$process_action = sanitize_text_field( $_POST['action'] );
+				$process_item   = array_map( 'sanitize_text_field', $_POST['post'] );
+				$process_data   = array(
+					'action' => $process_action,
+					'item'   => $process_item,
+				);
+				$this->process_bulk_action( $process_data );
+			}
+			if ( isset( $_POST['search'] ) ) {
+				$search_query        = sanitize_text_field( $_POST['search'] );
+				$this->search_query = $search_query;
+				$this->prepare_items();
+			}
+		} elseif ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
+			error_log("test");
+			$this->process_quick_action();
+			
 		}
 	}
-
-	if ( isset( $_POST['action'] ) && isset( $_POST['post'] ) ) {
-		$process_action = sanitize_text_field( $_POST['action'] );
-		$process_item   = array_map( 'sanitize_text_field', $_POST['post'] );
-		$process_data   = array(
-			'action' => $process_action,
-			'item'   => $process_item,
-		);
-		Allergens_Dietary_Pro_Show_Allergens::getInstance()->process_bulk_action( $process_data );
-	}
-	if ( isset( $_POST['search'] ) ) {
-		$search_query        = sanitize_text_field( $_POST['search'] );
-		$table               = Allergens_Dietary_Pro_Show_Allergens::getInstance();
-		$table->search_query = $search_query;
-		$table->prepare_items();
-	}
-} elseif ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
-	// if ( isset( $_GET['messaged'] ) ) {
-	// 	$type   = Notice_Types::INFO;
-	// 	$notice = Allergens_Dietary_Pro_Notices::getInstance();
-	// 	$notice->display_admin_notice( $type, htmlspecialchars( $_GET['messaged'] ) );
-	// }
-	$table = Allergens_Dietary_Pro_Show_Allergens::getInstance();
-
-	$table->process_quick_action();
-	
 }

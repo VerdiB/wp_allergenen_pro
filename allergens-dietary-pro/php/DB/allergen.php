@@ -100,7 +100,7 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 		return $result;
 	}
 
-	public function delete_allergen_by_name(string $allergy_name, int $return_page = null, string $message = null)
+	public function delete_allergen_by_name(string $allergy_name, int $return_page = null)
 	{
 		try {
 			global $wpdb;
@@ -156,6 +156,7 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 				);
 			}
 			$result = $wpdb->query($sql);
+			error_log(print_r($result,true));
 			if ($result === false) {
 				if (!$error_displayed) {
 					throw new Exception(__("Error deleting allergen: '" . $allergy_name . "'"));

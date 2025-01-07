@@ -20,6 +20,17 @@ if (! class_exists('Allergens_Dietary_Tabs') ) {
 class Allergens_Dietary_Pro_Tabs extends Allergens_Dietary_Tabs
 {    
     // public function __construct()
+    public function __construct()
+	{
+        parent::__construct();
+        //load js
+		wp_register_script('Allergens_Dietary_Pro_Show_Allergens', plugins_url(ALLERGENS_DIETARY_PRO_NAME . '/assets/js/script.js'), array('jquery'));
+        wp_enqueue_script( 'Allergens_Dietary_Pro_Show_Allergens');
+
+        //load css
+        wp_register_style('allergens-dietary-css-pro', plugins_url(ALLERGENS_DIETARY_PRO_NAME . '/assets/css/allergens-dietary-pro.css'));
+	    wp_enqueue_style('allergens-dietary-css-pro');
+	}
 
     public function showtabs()
     {
