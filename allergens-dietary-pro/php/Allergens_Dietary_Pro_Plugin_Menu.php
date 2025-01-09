@@ -80,8 +80,7 @@ class Allergens_Dietary_Pro_Plugin_Menu extends Allergens_Dietary_Plugin_Menu
 			require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
 		Allergens_Dietary_Pro_Tabs::getInstance()->showtabs();
-		$singleton = Allergens_Dietary_Pro_Show_Allergens::getInstance();
-		$singleton->table_page();
+		Allergens_Dietary_Pro_Show_Allergens::getInstance()->table_page();
 	}
 
 	public function info()

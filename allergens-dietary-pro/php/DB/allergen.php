@@ -17,6 +17,9 @@ if(!class_exists('Allergens_Dietary_Allergen_Queries')){
  */
 class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_Queries
 {
+	protected function __construct()
+	{
+	}
 
 	/**
 	 * @brief This method adds an allergen to the DB.
@@ -156,7 +159,6 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 				);
 			}
 			$result = $wpdb->query($sql);
-			error_log(print_r($result,true));
 			if ($result === false) {
 				if (!$error_displayed) {
 					throw new Exception(__("Error deleting allergen: '" . $allergy_name . "'"));
