@@ -34,16 +34,15 @@ class Allergens_Dietary_Pro_Notices extends Allergens_Dietary_Notices
 	 */
 	public function error_notice($type, $message)
 	{
-		$message_header = sprintf(__('%1$sAllergens and Dietary is inactive:%2$s', 'allergens-dietary'), '<p><strong>', '</strong></p>');
+		$message_header = sprintf(__('%1$sAllergens and Dietary pro is inactive:%2$s', 'allergens-dietary-pro'), '<p><strong>', '</strong></p>');
 		$message_full   = $message_header . $message;
 		add_action(
 			'admin_notices',
 			static function () use ($type, $message_full) {
-				echo '<div class="notice ' . esc_attr($type) . '" style="padding:12px 12px"> <p>
+				echo '<div class="notice notice-error ' . esc_attr($type) . '" style="padding:12px 12px"> <p>
 					' . wp_kses_post($message_full) . '
 				</p></div>';
 			}
 		);
-
 	}
 }

@@ -4,9 +4,44 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
+define('ALLERGENS_DIETARY_PRO_DIRNAME', __DIR__);
+
+/**
+ * @brief This function handles dependencies in the old way if the user has an old version of WordPress
+ * @author T.K
+ * @date 11-12-2024
+ * @since 0.18.5.1
+ */
+
+// function prevent_Wrong_Activation(){
+// if (!function_exists('is_plugin_active')) {
+//     require_once ABSPATH . 'wp-admin/includes/plugin.php';
+// }
+
+// // check if the plugin is active
+// if (!is_plugin_active('allergens-dietary/allergens-dietary.php')) {
+//     require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/notice/notice.php';
+// 	// WooCommerce is not installed or inactive, show error message
+
+// 	$return_url = admin_url('plugins.php?plugin_status=all&paged=1&s');
+// 	$message = 'Allergens Dietary free is not active <br><br> <a href="' . esc_url($return_url) . '">Go back</a>';
+// 	wp_die($message);
+// }
+
+// if (!is_plugin_active('woocommerce/woocommerce.php')) {
+//     require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/notice/notice.php';
+// 	// WooCommerce is not installed or inactive, show error message
+
+// 	$return_url = admin_url('plugins.php?plugin_status=all&paged=1&s');
+// 	$message = 'WooCommerce is inactive or not installed. Please install & activate WooCommerce <br><br> <a href="' . esc_url($return_url) . '">Go back</a>';
+// 	wp_die($message);
+// }
+// }
+
 '
 /*
 Plugin Name: Allergens and Dietary Pro
+Requires Plugins: woocommerce
 Plugin URI:
 Version:     0.19.1.3
 Description: Adds Allergens and Dietary options that can be used with WooCommerce products.
@@ -24,8 +59,6 @@ WC Tested Up To: 9.3.3
 
 __('Adds Allergens and Dietary options that can be used with WooCommerce products.', 'allergens-dietary-pro');
 
-
-
 // "Allergens and Dietary" is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -42,7 +75,7 @@ __('Adds Allergens and Dietary options that can be used with WooCommerce product
 // Set constant values that are used to retain file location references
 define('ALLERGENS_DIETARY_PRO_NAME', 'allergens-dietary-pro');
 define('ALLERGENS_DIETARY_PRO_FILE', __FILE__); // contains the full path to the plugin file
-define('ALLERGENS_DIETARY_PRO_DIRNAME', __DIR__);
+
 define('ALLERGENS_DIETARY_PRO_BASE', plugin_basename(__FILE__)); // contains the path: plugin_directory/plugin_file
 // Check if WooCommerce is active and store the result in a constant value
 if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -90,6 +123,7 @@ $en_US = new Allergens_Dietary_Pro_Load_Language();
 // class that contains the functions that are used by the activation/deactivation/uninstall hooks
 class Allergens_Dietary_Pro_Startup
 {
+	
 	// function that runs when the activation hook is called
 	public static function on_activation()
 	{
