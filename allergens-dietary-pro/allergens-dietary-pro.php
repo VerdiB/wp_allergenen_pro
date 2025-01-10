@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) {
 '
 /*
 Plugin Name: Allergens and Dietary Pro
+Requires Plugins: woocommerce
 Plugin URI:
 Version:     0.19.1.3
 Description: Adds Allergens and Dietary options that can be used with WooCommerce products.
@@ -67,7 +68,7 @@ if( file_exists( dirname(__FILE__, 2).'/allergens-dietary/allergens-dietary.php'
 // return;
 
 /*
-Plugin Name: Allergens and Dietary
+Plugin Name: Allergens and Dietary	
 Text Domain: allergens-dietary-icotoria
 Domain Path: /languages/
 */
