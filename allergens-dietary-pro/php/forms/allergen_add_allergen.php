@@ -90,85 +90,42 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 
 		$page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : '';
 
-		if (in_array($page, $showOnPage, true)) {
-			
-			//Allergen name and style elements 
-			$html = '<fieldset class="update_form inline-edit-product.quick-edit-row">';
-			$html .= '<div class="inline-edit-wrapper" aria-labelledby="quick-edit-legend">';
-			$html .= '<fieldset class="inline-edit-col-left"><div>';
-			$html .= '<legend class="inline-edit-legend">' . __("Quick Edit", "allergens-dietary-pro") . '</legend>';
-			$html .= '<input disabled type="hidden" id="the_hidden_allergy_name" class="update_" name="allergen_name_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '"/>';
-			$html .= '<label for="allergen_name">' . __('Allergen name', 'allergens-dietary-pro') . '</label>';
-			$html .= '<input type="text" class="update_" name="allergen_name" id="allergen_name" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" maxlength="50" disabled required/>';
-			
-			//Type dropdown.
-			$html .= '<div class="dropdown-row">';
-			$html .= '<label for="type">' . __('Type', 'allergens-dietary-pro') . '</label>';
-			$html .= '<select name="type" id="type" class="type">';
-			$html .= self::do_dropdown();
-			$html .= '</select>';
-			$html .= '</div>';
+		//Allergen name and style elements 
+		$html = '<table style="width: 100%"><fieldset id="the-list" class="inline-edit-product.quick-edit-row">';
+		$html .= '<fieldset class="inline-edit-col-left"><div class="inline-edit-row">';
+		$html .= '<legend style="font-weight: bold;" class="inline-edit-legend">' . __("Add allergen", "allergens-dietary-pro") . '</legend><br>';
+		$html .= '<div class="inline-edit-wrapper" aria-labelledby="quick-edit-legend">';
+		$html .= '<tr><th class="align-header" scope="row"><label for="allergen_name">' . __('Allergen name', 'allergens-dietary-pro') . '</label></th>';
+		$html .= '<td><input type="text" name="allergen_name" id="allergen_name" style="width: 100%;" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" required/></td></tr>';
+		
+		//Type dropdown.
+		$html .= '<tr><th class="align-header" scope="row"><label for="type">' . __('Type', 'allergens-dietary-pro') . '</label></th>';
+		$html .= '<td><select name="type" id="type" style="width: 100%" required>';
+		$html .= self::do_dropdown();
+		$html .= '</select></td></tr>';
 
-			//description input
-			$html .= '<label for="allergen_description">' . __('Allergen description', 'allergens-dietary-pro') . '</label>';
-			$html .= '<textarea class="update_" name="allergen_description" id="allergen_description" style="width: 300px; min-height: 100px; resize: none;" maxlength="255" disabled>'. ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '</textarea><br><br>';
-			
-			//submit
-			$html .= '</div><input disabled type="submit" class="update_ button button-primary save" name="submit" class="button button-primary" value="' . __('Update', 'allergens-dietary-pro') . '"/><br><br></fieldset>';
-			
-			//Image figure below. Max image size is 40x40.
-			$html .= '<fieldset class="inline-edit-col-right drag-drop-buttons"><div class="item">';
-			$html .= '<figure style="text-align: center;"><img class="update_ allergen_icon_img" style="max-height: 40px; max-width: 40px;" disabled id="allergen_icon_img" src="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_path'] : "") . '" alt="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
-			$html .= '<figcaption style="font-size: 10px; font-weight: bold; color: gray;">' . __('Max size of an icon is 40x40 pixels.', 'allergens-dietary-pro') . '</figcaption>';
-			$html .= '<br><label class="label-quick-edit wp-core-ui button">';
-			$html .= '<input type="file" class="update_ allergen_icon_file_input" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" name="allergen_icon" id="allergen_icon_file_input" disabled>';
-			$html .= '<input type="hidden" class="update_" name="allergen_icon_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '" disabled>';
-			$html .= '<span>'.__('Set image', 'allergens-dietary-pro') .'</span>';
-			$html .= '</label>';
-			$html .= '</figure>';
-
-			//close fieldsets
-			$html .= '</div><br></fieldset>';
-			$html .= '</div></fieldset">';
-		} else {
-
-			//Allergen name and style elements 
-			$html = '<table style="width: 100%"><fieldset id="the-list" class="inline-edit-product.quick-edit-row">';
-			$html .= '<fieldset class="inline-edit-col-left"><div class="inline-edit-row">';
-			$html .= '<legend style="font-weight: bold;" class="inline-edit-legend">' . __("Add allergen", "allergens-dietary-pro") . '</legend><br>';
-			$html .= '<div class="inline-edit-wrapper" aria-labelledby="quick-edit-legend">';
-			$html .= '<tr><th class="align-header" scope="row"><label for="allergen_name">' . __('Allergen name', 'allergens-dietary-pro') . '</label></th>';
-			$html .= '<td><input type="text" name="allergen_name" id="allergen_name" style="width: 100%;" value="' . ((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') . '" required/></td></tr>';
-			
-			//Type dropdown.
-			$html .= '<tr><th class="align-header" scope="row"><label for="type">' . __('Type', 'allergens-dietary-pro') . '</label></th>';
-			$html .= '<td><select name="type" id="type" style="width: 100%" required>';
-			$html .= self::do_dropdown();
-			$html .= '</select></td></tr>';
-
-			//description input
-			$html .= '</fieldset></table><br>';
-			$html .= '<label class="bold" for="allergen_description"><span style="display: block; margin-bottom: 10px;">' . __('Allergen description', 'allergens-dietary-pro') . '</span></label>';
-			$html .= '<textarea class="update_" name="allergen_description" id="allergen_description" style="width: 100%; max-width: 400px; min-height: 100px; resize: none;" maxlength="255">'. ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '</textarea>';
-			
-			//Image figure below. Max image size is 40x40.
-			$html .= '<table><div class="item"><fieldset class="inline-edit-col-right drag-drop-buttons"><div class="item">';
-			$html .= '<tr class="item-row">';
-			$html .= '<td><label class="label-quick-edit wp-core-ui button">';
-			$html .= '<input type="file" class="update_ allergen_icon_file_input" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" name="allergen_icon" id="allergen_icon_file_input">';
-			$html .= '<input type="hidden" class="update_" name="allergen_icon_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
-			$html .= '<span>'.__('Set image', 'allergens-dietary-pro') .'</span>';
-			$html .= '</label></td>';
-			$html .= '<td><figure style="text-align: center;"><th class="item-header"><br><img class="update_ add_allergen_icon_img" id="allergen_icon_img"  style="max-height: 40px; max-width: 40px;" src="' . get_home_url() . '/wp-content/plugins/allergens-dietary-pro/assets/icons/no_icon_selected.png" alt="no_icon_selected.png">';
-			$html .= '<figcaption style="font-size: 10px; max-width: 200px; font-weight: bold; color: gray;">' . __('Max size of an icon is 40x40 pixels.', 'allergens-dietary-pro') . '</figcaption></figure></td></tr></div>';
-			$html .= '</fieldset></table>';
-			
-			//submit
-			$html .= '<td><br><br><input type="submit" name="submit" class="button button-primary" value="' . __('Add allergen', 'allergens-dietary-pro') . '"/></td>';
-			
-			//close fieldset and table
-			$html .= '</div>';
-		}
+		//description input
+		$html .= '</fieldset></table><br>';
+		$html .= '<label class="bold" for="allergen_description"><span style="display: block; margin-bottom: 10px;">' . __('Allergen description', 'allergens-dietary-pro') . '</span></label>';
+		$html .= '<textarea class="update_" name="allergen_description" id="allergen_description" style="width: 100%; max-width: 400px; min-height: 100px; resize: none;" maxlength="255">'. ((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') . '</textarea>';
+		
+		//Image figure below. Max image size is 40x40.
+		$html .= '<table><div class="item"><fieldset class="inline-edit-col-right drag-drop-buttons"><div class="item">';
+		$html .= '<tr class="item-row">';
+		$html .= '<td><label class="label-quick-edit wp-core-ui button">';
+		$html .= '<input type="file" class="update_ allergen_icon_file_input" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" name="allergen_icon" id="allergen_icon_file_input">';
+		$html .= '<input type="hidden" class="update_" name="allergen_icon_hidden" value="' . ((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : "") . '">';
+		$html .= '<span>'.__('Set image', 'allergens-dietary-pro') .'</span>';
+		$html .= '</label></td>';
+		$html .= '<td><figure style="text-align: center;"><th class="item-header"><br><img class="update_ add_allergen_icon_img" id="allergen_icon_img"  style="max-height: 40px; max-width: 40px;" src="' . get_home_url() . '/wp-content/plugins/allergens-dietary-pro/assets/icons/no_icon_selected.png" alt="no_icon_selected.png">';
+		$html .= '<figcaption style="font-size: 10px; max-width: 200px; font-weight: bold; color: gray;">' . __('Max size of an icon is 40x40 pixels.', 'allergens-dietary-pro') . '</figcaption></figure></td></tr></div>';
+		$html .= '</fieldset></table>';
+		
+		//submit
+		$html .= '<td><br><br><input type="submit" name="submit" class="button button-primary" value="' . __('Add allergen', 'allergens-dietary-pro') . '"/></td>';
+		
+		//close fieldset and table
+		$html .= '</div>';
 
 		echo $html;
 	}
@@ -215,102 +172,50 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 			return;
 		}
 
-		// ADD ALLERGEN PAGE!
-		if (!isset($data['allergen_name_hidden']) && $page === $showOnPage) {
+		$no_icon_selected = false;
 
-			$no_icon_selected = false;
-
-			if ($all_query->checkAllergenExists($data['allergen_name'])) {
-				self::$_type = Notice_Types::ERROR;
-				self::$message = __('Allergen name already exists','allergens-dietary-pro');
-				$notice = Allergens_Dietary_Pro_Notices::getInstance();
-				$notice->display_admin_notice(self::$_type,self::$message);
-				return;
-			}
-
-			// Default image
-			if ($empty_file_input) {
-				$imagePath = get_home_url() . '/wp-content/plugins/allergens-dietary-pro/assets/icons/no_icon_selected.png';
-				$imageName = sanitize_file_name(basename($imagePath));
-				$data['allergen_icon'] = [
-					'name' => $imageName,
-					'tmp_name' => $imagePath,
-					'type' => 'image/png',
-				];
-				$no_icon_selected = true;
-			}
-
-			// This is temporary, should be WP conform errors!
-			if (!$valid_icon && !$no_icon_selected) {
-				self::$_type = Notice_Types::ERROR;
-				self::$message = __('The file is not a valid image. Supported image types are: ', 'allergens-dietary-pro') . implode(', ', $this->MIME_NAMES);
-				$notice = Allergens_Dietary_Pro_Notices::getInstance();
-				$notice->display_admin_notice(self::$_type,self::$message);
-				return;
-			}
-
-			$all_query->addAllergens($data);
-			if (!$no_icon_selected && !$attachment_exists) { // Don't add attachment to the table, image already exists there.
-				$att_query->addAttachment($data['allergen_icon']);
-			}
-			$all_att_query->addAllergyAttachment($data);
-
-			// Temporary feedback, should be of WP conform.
-			self::$_type= Notice_Types::SUCCESS;
-			self::$message = __('Succesfully added new allergen: ' . $data['allergen_name'] . '.', 'allergens-dietary-pro');
+		if ($all_query->checkAllergenExists($data['allergen_name'])) {
+			self::$_type = Notice_Types::ERROR;
+			self::$message = __('Allergen name already exists','allergens-dietary-pro');
 			$notice = Allergens_Dietary_Pro_Notices::getInstance();
 			$notice->display_admin_notice(self::$_type,self::$message);
-			// return;
-		} else { // QUICK EDIT PAGE!
-			// This is temporary, should be WP conform errors!
-			if ($all_query->checkAllergenExists($data['allergen_name']) && $data['allergen_name_hidden'] !== $data['allergen_name']) {
-				self::$_type = Notice_Types::ERROR;
-				self::$message = __('Allergen name already exists', 'allergens-dietary-pro');
-				$notice = Allergens_Dietary_Pro_Notices::getInstance();
-				$notice->display_admin_notice(self::$_type,self::$message);
-				return;
-			}
-			if (!$valid_icon && !$empty_file_input) {
-				self::$_type = Notice_Types::ERROR;
-				self::$message = __('The file is not a valid image. Supported image types are: ' . implode(', ', $this->MIME_NAMES), 'allergens-dietary-pro') . '.';
-				$notice = Allergens_Dietary_Pro_Notices::getInstance();
-				$notice->display_admin_notice(self::$_type,self::$message);
-				return;
-			}
-
-			$all_query->updateAllergens($data);
-			if ($empty_file_input) {
-				self::$_type = Notice_Types::SUCCESS;
-				self::$message = __('Allergen successfully updated.', 'allergens-dietary-pro');
-				$notice = Allergens_Dietary_Pro_Notices::getInstance();
-				$notice->display_admin_notice(self::$_type,self::$message);
-				return;
-			} // update only the new allergen data when not uploading a new image. name, description etc.
-			
-
-			if ($attachment_exists) { // if the attachment exists, set to existing img and only remove attachment when not used.
-				$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
-				if ($data['allergen_icon_hidden'] !== 'no_icon_selected.png' && !$all_att_query->attachmentIsUsed($data['allergen_icon_hidden'])) {
-					$att_query->deleteAttachment($data['allergen_icon_hidden']);
-				}
-				self::$_type = Notice_Types::SUCCESS;
-				self::$message = __('Allergen successfully updated.', 'allergens-dietary-pro');
-				$notice = Allergens_Dietary_Pro_Notices::getInstance();
-				$notice->display_admin_notice(self::$_type,self::$message);
-			} else {
-				// Prevent losing no_icon_selected.png as image in DB, and if there are multiple of the old img don't change all of them.
-				if ($data['allergen_icon_hidden'] === 'no_icon_selected.png' || $all_att_query->checkMultipleAttachmentsExists($data['allergen_icon_hidden'])) {
-					$att_query->addAttachment($data['allergen_icon']);
-					$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
-				} else {
-					$att_query->updateAttachment($data['allergen_icon'], $data['allergen_icon_hidden']);
-				}
-				self::$_type = Notice_Types::SUCCESS;
-				self::$message = __('Allergen successfully updated.', 'allergens-dietary-pro');
-				$notice = Allergens_Dietary_Pro_Notices::getInstance();
-				$notice->display_admin_notice(self::$_type,self::$message);
-			}
+			return;
 		}
+
+		// Default image
+		if ($empty_file_input) {
+			$imagePath = get_home_url() . '/wp-content/plugins/allergens-dietary-pro/assets/icons/no_icon_selected.png';
+			$imageName = sanitize_file_name(basename($imagePath));
+			$data['allergen_icon'] = [
+				'name' => $imageName,
+				'tmp_name' => $imagePath,
+				'type' => 'image/png',
+			];
+			$no_icon_selected = true;
+		}
+
+		// This is temporary, should be WP conform errors!
+		if (!$valid_icon && !$no_icon_selected) {
+			self::$_type = Notice_Types::ERROR;
+			self::$message = __('The file is not a valid image. Supported image types are: ', 'allergens-dietary-pro') . implode(', ', $this->MIME_NAMES);
+			$notice = Allergens_Dietary_Pro_Notices::getInstance();
+			$notice->display_admin_notice(self::$_type,self::$message);
+			return;
+		}
+
+		$all_query->addAllergens($data);
+		if (!$no_icon_selected && !$attachment_exists) { // Don't add attachment to the table, image already exists there.
+			$att_query->addAttachment($data['allergen_icon']);
+		}
+		$all_att_query->addAllergyAttachment($data);
+
+		// Temporary feedback, should be of WP conform.
+		self::$_type= Notice_Types::SUCCESS;
+		self::$message = __('Succesfully added new allergen: ' . $data['allergen_name'] . '.', 'allergens-dietary-pro');
+		$notice = Allergens_Dietary_Pro_Notices::getInstance();
+		$notice->display_admin_notice(self::$_type,self::$message);
+		// return;
+		
 	}
 
 	/**
