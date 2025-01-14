@@ -80,7 +80,14 @@ class Allergens_Dietary_Pro_Plugin_Menu extends Allergens_Dietary_Plugin_Menu
 			require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/tabs/allergen_tabs.php';
 		}
 		Allergens_Dietary_Pro_Tabs::getInstance()->showtabs();
-		Allergens_Dietary_Pro_Show_Allergens::getInstance()->table_page();
+		$table = Allergens_Dietary_Pro_Show_Allergens::getInstance();
+		$table->prepare_items();
+		echo '<form method="POST" id="show_allergens_form" enctype="multipart/form-data">';
+        wp_nonce_field('allergen_table_action', 'allergen_val');
+		$table->search_box('Search', 'show_allergens');
+
+		$table->display();
+		echo '</form>';
 	}
 
 	public function info()

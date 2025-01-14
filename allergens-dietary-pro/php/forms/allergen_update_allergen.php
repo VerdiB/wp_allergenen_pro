@@ -54,7 +54,10 @@ class Allergens_Dietary_Pro_Update_Allergen_Form implements I_Allergens_Dietary_
         $this->MIME_TYPES = Mime_Types::get_mime_types();
         $this->MIME_NAMES = array_map(fn($case) => $case->name, Mime_Types::cases());
         $this->_allergens = Allergens_Dietary_Pro_Allergy_Attachment_Queries::getInstance()->getAllAllergyAttachmments(true);
-        error_log(print_r($this->_allergens,true));
+
+        if(!empty(static::$_message)){
+            Allergens_Dietary_Pro_Notices::getInstance()->display_admin_notice(Notice_Types::SUCCESS, static::$_message);
+        }
     } 
 
     /**
@@ -113,27 +116,28 @@ class Allergens_Dietary_Pro_Update_Allergen_Form implements I_Allergens_Dietary_
     {
         $data = $this->sanitize($data);
 
-
         foreach ($data as $icon) {
             // check if file is an image and if it is not, skip it
             if (false === in_array($icon['type'], $this->MIME_TYPES)) {
-                self::$_message = __('The new file: ' . $icon['name'] . ' is not a valid image.  Supported image types are: ' . implode(', ', $this->MIME_NAMES), 'allergens-dietary-pro') . '.';
+                $message = __('The new file: ' . $icon['name'] . ' is not a valid image.  Supported image types are: ' . implode(', ', $this->MIME_NAMES), 'allergens-dietary-pro') . '.';
                 $notice = Allergens_Dietary_Pro_Notices::getInstance();
-                $notice->display_admin_notice(Notice_Types::ERROR, __(self::$_message, 'allergens-dietary-pro'));		
+                $notice->display_admin_notice(Notice_Types::ERROR, __($message, 'allergens-dietary-pro'));		
     
                 continue;
             }
             // check if file is in database already and if it is, skip it
             if (true === Allergens_Dietary_Pro_Attachment_Queries::getInstance()->checkAttachmentExists($icon['name'])) {
-                self::$_message =__('The new file: ' . $icon['name'] . ' already exists.', 'allergens-dietary-pro');
+                $message =__('The new file: ' . $icon['name'] . ' already exists.', 'allergens-dietary-pro');
                 $notice = Allergens_Dietary_Pro_Notices::getInstance();
-                $notice->display_admin_notice(Notice_Types::ERROR, __(self::$_message, 'allergens-dietary-pro'));		
+                $notice->display_admin_notice(Notice_Types::ERROR, __($message, 'allergens-dietary-pro'));		
     
                 continue;
             }
 
             Allergens_Dietary_Pro_Attachment_Queries::getInstance()->updateAttachment($icon, $icon['oldName']);
+            static::$_message = __("Succesfully updated image(s).", 'allergens-dietary-pro');
         }
+
     }
 
     /**

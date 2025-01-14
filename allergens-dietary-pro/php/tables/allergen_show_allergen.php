@@ -29,194 +29,209 @@ if ( ! class_exists( 'Allergens_Dietary_Show_Allergens' ) ) {
  * @since 1.0.0
  */
 
-class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allergens {
-
-	// Page is statisch zodat er maar 1 is, en de zelfde waarde blijft.
-
-	protected function __construct() {
-		parent::__construct();
-
-		$this->setup();
-		// if ( ! empty( static::$message ) ) {
-		// 	$type   = Notice_Types::INFO;
-		// 	$notice = Allergens_Dietary_Pro_Notices::getInstance();
-		// 	$notice->display_admin_notice( $type, static::$message );
-		// }
-
-		// $notice = Allergens_Dietary_Pro_Notices::getInstance();
-		// $notice->display_admin_notice(Notice_Types::WARNING, __('is great success', 'allergens-dietary-pro'));
-	}
-
-	protected $table_action_options = array( 'change_status', 'delete', 'quick_edit' );
-
-	public function handle_row_actions( $item, $column_name, $primary ) {
-		if ( $primary !== $column_name ) {
-			return '';
-		}
-		$valid_actions = $this->table_action_options;
-
-		$action_links = array();
-		foreach ( $valid_actions as $action ) {
-			$action_links[ $action ] = $this->build_action_url( $action, $item );
-		}
-
-		return $this->row_actions( $action_links );
-	}
-
-	public function single_row($item)
+class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allergens 
+{    
+    /**
+     * @author ictoriabv
+     * @return void
+     * @since V0.18.6.0
+     * @version V0.18.6.0
+     */
+    protected function __construct()
     {
-        $this->column_location_id($item);
-        echo '<tr class="inline-edit-row-post quick-edit-row quick-edit-row-post inline-edit-post">';
-        $this->single_row_columns($item);
-        echo '</tr>';
+        parent::__construct();
     }
 
+    /**
+     * @author ictoriabv
+     * @return array
+     * @since V0.18.6.0
+     * @version V0.18.6.0
+     */
+    protected function get_bulk_actions()
+    {
+        return array(
+            'bulk-change-status' => __('Change status', 'allergens-dietary'),
+            'bulk-delete' => __('Delete', 'allergens-dietary'),
+        );
+    }
 
-	protected function build_action_url( $action, $item ) {
-		// loop-build actions for quick actions.
-		$color      = 'blue';
-		$disabled   = '';
-		$is_default = Allergens_Dietary_Pro_Allergen_Queries::getInstance();
-		if ( esc_attr( $action ) === 'delete' || esc_attr( $action ) === 'quick_edit' ) {
-			$is_default = Allergens_Dietary_Pro_Allergen_Queries::getInstance()->is_default_allergen( $item['allergy_name'] );
-		}
-
-		( esc_attr( $action ) === 'delete' ) ? $color = 'red' : $color = 'blue';
-
-		if ( $is_default ) {
-			$disabled = 'none';
-		} else {
-			$disabled = 'auto';
-		}
-
-		/*
-		While using quick_edit you always need to add a file.
-		This can't be solved, because you can't put a value into
-		a file input*/
-		if ( esc_attr( $action ) !== 'quick_edit' && esc_attr( $action ) !== 'change_status' ) {
-			return $is_default ? '<a style="color: grey;">' . ucfirst( str_replace( '_', ' ', $action ) ) . '</a>' : sprintf(
-				'<a style="color: ' . $color . ';" href="?page=%s' . ( static::$_page > 0 ? '&paged=' . strval( static::$_page ) : '' ) . '&item=%s&action=%s&_wpnonce=%s">%s</a>',
-				esc_attr( $_REQUEST['page'] ),
-				esc_attr( $item['allergy_name'] ),
-				esc_attr( $action ),
-				wp_create_nonce( 'allergens_' . $action ),
-				ucfirst( str_replace( '_', ' ', $action ) ),
-			);
-		} elseif ( esc_attr( $action ) === 'change_status' ) {
-			return sprintf(
-				'<a style="color: ' . $color . ';" href="?page=%s' . ( static::$_page > 0 ? '&paged=' . strval( static::$_page ) : '' ) . '&item=%s&action=%s&_wpnonce=%s">%s</a>',
-				esc_attr( $_REQUEST['page'] ),
-				esc_attr( $item['allergy_name'] ),
-				esc_attr( $action ),
-				wp_create_nonce( 'allergens_' . $action ),
-				ucfirst( str_replace( '_', ' ', $action ) ),
-			);
-		} else {
-			Allergens_Dietary_Pro_Form::setFormType( FormType::ALLERGENS );
-			Allergens_Dietary_Pro_Form::getInstance( true )->showForm( esc_attr( $item['allergy_name'] ) );
-
-			return $is_default ? '<a style="color: grey;">' . ucfirst( str_replace( '_', ' ', $action ) ) . '</a>' : sprintf(
-				'<a class="%s" id="%s" style="color: ' . $color . '; pointer-events: %s;" href="#&item=%s">%s</a>',
-				esc_attr( $action ),
-				esc_attr( $item['allergy_name'] ),
-				$disabled,
-				esc_attr( $item['allergy_name'] ),
-				ucfirst( str_replace( '_', ' ', $action ) ),
-			);
-		}
-	}
-
-	public function get_bulk_actions() {
-		$actions                  = array();
-		$actions['change_status'] = __( 'Change status', 'allergens-dietary-pro' );
-		$actions['delete']        = __( 'Delete', 'allergens-dietary-pro' );
-		return $actions;
-	}
-
-	public function prepare_items() {
-		$data = Allergens_Dietary_Pro_Allergen_Queries::getItems();
-
-		$this->_column_headers = array( $this->get_columns(), array(), array() );
-
-		if ( ! empty( $this->search_query ) ) {
-			$this->items = array_filter(
-				$data,
-				function ( $item ) {
-					return stripos( $item['allergy_name'], $this->search_query ) !== false;
-				}
-			);
-		} else {
-			$this->items = $data;
-		}
-
-		$total_items = count( $this->items );
-
-		$per_page     = $this->get_items_per_page( 'my_list_table_per_page', $this->get_items_per_pages() );
-		$current_page = $this->get_pagenum();
-
-		// Fetch data for the current page
-		$this->items = array_slice( $this->items, ( $current_page - 1 ) * $per_page, $per_page );
-
-		// Set pagination args
-		$this->set_pagination_args(
+    /**
+     * @author ictoriabv
+     * @brief defines a custom response on column rows for allergens
+     * In this case only to change its status
+     * @param array|object $item
+     * @return string
+     * @since V0.18.6.0
+     * @version V0.18.6.0
+     */
+    protected function column_allergy_name(array|object $item){
+        $status_nonce = esc_attr(wp_create_nonce("change-status-" . $item['allergy_name']));
+        $delete_nonce = esc_attr(wp_create_nonce("delete-" . $item['allergy_name']));
+        // $page = 'allergens-test-table';
+        $status_url = add_query_arg(
+            array(
+                'page'      =>  static::PAGE,
+                'action'    =>  'change-status',
+                'item'      =>  $item['allergy_name'],
+                'paged'     =>  $this->get_pagenum(),
+                '_wpnonce'  =>  $status_nonce
+            ),
+            admin_url('admin.php')
+        );
+        $delete_url = add_query_arg(
 			array(
-				'total_items' => $total_items,
-				'per_page'    => $per_page,
-				'total_pages' => ceil( $total_items / $per_page ),
+                'page'      =>  static::PAGE,
+                'action'    =>  'delete',
+                'item'      =>  $item['allergy_name'],
+                'paged'     =>  $this->get_pagenum(),
+                '_wpnonce'  =>  $delete_nonce
+            ),
+            admin_url('admin.php')
+        );
+
+        $actions = array(
+            'change status' =>sprintf(
+                '<a href="%s">%s</a>',
+                $status_url,
+                __('Change Status', 'allergens-dietary')
+			),
+			'delete' =>sprintf(
+                '<a href="%s">%s</a>',
+                $delete_url,
+                __('Delete', 'allergens-dietary')
 			)
-		);
-	}
+        );
+        return sprintf('%1$s %2$s',$item['allergy_name'] , $this->row_actions($actions));
+    }
 
-	public function process_quick_action() {
-		parent::process_quick_action();
-		
-		$item   = sanitize_text_field( $_GET['item'] );
-		$action = sanitize_text_field( $_GET['action'] );
-		$nonce  = filter_input( INPUT_GET, '_wpnonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+    /**
+     * @author ictoriabv
+     * @return string
+     * @since V0.18.6.0
+     * @version V0.18.6.0
+     */
+    protected function column_cb($item)
+    {
+        return sprintf(
+            '<input type="checkbox" name="allergens[]" value="%s" />',
+            $item['allergy_name']
+        );
+    }
 
-		// Verify nonce based on action
-		if ( $action === 'delete' && ! wp_verify_nonce( $nonce, 'allergens_delete' ) ) {
-			wp_die( 'Security check failed for deletion!' );
-		}
-		
-		// Perform action based on case
-		switch ( $action ) {
-			case 'delete':
-				static::$message = __( 'Allergen deleted', 'allergens-dietary-pro' );
-				Allergens_Dietary_Pro_Allergen_Queries::getInstance()->delete_allergen_by_name( $item, static::$_page);
-				return static::$message;
-				break;
-			break;
-		}
-		
-	}
+    /**
+     * @author ictoriabv
+     * @brief Handles bulk action on all allergens
+     * where as for now only changes the status of an allergy/dietary
+     * @return void
+     * @since V0.18.6.0
+     * @version V0.18.6.0
+     */
+    protected function process_bulk_action(){
+        //check the nonce
+        if(isset($_POST['_wpnonce']) && !empty($_POST['_wpnonce'])){
+            //sanitize the nonce
+            $nonce = sanitize_text_field(wp_unslash($_POST['_wpnonce']));
+            $action = 'bulk-' . $this->_args['plural'];
 
-	public function process_bulk_action( $data ) {
-		parent::process_bulk_action($data);
+            //verify nonce
+            if(!wp_verify_nonce($nonce, $action)) {
+                wp_die(esc_html(__('Security check failed!', 'allergens-dietary')));
+            }
 
-		$action = $this->current_action();
+            //check if there are allergens in array sends query to db
+            if(isset($_POST['allergens']) && !empty($_POST['allergens'])){
+                if ('bulk-change-status' === $this->current_action()){
+                    $to_change = array_map('sanitize_text_field', wp_unslash($_POST['allergens']));
+                    $allergen_query_arr = array();
+                    foreach($this->_allergens as $allergen){
+                        if (in_array($allergen['allergy_name'], $to_change)){
+                            $allergen_query_arr[]= $allergen;
+                        }
+                    }
+                    foreach($allergen_query_arr as $allergen_query){
+                        $allergen_query['is_active'] =  ($allergen_query['is_active'] == 1)? 0 : 1;
+                        Allergens_Dietary_Allergen_Queries::getInstance()->change_status($allergen_query);
+                    }
+                    setcookie('notice-type','bulk-status', time() + 30);
+                    wp_redirect(admin_url('admin.php?page=' . static::PAGE . '&paged='. $this->get_pagenum()));
+                    exit;
+                }
+                if ('bulk-delete' === $this->current_action()){
+                    $to_change = array_map('sanitize_text_field', wp_unslash($_POST['allergens']));
+                    $allergen_query_arr = array();
+                    foreach($this->_allergens as $allergen){
+                        if (in_array($allergen['allergy_name'], $to_change)){
+                            $allergen_query_arr[]= $allergen;
+                        }
+                    }
+                    foreach($allergen_query_arr as $allergen_query){
+                        $allergen_query['is_active'] =  ($allergen_query['is_active'] == 1)? 0 : 1;
+                        Allergens_Dietary_Allergen_Queries::getInstance()->change_status($allergen_query);
+                    }
+                    setcookie('notice-type','bulk-status', time() + 30);
+                    wp_redirect(admin_url('admin.php?page=' . static::PAGE . '&paged='. $this->get_pagenum()));
+                    exit;
+                }
+            }
+        }
+    }
 
-		switch ( $action ) {
-			case 'delete':
-				foreach ( $data['item'] as $allergy_name ) {
-					static::$message = __( 'Allergen deleted', 'allergens-dietary-pro' );
-					Allergens_Dietary_Pro_Allergen_Queries::getInstance()->delete_allergen_by_name( $allergy_name, static::$_page );
-					return static::$message;
-				}
-				break;
-		}
-	}
-
-	public function setup(){
-		parent::setup();
-		
-		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-			if ( isset( $_POST['action'] ) ) {
-				if ( $_POST['action'] = -1 ) {
-					Allergens_Dietary_Pro_Form::setFormType( FormType::ALLERGENS );
-					Allergens_Dietary_Pro_Form::getInstance()->submitUpdate();
-				}
-			}
-		}
-	}
+    /**
+     * @author ictoriabv
+     * @overload from parrent method and can be overloaded still
+     * @brief handles custom row actions on the allergen table
+     * for this version of the plug-in it will only handle status changes
+     * @param object|array $item
+     * @param string $column_name
+     * @param string $primary
+     * @return void
+     * @since V0.18.6.0
+     * @version V0.18.6.0
+     */
+    protected function handle_row_actions($item, $column_name, $primary)
+    {        
+        if (!empty(sanitize_url(wp_unslash($_GET['item']))) &&
+            !empty(sanitize_url(wp_unslash($_GET['action']))) &&
+            !empty(sanitize_url(wp_unslash($_GET['page'])))
+        ){
+            $allergen_name = preg_replace('/^https?:\/\//','',sanitize_url(wp_unslash($_GET['item'])));
+            $table_action = preg_replace('/^https?:\/\//','', sanitize_url(wp_unslash($_GET['action'])));
+            if(check_admin_referer("change-status-" . $allergen_name)){
+                if ($table_action === 'change-status'){
+                    $allergen_active = array();
+                    foreach ($this->_allergens as $allergen){
+                        if(array_search($allergen_name, $allergen)){
+                            $allergen_active = $allergen;
+                            break;
+                        }
+                    }
+                    $allergen_active['is_active'] = ($allergen_active['is_active'] == 1)? 0 : 1;
+                    Allergens_Dietary_Allergen_Queries::getInstance()->change_status($allergen_active);
+                    
+                    setcookie('notice-type','single-status', time() + 30);
+                    wp_redirect(admin_url('admin.php?page=' . static::PAGE . '&paged='. $this->get_pagenum()));
+                    exit;
+                }
+            }
+            if(check_admin_referer("delete-" . $allergen_name)){
+				var_dump("handle-row-delete");
+                if ($table_action === 'delete'){
+                    $allergen_active = array();
+                    foreach ($this->_allergens as $allergen){
+                        if(array_search($allergen_name, $allergen)){
+                            $allergen_active = $allergen;
+                            break;
+                        }
+                    }
+                    $allergen_active['is_active'] = ($allergen_active['is_active'] == 1)? 0 : 1;
+                    Allergens_Dietary_Allergen_Queries::getInstance()->change_status($allergen_active);
+                    
+                    setcookie('notice-type','single-status', time() + 30);
+                    wp_redirect(admin_url('admin.php?page=' . static::PAGE . '&paged='. $this->get_pagenum()));
+                    exit;
+                }
+            }
+        }
+    }
 }
