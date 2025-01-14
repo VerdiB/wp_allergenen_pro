@@ -66,19 +66,11 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
      * @version V0.18.6.0
      */
     protected function column_allergy_name(array|object $item){
-        $status_nonce = esc_attr(wp_create_nonce("change-status-" . $item['allergy_name']));
+		$status = parent::column_allergy_name($item);
         $delete_nonce = esc_attr(wp_create_nonce("delete-" . $item['allergy_name']));
-        // $page = 'allergens-test-table';
-        $status_url = add_query_arg(
-            array(
-                'page'      =>  static::PAGE,
-                'action'    =>  'change-status',
-                'item'      =>  $item['allergy_name'],
-                'paged'     =>  $this->get_pagenum(),
-                '_wpnonce'  =>  $status_nonce
-            ),
-            admin_url('admin.php')
-        );
+
+		$default_item = Allergens_Dietary_Pro_Allergen_Queries::getInstance()->is_default_allergen($item['allergy_name']);
+
         $delete_url = add_query_arg(
 			array(
                 'page'      =>  static::PAGE,
@@ -89,19 +81,39 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
             ),
             admin_url('admin.php')
         );
+        $edit_url = add_query_arg(
+			array(
+                'page'      =>  'allergens-dietary-add-allergen',
+                'action'    =>  'edit',
+                'item'      =>  $item['allergy_name'],
+            ),
+            admin_url('admin.php')
+        );
 
         $actions = array(
-            'change status' =>sprintf(
-                '<a href="%s">%s</a>',
-                $status_url,
-                __('Change Status', 'allergens-dietary')
-			),
-			'delete' =>sprintf(
-                '<a href="%s">%s</a>',
-                $delete_url,
-                __('Delete', 'allergens-dietary')
-			)
+			$status
         );
+		if($default_item){
+			$actions['delete'] = sprintf(
+				'<span>%s</span>',
+				__('Delete', 'allergens-dietary')
+			);
+			$actions['edit'] = sprintf(
+				'<span>%s</span>',
+				__('Edit', 'allergens-dietary')
+			);
+		}else{
+			$actions['delete'] = sprintf(
+				'<a href="%s">%s</a>',
+				$delete_url,
+				__('Delete', 'allergens-dietary')
+			);
+			$actions['edit'] = sprintf(
+				'<a href="%s">%s</a>',
+				$edit_url,
+				__('Edit', 'allergens-dietary')
+			);
+		}
         return sprintf('%1$s %2$s',$item['allergy_name'] , $this->row_actions($actions));
     }
 
@@ -191,47 +203,33 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
      */
     protected function handle_row_actions($item, $column_name, $primary)
     {        
-        if (!empty(sanitize_url(wp_unslash($_GET['item']))) &&
-            !empty(sanitize_url(wp_unslash($_GET['action']))) &&
-            !empty(sanitize_url(wp_unslash($_GET['page'])))
+		parent::handle_row_actions($item, $column_name, $primary);
+        if (empty(sanitize_url(wp_unslash($_GET['item']))) ||
+            empty(sanitize_url(wp_unslash($_GET['action']))) ||
+            empty(sanitize_url(wp_unslash($_GET['page'])))
         ){
-            $allergen_name = preg_replace('/^https?:\/\//','',sanitize_url(wp_unslash($_GET['item'])));
-            $table_action = preg_replace('/^https?:\/\//','', sanitize_url(wp_unslash($_GET['action'])));
-            if(check_admin_referer("change-status-" . $allergen_name)){
-                if ($table_action === 'change-status'){
-                    $allergen_active = array();
-                    foreach ($this->_allergens as $allergen){
-                        if(array_search($allergen_name, $allergen)){
-                            $allergen_active = $allergen;
-                            break;
-                        }
-                    }
-                    $allergen_active['is_active'] = ($allergen_active['is_active'] == 1)? 0 : 1;
-                    Allergens_Dietary_Allergen_Queries::getInstance()->change_status($allergen_active);
-                    
-                    setcookie('notice-type','single-status', time() + 30);
-                    wp_redirect(admin_url('admin.php?page=' . static::PAGE . '&paged='. $this->get_pagenum()));
-                    exit;
-                }
-            }
-            if(check_admin_referer("delete-" . $allergen_name)){
-				var_dump("handle-row-delete");
-                if ($table_action === 'delete'){
-                    $allergen_active = array();
-                    foreach ($this->_allergens as $allergen){
-                        if(array_search($allergen_name, $allergen)){
-                            $allergen_active = $allergen;
-                            break;
-                        }
-                    }
-                    $allergen_active['is_active'] = ($allergen_active['is_active'] == 1)? 0 : 1;
-                    Allergens_Dietary_Allergen_Queries::getInstance()->change_status($allergen_active);
-                    
-                    setcookie('notice-type','single-status', time() + 30);
-                    wp_redirect(admin_url('admin.php?page=' . static::PAGE . '&paged='. $this->get_pagenum()));
-                    exit;
-                }
-            }
-        }
+			return;
+		}
+		$allergen_name = preg_replace('/^https?:\/\//','',sanitize_url(wp_unslash($_GET['item'])));
+		$table_action = preg_replace('/^https?:\/\//','', sanitize_url(wp_unslash($_GET['action'])));
+
+		if(check_admin_referer("delete-" . $allergen_name)){
+			var_dump("handle-row-delete");
+			if ($table_action === 'delete'){
+				$allergen_active = array();
+				foreach ($this->_allergens as $allergen){
+					if(array_search($allergen_name, $allergen)){
+						$allergen_active = $allergen;
+						break;
+					}
+				}
+				$allergen_active['is_active'] = ($allergen_active['is_active'] == 1)? 0 : 1;
+				Allergens_Dietary_Allergen_Queries::getInstance()->change_status($allergen_active);
+				
+				setcookie('notice-type','single-status', time() + 30);
+				wp_redirect(admin_url('admin.php?page=' . static::PAGE . '&paged='. $this->get_pagenum()));
+				exit;
+			}
+		}        
     }
 }
