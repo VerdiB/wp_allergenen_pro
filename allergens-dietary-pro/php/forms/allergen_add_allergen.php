@@ -60,16 +60,32 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 
 
 	protected ?array $_allergen = null;
-	protected bool $editing = false;
 	protected array $MIME_TYPES;
 	protected array $MIME_NAMES;
 	protected static string $message = '';
 	protected static Notice_Types $_type;
+	protected $return_page = 'allergens-dietary-show-allergens';
 
 	public function __construct()
 	{
 		$this->MIME_TYPES = Mime_Types::get_mime_types();
 		$this->MIME_NAMES = array_map(fn($case) => $case->name, Mime_Types::cases());
+		
+		
+		if(isset($_COOKIE['return-page'])){
+			$this->return_page = sanitize_text_field(wp_unslash($_COOKIE['return-page']));
+			setcookie('return-page', '', time()-60*60*24);
+		}
+		if(isset($_COOKIE['Error'])){
+			$message = sanitize_text_field(wp_unslash($_COOKIE['Error']));
+			Allergens_Dietary_Pro_Notices::getInstance()->display_admin_notice(Notice_Types::ERROR, esc_html(__($message, 'allergens-dietary-pro')) );
+			setcookie('Error', '', time() - 60 );
+		}
+		if(isset($_COOKIE['Success'])){
+			$message = sanitize_text_field(wp_unslash($_COOKIE['Success']));
+			Allergens_Dietary_Pro_Notices::getInstance()->display_admin_notice(Notice_Types::SUCCESS, esc_html(__($message, 'allergens-dietary-pro')) );
+			setcookie('Success', '', time() - 60 );
+		}
 	}
 
 	/**
@@ -82,13 +98,18 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 	 */
 	public function showForm(?string $allergenName = null)
 	{
-		if (isset($_GET['action']) && isset($_GET['item'])) {
+		$editing = false;
+		if (isset($_GET['action']) && isset($_GET['item'])) { // Check to see if editing allergen or adding.
+			if($_GET['action'] !== 'edit'){
+				wp_die(esc_html(__('You are unable to edit', 'allergens-dietary-pro')));
+			}
 			$allergen = sanitize_text_field(wp_unslash($_GET['item']));
 			if (Allergens_Dietary_Pro_Allergen_Queries::getInstance()->is_default_allergen($allergen)){
-				wp_die(__('You are unable to update any default allergens.', 'allergens-dietary-pro'));
+				wp_die(esc_html(__('You are unable to update any default allergens', 'allergens-dietary-pro')));
 			}
+
 			$this->_allergen = Allergens_Dietary_Pro_Allergy_Attachment_Queries::getInstance()->getallergyAttachment($allergen);
-			$this->editing = true;
+			$editing = true;	
 		}
 
 ?>
@@ -97,20 +118,21 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 				<fieldset class="inline-edit-col-left">
 					<div class="inline-edit-row">
 						<legend style="font-weight: bold;" class="inline-edit-legend">
-							<?php echo __('Add allergen', 'allergens-dietary-pro') ?>
+							<?php echo esc_html(__('Add allergen', 'allergens-dietary-pro')) ?>
 						</legend>
 						<br>
 						<div class="inline-edit-wrapper" aria-labelledby="quick-edit-legend">
 							<tr>
 								<th class="align-header" scope="row">
-									<label for="allergen_name"> <?php echo __('Allergen name', 'allergens-dietary-pro') ?></label>
+									<label for="allergen_name"> <?php echo esc_html(__('Allergen name', 'allergens-dietary-pro')) ?></label>
 								</th>
 								<td>
-									<input type="text" name="allergen_name" id="allergen_name" style="width: 100%;" value="<?php echo (!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '' ?> " required />
+									<input type="text" name="allergen_name" id="allergen_name" style="width: 100%;" value="<?php echo esc_html((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') ?>" required />
+									<input type="hidden" name="allergen_name_hidden" id="allergen_name_hidden" value="<?php echo esc_html((!empty($this->_allergen)) ? $this->_allergen['allergy_name'] : '') ?>" required />
 								</td>
 							</tr>
 							<tr>
-								<th class="align-header" scope="row"><label for="type"><?php echo __('Type', 'allergens-dietary-pro') ?></label></th>
+								<th class="align-header" scope="row"><label for="type"><?php echo esc_html(__('Type', 'allergens-dietary-pro')) ?></label></th>
 								<td>
 									<select name="type" id="type" style="width: 100%" required>
 										<?php echo self::do_dropdown(); ?>
@@ -122,9 +144,9 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 		</table>
 		<br>
 		<label class="bold" for="allergen_description">
-			<span style="display: block; margin-bottom: 10px;"><?php echo __('Allergen description', 'allergens-dietary-pro') ?></span>
+			<span style="display: block; margin-bottom: 10px;"><?php echo esc_html(__('Allergen description', 'allergens-dietary-pro')) ?></span>
 		</label>
-		<textarea class="update_" name="allergen_description" id="allergen_description" style="width: 100%; max-width: 400px; min-height: 100px; resize: none;" maxlength="255"><?php echo (!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '' ?></textarea>
+		<textarea class="update_" name="allergen_description" id="allergen_description" style="width: 100%; max-width: 400px; min-height: 100px; resize: none;" maxlength="255"><?php echo esc_html((!empty($this->_allergen)) ? $this->_allergen['allergy_description'] : '') ?></textarea>
 		<table>
 			<div class="item">
 				<fieldset class="inline-edit-col-right drag-drop-buttons">
@@ -133,15 +155,15 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 							<td>
 								<label class="label-quick-edit wp-core-ui button">
 									<input type="file" class="update_ allergen_icon_file_input" accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml" name="allergen_icon" id="allergen_icon_file_input">
-									<input type="hidden" class="update_" name="allergen_icon_hidden" value=" <?php echo (!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : '' ?>">
-									<span><?php echo __($this->editing ? 'Update image' : 'Set image', 'allergens-dietary-pro') ?></span>
+									<input type="hidden" class="update_" name="allergen_icon_hidden" value=" <?php echo esc_html((!empty($this->_allergen)) ? $this->_allergen['attachment_name'] : '') ?>">
+									<span><?php echo esc_html(__($editing ? 'Update image' : 'Set image', 'allergens-dietary-pro')) ?></span>
 								</label>
 							</td>
 							<td class="item-header">
 								<figure style="text-align: center;">
 									<br>
-									<img class="update_ add_allergen_icon_img" id="allergen_icon_img" style="max-height: 40px; max-width: 40px;" src="<?php echo $this->editing ? $this->_allergen['attachment_path'] : get_home_url() . '/wp-content/plugins/allergens-dietary-pro/assets/icons/no_icon_selected.png' ?>" alt="no_icon_selected.png">
-									<figcaption style="font-size: 10px; max-width: 200px; font-weight: bold; color: gray;"> <?php echo __('Max size of an icon is 40x40 pixels.', 'allergens-dietary-pro') ?> </figcaption>
+									<img class="update_ add_allergen_icon_img" id="allergen_icon_img" style="max-height: 40px; max-width: 40px;" src="<?php echo esc_html((true === $editing && !empty($this->_allergen['attachment_path'])) ? $this->_allergen['attachment_path'] : get_home_url() . '/wp-content/plugins/allergens-dietary-pro/assets/icons/no_icon_selected.png') ?>" alt="no_icon_selected.png">
+									<figcaption style="font-size: 10px; max-width: 200px; font-weight: bold; color: gray;"> <?php echo esc_html(__('Max size of an icon is 40x40 pixels.', 'allergens-dietary-pro')) ?> </figcaption>
 								</figure>
 							</td>
 						</tr>
@@ -151,7 +173,10 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 		<td>
 			<br>
 			<br>
-			<input type="submit" name="submit" class="button button-primary" value="<?php echo __($this->editing ? 'Save allergen' : 'Add allergen', 'allergens-dietary-pro') ?>" />
+			<div style="display: flex; justify-content:space-between;">
+				<input type="submit" name="submit" class="button button-primary" value="<?php echo esc_html(__($editing ? 'Save' : 'Add Allergen', 'allergens-dietary-pro')) ?>" />
+				<?php if($editing){?> <input type="submit" name="submit[submit-return]" class="button button-secondary" value="<?php echo esc_html(__('Save and return', 'allergens-dietary-pro'))?>" /><?php } ?>
+			</div>
 		</td>
 		</div>
 
@@ -172,6 +197,14 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 	{
 		$data = $this->sanitize($data);
 
+		$no_icon_selected = false;
+		$return_to_page = false;
+		$editing = false;
+
+		if (isset($_GET['action']) && $_GET['action'] === 'edit' && isset($_GET['item'])) {			
+			$editing = true;
+		}
+
 		$file_type_input = wp_check_filetype($data['allergen_icon']['name']);
 		$valid_icon = in_array($file_type_input['type'], $this->MIME_TYPES) ? true : false;
 		$empty_file_input = empty($data['allergen_icon']['name']) ? true : false;
@@ -181,39 +214,57 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 		$att_query = Allergens_Dietary_Pro_Attachment_Queries::getInstance();
 		$all_att_query = Allergens_Dietary_Pro_Allergy_Attachment_Queries::getInstance();
 
-		$attachment_exists = $att_query->checkAttachmentExists($data['allergen_icon']['name']);
-		$notice = Allergens_Dietary_Pro_Notices::getInstance();
-		self::$_type = Notice_Types::ERROR;
-
-		$no_icon_selected = false;
-
 		if (empty($data) || !isset($data)) {
-			self::$message = __('Form has not been set!', 'allergens-dietary-pro');
-			$notice->display_admin_notice(self::$_type, self::$message);
+			setcookie('Error', 'Form has not been set!', time() + 30);
 			return;
 		} elseif (empty($data['allergen_name'])) {
-			self::$message = __('Allergen Name Can\'t be empty or blank!', 'allergens-dietary-pro');
-			$notice->display_admin_notice(self::$_type, self::$message);
+			setcookie('Error', "Allergen name can't be empty or blank!", time() + 30);
 			return;
 		}
-		if ($all_query->checkAllergenExists($data['allergen_name'])) {
-			self::$message = __('Allergen name already exists', 'allergens-dietary-pro');
-			$notice->display_admin_notice(self::$_type, self::$message);
+		if ($all_query->checkAllergenExists($data['allergen_name']) && $data['allergen_name'] !== $data['allergen_name_hidden']) {
+			setcookie('Error', 'Allergen name already exists', time() + 30);
 			return;
 		}
-		if (!$valid_icon && !$no_icon_selected) {
-			self::$message = __('The file is not a valid image. Supported image types are: ', 'allergens-dietary-pro') . implode(', ', $this->MIME_NAMES);
-			$notice->display_admin_notice(self::$_type, self::$message);
+		if (!$valid_icon && !$empty_file_input) {
+			setcookie('Error', 'The file is not a valid image. Supported image types are: '  . implode(', ', $this->MIME_NAMES), time() + 30);
+			return;
+		}
+		if($att_query->checkAttachmentExists($data['allergen_icon']['name']) && $data['allergen_icon']['name'] !== 'no_icon_selected.png'){
+			setcookie('Error', 'The new image already exists', time() + 30);
 			return;
 		}
 
-		if ($this->editing) {
+		if ($editing) { // Editing an allergen.
 			
-
-		} else {
-
+			if(empty($data['allergen_name_hidden'])){ // Can't update the allergen if previous isn't set.
+				setcookie('Error', 'There has to be a previous allergen to update', time() + 30);
+				return;
+			}
 			
+			$all_query->updateAllergens($data);
+			if ($empty_file_input) { // update only the new allergen data when not uploading a new image. name, description etc.
+				setcookie('Success', 'Succesfully updated/saved allergen', time() + 30);
+				return;
+			} 
 
+			if ($att_query->checkAttachmentExists($data['allergen_icon']['name'])) { // if the attachment exists, set to existing img and only remove attachment when not used.
+				$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
+				if ($data['allergen_icon_hidden'] !== 'no_icon_selected.png' && !$all_att_query->attachmentIsUsed($data['allergen_icon_hidden'])) {
+					$att_query->deleteAttachment($data['allergen_icon_hidden']);
+				}
+			} else {
+				// Prevent losing no_icon_selected.png as image in DB, and if there are multiple of the old img don't change all of them.
+				if ($data['allergen_icon_hidden'] === 'no_icon_selected.png' || $all_att_query->checkMultipleAttachmentsExists($data['allergen_icon_hidden'])) {
+					$att_query->addAttachment($data['allergen_icon']);
+					$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
+				} else {
+					$att_query->updateAttachment($data['allergen_icon'], $data['allergen_icon_hidden']);
+				}
+			}
+
+			setcookie('Success', 'Succesfully updated/saved allergen', time() + 30);
+
+		} else {	// Adding a new allergen.
 			// Default image
 			if ($empty_file_input) {
 				$imagePath = get_home_url() . '/wp-content/plugins/allergens-dietary-pro/assets/icons/no_icon_selected.png';
@@ -225,18 +276,27 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 				];
 				$no_icon_selected = true;
 			}
-
 			
-
 			$all_query->addAllergens($data);
-			if (!$no_icon_selected && !$attachment_exists) { // Don't add attachment to the table, image already exists there.
+			if (!$no_icon_selected) { // Don't add attachment to the table, image already exists there.
 				$att_query->addAttachment($data['allergen_icon']);
 			}
 			$all_att_query->addAllergyAttachment($data);			
+			setcookie('Success', 'Succesfully added new allergen: ' . $data['allergen_name'] . '.', time() + 30);
 		}
-		self::$_type = Notice_Types::SUCCESS;
-		self::$message = __('Succesfully added new allergen: ' . $data['allergen_name'] . '.', 'allergens-dietary-pro');
-		$notice->display_admin_notice(self::$_type, self::$message);
+
+		if(isset($data['submit']['submit-return'])){
+			$return_to_page = true;
+		}
+
+		if(true === $return_to_page){
+			wp_redirect(admin_url('admin.php?page=' . $this->return_page ));
+		}elseif(true === $editing){
+			wp_redirect(admin_url('admin.php?page=allergens-dietary-add-allergen&action=edit&item=' . $data['allergen_name']));
+		}else{
+			wp_redirect(admin_url('admin.php?page=allergens-dietary-add-allergen&action'));
+		}
+		exit;
 	}
 
 	/**
@@ -250,6 +310,8 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 	public function sanitize(array $data)
 	{
 		$data['allergen_name'] = sanitize_text_field(wp_unslash($data['allergen_name']));
+		$data['allergen_name_hidden'] = sanitize_text_field(wp_unslash($data['allergen_name_hidden']));
+		$data['allergen_icon_hidden'] = sanitize_text_field(wp_unslash($data['allergen_icon_hidden']));
 		$data['allergen_description'] = sanitize_text_field(wp_unslash($data['allergen_description']));
 		$data['type'] = absint(sanitize_text_field(wp_unslash($data['type'])));
 		$data['allergen_icon']['name'] = sanitize_file_name($data['allergen_icon']['name']);
@@ -260,8 +322,8 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 	{
 		$html = '';
 
-		$html .= '<option value="1" ' . (!empty($this->_allergen['type']) && $this->_allergen['type']  === 1 ? 'selected' : '') . '>' . __('Allergy', 'allergens-dietary-pro') . '</option>';
-		$html .= '<option value="0" ' . (!empty($this->_allergen['type']) && $this->_allergen['type']  === 1 ? 'selected' : '') . '>' . __('Dietary restriction', 'allergens-dietary-pro') . '</option>';
+		$html .= '<option value="1" ' . (!empty($this->_allergen['type']) && $this->_allergen['type']  === 1 ? 'selected' : '') . '>' . esc_html(__('Allergy', 'allergens-dietary-pro')) . '</option>';
+		$html .= '<option value="0" ' . (!empty($this->_allergen['type']) && $this->_allergen['type']  === 1 ? 'selected' : '') . '>' . esc_html(__('Dietary restriction', 'allergens-dietary-pro')) . '</option>';
 		return $html;
 
 
