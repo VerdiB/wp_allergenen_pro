@@ -64,28 +64,26 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 	protected array $MIME_NAMES;
 	protected static string $message = '';
 	protected static Notice_Types $_type;
-	protected $return_page = 'allergens-dietary-show-allergens';
+	protected string $return_page;
 
 	public function __construct()
 	{
 		$this->MIME_TYPES = Mime_Types::get_mime_types();
 		$this->MIME_NAMES = array_map(fn($case) => $case->name, Mime_Types::cases());
 		
-		
 		if(isset($_COOKIE['return-page'])){
 			$this->return_page = sanitize_text_field(wp_unslash($_COOKIE['return-page']));
-			setcookie('return-page', '', time()-60*60*24);
 		}
 		if(isset($_COOKIE['Error'])){
 			$message = sanitize_text_field(wp_unslash($_COOKIE['Error']));
 			Allergens_Dietary_Pro_Notices::getInstance()->display_admin_notice(Notice_Types::ERROR, esc_html(__($message, 'allergens-dietary-pro')) );
 			setcookie('Error', '', time() - 60 );
-		}
-		if(isset($_COOKIE['Success'])){
+		}elseif(isset($_COOKIE['Success'])){
 			$message = sanitize_text_field(wp_unslash($_COOKIE['Success']));
 			Allergens_Dietary_Pro_Notices::getInstance()->display_admin_notice(Notice_Types::SUCCESS, esc_html(__($message, 'allergens-dietary-pro')) );
 			setcookie('Success', '', time() - 60 );
 		}
+
 	}
 
 	/**
@@ -105,7 +103,7 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 			}
 			$allergen = sanitize_text_field(wp_unslash($_GET['item']));
 			if (Allergens_Dietary_Pro_Allergen_Queries::getInstance()->is_default_allergen($allergen)){
-				wp_die(esc_html(__('You are unable to update any default allergens', 'allergens-dietary-pro')));
+				wp_die(esc_html(__('You are not permitted to make any changes to default allergens', 'allergens-dietary-pro')));
 			}
 
 			$this->_allergen = Allergens_Dietary_Pro_Allergy_Attachment_Queries::getInstance()->getallergyAttachment($allergen);
@@ -200,7 +198,7 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 		$no_icon_selected = false;
 		$return_to_page = false;
 		$editing = false;
-
+		
 		if (isset($_GET['action']) && $_GET['action'] === 'edit' && isset($_GET['item'])) {			
 			$editing = true;
 		}
@@ -208,95 +206,140 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 		$file_type_input = wp_check_filetype($data['allergen_icon']['name']);
 		$valid_icon = in_array($file_type_input['type'], $this->MIME_TYPES) ? true : false;
 		$empty_file_input = empty($data['allergen_icon']['name']) ? true : false;
-
+		
 		// DB Query's
 		$all_query = Allergens_Dietary_Pro_Allergen_Queries::getInstance();
 		$att_query = Allergens_Dietary_Pro_Attachment_Queries::getInstance();
 		$all_att_query = Allergens_Dietary_Pro_Allergy_Attachment_Queries::getInstance();
 
-		if (empty($data) || !isset($data)) {
-			setcookie('Error', 'Form has not been set!', time() + 30);
-			return;
-		} elseif (empty($data['allergen_name'])) {
-			setcookie('Error', "Allergen name can't be empty or blank!", time() + 30);
-			return;
-		}
-		if ($all_query->checkAllergenExists($data['allergen_name']) && $data['allergen_name'] !== $data['allergen_name_hidden']) {
-			setcookie('Error', 'Allergen name already exists', time() + 30);
-			return;
-		}
-		if (!$valid_icon && !$empty_file_input) {
-			setcookie('Error', 'The file is not a valid image. Supported image types are: '  . implode(', ', $this->MIME_NAMES), time() + 30);
-			return;
-		}
-		if($att_query->checkAttachmentExists($data['allergen_icon']['name']) && $data['allergen_icon']['name'] !== 'no_icon_selected.png'){
-			setcookie('Error', 'The new image already exists', time() + 30);
-			return;
-		}
-
-		if ($editing) { // Editing an allergen.
-			
-			if(empty($data['allergen_name_hidden'])){ // Can't update the allergen if previous isn't set.
-				setcookie('Error', 'There has to be a previous allergen to update', time() + 30);
-				return;
+		$skip = $this->valid_input($data, $editing, $all_query, $att_query, $valid_icon, $empty_file_input);
+		
+		if(true === $skip){
+			if(true === $editing){
+				$this->handle_edit($data, $all_query, $att_query, $all_att_query, $empty_file_input);
+			}else{
+				$this->handle_add($data, $all_query, $att_query, $all_att_query, $empty_file_input, $no_icon_selected);
 			}
-			
-			$all_query->updateAllergens($data);
-			if ($empty_file_input) { // update only the new allergen data when not uploading a new image. name, description etc.
-				setcookie('Success', 'Succesfully updated/saved allergen', time() + 30);
-				return;
-			} 
-
-			if ($att_query->checkAttachmentExists($data['allergen_icon']['name'])) { // if the attachment exists, set to existing img and only remove attachment when not used.
-				$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
-				if ($data['allergen_icon_hidden'] !== 'no_icon_selected.png' && !$all_att_query->attachmentIsUsed($data['allergen_icon_hidden'])) {
-					$att_query->deleteAttachment($data['allergen_icon_hidden']);
-				}
-			} else {
-				// Prevent losing no_icon_selected.png as image in DB, and if there are multiple of the old img don't change all of them.
-				if ($data['allergen_icon_hidden'] === 'no_icon_selected.png' || $all_att_query->checkMultipleAttachmentsExists($data['allergen_icon_hidden'])) {
-					$att_query->addAttachment($data['allergen_icon']);
-					$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
-				} else {
-					$att_query->updateAttachment($data['allergen_icon'], $data['allergen_icon_hidden']);
-				}
-			}
-
-			setcookie('Success', 'Succesfully updated/saved allergen', time() + 30);
-
-		} else {	// Adding a new allergen.
-			// Default image
-			if ($empty_file_input) {
-				$imagePath = get_home_url() . '/wp-content/plugins/allergens-dietary-pro/assets/icons/no_icon_selected.png';
-				$imageName = sanitize_file_name(basename($imagePath));
-				$data['allergen_icon'] = [
-					'name' => $imageName,
-					'tmp_name' => $imagePath,
-					'type' => 'image/png',
-				];
-				$no_icon_selected = true;
-			}
-			
-			$all_query->addAllergens($data);
-			if (!$no_icon_selected) { // Don't add attachment to the table, image already exists there.
-				$att_query->addAttachment($data['allergen_icon']);
-			}
-			$all_att_query->addAllergyAttachment($data);			
-			setcookie('Success', 'Succesfully added new allergen: ' . $data['allergen_name'] . '.', time() + 30);
 		}
 
 		if(isset($data['submit']['submit-return'])){
 			$return_to_page = true;
 		}
 
+		$this->handle_redirect($data, $return_to_page, $editing, $skip);
+	}
+
+	/**
+	 * @brief This method redirects the user to a different or the same page with some conditions.
+	 * @return void
+	 * @author Ictoria
+	 * @since 1.0.0
+	 * @date 16-1-2025
+	 */
+	protected function handle_redirect(array $data, bool $return_to_page, bool $editing, bool $skip){
 		if(true === $return_to_page){
-			wp_redirect(admin_url('admin.php?page=' . $this->return_page ));
+			$return_page = !empty($this->return_page) ? $this->return_page : 'allergens-dietary-show-allergens';
+			wp_redirect(admin_url('admin.php?page=' . $return_page ));
 		}elseif(true === $editing){
-			wp_redirect(admin_url('admin.php?page=allergens-dietary-add-allergen&action=edit&item=' . $data['allergen_name']));
+			wp_redirect(admin_url('admin.php?page=allergens-dietary-add-allergen&action=edit&item=' . (false === $skip ? $data['allergen_name_hidden'] : $data['allergen_name'])));			
 		}else{
-			wp_redirect(admin_url('admin.php?page=allergens-dietary-add-allergen&action'));
+			wp_redirect(admin_url('admin.php?page=allergens-dietary-add-allergen'));
 		}
 		exit;
+	}
+	
+	/**
+	 * @brief This method validates input made by the user and check for errors.
+	 * If there is an error then it return false, else true.
+	 * @return true|false
+	 * @author Ictoria
+	 * @since 1.0.0
+	 * @date 16-1-2025
+	 */
+	protected function valid_input(array $data, bool $editing, $all_query, $att_query, bool $valid_icon, bool $empty_file_input): bool{
+		if (empty($data) || !isset($data)) {
+			setcookie('Error', 'Form has not been set!', time() + 30);
+			return false;
+		} elseif (empty($data['allergen_name'])) {
+			setcookie('Error', "Allergen name can't be empty or blank!", time() + 30);
+			return false;
+		}
+
+		if ($all_query->checkAllergenExists($data['allergen_name']) && $data['allergen_name'] !== $data['allergen_name_hidden']) {
+			setcookie('Error', 'Allergen name already exists', time() + 30);
+			return false;
+		}
+		if (!$valid_icon && !$empty_file_input) {
+			setcookie('Error', 'The file is not a valid image. Supported image types are: '  . implode(', ', $this->MIME_NAMES), time() + 30);
+			return false;
+		}
+		if($att_query->checkAttachmentExists($data['allergen_icon']['name']) && $data['allergen_icon']['name'] !== 'no_icon_selected.png'){
+			setcookie('Error', 'The new image already exists', time() + 30);
+			return false;
+		}
+		if(empty($data['allergen_name_hidden']) && true === $editing){ // Can't update the allergen if previous isn't set.
+			setcookie('Error', 'There has to be a previous allergen to update', time() + 30);
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @brief This method handles the edit allergen logic.
+	 * @return void
+	 * @author Ictoria
+	 * @since 1.0.0
+	 * @date 16-1-2025
+	 */
+	protected function handle_edit(array $data, $all_query, $att_query, $all_att_query, bool $empty_file_input){
+		$all_query->updateAllergens($data);
+		if ($empty_file_input) { // update only the new allergen data when not uploading a new image. name, description etc.
+			// setcookie('Success', 'Succesfully updated/saved allergen', time() + 30);
+		} elseif ($att_query->checkAttachmentExists($data['allergen_icon']['name'])) { // if the attachment exists, set to existing img and only remove attachment when not used.
+			$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
+			if ($data['allergen_icon_hidden'] !== 'no_icon_selected.png' && !$all_att_query->attachmentIsUsed($data['allergen_icon_hidden'])) {
+				$att_query->deleteAttachment($data['allergen_icon_hidden']);
+			}
+		} else {
+			// Prevent losing no_icon_selected.png as image in DB, and if there are multiple of the old img don't change all of them.
+			if ($data['allergen_icon_hidden'] === 'no_icon_selected.png' || $all_att_query->checkMultipleAttachmentsExists($data['allergen_icon_hidden'])) {
+				$att_query->addAttachment($data['allergen_icon']);
+				$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
+			} else {
+				$att_query->updateAttachment($data['allergen_icon'], $data['allergen_icon_hidden']);
+			}
+		}
+
+		setcookie('Success', 'Succesfully updated/saved allergen', time() + 30);
+	}
+
+	/**
+	 * @brief This method handles the add allergen logic.
+	 * @return void
+	 * @author Ictoria
+	 * @since 1.0.0
+	 * @date 16-1-2025
+	 */
+	protected function handle_add(array $data, $all_query, $att_query, $all_att_query, bool $empty_file_input, bool $no_icon_selected){
+		// Default image
+		if ($empty_file_input) {
+			$imagePath = get_home_url() . '/wp-content/plugins/allergens-dietary-pro/assets/icons/no_icon_selected.png';
+			$imageName = sanitize_file_name(basename($imagePath));
+			$data['allergen_icon'] = [
+				'name' => $imageName,
+				'tmp_name' => $imagePath,
+				'type' => 'image/png',
+			];
+			$no_icon_selected = true;
+		}
+		
+		$all_query->addAllergens($data);
+		if (false === $no_icon_selected) { // Don't add attachment to the table, image already exists there.
+			$att_query->addAttachment($data['allergen_icon']);
+		}
+		$all_att_query->addAllergyAttachment($data);			
+		setcookie('Success', 'Succesfully added new allergen: ' . $data['allergen_name'] . '.', time() + 30);
 	}
 
 	/**

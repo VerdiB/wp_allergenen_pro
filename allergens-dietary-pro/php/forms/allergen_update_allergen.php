@@ -55,9 +55,15 @@ class Allergens_Dietary_Pro_Update_Allergen_Form implements I_Allergens_Dietary_
         $this->MIME_NAMES = array_map(fn($case) => $case->name, Mime_Types::cases());
         $this->_allergens = Allergens_Dietary_Pro_Allergy_Attachment_Queries::getInstance()->getAllAllergyAttachmments(true);
 
-        if(!empty(static::$_message)){
-            Allergens_Dietary_Pro_Notices::getInstance()->display_admin_notice(Notice_Types::SUCCESS, static::$_message);
-        }
+        if(isset($_COOKIE['Error'])){
+			$message = sanitize_text_field(wp_unslash($_COOKIE['Error']));
+			Allergens_Dietary_Pro_Notices::getInstance()->display_admin_notice(Notice_Types::ERROR, esc_html(__($message, 'allergens-dietary-pro')) );
+			setcookie('Error', '', time() - 60 );
+		}elseif(isset($_COOKIE['Success'])){
+			$message = sanitize_text_field(wp_unslash($_COOKIE['Success']));
+			Allergens_Dietary_Pro_Notices::getInstance()->display_admin_notice(Notice_Types::SUCCESS, esc_html(__($message, 'allergens-dietary-pro')) );
+			setcookie('Success', '', time() - 60 );
+		}
     } 
 
     /**
@@ -115,28 +121,33 @@ class Allergens_Dietary_Pro_Update_Allergen_Form implements I_Allergens_Dietary_
     public function submit(array $data)
     {
         $data = $this->sanitize($data);
+        $error = false;
 
-        foreach ($data as $icon) {
+        foreach ($data as $icon ) {
             // check if file is an image and if it is not, skip it
             if (false === in_array($icon['type'], $this->MIME_TYPES)) {
-                $message = __('The new file: ' . $icon['name'] . ' is not a valid image.  Supported image types are: ' . implode(', ', $this->MIME_NAMES), 'allergens-dietary-pro') . '.';
-                $notice = Allergens_Dietary_Pro_Notices::getInstance();
-                $notice->display_admin_notice(Notice_Types::ERROR, __($message, 'allergens-dietary-pro'));		
-    
+                if(!$error){
+                    setcookie('Error', 'The new file: ' . $icon['name'] . ' is not a valid image.  Supported image types are: ' . implode(', ', $this->MIME_NAMES), time() + 30);
+                    $error = true;
+                }
                 continue;
             }
             // check if file is in database already and if it is, skip it
             if (true === Allergens_Dietary_Pro_Attachment_Queries::getInstance()->checkAttachmentExists($icon['name'])) {
-                $message =__('The new file: ' . $icon['name'] . ' already exists.', 'allergens-dietary-pro');
-                $notice = Allergens_Dietary_Pro_Notices::getInstance();
-                $notice->display_admin_notice(Notice_Types::ERROR, __($message, 'allergens-dietary-pro'));		
-    
+                if(!$error){
+                    setcookie('Error', 'The new file: ' . $icon['name'] . ' already exists', time() + 30);
+                    $error = true;
+                }
                 continue;
             }
 
             Allergens_Dietary_Pro_Attachment_Queries::getInstance()->updateAttachment($icon, $icon['oldName']);
-            static::$_message = __("Succesfully updated image(s).", 'allergens-dietary-pro');
+            if(!$error){
+                setcookie('Success', 'Succesfully updated image(s)', time() + 30);
+            }
         }
+        wp_redirect(admin_url('admin.php?page=allergens-dietary-update-allergen'));
+        exit;
 
     }
 
