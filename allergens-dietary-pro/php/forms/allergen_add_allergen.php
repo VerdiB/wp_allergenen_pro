@@ -78,7 +78,8 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 			$message = sanitize_text_field(wp_unslash($_COOKIE['Error']));
 			Allergens_Dietary_Pro_Notices::getInstance()->display_admin_notice(Notice_Types::ERROR, esc_html(__($message, 'allergens-dietary-pro')) );
 			setcookie('Error', '', time() - 60 );
-		}elseif(isset($_COOKIE['Success'])){
+		}
+		if(isset($_COOKIE['Success'])){
 			$message = sanitize_text_field(wp_unslash($_COOKIE['Success']));
 			Allergens_Dietary_Pro_Notices::getInstance()->display_admin_notice(Notice_Types::SUCCESS, esc_html(__($message, 'allergens-dietary-pro')) );
 			setcookie('Success', '', time() - 60 );
