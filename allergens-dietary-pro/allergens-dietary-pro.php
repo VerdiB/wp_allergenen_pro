@@ -63,10 +63,6 @@ if( file_exists( dirname(__FILE__, 2).'/allergens-dietary/allergens-dietary.php'
 	define('ALLERGENS_DIETARY_ACTIVE', false);
 }
 
-// error_log((ALLERGENS_DIETARY_ACTIVE ? 'true':'false'));
-// // var_dump(ALLERGENS_DIETARY_ACTIVE);
-// return;
-
 /*
 Plugin Name: Allergens and Dietary	
 Text Domain: allergens-dietary-icotoria

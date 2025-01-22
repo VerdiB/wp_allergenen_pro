@@ -102,10 +102,4 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 
 		return $result;
 	}
-
-	// public function singleActivationUpdate(int $return_page, string $message){
-	// 	parent::singleActivationUpdate($return_page, $message);
-	// 	// $instance = self::getInstance();
-	// 	// $instance->singleActivationUpdate();
-	// }
 }

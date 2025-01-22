@@ -153,11 +153,6 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
 		}
 		
 		$allergen_names = wp_unslash($_POST['allergens']);
-		// echo '<pre>';
-		// print_r($_POST);
-		// echo '</pre>';
-		// return;
-		// error_log(print_r('this current action:' . $this->current_action(), true));
 		
 		if ('bulk-delete' === $this->current_action()){
 			$error = array();
@@ -215,8 +210,19 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
 
 		if(false !== wp_verify_nonce($nonce, "delete-" . $allergen_name)){
 			if ($table_action === 'delete'){
-				Allergens_Dietary_Pro_Allergen_Queries::getInstance()->delete_allergen_by_name($allergen_name);
-				setcookie('Success','Succesfully deleted allergen', time() + 30);
+				if(!Allergens_Dietary_Pro_Allergen_Queries::getInstance()->is_default_allergen($allergen_name)){
+					$all_att_query = Allergens_Dietary_Pro_Allergy_Attachment_Queries::getInstance();
+					$data = $all_att_query->getallergyAttachment($allergen_name, true);
+					$attachment = $data['attachment_name'];
+					if($all_att_query->checkMultipleAttachmentsExists($attachment) || $attachment === 'no_icon_selected.png'){
+						$all_att_query->deleteAllergyAndConnection($allergen_name);
+					}else{
+						$all_att_query->deleteAllergyAttachment($allergen_name);
+					}
+					setcookie('Success','Succesfully deleted allergen', time() + 30);
+				}else{
+					setcookie('Error','You are not permitted to delete default allergens', time() + 30);
+				}
                 wp_redirect(admin_url('admin.php?page=' . static::PAGE . '&paged='. $this->get_pagenum()));
                 exit;
 			}

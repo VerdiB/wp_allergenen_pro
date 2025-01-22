@@ -5,10 +5,6 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-// if (!interface_exists('I_Allergens_Dietary_Pro_Form')) {
-// 	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/forms/Iallergen_form.php';
-// }
-
 if (!interface_exists('I_Allergens_Dietary_Form')) {
 	require_once ALLERGENS_DIETARY_FREE_DIRNAME . '/php/forms/Iallergen_form.php';
 }
@@ -295,20 +291,20 @@ class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
 	 */
 	protected function handle_edit(array $data, $all_query, $att_query, $all_att_query, bool $empty_file_input){
 		$all_query->updateAllergens($data);
-		if ($empty_file_input) { // update only the new allergen data when not uploading a new image. name, description etc.
-			// setcookie('Success', 'Succesfully updated/saved allergen', time() + 30);
-		} elseif ($att_query->checkAttachmentExists($data['allergen_icon']['name'])) { // if the attachment exists, set to existing img and only remove attachment when not used.
-			$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
-			if ($data['allergen_icon_hidden'] !== 'no_icon_selected.png' && !$all_att_query->attachmentIsUsed($data['allergen_icon_hidden'])) {
-				$att_query->deleteAttachment($data['allergen_icon_hidden']);
-			}
-		} else {
-			// Prevent losing no_icon_selected.png as image in DB, and if there are multiple of the old img don't change all of them.
-			if ($data['allergen_icon_hidden'] === 'no_icon_selected.png' || $all_att_query->checkMultipleAttachmentsExists($data['allergen_icon_hidden'])) {
-				$att_query->addAttachment($data['allergen_icon']);
+		if (!$empty_file_input) { // update only the new allergen data when not uploading a new image. name, description etc.
+			if ($att_query->checkAttachmentExists($data['allergen_icon']['name'])) { // if the attachment exists, set to existing img and only remove attachment when not used.
 				$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
+				if ($data['allergen_icon_hidden'] !== 'no_icon_selected.png' && !$all_att_query->attachmentIsUsed($data['allergen_icon_hidden'])) {
+					$att_query->deleteAttachment($data['allergen_icon_hidden']);
+				}
 			} else {
-				$att_query->updateAttachment($data['allergen_icon'], $data['allergen_icon_hidden']);
+				// Prevent losing no_icon_selected.png as image in DB, and if there are multiple of the old img don't change all of them.
+				if ($data['allergen_icon_hidden'] === 'no_icon_selected.png' || $all_att_query->checkMultipleAttachmentsExists($data['allergen_icon_hidden'])) {
+					$att_query->addAttachment($data['allergen_icon']);
+					$all_att_query->updateAllergyAttachment($data['allergen_name'], $data['allergen_icon']['name']);
+				} else {
+					$att_query->updateAttachment($data['allergen_icon'], $data['allergen_icon_hidden']);
+				}
 			}
 		}
 

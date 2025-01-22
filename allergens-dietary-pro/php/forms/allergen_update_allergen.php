@@ -122,34 +122,38 @@ class Allergens_Dietary_Pro_Update_Allergen_Form implements I_Allergens_Dietary_
     public function submit(array $data)
     {
         $data = $this->sanitize($data);
-        $error = false;
+        $errors = array();
+        $success = array();
 
         foreach ($data as $icon ) {
+            // print_r($icon['name']);
+            // return;
             // check if file is an image and if it is not, skip it
             if (false === in_array($icon['type'], $this->MIME_TYPES)) {
-                if(!$error){
-                    setcookie('Error', 'The new file: ' . $icon['name'] . ' is not a valid image.  Supported image types are: ' . implode(', ', $this->MIME_NAMES), time() + 30);
-                    $error = true;
-                }
+                $errors['valid'][] = $icon['name'];
                 continue;
             }
             // check if file is in database already and if it is, skip it
             if (true === Allergens_Dietary_Pro_Attachment_Queries::getInstance()->checkAttachmentExists($icon['name'])) {
-                if(!$error){
-                    setcookie('Error', 'The new file: ' . $icon['name'] . ' already exists', time() + 30);
-                    $error = true;
-                }
+                $errors['exists'][] = $icon['name'];
                 continue;
             }
 
             Allergens_Dietary_Pro_Attachment_Queries::getInstance()->updateAttachment($icon, $icon['oldName']);
-            if(!$error){
-                setcookie('Success', 'Succesfully updated image(s)', time() + 30);
+            $success[] = $icon['name'];
+        }
+
+        if(!empty($errors)){
+            if(!empty($errors['exists'])){
+                setcookie('Error', 'The name of the following file(s) already exist: ' . implode(', ', $errors['exists']), time() + 30);
+            }elseif(!empty($errors['valid'])){
+                setcookie('Error', 'The following file(s) do not consist of the correct file extension: ' . implode(', ', $errors['valid']) . '. Should consist of: ' . implode(', ', $this->MIME_NAMES), time() + 30);
             }
+        }else{
+            setcookie('Success', 'Succesfully updated image(s): ' . implode(', ', $success), time() + 30);
         }
         wp_redirect(admin_url('admin.php?page=allergens-dietary-update-allergen'));
         exit;
-
     }
 
     /**
