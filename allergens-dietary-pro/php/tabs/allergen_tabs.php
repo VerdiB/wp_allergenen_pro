@@ -50,18 +50,6 @@ class Allergens_Dietary_Pro_Tabs extends Allergens_Dietary_Tabs
         //hier moet bijvoorbeeld een functie komen die de inhoud van de pagina verandert.
     }
 
-    /*public function js_add_help_tab() {
-        $screen = get_current_screen();
-        print_r("hello");
-    
-        $screen->add_help_tab( array(
-            'id'       => 'hello-world',
-            'title'    => __( 'Hello World' ),
-            'content'  => '<p>Lorem ipsum</p>',
-            'priority' => 10,
-        ) );
-    }*/
-
     public static function getStyles()
     {
         wp_register_style('allergens-dietary-pro-css', plugins_url(ALLERGENS_DIETARY_PRO_NAME . '/assets/css/allergens-dietary-pro.css'));

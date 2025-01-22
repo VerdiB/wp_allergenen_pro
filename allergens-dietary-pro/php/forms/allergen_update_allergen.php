@@ -126,8 +126,6 @@ class Allergens_Dietary_Pro_Update_Allergen_Form implements I_Allergens_Dietary_
         $success = array();
 
         foreach ($data as $icon ) {
-            // print_r($icon['name']);
-            // return;
             // check if file is an image and if it is not, skip it
             if (false === in_array($icon['type'], $this->MIME_TYPES)) {
                 $errors['valid'][] = $icon['name'];
