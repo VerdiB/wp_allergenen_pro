@@ -122,23 +122,29 @@ class Allergens_Dietary_Pro_Update_Allergen_Form implements I_Allergens_Dietary_
     public function submit(array $data)
     {
         $data = $this->sanitize($data);
+        
         $errors = array();
         $success = array();
 
-        foreach ($data as $icon ) {
+        foreach ($data as $name => $value) {
             // check if file is an image and if it is not, skip it
-            if (false === in_array($icon['type'], $this->MIME_TYPES)) {
-                $errors['valid'][] = $icon['name'];
+            if (false === in_array($value['type'], $this->MIME_TYPES)) {
+                $errors['valid'][] = $value['name'];
                 continue;
             }
             // check if file is in database already and if it is, skip it
-            if (true === Allergens_Dietary_Pro_Attachment_Queries::getInstance()->checkAttachmentExists($icon['name'])) {
-                $errors['exists'][] = $icon['name'];
+            if (true === Allergens_Dietary_Pro_Attachment_Queries::getInstance()->checkAttachmentExists($value['name'])) {
+                $errors['exists'][] = $value['name'];
                 continue;
             }
-
-            Allergens_Dietary_Pro_Attachment_Queries::getInstance()->updateAttachment($icon, $icon['oldName']);
-            $success[] = $icon['name'];
+            $all_att_query = Allergens_Dietary_Pro_Allergy_Attachment_Queries::getInstance();
+            if($all_att_query->checkMultipleAttachmentsExists($value['oldName'])){
+                Allergens_Dietary_Pro_Attachment_Queries::getInstance()->addAttachment($value);
+                $all_att_query->updateAllergyAttachment($name, $value['name']);
+            }else{
+                Allergens_Dietary_Pro_Attachment_Queries::getInstance()->updateAttachment($value, $value['oldName']);
+            }
+            $success[] = $value['name'];
         }
 
         if(!empty($errors)){
