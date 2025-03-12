@@ -73,7 +73,8 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
         $delete_nonce = esc_attr(wp_create_nonce("delete-" . $item['allergy_name']));
         $edit_nonce = esc_attr(wp_create_nonce("edit-" . $item['allergy_name']));
 
-		$default_item = Allergens_Dietary_Pro_Allergen_Queries::getInstance()->is_default_allergen($item['allergy_name']);
+		// $default_item = Allergens_Dietary_Pro_Allergen_Queries::getInstance()->is_default_allergen($item['allergy_name']);
+		$default_item = $item['is_default_option'];
 
         $delete_url = add_query_arg(
 			array(

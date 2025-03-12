@@ -102,4 +102,19 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 
 		return $result;
 	}
+
+	public function is_default_allergen(string $allergenName){
+		global $wpdb;
+
+		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+
+		$sql = $wpdb->prepare(
+			"SELECT is_default_option FROM $table_name WHERE allergy_name = %s",
+			$allergenName
+		);
+
+		$result = $wpdb->get_results($sql, ARRAY_A);
+
+		return ( $result === 0) ? true : false;
+	}
 }

@@ -10,12 +10,12 @@ if(!class_exists('Allergens_Dietary_Attachment_Queries')){
 
 class Allergens_Dietary_Pro_Attachment_Queries extends Allergens_Dietary_Attachment_Queries
 {
-	private const PATH = ALLERGENS_DIETARY_PRO_DIRNAME . '/assets/icons/custom/';
-	private string $_url;
+	// private const PATH = ALLERGENS_DIETARY_PRO_DIRNAME . '/assets/icons/custom/';
+	// private string $_url;
 
 	protected function __construct()
 	{
-		$this->_url = get_home_url() . '/wp-content/plugins/allergens-dietary-pro/assets/icons/custom/';
+		parent::__construct();
 	}
 
 	public function addAttachment(array $data)

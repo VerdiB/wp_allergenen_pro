@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-if (!interface_exists('I_Allergens_Dietary_Form')) {
+if (!interface_exists('Allergens_Dietary_Form_I')) {
 	require_once ALLERGENS_DIETARY_FREE_DIRNAME . '/php/forms/Iallergen_form.php';
 }
 
@@ -51,7 +51,7 @@ if (! enum_exists('Notice_Types')) {
 /********************************************************************/
 /********************************************************************/
 
-class Allergens_Dietary_Pro_Allergen_Form implements I_Allergens_Dietary_Form
+class Allergens_Dietary_Pro_Allergen_Form implements Allergens_Dietary_Form_I
 {
 
 
