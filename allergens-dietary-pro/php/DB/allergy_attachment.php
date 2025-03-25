@@ -87,14 +87,10 @@ class Allergens_Dietary_Pro_Allergy_Attachment_Queries extends Allergens_Dietary
 		$table_a = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
 		$sql = $wpdb->prepare(
-			"DELETE aa, a, am 
-			FROM $table_aa AS aa
-			JOIN $table_a AS a 
-			ON a.allergy_name = aa.allergy_name
-			JOIN $table_am as am
-			ON am.attachment_name = aa.attachment_name
-			WHERE aa.allergy_name = %s  
-			AND a.is_default_option != 1",
+			"DELETE
+			FROM $table_aa
+			WHERE allergy_name = %s  
+			",
 			$allergy
 		);
 
@@ -119,6 +115,10 @@ class Allergens_Dietary_Pro_Allergy_Attachment_Queries extends Allergens_Dietary
 
 		$wpdb->query($sql);
 	}
+
+	// public function getallergyAttachment(string $attachment, bool $isForm = true){
+	// 	parent::getallergyAttachment($attachment, $isForm);
+	// }
 
 	public function checkMultipleAttachmentsExists(string $attachment): bool
 	{

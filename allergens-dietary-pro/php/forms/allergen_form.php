@@ -49,4 +49,16 @@ class Allergens_Dietary_Pro_Form extends Allergens_Dietary_Form
 			self::$_formObject = new Allergens_Dietary_Pro_Update_Allergen_Form();
 		}
 	}
+
+	public function showForm(string $allergenName = null){
+		if ( !empty( $_POST['allergenForm'] ) ){
+			$this->_formData = $_POST['allergenForm']; 
+		}
+
+		if ( !empty( $_FILES['allergenFormFile'] ) ){
+			$this->_formData = array_merge($this->_formData , $_FILES);
+		}
+		
+		parent::showForm($allergenName);
+	}
 }

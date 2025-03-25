@@ -8,6 +8,10 @@ if ( ! class_exists( 'Allergens_Dietary_Pro_Allergen_Queries' ) ) {
 	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/DB/allergen.php';
 }
 
+if ( ! class_exists( 'Allergens_Dietary_Pro_Allergy_Product_Queries' ) ) {
+	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/DB/allergy_product.php';
+}
+
 if ( ! class_exists( 'Allergens_Dietary_Pro_Form' ) ) {
 	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/forms/allergen_form.php';
 }
@@ -69,7 +73,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
      * @version V0.18.6.0
      */
     protected function column_allergy_name(array|object $item){
-		$status = parent::column_allergy_name($item);
+		// $status = parent::column_allergy_name($item);
         $delete_nonce = esc_attr(wp_create_nonce("delete-" . $item['allergy_name']));
         $edit_nonce = esc_attr(wp_create_nonce("edit-" . $item['allergy_name']));
 
@@ -98,7 +102,8 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
         );
 
         $actions = array(
-			'change status' => $status
+			// 'change status' => $status
+			'change status' => parent::column_allergy_name($item)
         );
 		if($default_item){
 			$actions['delete'] = sprintf(
@@ -156,20 +161,40 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
 		$allergen_names = wp_unslash($_POST['allergens']);
 		
 		if ('bulk-delete' === $this->current_action()){
+			$to_delete = array_map('sanitize_text_field', wp_unslash($_POST['allergens']));
 			$error = array();
 			$succes = false;
 			$all_att_query = Allergens_Dietary_Pro_Allergy_Attachment_Queries::getInstance();
-			foreach($allergen_names as $allergen_name){
-				if(Allergens_Dietary_Pro_Allergen_Queries::getInstance()->is_default_allergen($allergen_name)){
+			$all_query = Allergens_Dietary_Pro_Allergen_Queries::getInstance();
+			
+			foreach($this->_allergens as $allergen){
+				if (in_array($allergen['allergy_name'], $to_delete)){
+                    $allergen_query_arr[]= $allergen;
+                } 
+			}
+			
+			foreach($allergen_query_arr as $allergen_name){
+				// error_log(print_r($allergen_name,true));
+				// return;
+				if($all_query->is_default_allergen($allergen_name['allergy_name'])){
 					$error[] = $allergen_name;
 					continue;
 				}
-				$data = $all_att_query->getallergyAttachment($allergen_name, true);
+
+				// return
+				$data = $all_att_query->getallergyAttachment($allergen_name['allergy_name'], true);
+
+				// echo '<pre>';
+				error_log(print_r($data,true));
+				// print_r($data);
+				// echo '</pre>';
+				// return;
+
 				$attachment = $data['attachment_name'];
 				if($all_att_query->checkMultipleAttachmentsExists($attachment) || $attachment === 'no_icon_selected.png'){
-					$all_att_query->deleteAllergyAndConnection($allergen_name);
+					$all_att_query->deleteAllergyAndConnection($allergen_name['allergy_name']);
 				}else{
-					$all_att_query->deleteAllergyAttachment($allergen_name);
+					$all_att_query->deleteAllergyAttachment($allergen_name['allergy_name']);
 				}
 				$succes = true;
 			}
@@ -215,10 +240,16 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
 					$all_att_query = Allergens_Dietary_Pro_Allergy_Attachment_Queries::getInstance();
 					$data = $all_att_query->getallergyAttachment($allergen_name, true);
 					$attachment = $data['attachment_name'];
-					if($all_att_query->checkMultipleAttachmentsExists($attachment) || $attachment === 'no_icon_selected.png'){
-						$all_att_query->deleteAllergyAndConnection($allergen_name);
+					
+					if($all_att_query->checkMultipleAttachmentsExists($attachment,true) || $attachment === 'no_icon_selected.png'){
+						$all_att_query->deleteAllergyAttachment($allergen_name);
+						Allergens_Dietary_Pro_Allergy_Product_Queries::getInstance()->deleteAllergiesProduct($allergen_name);
+						Allergens_Dietary_Pro_Allergen_Queries::getInstance()->deleteAllergen($allergen_name);
 					}else{
 						$all_att_query->deleteAllergyAttachment($allergen_name);
+						Allergens_Dietary_Pro_Attachment_Queries::getInstance()->deleteAttachment($attachment);
+						Allergens_Dietary_Pro_Allergy_Product_Queries::getInstance()->deleteAllergiesProduct($allergen_name);
+						Allergens_Dietary_Pro_Allergen_Queries::getInstance()->deleteAllergen($allergen_name);					
 					}
 					setcookie('Success','Succesfully deleted allergen', time() + 30);
 				}else{

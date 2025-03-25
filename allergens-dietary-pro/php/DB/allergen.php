@@ -17,6 +17,18 @@ if(!class_exists('Allergens_Dietary_Allergen_Queries')){
  */
 class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_Queries
 {
+
+	public static function getInstance()
+    {
+		// parent::getInstance();
+        $subclass = static::class;
+        if (!isset(self::$instances[$subclass])) {
+            self::$instances[$subclass] = new static();
+        }
+        return self::$instances[$subclass];
+    }
+
+
 	protected function __construct()
 	{
 	}
@@ -117,4 +129,16 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 
 		return ( $result === 0) ? true : false;
 	}
+
+	public function deleteAllergen(string $allergen){
+		global $wpdb;
+        	$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+        
+			return $wpdb->query($wpdb->prepare(// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				"DELETE FROM %i
+				WHERE allergy_name = %s",
+				array($table_name, $allergen)
+			));
+	}
+        
 }
