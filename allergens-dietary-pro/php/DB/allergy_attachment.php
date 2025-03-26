@@ -87,11 +87,18 @@ class Allergens_Dietary_Pro_Allergy_Attachment_Queries extends Allergens_Dietary
 		$table_a = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
 
 		$sql = $wpdb->prepare(
-			"DELETE
-			FROM $table_aa
-			WHERE allergy_name = %s  
+			"DELETE aa.*, am.*, a.*
+			FROM %i AS aa
+			LEFT JOIN %i AS am
+			ON am.attachment_name = aa.attachment_name
+			LEFT JOIN %i AS a
+			ON a.allergy_name = aa.allergy_name
+			WHERE aa.allergy_name = %s  
 			",
-			$allergy
+			array(
+				$table_aa, $table_am,
+				$table_a, $allergy
+			)
 		);
 
 		$wpdb->query($sql);

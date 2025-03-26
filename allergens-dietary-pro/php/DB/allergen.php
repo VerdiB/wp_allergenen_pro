@@ -18,19 +18,20 @@ if(!class_exists('Allergens_Dietary_Allergen_Queries')){
 class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_Queries
 {
 
-	public static function getInstance()
-    {
-		// parent::getInstance();
-        $subclass = static::class;
-        if (!isset(self::$instances[$subclass])) {
-            self::$instances[$subclass] = new static();
-        }
-        return self::$instances[$subclass];
-    }
+	// public static function getInstance()
+    // {
+	// 	// parent::getInstance();
+    //     $subclass = static::class;
+    //     if (!isset(self::$instances[$subclass])) {
+    //         self::$instances[$subclass] = new static();
+    //     }
+    //     return self::$instances[$subclass];
+    // }
 
 
 	protected function __construct()
 	{
+		parent::__construct();
 	}
 
 	/**
@@ -127,7 +128,7 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 
 		$result = $wpdb->get_results($sql, ARRAY_A);
 
-		return ( $result === 0) ? true : false;
+		return ( $result === 1) ? true : false;
 	}
 
 	public function deleteAllergen(string $allergen){
