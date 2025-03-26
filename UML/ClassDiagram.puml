@@ -21,100 +21,22 @@ end note
 
 package "php"{
 
-    class Allergens_Dietary_Pro_Filter{
-        -{static} _instance : Allergens_Dietary_Pro_Filter
-        - _allergens : array
-        +{static} instance() : Allergens_Dietary_Pro_Filter
-        - __construct() : void
-        + create_filter() : void
-        + filter_query(query:array) : void
-        + load_css() : void
-        + load_js() : void
+    class Allergens_Dietary_Pro_Plugin_Menu{
+        + addMyAdminMenu() : void
+        + addallergens() : void
+        + updateallergens() : void
+        + licenseForm() : void
+        + showallergens() : void
+        + info() : void
     }
 
-    class Allergens_Dietary_Pro_Activator{
-        -{static} counter: int
-        -{static} url: string
-        -{static} allergens_options: array
-        -{static} allergy_icon_options: array
-        -{static} icon_options: array
-        +{static} activate() : void
-        + __construct() : void
-        -{static} create_tables() : void
-        +{static} load_textdomain() : void
-        +{static} get_settings() : array
-        +{static} get_options() : array
-        +{static} load_style() : void
-        +{static} enqueue_styles() : void
-        +{static} enqueue_admin_styles() : void
-        +{static} load_admin_js() : void
-        +{static} enqueue_admin_scripts() : void
-        + upAllergens_Dietary_Pro_Load_Language_file() : void
-        +{static} initialize() : void
-        +{static} allergens_options() : array
-        +{static} allergy_icon_options() : array
-        +{static} icon_options() : array
-        +{static} insert_standard_data() : void
-    }
-
-    class Allergens_Dietary_Pro_Product_Settings{
-        -{static} _instance : Allergens_Dietary_Pro_Product_Settings
-        - _allergens :array
-        - _allergy_attachments : array  
-        + __construct() : void
-        + data_tab(product_data_tabs:array) : array
-        + data_fields() : void
-        + save_product_options(post_id:int) : void
-        - replace_space_chars(allergens:string) : string
-    }
-
-    class Allergens_Dietary_Pro_Products{
-        -{static} _instance : Allergens_Dietary_Pro_Products
-        +{static} instance() : Allergens_Dietary_Pro_Products
-        + __construct() : void
-        + show_product_options() : void
-        + render_html(data:array): string
-
-    }
-
-    class Allergens_Dietary_Pro_Wc_Integration_Settings{
-        + __construct() : void
-        + init_form_fields() : void
-        + generate_allergensdietary_html() : void
-        + save_settings(post:array) : void
-        +{static} plugin_action_links(links:array) : array
-    }
     package "tables"{
          class Allergens_Dietary_Pro_Show_Allergens{
-            - {static} _instance : array
-            + {static} getInstance() : self
-            # {static} _page : int
-            # {static} message : string
             # __construct() : void
-            # table_action_options : array
-            + search_query : string
-            + get_items_per_pages() : int
-            - set_items_per_pages(value:int) : void
-            + get_table_columns_and_data() : array
-            + column_default(item:array, column_name:string) : string
-            + column_cb(item:array) : string
-            + handle_row_actions(item:array, column_name:string, primary:string) : array
-            - build_action_url(action:string, item:array) : string
-            - handle_search() : void
-            - handle_items_per_page() : void
-            + get_bulk_actions() : array
-            # display_tablenav(which:string) : void
-            + single_row(item:array) : void
-            # edit_row_action(id:string) : string
-            # single_row_columns(item:object) : void
-            + get_columns() : array
-            + prepare_items() : void
-            + process_quick_action() : void
-            + process_bulk_action(data:array) : void
-            + items_per_page_form(text:string, input_id:string, label:string, which:string) : void
-            + search_box(text:string, input_id:string) : voi
-            + table_page() : void
-            + setup() : void
+            # get_bulk_actions() : array
+            # column_allergy_name(item:array|object) : string
+            # process_bulk_action() : void
+            # handle_row_actions(item:array|object, column_name:string, primary:string) : void
         }
     }
     package "notice"{
@@ -127,23 +49,13 @@ package "php"{
         }
 
         class Allergens_Dietary_Pro_Notices{
-            -{static} _instance : Allergens_Dietary_Pro_Notices
-            + getInstance(): Allergens_Dietary_Pro_Notices
-            - __construct():void 
-            + display_notice(type:NoticeType, message:string) : void
+            # __construct():void 
+            + error_notice(type:NoticeType, message:string) : void
         }
 
     }
 
     package "forms"{
-
-        enum FormType{
-            ALLERGENS
-            LICENSE
-            UPDATE
-
-            + match(formType:FormType) : boolean
-        }
 
         interface I_Allergens_Dietary_Pro_Form{
             + showForm(allergenName:String) : void
@@ -152,14 +64,7 @@ package "php"{
         }
 
         class Allergens_Dietary_Pro_Form{
-            -{static} _instance : Allergens_Dietary_Pro_Allergens_Form
-            -{static} formType : FormType
-            -{static} formObject : I_Allergens_Dietary_Pro_Form
             - __construct() : void
-            + {static} getInstance() : Allergens_Dietary_Pro_Allergens_Form
-            + {static} setFormType(formType:FormType) : void
-            + {static} getFormType() : FormType
-            + submitUpdate() : void
             + showForm(allergenName:String) : void
         }
 
@@ -172,6 +77,10 @@ package "php"{
             + __construct(): void
             + showForm(allergenName:String) : void
             + submit(data:array) : void
+            # handle_redirect(data:array, return_to_page:bool, editin:bool, skip:bool)
+            # valid_input(data:array, editing:bool, all_query:object, att_query:object, valid_icon:bool, empty_file_input:bool) :bool
+            # handle_edit(data:array, all_query:object, att_query:object, all_att_query:object, empty_file_input:bool):void
+            # handle_add(data:array, all_query:object, att_query:object, all_att_query:object, empty_file_input:bool, no_icon_selected:bool): void
             + sanitize(data:array) : array
             - do_dropdown() : string
         }
@@ -184,6 +93,7 @@ package "php"{
         }
         class Allergens_Dietary_Pro_Update_Allergen_Form{
             - MIME_TYPES : array
+            - MIME_NAMES : array
             - _allergens: array
             - {static} _message: string
             + __construct() : void
@@ -261,6 +171,14 @@ package "php"{
         enum Mime_Types{
             + get_mime_types() : array
         }
+        
+        enum FormType{
+            ALLERGENS
+            LICENSE
+            UPDATE
+
+            + match(formType:FormType) : boolean
+        }
     }
 
     package "tabs" {
@@ -293,7 +211,6 @@ package Allergens_Dietary_Pro{
 N2 -- Allergens_Dietary_Pro
 Allergens_Dietary_Pro +-u- php
 
-Allergens_Dietary_Pro_Product_Settings .l.> Allergens_Dietary_Pro_Allergy_Product_Queries : uses
 Allergens_Dietary_Pro_Products ..> Allergens_Dietary_Pro_Allergy_Product_Queries
 
 
