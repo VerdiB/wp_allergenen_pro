@@ -106,30 +106,17 @@ package "php"{
 
     package "DB" {
         class Allergens_Dietary_Pro_Allergen_Queries{
-            -{static} instances : array
-            +{static} getInstance() : self
             # __construct() : void
-            + getAllAllergens() : array
-            + {static} includeItems() : void
-            + is_default_allergen(allergy_name:string) : boolean
-            + {static} getItems() : array
-            + {static} getColumns() : array
-            + activationUpdate(data:array) : void
-            + singleActivationUpdate() : void
             + addAllergens(data:array) : boolean
             + checkAllergenExists(allergenName:string) : boolean
             + updateAllergens(data:array) : void
             + getAllergen(allergenName:string) : array
-            + {static} delete_allergen_by_name(allergy_name:string) : void
+            + is_default_allergen(allergy_name:string) : boolean
+            + deleteAllergen(allergy_name:string) : void
         }
 
         class Allergens_Dietary_Pro_Attachment_Queries{
-            -{static} instances : array
-            +{static} getInstance() : self
-            - path : string
-            - _url : string
             # __construct() : void
-            + {static} attachment_insert(result:array) : void
             + addAttachment(data:array) : boolean
             + deleteAttachment(attachment:string) : void
             + checkAttachmentExists(attachmentName:string) : boolean
@@ -139,36 +126,36 @@ package "php"{
         }
 
         class Allergens_Dietary_Pro_Allergy_Attachment_Queries{
-            -{static} instances : array
-            +{static} getInstance() : self
             # __construct() : void
-            + getAllergyAttachment(allergyAttachmentName:string, isForm:boolean) : array
-            + getAllAllergyAttachmments(skip_default:boolean) : array
-            + {static} allergy_connection(result:array) : array
             + addAllergyAttachment(data:array) : boolean
             + updateAllergyAttachment(data:array) : void
             + attachmentIsUsed() : boolean
             + checkAllergyAttachmentExists(allergy_name:string) : boolean
             + deleteAllergyAttachment(allergy:string) : void
+            + getAllergyAttachment(allergyAttachmentName:string, isForm:boolean) : array
+            + deleteAllergyAndConnection(allergy:string,) : void
             + checkMultipleAttachmentsExists(icon:string, bool:boolean) : boolean
         }
+
         class Allergens_Dietary_Pro_Allergy_Product_Queries{
-            -{static} instances : array
-            +{static} getInstance() : self
             # __construct() : void
-            + addAllergyProduct(product_id:int, allergen:string) : boolean
-            + getAllergyProduct(product_id:int, allergen:string=null) : array
-            + deleteAllergyProduct(product_id:int, allergen:String) : boolean
-            + getFilteredProducts(allergens:array, dietary:array)
+            + deleteAllergiesProduct(allergen:String) : boolean
         }
     }
     package "lists" {
         class Allergens_Dietary_Pro_Info{
+            - {static} _instance: Allergens_Dietary_Pro_Info
             + showinfo() : void
             + {static} getInstance() : Allergens_Dietary_Pro_Info
             + {static} getStyles() : void
         }
         enum Mime_Types{
+            png
+            jpeg
+            jpeg
+            svg
+            webpp
+
             + get_mime_types() : array
         }
         
@@ -185,7 +172,6 @@ package "php"{
         class Allergens_Dietary_Pro_Tabs{
             + showtabs() : void
             + showpages() : void
-            + {static} getInstance() : Allergens_Dietary_Pro_Tabs
             + {static} getStyles() : void
 
         }
@@ -211,16 +197,17 @@ package Allergens_Dietary_Pro{
 N2 -- Allergens_Dietary_Pro
 Allergens_Dietary_Pro +-u- php
 
-Allergens_Dietary_Pro_Products ..> Allergens_Dietary_Pro_Allergy_Product_Queries
-
 
 ' forms relations
 FormType  <.. Allergens_Dietary_Pro_Form 
 Allergens_Dietary_Pro_Form o-r-> I_Allergens_Dietary_Pro_Form
 Allergens_Dietary_Pro_License_Form ..|> I_Allergens_Dietary_Pro_Form
 Allergens_Dietary_Pro_Allergens_Form .u.|> I_Allergens_Dietary_Pro_Form
-Allergens_Dietary_Pro_Allergens_Form ..> Allergens_Dietary_Pro_Tabs : uses
-Allergens_Dietary_Pro_Allergens_Form ..> Allergens_Dietary_Pro_Allergen_Queries : uses
-Allergens_Dietary_Pro_Allergens_Form .r.> Allergens_Dietary_Pro_Attachment_Queries : uses
-Allergens_Dietary_Pro_Allergens_Form ..> Allergens_Dietary_Pro_Allergy_Attachment_Queries : uses
+Allergens_Dietary_Pro_Allergens_Form .l.> Allergens_Dietary_Pro_Tabs
+Allergens_Dietary_Pro_Allergens_Form ..> Allergens_Dietary_Pro_Allergen_Queries
+Allergens_Dietary_Pro_Allergens_Form .r.> Allergens_Dietary_Pro_Attachment_Queries
+Allergens_Dietary_Pro_Allergens_Form ..> Allergens_Dietary_Pro_Allergy_Attachment_Queries
+Allergens_Dietary_Pro_Allergens_Form ..> Allergens_Dietary_Pro_Allergy_Product_Queries 
+
+' 
 @enduml
