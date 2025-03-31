@@ -5,8 +5,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-if (!interface_exists('I_Allergens_Dietary_Pro_Form')) {
-    require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/forms/Iallergen_form.php';
+if (!interface_exists('Allergens_Dietary_Form_I')) {
+	require_once ALLERGENS_DIETARY_FREE_DIRNAME . '/php/forms/Iallergen_form.php';
 }
 
 if (!class_exists('Allergens_Dietary_Pro_Allergen_Queries')) {
@@ -42,7 +42,7 @@ if ( ! class_exists( 'Allergens_Dietary_Pro_Notices' ) ) {
 
 /********************************************************************/
 
-class Allergens_Dietary_Pro_Update_Allergen_Form implements I_Allergens_Dietary_Pro_Form
+class Allergens_Dietary_Pro_Update_Allergen_Form implements Allergens_Dietary_Form_I
 {
     private array $MIME_TYPES;
     private array $MIME_NAMES;
@@ -54,7 +54,17 @@ class Allergens_Dietary_Pro_Update_Allergen_Form implements I_Allergens_Dietary_
         $this->MIME_TYPES = Mime_Types::get_mime_types();
         $this->MIME_NAMES = array_map(fn($case) => $case->name, Mime_Types::cases());
         $this->_allergens = Allergens_Dietary_Pro_Allergy_Attachment_Queries::getInstance()->getAllAllergyAttachmments(true);
-    
+
+        if(isset($_COOKIE['Error'])){
+			$message = sanitize_text_field(wp_unslash($_COOKIE['Error']));
+			Allergens_Dietary_Pro_Notices::getInstance()->display_admin_notice(Notice_Types::ERROR, esc_html(__($message, 'allergens-dietary-pro')) );
+			setcookie('Error', '', time() - 60 );
+		}
+        if(isset($_COOKIE['Success'])){
+			$message = sanitize_text_field(wp_unslash($_COOKIE['Success']));
+			Allergens_Dietary_Pro_Notices::getInstance()->display_admin_notice(Notice_Types::SUCCESS, esc_html(__($message, 'allergens-dietary-pro')) );
+			setcookie('Success', '', time() - 60 );
+		}
     } 
 
     /**
@@ -112,28 +122,42 @@ class Allergens_Dietary_Pro_Update_Allergen_Form implements I_Allergens_Dietary_
     public function submit(array $data)
     {
         $data = $this->sanitize($data);
+        
+        $errors = array();
+        $success = array();
 
-
-        foreach ($data as $icon) {
+        foreach ($data as $name => $value) {
             // check if file is an image and if it is not, skip it
-            if (false === in_array($icon['type'], $this->MIME_TYPES)) {
-                self::$_message = __('The new file: ' . $icon['name'] . ' is not a valid image.  Supported image types are: ' . implode(', ', $this->MIME_NAMES), 'allergens-dietary-pro') . '.';
-                $notice = Allergens_Dietary_Pro_Notices::getInstance();
-                $notice->display_admin_notice(Notice_Types::ERROR, __(self::$_message, 'allergens-dietary-pro'));		
-    
+            if (false === in_array($value['type'], $this->MIME_TYPES)) {
+                $errors['valid'][] = $value['name'];
                 continue;
             }
             // check if file is in database already and if it is, skip it
-            if (true === Allergens_Dietary_Pro_Attachment_Queries::getInstance()->checkAttachmentExists($icon['name'])) {
-                self::$_message =__('The new file: ' . $icon['name'] . ' already exists.', 'allergens-dietary-pro');
-                $notice = Allergens_Dietary_Pro_Notices::getInstance();
-                $notice->display_admin_notice(Notice_Types::ERROR, __(self::$_message, 'allergens-dietary-pro'));		
-    
+            if (true === Allergens_Dietary_Pro_Attachment_Queries::getInstance()->checkAttachmentExists($value['name'])) {
+                $errors['exists'][] = $value['name'];
                 continue;
             }
-
-            Allergens_Dietary_Pro_Attachment_Queries::getInstance()->updateAttachment($icon, $icon['oldName']);
+            $all_att_query = Allergens_Dietary_Pro_Allergy_Attachment_Queries::getInstance();
+            if($all_att_query->checkMultipleAttachmentsExists($value['oldName'])){
+                Allergens_Dietary_Pro_Attachment_Queries::getInstance()->addAttachment($value);
+                $all_att_query->updateAllergyAttachment($name, $value['name']);
+            }else{
+                Allergens_Dietary_Pro_Attachment_Queries::getInstance()->updateAttachment($value, $value['oldName']);
+            }
+            $success[] = $value['name'];
         }
+
+        if(!empty($errors)){
+            if(!empty($errors['exists'])){
+                setcookie('Error', 'The name of the following file(s) already exist: ' . implode(', ', $errors['exists']), time() + 30);
+            }elseif(!empty($errors['valid'])){
+                setcookie('Error', 'The following file(s) do not consist of the correct file extension: ' . implode(', ', $errors['valid']) . '. Should consist of: ' . implode(', ', $this->MIME_NAMES), time() + 30);
+            }
+        }else{
+            setcookie('Success', 'Succesfully updated image(s): ' . implode(', ', $success), time() + 30);
+        }
+        wp_redirect(admin_url('admin.php?page=allergens-dietary-update-allergen'));
+        exit;
     }
 
     /**

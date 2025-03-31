@@ -1,4 +1,4 @@
-Plugin Name: Allergens and Dietary
+Plugin Name: Allergens and Dietary Pro
 Plugin URI: https://wordpress.org/plugins/allergens-and-dietary/
 Description: Adds Allergens and Dietary options that can be used with WooCommerce products
 Version: 1.0.0
