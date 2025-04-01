@@ -253,12 +253,20 @@ package "php"{
         }
 
         class Allergens_Dietary_Pro_License_Handler{
-            -{static} instances : array
+            -{static} instances : Allergens_Dietary_Pro_License_Handler
             +{static} getInstance() : self
             # __construct() : void
-            + getLicense() : string
-            + licenseActivator(license_key:string, ip:string) : void
-            + exceededLicenseHandler() : void
+            # getLicense() : string
+            # licenseActivator(license_key:string, ip:string) : void
+            # exceededLicenseHandler() : void
+        }
+
+        class Allergens_Dietary_Pro_License_DB_Connection{
+            - servername : string
+            - username : string
+            - password : string
+            # __construct() : void
+            - databaseConnector() : string
         }
     }
     package "lists" {

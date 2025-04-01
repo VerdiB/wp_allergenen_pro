@@ -106,9 +106,38 @@ services:
     networks:
       development:
 
+  yippee:
+    image: "mysql:latest"
+    ports:
+      - "3306"
+    environment:
+      MYSQL_DATABASE: wp-allergenen-pro
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    networks:
+      allergenKey:
+        ipv4_address: "126.168.94.21"
+
+  yipie-admin:
+    image: "phpmyadmin:latest"
+    ports:
+      - "8181:80"
+    depends_on:
+      - yippee
+    environment:
+      PMA_PORT: 3306
+      PMA_HOST: yippee
+    networks:
+      allergenKey:
+        ipv4_address: "126.168.94.22"
+
 networks:
   development:
     ipam:
       driver: default
       config:
         - subnet: "124.168.92.0/24"
+  allergenKey:
+    ipam:
+      driver: default
+      config:
+        - subnet: "126.168.94.0/24"
