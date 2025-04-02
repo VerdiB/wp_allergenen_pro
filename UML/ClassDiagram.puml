@@ -265,7 +265,7 @@ package "php"{
             - servername : string
             - username : string
             - password : string
-            # __construct() : void
+            + __construct() : void
             - databaseConnector() : string
         }
     }
@@ -319,6 +319,8 @@ FormType  <.. Allergens_Dietary_Pro_Form
 Allergens_Dietary_Pro_Form o-r-> I_Allergens_Dietary_Pro_Form
 Allergens_Dietary_Pro_License_Form ..|> I_Allergens_Dietary_Pro_Form
 Allergens_Dietary_Pro_Allergens_Form .u.|> I_Allergens_Dietary_Pro_Form
+Allergens_Dietary_Pro_License_Form ..|> Allergens_Dietary_Pro_License_Handler
+Allergens_Dietary_Pro_License_Handler ..|> Allergens_Dietary_Pro_License_DB_Connection
 Allergens_Dietary_Pro_Allergens_Form ..> Allergens_Dietary_Pro_Tabs : uses
 Allergens_Dietary_Pro_Allergens_Form ..> Allergens_Dietary_Pro_Allergen_Queries : uses
 Allergens_Dietary_Pro_Allergens_Form .r.> Allergens_Dietary_Pro_Attachment_Queries : uses

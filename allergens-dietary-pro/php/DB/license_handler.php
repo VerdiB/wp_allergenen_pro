@@ -40,12 +40,17 @@ class Allergens_Dietary_Pro_License_Handler
 
     protected function getLicense()
     {
-
+      $dbConnect = new Allergens_Dietary_Pro_License_DB_Connection();
+      $sql = 'SELECT licentieSleutel FROM licenties';
+      $statement = $dbConnect->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+      $statement->execute();
+      $result = $statement->get_result();
+      return $result;
     }
 
     protected function licenseActivator()
     {
-
+      
     }
 
     // Functie voor het handelen van een aantal edge-cases. 
