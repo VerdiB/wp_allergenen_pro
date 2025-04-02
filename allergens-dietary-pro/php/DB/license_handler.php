@@ -4,28 +4,28 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-if(!class_exists('Allergens_Dietary_Pro_License_Handler.php')){
-	require_once ALLERGENS_DIETARY_FREE_DIRNAME . '/php/DB/license_handler.php';
+if(!class_exists('Allergens_Dietary_Pro_License_DB_Connection')){
+	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/DB/license_db_connection.php';
 }
 
 
 
 class Allergens_Dietary_Pro_License_Handler
 {
-    protected function __construct()
+    public function __construct()
     {
-      if (licenseActivator === 1)
-      {
-          //test condition is always set to true
-          if(true)
-          {
+      // if (licenseActivator === 1)
+      // {
+      //     //test condition is always set to true
+      //     if(true)
+      //     {
 
-          }
-      }
-      else
-      {
-          $this->licenseActivator();
-      }
+      //     }
+      // }
+      // else
+      // {
+      $this->licenseActivator();
+      // }
 
       $this->exceededLicenseHandler();
     }
@@ -38,7 +38,7 @@ class Allergens_Dietary_Pro_License_Handler
         return self::$_instance;
     }
 
-    protected function getLicense()
+    public function getLicense()
     {
       $dbConnect = new Allergens_Dietary_Pro_License_DB_Connection();
       $sql = 'SELECT licentieSleutel FROM licenties';

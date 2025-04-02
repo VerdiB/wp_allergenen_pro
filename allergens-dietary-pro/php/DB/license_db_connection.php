@@ -16,7 +16,7 @@ class Allergens_Dietary_Pro_License_DB_Connection
     private string  $username = "root";
     private string  $password = "";
 
-    protected function __construct()
+    public function __construct()
     {
         $this->databaseConnector();
     }
@@ -25,14 +25,16 @@ class Allergens_Dietary_Pro_License_DB_Connection
     {
         try 
         {
-            $conn = new PDO("mysql:host=$this->servername;dbname=myDB", $this->username, $this->password);
+            $conn = new PDO("mysql:host=$this->servername;dbname=wp-allergenen-pro", $this->username, $this->password);
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo "Connected successfully";
+            return $conn;
         } 
         catch(PDOException $e) 
         {
             echo "Connection failed: " . $e->getMessage();
         }
+
     }
 }

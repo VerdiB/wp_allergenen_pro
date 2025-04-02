@@ -19,7 +19,7 @@ if (!class_exists('Allergens_Dietary_Pro_Update_Allergen_Form')) {
 	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/forms/allergen_update_allergen.php';
 }
 if (!enum_exists('FormType')) {
-	require_once ALLERGENS_DIETARY_FREE_DIRNAME . '/php/lists/form_type.php';
+	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/lists/form_type.php';
 }
 
 if (!class_exists('Allergens_Dietary_Form')) {
@@ -41,6 +41,7 @@ class Allergens_Dietary_Pro_Form extends Allergens_Dietary_Form
 	
 	public function __construct(bool $isTable = false)
 	{
+		// #[\Override]
 		parent::__construct();
 		if (FormType::ALLERGENS === self::$_formType) {
 			self::$_formObject = new Allergens_Dietary_Pro_Allergen_Form();
