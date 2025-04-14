@@ -1,4 +1,3 @@
-
 @startuml db-design
 skinparam Linetype ortho
 note as N1
@@ -47,6 +46,30 @@ entity "product_meta_lookup"{
     tax_status: varchar(100)
     tax_class: varchar(100)
 }
+
+entity "licenties"{
+    licentie_sleutel: varchar(255) <<PK>>
+    start_datum: date
+    eind_datum: date
+    in_gebruik: varchar(10)
+}
+
+entity "licenties_website"{
+    licentie_sleutel: varchar(255) <<FK>> <<PK>>
+    ip_adres: varchar(34)
+}
+
+entity "licentie_logboek" {
+    licentie_sleutel: varchar(255) <<FK>> <<PK>>
+    ip_adres: varchar(34) <<FK>>
+    start_datum: date
+}
+
+licenties_website }|--|| licenties
+licenties |o--|{ licentie_logboek
+licenties_website |o--|{ licentie_logboek
+
+
 
 allergy ||--o{ allergy_product
 allergy ||--|| allergy_attachement

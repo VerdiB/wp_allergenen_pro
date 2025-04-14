@@ -101,7 +101,7 @@ class Allergens_Dietary_Pro_Startup
 		
 			$level = 'notice-error';
 			$message = sprintf(__('%1$sWooCommerce is inactive or not installed. Please install & activate WooCommerce%2$s', 'allergens-dietary-pro'), '<p>', '</p>');
-			Allergens_Dietary_Pro_Notices::error_notice($level, $message);
+			// Allergens_Dietary_Pro_Notices::error_notice($level, $message);
 			deactivate_plugins(ALLERGENS_DIETARY_PRO_BASE);
 			
 			if ( isset( $_GET['activate'] ) ) {

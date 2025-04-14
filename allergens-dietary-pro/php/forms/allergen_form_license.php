@@ -12,6 +12,10 @@ if ( ! class_exists( 'Allergens_Dietary_Pro_Allergen_Queries' ) ) {
 	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/DB/allergen.php';
 }
 
+if( ! class_exists('Allergens_Dietary_Pro_License_Handler')){
+	require_once ALLERGENS_DIETARY_PRO_DIRNAME . '/php/DB/license_handler.php';
+}
+
 
 /**
  * @class Allergens_Dietary_Pro_License_Form
@@ -29,22 +33,27 @@ class Allergens_Dietary_Pro_License_Form implements I_Allergens_Dietary_Pro_Form
 	 * for now it is empty and does nothing but it's common courtesy to have it
 	 * @return void
 	 */
-	public function __construct() {
+	public function __construct() 
+	{
 	}
 
 	public function showForm( string $allergenName = null ) {
-		if ( ! is_null( $allergenName ) ) {
-			return;
-		}
+
 
 		// TODO: Getting license key that is in use by site if it exists
-		$html  = '<fieldset>
-		<label for="license_key">' . __( 'License key', 'allergens-dietary-pro' ) . '</label><br>
-		<input type="text" name="license_key" id="license_key" value=""><br><br>
-		<input type="submit" class="button button-primary" id="submitButton" name="submit" value="' . __( 'Verify license key', 'allergens-dietary-pro' ) . '">';
-		$html .= '</fieldset>';
 
-		echo $html;
+		$licenseHandler = new Allergens_Dietary_Pro_License_Handler();
+		$license = $licenseHandler->getLicense();
+		echo $license;
+		var_dump($licenseHandler);
+		return ;
+		// $html  = '<fieldset>
+		// <label for="license_key">' . __( 'License key', 'allergens-dietary-pro' ) . '</label><br>
+		// <input type="text" name="license_key" id="license_key" value=""><br><br>
+		// <input type="submit" class="button button-primary" id="submitButton" name="submit" value="' . __( 'Verify license key', 'allergens-dietary-pro' ) . '">
+		// <p> Test';
+		// $html .= '</fieldset>';
+		// echo $html;
 	}
 
 	public function submit( array $data ) {
