@@ -31,7 +31,7 @@ if (!class_exists('Allergens_Dietary_Form')) {
  * @class Allergens_Dietary_Pro_Form
  * @brief This class is a singleton strategy
  * that creates a form for the allergens and dietary restrictions plugin.
- * @author Ictoria
+ * @author Verdi-B
  * @date 2-9-2024
  * @since 1.0.0
  */

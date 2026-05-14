@@ -13,8 +13,7 @@ Version:     0.19.1.3
 Description: Adds Allergens and Dietary options that can be used with WooCommerce products.
 Requires at least: 6.3.1
 Requires PHP: 7.4
-Author:      Ictoria.nl
-Author URI:  http://ictoria.nl
+Author:      Verdi-B
 License:     GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: allergens-dietary-pro
@@ -128,8 +127,8 @@ class Allergens_Dietary_Pro_Startup
 		// cookies might be needed if the filter needs to store previous search settings, and will have to be removed if this function is called
 
 		// temporary delete_option for testing without having to uninstall/reinstall. This code is also found in the uninstall.php file of this plugin
-		// delete_option('allergens_dietary_ictoria_settings');
-		// delete_option('allergens_dietary_ictoria_options');
+		// delete_option('allergens_dietary_settings');
+		// delete_option('allergens_dietary_options');
 	}
 }
 register_deactivation_hook(ALLERGENS_DIETARY_PRO_BASE, array('Allergens_Dietary_Pro_Startup', 'on_deactivation'));

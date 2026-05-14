@@ -28,7 +28,7 @@ if ( ! class_exists( 'Allergens_Dietary_Show_Allergens' ) ) {
  * @class Allergens_Dietary_Pro_Show_Allergens
  * @brief Class that shows the allergens
  * the user can see the already created allergies
- * @author Ictoria
+ * @author Verdi-B
  * @date 24-9-2024
  * @since 1.0.0
  */
@@ -36,7 +36,7 @@ if ( ! class_exists( 'Allergens_Dietary_Show_Allergens' ) ) {
 class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allergens 
 {    
     /**
-     * @author ictoriabv
+     * @author Verdi-B
      * @return void
      * @since V0.18.6.0
      * @version V0.18.6.0
@@ -71,7 +71,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
     }
 
     /**
-     * @author ictoriabv
+     * @author Verdi-B
      * @return array
      * @since V0.18.6.0
      * @version V0.18.6.0
@@ -88,7 +88,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
     }
 
     /**
-     * @author ictoriabv
+     * @author Verdi-B
      * @brief defines a custom response on column rows for allergens
      * In this case only to change its status
      * @param array|object $item
@@ -154,7 +154,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
     }
 
     /**
-     * @author ictoriabv
+     * @author Verdi-B
      * @brief Handles bulk action on all allergens
      * where as for now only changes the status of an allergy/dietary
      * @return void
@@ -222,7 +222,7 @@ class Allergens_Dietary_Pro_Show_Allergens extends Allergens_Dietary_Show_Allerg
     }
 
     /**
-     * @author ictoriabv
+     * @author Verdi-B
      * @overload from parrent method and can be overloaded still
      * @brief handles custom row actions on the allergen table
      * for this version of the plug-in it will only handle status changes

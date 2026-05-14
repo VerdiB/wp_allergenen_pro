@@ -15,7 +15,7 @@ if (! class_exists('Allergens_Dietary_Notices')){
 /**
  * @brief This class handles the errors. 
  * and carries out potential error logs for future development
- * @author Ictoria
+ * @author Verdi-B
  * @since 1.0.0
  * @date 4-11-2024
  */
@@ -28,7 +28,7 @@ class Allergens_Dietary_Pro_Notices extends Allergens_Dietary_Notices
 	 * @param Notice_Types $type
 	 * @param string $message
 	 * @return void
-	 * @author Ictoria
+	 * @author Verdi-B
 	 * @since 1.0.0
 	 * @date 4-11-2024
 	 */

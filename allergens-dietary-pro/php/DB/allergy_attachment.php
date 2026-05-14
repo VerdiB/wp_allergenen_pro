@@ -16,7 +16,7 @@ class Allergens_Dietary_Pro_Allergy_Attachment_Queries extends Allergens_Dietary
 	{
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+		$table_name = $wpdb->prefix . 'allergens_dietary_allergy_attachment';
 
 		$wpdb->insert(
 			$table_name,
@@ -34,7 +34,7 @@ class Allergens_Dietary_Pro_Allergy_Attachment_Queries extends Allergens_Dietary
 
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+		$table_name = $wpdb->prefix . 'allergens_dietary_allergy_attachment';
 
 		return $wpdb->update(
 			$table_name,
@@ -51,7 +51,7 @@ class Allergens_Dietary_Pro_Allergy_Attachment_Queries extends Allergens_Dietary
 	{
 		global $wpdb;
 
-		$table = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+		$table = $wpdb->prefix . 'allergens_dietary_allergy_attachment';
 		
 		$count = $wpdb->get_var($wpdb->prepare(
 			"SELECT COUNT(attachment_name) FROM $table
@@ -66,7 +66,7 @@ class Allergens_Dietary_Pro_Allergy_Attachment_Queries extends Allergens_Dietary
 	{
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+		$table_name = $wpdb->prefix . 'allergens_dietary_allergy_attachment';
 
 		$sql = $wpdb->prepare(
 			"SELECT attachment_name FROM $table_name WHERE allergy_name = %s",
@@ -82,9 +82,9 @@ class Allergens_Dietary_Pro_Allergy_Attachment_Queries extends Allergens_Dietary
 	{
 		global $wpdb;
 
-		$table_aa = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-		$table_am = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
-		$table_a = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+		$table_aa = $wpdb->prefix . 'allergens_dietary_allergy_attachment';
+		$table_am = $wpdb->prefix . 'allergens_dietary_attachments';
+		$table_a = $wpdb->prefix . 'allergens_dietary_allergy';
 
 		$sql = $wpdb->prepare(
 			"DELETE aa.*, am.*, a.*
@@ -107,8 +107,8 @@ class Allergens_Dietary_Pro_Allergy_Attachment_Queries extends Allergens_Dietary
 	public function deleteAllergyAndConnection(string $allergy){
 		global $wpdb;
 
-		$table_aa = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
-		$table_a = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+		$table_aa = $wpdb->prefix . 'allergens_dietary_allergy_attachment';
+		$table_a = $wpdb->prefix . 'allergens_dietary_allergy';
 
 		$sql = $wpdb->prepare(
 			"DELETE aa, a 
@@ -131,7 +131,7 @@ class Allergens_Dietary_Pro_Allergy_Attachment_Queries extends Allergens_Dietary
 	{
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_attachment';
+		$table_name = $wpdb->prefix . 'allergens_dietary_allergy_attachment';
 
 		$sql = $wpdb->prepare(
 			"SELECT COUNT(attachment_name) FROM $table_name

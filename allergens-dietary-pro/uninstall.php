@@ -8,7 +8,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-$settings = get_option( 'allergens_dietary_ictoria_settings' );
+$settings = get_option( 'allergens_dietary_settings' );
 // if enabled, export all product data added by this plugin before removing them from WP and offer a dowloadable .csv file
 if ( $settings['auto-export'] == true ) {
 	// call export function here
@@ -25,12 +25,12 @@ $ids = get_posts(
 );
 // loop through all products and delete the plugin data
 for ( $i = 0; $i < count( $ids ); $i++ ) {
-	delete_post_meta( $ids[ $i ], 'allergens_dietary_ictoria' );
+	delete_post_meta( $ids[ $i ], 'allergens_dietary' );
 }
 
 // delete all options added by this plugin. Files are automatically removed by WP
-delete_option( 'allergens_dietary_ictoria_options' );
-delete_option( 'allergens_dietary_ictoria_settings' );
+delete_option( 'allergens_dietary_options' );
+delete_option( 'allergens_dietary_settings' );
 
 // get db object
 global $wpdb;
@@ -44,10 +44,10 @@ global $wpdb;
  * @var array
  */
 $tables = array(
-	'allergens_dietary_ictoria_allergy_attachment',
-	'allergens_dietary_ictoria_allergy_product',
-	'allergens_dietary_ictoria_attachments',
-	'allergens_dietary_ictoria_allergy',
+	'allergens_dietary_allergy_attachment',
+	'allergens_dietary_allergy_product',
+	'allergens_dietary_attachments',
+	'allergens_dietary_allergy',
 );
 
 /**
@@ -56,10 +56,10 @@ $tables = array(
  * This array contains the SQL statements that are used to delete foreign keys from the database tables.
  */
 $fk_del = array(
-	"ALTER TABLE {$wpdb->prefix}allergens_dietary_ictoria_allergy_product
+	"ALTER TABLE {$wpdb->prefix}allergens_dietary_allergy_product
 	DROP FOREIGN KEY FK_AllergyProduct_WCproduct,
 	DROP FOREIGN KEY FK_AllergyProduct_Allergy",
-	"ALTER TABLE {$wpdb->prefix}allergens_dietary_ictoria_allergy_attachment
+	"ALTER TABLE {$wpdb->prefix}allergens_dietary_allergy_attachment
 	DROP FOREIGN KEY FK_AllergyAttach_Allergy,
 	DROP FOREIGN KEY FK_AllergyAttach_Attach",
 );

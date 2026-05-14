@@ -31,7 +31,7 @@ if ( ! class_exists( 'Allergens_Dietary_Pro_Notices' ) ) {
 
 /**
  * @brief This shows the tabs on add/update allergens .
- * @author Ictoria
+ * @author Verdi-B
  * @since 1.0.0
  * @date 18-9-2024
  */
@@ -71,7 +71,7 @@ class Allergens_Dietary_Pro_Update_Allergen_Form implements Allergens_Dietary_Fo
      * @param string|null $allergenName
      * @brief This method shows the form to add/update allergens .
      * @return void
-     * @author Ictoria
+     * @author Verdi-B
      * @since 1.0.0
      * @date 11-9-2024
      */
@@ -115,7 +115,7 @@ class Allergens_Dietary_Pro_Update_Allergen_Form implements Allergens_Dietary_Fo
      * @brief This method submits the form data to the DB.
      * @throws Exception if the file is not a valid image
      * @return void
-     * @author Ictoria
+     * @author Verdi-B
      * @since 1.0.0
      * @date 11-9-2024
      */
@@ -164,7 +164,7 @@ class Allergens_Dietary_Pro_Update_Allergen_Form implements Allergens_Dietary_Fo
      * @param array $data
      * @brief This method sanitizes the form data for the DB.
      * @return array $data
-     * @author Ictoria
+     * @author Verdi-B
      * @since 1.0.0
      * @date 11-9-2024
      */

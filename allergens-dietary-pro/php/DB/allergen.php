@@ -11,7 +11,7 @@ if(!class_exists('Allergens_Dietary_Allergen_Queries')){
 /**
  * @class Allergens_Dietary_Pro_Allergen_Queries
  * @brief This class is a singleton that handles all the queries for the allergens and dietary restrictions DB table.
- * @author Ictoria
+ * @author Verdi-B
  * @date 11-9-2024
  * @since 1.0.0
  */
@@ -40,13 +40,13 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 	 * @return bool
 	 * @since 1.0.0
 	 * @date 11-9-2024
-	 * @author Ictoria
+	 * @author Verdi-B
 	 */
 	public function addAllergens(array $data)
 	{
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+		$table_name = $wpdb->prefix . 'allergens_dietary_allergy';
 
 		$wpdb->insert(
 			$table_name,
@@ -69,7 +69,7 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 	{
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+		$table_name = $wpdb->prefix . 'allergens_dietary_allergy';
 
 		$sql = $wpdb->prepare(
 			"SELECT allergy_name FROM $table_name WHERE allergy_name = %s",
@@ -85,7 +85,7 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 	{
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+		$table_name = $wpdb->prefix . 'allergens_dietary_allergy';
 
 		$wpdb->update(
 			$table_name,
@@ -104,7 +104,7 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 	{
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+		$table_name = $wpdb->prefix . 'allergens_dietary_allergy';
 
 		$sql = $wpdb->prepare(
 			"SELECT * FROM $table_name WHERE allergy_name = %s",
@@ -119,7 +119,7 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 	public function is_default_allergen(string $allergenName){
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+		$table_name = $wpdb->prefix . 'allergens_dietary_allergy';
 
 		$sql = $wpdb->prepare(
 			"SELECT is_default_option FROM $table_name WHERE allergy_name = %s",
@@ -133,7 +133,7 @@ class Allergens_Dietary_Pro_Allergen_Queries extends Allergens_Dietary_Allergen_
 
 	public function deleteAllergen(string $allergen){
 		global $wpdb;
-        	$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy';
+        	$table_name = $wpdb->prefix . 'allergens_dietary_allergy';
         
 			return $wpdb->query($wpdb->prepare(// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				"DELETE FROM %i

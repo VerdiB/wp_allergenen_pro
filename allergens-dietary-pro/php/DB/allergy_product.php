@@ -11,7 +11,7 @@ if(!class_exists('Allergens_Dietary_Allergy_Product_Queries')){
 /**
  * @class Allergens_Dietary_Pro_Allergy_Product_Queries
  * @brief This class is a singleton that handles all the queries for the allergens and dietary restrictions DB table.
- * @author Ictoria
+ * @author Verdi-B
  * @date 4-10-2024
  * @since 1.0.0
  */
@@ -22,7 +22,7 @@ class Allergens_Dietary_Pro_Allergy_Product_Queries extends Allergens_Dietary_Al
 
     public function deleteAllergiesProduct(string $allergen){
         global $wpdb;
-        $table_name = $wpdb->prefix . 'allergens_dietary_ictoria_allergy_product';
+        $table_name = $wpdb->prefix . 'allergens_dietary_allergy_product';
         
         return $wpdb->query($wpdb->prepare(// phpcs:ignore WordPress.DB.DirectDatabaseQuery
             "DELETE FROM %i

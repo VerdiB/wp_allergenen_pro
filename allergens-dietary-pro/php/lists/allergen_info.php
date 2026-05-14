@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @class Allergens_Dietary_Pro_License_Info
  * @brief Class that creates the info
  * the user can see the info
- * @author Ictoria
+ * @author Verdi-B
  * @date 12-9-2024
  * @since 1.0.0
  */

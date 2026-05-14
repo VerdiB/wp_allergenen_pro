@@ -22,13 +22,7 @@ if (!class_exists('Allergens_Dietary_Pro_Allergen_Queries')) {
 }
 /**
  * @brief This shows the tabs on add/update allergens .
- * @author Ictoria
- * @since 1.0.0
- * @date 18-9-2024
- */
-/**
- * @brief This shows the tabs on add/update allergens .
- * @author Ictoria
+ * @author Verdi-B
  * @since 1.0.0
  * @date 18-9-2024
  */
@@ -86,7 +80,7 @@ class Allergens_Dietary_Pro_Allergen_Form implements Allergens_Dietary_Form_I
 	 * @param string|null $allergenName
 	 * @brief This method shows the form to add/update allergens .
 	 * @return void
-	 * @author Ictoria
+	 * @author Verdi-B
 	 * @since 1.0.0
 	 * @date 11-9-2024
 	 */
@@ -183,7 +177,7 @@ class Allergens_Dietary_Pro_Allergen_Form implements Allergens_Dietary_Form_I
 	 * @brief This method submits the form data to the DB.
 	 * @throws Exception if the file is not a valid image
 	 * @return void
-	 * @author Ictoria
+	 * @author Verdi-B
 	 * @since 1.0.0
 	 * @date 11-9-2024
 	 */
@@ -238,7 +232,7 @@ class Allergens_Dietary_Pro_Allergen_Form implements Allergens_Dietary_Form_I
 	/**
 	 * @brief This method redirects the user to a different or the same page with some conditions.
 	 * @return void
-	 * @author Ictoria
+	 * @author Verdi-B
 	 * @since 1.0.0
 	 * @date 16-1-2025
 	 */
@@ -259,7 +253,7 @@ class Allergens_Dietary_Pro_Allergen_Form implements Allergens_Dietary_Form_I
 	 * @brief This method validates input made by the user and check for errors.
 	 * If there is an error then it return false, else true.
 	 * @return true|false
-	 * @author Ictoria
+	 * @author Verdi-B
 	 * @since 1.0.0
 	 * @date 16-1-2025
 	 */
@@ -296,7 +290,7 @@ class Allergens_Dietary_Pro_Allergen_Form implements Allergens_Dietary_Form_I
 	/**
 	 * @brief This method handles the edit allergen logic.
 	 * @return void
-	 * @author Ictoria
+	 * @author Verdi-B
 	 * @since 1.0.0
 	 * @date 16-1-2025
 	 */
@@ -335,7 +329,7 @@ class Allergens_Dietary_Pro_Allergen_Form implements Allergens_Dietary_Form_I
 	/**
 	 * @brief This method handles the add allergen logic.
 	 * @return void
-	 * @author Ictoria
+	 * @author Verdi-B
 	 * @since 1.0.0
 	 * @date 16-1-2025
 	 */
@@ -377,7 +371,7 @@ class Allergens_Dietary_Pro_Allergen_Form implements Allergens_Dietary_Form_I
 	 * @param array $data
 	 * @brief This method sanitizes the form data for the DB.
 	 * @return array $data
-	 * @author Ictoria
+	 * @author Verdi-B
 	 * @since 1.0.0
 	 * @date 11-9-2024
 	 */
