@@ -22,7 +22,7 @@ class Allergens_Dietary_Pro_Attachment_Queries extends Allergens_Dietary_Attachm
 	{
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
+		$table_name = $wpdb->prefix . 'allergens_dietary_attachments';
 
 		$wpdb->insert(
 			$table_name,
@@ -39,7 +39,7 @@ class Allergens_Dietary_Pro_Attachment_Queries extends Allergens_Dietary_Attachm
 
 	public function deleteAttachment( string $attachment ) {
 		global $wpdb;
-		$table_attachment = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
+		$table_attachment = $wpdb->prefix . 'allergens_dietary_attachments';
 
 		$sqlConnection = $wpdb->prepare(
 			"DELETE FROM $table_attachment
@@ -60,7 +60,7 @@ class Allergens_Dietary_Pro_Attachment_Queries extends Allergens_Dietary_Attachm
 
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
+		$table_name = $wpdb->prefix . 'allergens_dietary_attachments';
 
 		$sql = $wpdb->prepare(
 			"SELECT attachment_name FROM $table_name WHERE attachment_name = %s",
@@ -77,7 +77,7 @@ class Allergens_Dietary_Pro_Attachment_Queries extends Allergens_Dietary_Attachm
 	{
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'allergens_dietary_ictoria_attachments';
+		$table_name = $wpdb->prefix . 'allergens_dietary_attachments';
 		
 		$wpdb->update(
 			$table_name,
@@ -99,7 +99,7 @@ class Allergens_Dietary_Pro_Attachment_Queries extends Allergens_Dietary_Attachm
 	 * @param array $data
 	 * @since 1.0.0
 	 * @date 11-9-2024
-	 * @author Ictoria
+	 * @author Verdi-B
 	 */
 	private function placeAttachment(array $data)
 	{
@@ -121,7 +121,7 @@ class Allergens_Dietary_Pro_Attachment_Queries extends Allergens_Dietary_Attachm
 	 * @param string $attachmentName
 	 * @since 1.0.0
 	 * @date 6-11-2024
-	 * @author Ictoria
+	 * @author Verdi-B
 	 */
 	private function removeAttachment(string $attachmentName)
 	{
