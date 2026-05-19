@@ -105,7 +105,7 @@ services:
       - ./phpunit/tests:/var/www/html/wordpress-tests/
       # - ./wordpress:/var/www/html/
     depends_on:
-      - wordpresslatest
+      - wp-dev
     networks:
       development:
 
